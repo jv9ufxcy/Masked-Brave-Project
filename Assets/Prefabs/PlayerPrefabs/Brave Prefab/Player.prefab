@@ -225,7 +225,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.12, y: -0.14}
+  m_Offset: {x: 0.1, y: -0.13999999}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -236,7 +236,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.67, y: 1.54}
+  m_Size: {x: 0.66, y: 1.54}
   m_EdgeRadius: 0
 --- !u!1 &603746093649840932
 GameObject:
@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 3
+  _effect: 0
 --- !u!61 &1597203363817921083
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -369,6 +370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 5
+  _effect: 0
 --- !u!61 &4142192580474856093
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -710,6 +712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 3
+  _effect: 0
 --- !u!61 &626733387358180539
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -803,15 +806,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
+  _globalVars: {fileID: 0}
   currentRecoveryPoints_UseProperty: 15
   currentSpecialEnergyMeter_UseProperty: 30
   movementSpeed: 8
   jumpStrength: 14
   fallMultiplier: 4.5
   lowJumpMultiplier: 6
+  isOnGround: 1
   maxDash: 0.2
   dashSpeed: 24
   dashAnimation: Dash
+  PlayerAfterImage: {fileID: 8595623674763871028}
   groundDetectPoint: {fileID: 94189463829205636}
   groundDetectRadius: 0.25
   whatCountsAsGround:
@@ -827,11 +833,9 @@ MonoBehaviour:
   knockbackFromRight: 0
   deathParticle: {fileID: 1756106632241220, guid: 2f3b405dff359b6429fa5951466d6c6c,
     type: 3}
-  PlayerAfterImage: {fileID: 8595623674763871028}
-  isOnGround: 1
   wallCheck: {fileID: 8333887593098743198}
   wallSpeed: -1.7
-  wallJumpDistance: 8
+  wallJumpDistance: 4
   wallJumpHeight: 16
   wallJumpMaxTimer: 0.2
   wallJumpTimer: 0
@@ -870,6 +874,11 @@ MonoBehaviour:
   bulletSound: Shoot
   currentSpriteRenderer_UseProperty: {fileID: 693395144}
   playerRespawn: {fileID: 3480369017989323384}
+  myController: 0
+  horizontalAxisName: 
+  altHorizontalAxisName: 
+  verticalAxisName: 
+  altVerticalAxisName: 
 --- !u!114 &7909421117020226101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -885,10 +894,8 @@ MonoBehaviour:
   characterState: 0
   thePlayer: {fileID: 1856400284}
   airDash: {fileID: 0}
-  swordAttack: {fileID: 2789837393158242371, guid: 0103869ff496891439ba425c4354be31,
-    type: 3}
-  riderPunch: {fileID: 2789837393158242371, guid: 0103869ff496891439ba425c4354be31,
-    type: 3}
+  swordAttack: {fileID: 0}
+  riderPunch: {fileID: 0}
   largeAvatar: {fileID: 392602814711627710}
   smallAvatar: {fileID: 4767021287074544167}
   audioManager: {fileID: 0}
@@ -1054,6 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 2
+  _effect: 0
 --- !u!61 &3294233615060212762
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1139,6 +1147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 4
+  _effect: 0
 --- !u!61 &7021374135885698135
 BoxCollider2D:
   m_ObjectHideFlags: 0
