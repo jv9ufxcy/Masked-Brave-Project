@@ -115,8 +115,10 @@ MonoBehaviour:
   _damagedState: 0
   deathParticle: {fileID: 1756106632241220, guid: 581f36e8204ec674ca9cf38a21e0f97b,
     type: 3}
-  itemDropped: {fileID: 0}
-  energyDropped: {fileID: 0}
+  itemDropped: {fileID: 1214605765240008, guid: 47fb1b856b0351146b6f18848f50f296,
+    type: 3}
+  energyDropped: {fileID: 1214605765240008, guid: 47fb1b856b0351146b6f18848f50f296,
+    type: 3}
   shouldDropAtHalf: 0
   enemyKnockbackDuration: 0
   enemyKnockbackForce: 5
@@ -125,7 +127,7 @@ MonoBehaviour:
   maxEnemyLaunchDuration: 0.005
   launchForce: {x: 0, y: 10}
   enemyKnockFromRight: 0
-  damageCooldownInSeconds: 0.75
+  damageCooldownInSeconds: 0.25
   wallDetectPoint: {fileID: 7058027136020591375}
   groundDetectPoint: {fileID: 7058027136020591375}
   edgeDetectPoint: {fileID: 7058027136020591375}
@@ -150,12 +152,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &4263505612507493645
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -169,7 +171,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.75}
+  m_Offset: {x: 0, y: -0.65}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -180,7 +182,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.5}
+  m_Size: {x: 1, y: 0.75}
   m_EdgeRadius: 0
 --- !u!212 &3991188050088239747
 SpriteRenderer:
@@ -261,21 +263,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b626aa55d406245a3322bb9eda563a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDetectPoint: {fileID: 0}
+  wallDetectPoint: {fileID: 5878368984266868289}
   groundDetectPoint: {fileID: 7058027136020591375}
   DetectRadius: 0.2
   whatCountsAsWall:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 33024
   edgeDetectPoint: {fileID: 7058027136020591375}
   whatIsShootable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   isShootableInRange: 0
-  moveSpeed: 0
-  jumpStrength: 0
+  moveSpeed: 3
+  jumpStrength: 10
   moveRight: 0
-  shouldEnemyWalkOffEdge: 0
+  shouldEnemyWalkOffEdge: 1
 --- !u!1 &2447843096499125990
 GameObject:
   m_ObjectHideFlags: 0

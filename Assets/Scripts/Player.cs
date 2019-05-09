@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     private int maxSpecialEnergyMeter = 30;
     [SerializeField] private int currentSpecialEnergyMeter_UseProperty;
 
+    [SerializeField] private int strikeCost = 5, launcherCost = 3, shootCost = 2;
+
     private int maxNumberOfBullets = 3;
     private int currentNumberOfBullets_UseProperty;
     private int numberOfDashes_UseProperty = 1;
@@ -411,7 +413,7 @@ public class Player : MonoBehaviour
                     attackTimer = attackCooldown;
                     _state = PlayerState.STATE_FIRST_ATTACK_SM;
                 }
-                if (isSpecialKeyDown && verticalInput == 0)
+                if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown && verticalInput == 0)
                 {
                     attackTimer = specialAttackCooldown;
                     hasAttacked = false;
@@ -470,7 +472,7 @@ public class Player : MonoBehaviour
                     attackTimer = attackCooldown;
                     _state = PlayerState.STATE_BRAVE_LAUNCHER_SM;
                 }
-                if (isSpecialKeyDown && verticalInput == 0)
+                if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown && verticalInput == 0)
                 {
                     attackTimer = specialAttackCooldown;
                     hasAttacked = false;
@@ -523,7 +525,7 @@ public class Player : MonoBehaviour
                 if (isWallSliding)
                     _state = PlayerState.STATE_WALLSLIDING_SM;
 
-                if (isSpecialKeyDown && verticalInput != -1 && !anySlashReady)
+                if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown && verticalInput != -1 && !anySlashReady)
                 {
                     hasAttacked = false;
                     attackTimer = specialAttackCooldown;
@@ -578,7 +580,7 @@ public class Player : MonoBehaviour
                 {
                     wallJumpTimer -= Time.fixedDeltaTime;
 
-                    if (isSpecialKeyDown)
+                    if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown)
                     {
                         wallJumpTimer = 0;
                         attackTimer = specialAttackCooldown;
@@ -681,7 +683,7 @@ public class Player : MonoBehaviour
                         attackTimer = comboA1Cooldown;
                         _state = PlayerState.STATE_SECOND_ATTACK_SM;
                     }
-                    else if (isSpecialKeyDown && verticalInput == 0)
+                    else if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown && verticalInput == 0)
                     {
                         TurnAround();
                         hasAttacked = false;
@@ -725,7 +727,7 @@ public class Player : MonoBehaviour
                         attackTimer = comboA2Cooldown;
                         _state = PlayerState.STATE_THIRD_ATTACK_SM;
                     }
-                    else if (isSpecialKeyDown && verticalInput == 0)
+                    else if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown && verticalInput == 0)
                     {
                         TurnAround();
                         hasAttacked = false;
@@ -761,13 +763,22 @@ public class Player : MonoBehaviour
                         audioManager.PlaySound(comboA2Sound);
                         hasAttacked = true;
                     }
+                    else if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown && verticalInput == 0)
+                    {
+                        TurnAround();
+                        hasAttacked = false;
+                        attackTimer = specialAttackCooldown;
+                        _state = PlayerState.STATE_BRAVE_STRIKE_SM;
+                    }
 
                 }
+
                 if (shouldJump == true || !isOnGround)
                 {
                     attackTimer = 0;
                     _state = PlayerState.STATE_JUMPING_SM;
                 }
+
                     ReturnToIdleState();
                 break;
             case PlayerState.STATE_JUMPING_ATTACK_SM:
@@ -783,11 +794,11 @@ public class Player : MonoBehaviour
                     }
                     if (!hasAttacked)
                     {
-                        currentAnim.SetTrigger("Attack");
+                        currentAnim.SetTrigger("AirAttack");
                         audioManager.PlaySound(attackingSound);
                         hasAttacked = true;
                     }
-                    if (isSpecialKeyDown && verticalInput != -1)
+                    if (CurrentSpecialEnergyMeter >= strikeCost && isSpecialKeyDown && verticalInput != -1)
                     {
                         TurnAround();
                         hasAttacked = false;
@@ -812,13 +823,14 @@ public class Player : MonoBehaviour
             case PlayerState.STATE_BRAVE_STRIKE_SM:
                 
                 BetterJump();
-                //SpendMeter(energyMeterCost);
+                
                 if (attackTimer >= 0)
                 {
                     isSpecialKeyDown = false;
                     attackTimer -= Time.deltaTime;
                     if (!hasAttacked)
                     {
+                        SpendMeter(strikeCost);
                         myRB.velocity = new Vector2(0, 0);
                         currentAnim.SetTrigger("RiderPunch");
                         audioManager.PlaySound(riderPunchSound);
@@ -844,7 +856,7 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerState.STATE_BRAVE_LAUNCHER_SM:
-
+                
                 if (attackTimer >= 0)
                 {
                     attackTimer -= Time.fixedDeltaTime;
@@ -852,6 +864,7 @@ public class Player : MonoBehaviour
 
                     if (!hasAttacked)
                     {
+                        SpendMeter(launcherCost);
                         currentAnim.SetTrigger("Launcher");
                         audioManager.PlaySound(attackingSound);
                         hasAttacked = true;
@@ -873,6 +886,7 @@ public class Player : MonoBehaviour
 
                     if (!hasAttacked)
                     {
+                        SpendMeter(launcherCost);
                         currentAnim.SetTrigger("Slam");
                         audioManager.PlaySound(comboA2Sound);
                         hasAttacked = true;
@@ -1007,7 +1021,7 @@ public class Player : MonoBehaviour
                     _state = PlayerState.STATE_RUNNING_TR;
                 }
 
-                if (isAttackKeyDown)
+                if (CurrentSpecialEnergyMeter >= shootCost && isAttackKeyDown)
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_IDLE_TR;
@@ -1048,7 +1062,7 @@ public class Player : MonoBehaviour
                     Henshin();
                     _state = PlayerState.STATE_RUNNING_SM;
                 }
-                if (isAttackKeyDown)
+                if (CurrentSpecialEnergyMeter >= shootCost && isAttackKeyDown)
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_RUNNING_TR;
@@ -1099,7 +1113,7 @@ public class Player : MonoBehaviour
                     Henshin();
                     _state = PlayerState.STATE_JUMPING_SM;
                 }
-                if (isAttackKeyDown)
+                if (CurrentSpecialEnergyMeter >= shootCost && isAttackKeyDown)
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_JUMPING_TR;
@@ -1226,6 +1240,7 @@ public class Player : MonoBehaviour
             case PlayerState.STATE_SHOOTING_IDLE_TR:
                     FireBullet();
                 currentAnim.SetTrigger("Shooting");
+                SpendMeter(shootCost);
                 if (attackTimer > 0)
                 {
                     attackTimer -= Time.fixedDeltaTime;
@@ -1474,7 +1489,7 @@ public class Player : MonoBehaviour
         else
             isThirdAttackKeyDown = false;
 
-        if (Input.GetButtonDown(topFaceButtonName) && verticalInput == -1)
+        if (Input.GetButtonDown(topFaceButtonName) && verticalInput == -1&&CurrentSpecialEnergyMeter>=launcherCost)
             isLauncherKeyDown = true;
         else
             isLauncherKeyDown = false;

@@ -173,11 +173,11 @@ public class BossHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentEnemyHealth <= maxEnemyHealth / 2 && shouldDropAtHalf == true)
-        {
-            Instantiate(energyDropped, transform.position, transform.rotation);
-            shouldDropAtHalf = false;
-        }
+        //if (currentEnemyHealth <= maxEnemyHealth / 2 && shouldDropAtHalf == true)
+        //{
+        //    Instantiate(energyDropped, transform.position, transform.rotation);
+        //    shouldDropAtHalf = false;
+        //}
         if (currentEnemyHealth <= 0)
         {
             currentEnemyHealth = 0;
@@ -276,9 +276,12 @@ public class BossHealthManager : MonoBehaviour
         if (!IsInvul&&deathCount>0)
         {
             if (!isEnemyInvincible)
+            {
                 currentEnemyHealth -= damageToTake;
-            audioManager.PlaySound(enemyTakeDamageSound);
-            StartCoroutine(DamageCooldownCoroutine());
+                audioManager.PlaySound(enemyTakeDamageSound);
+                Instantiate(energyDropped, transform.position, transform.rotation);
+                StartCoroutine(DamageCooldownCoroutine());
+            }   
         }
     }
     private IEnumerator DamageCooldownCoroutine()

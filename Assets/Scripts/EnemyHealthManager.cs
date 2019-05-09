@@ -134,11 +134,11 @@ public class EnemyHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if (currentEnemyHealth<=maxEnemyHealth/2 && shouldDropAtHalf==true)
-        {
-            Instantiate(energyDropped, transform.position, transform.rotation);
-            shouldDropAtHalf = false;
-        }
+        //if (currentEnemyHealth<=maxEnemyHealth/2 && shouldDropAtHalf==true)
+        //{
+        //    Instantiate(energyDropped, transform.position, transform.rotation);
+        //    shouldDropAtHalf = false;
+        //}
 		if (currentEnemyHealth<=0)
         {
             currentEnemyHealth = 0;
@@ -191,12 +191,19 @@ public class EnemyHealthManager : MonoBehaviour
                 break;
         }
     }
+    private void DropMeter()
+    {
+        Instantiate(energyDropped, transform.position, transform.rotation);
+    }
     public void TakeDamage(int damageToTake, HurtEnemyOnHit.DamageEffect _effect)
     {
         if (!IsInvul)
         {
             if (!isEnemyInvincible)
+            {
                 currentEnemyHealth -= damageToTake;
+                DropMeter();
+            }
             switch (_effect)
             {
                 case HurtEnemyOnHit.DamageEffect.stun:
