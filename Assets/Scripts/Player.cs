@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
     public PlayerState _state;
     public GlobalVars _globalVars;
+    [Space]
+    [Header("Stats")]
     //Health
     private int maxHitPoints = 3;
     private int currentHitPoints_UseProperty;
@@ -24,7 +27,9 @@ public class Player : MonoBehaviour
     private int numberOfDashes_UseProperty = 1;
     private int minimumNumberOfDashes = 1;
 
-    #region Movement
+    [Space]
+    [Header("Movement")]
+
     [SerializeField] private float movementSpeed = 8f;
     [SerializeField] float jumpStrength = 12f;
     [SerializeField] private float fallMultiplier=4.5f;
@@ -35,29 +40,56 @@ public class Player : MonoBehaviour
     private bool shouldMove;
     private Vector2 jumpForce;
 
-    //Dashing
+    [Space]
+    [Header("ChargedJump")]
+
+    private float jumpPressure;
+    [SerializeField] private float minJumpPressure = 6f;
+    [SerializeField] private float maxJumpPressure = 24f;
+    [SerializeField] private float jumpChargeMultiplier = 10f;
+    private bool shouldChargeJump;
+    private bool hasReleasedJump=false;
+    [Space]
+    [Header("Dashing")]
     private float dashTimer;
-    [SerializeField] private float maxDash = 0.2f;
+    [SerializeField] private float maxDashTime = 0.2f;
+    [SerializeField] private float airDashTime = 0.3f;
+    [SerializeField] private float groundDashTime = 0.15f;
     [SerializeField] private float dashSpeed = 24f;
     [SerializeField] private string dashAnimation = "Dash";
-    [SerializeField] private GameObject PlayerAfterImage;
+    [SerializeField] private int dashCounter;
+    [SerializeField] private int maxDashCounter=3;
     private bool isDashKeyDown = false;
+    private bool hasDashed;
+    private bool isDashing;
     private float savedGravity_UseProperty;
 
-    //Detect bounds
+    [SerializeField]
+    private float fadeTime = 0.5f, aIInterval = 0.05f;
+    [SerializeField]
+    private Transform afterImageParent;
+    [SerializeField]
+    private Color trailColor = new Vector4(50, 50, 50, 0.2f), fadeColor;
+
+    [Space]
+    [Header("Detect Bounds")]
+
     [SerializeField] Transform groundDetectPoint;
     [SerializeField] float groundDetectRadius = 0.25f;
     [SerializeField] LayerMask whatCountsAsGround, whatCountsAsWall;
 
-    //Damage and Invul
+    [Space]
+    [Header("Damage and Invul")]
+
     private bool isInvulnerable_UseProperty = false;
     [SerializeField] private float damageCooldownInSeconds = 2f;
     public float knockbackDuration, knockbackForce, maxKnockbackDuration;
     public bool knockbackFromRight;
     [SerializeField] private GameObject deathParticle;
-    #endregion
 
-#region WallJumpVariables
+    [Space]
+    [Header("Wall Jump")]
+
     [SerializeField] private Transform wallCheck;
     [SerializeField] private float wallSpeed = -1.7f;
     [SerializeField] float wallJumpDistance = 8f;
@@ -73,9 +105,11 @@ public class Player : MonoBehaviour
     private Vector2 jumpLeftForce;
     private Vector2 jumpRightForce;
     private bool isAtPeakJumpHeight;
-    #endregion
 
     #region SwordmasterAttackingVariables
+    [Space]
+    [Header("Swordmaster Attaacking Stats")]
+
     private bool isAttackKeyDown;
     private bool isSecondAttackKeyDown;
     private bool isThirdAttackKeyDown;
@@ -108,6 +142,9 @@ public class Player : MonoBehaviour
     private bool downSlashReady;
     #endregion
     #region TricksterShootingVariables
+    [Space]
+    [Header("Trickster Shooting Stats")]
+
     [SerializeField] private Vector2 bulletOffset = new Vector2(0, 0.5f);
     [SerializeField] private Vector2 velocity = new Vector2 (40f,0);
     [SerializeField] private float fireRate = 3.3f;
@@ -115,11 +152,22 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletMuzzle;
     #endregion
-    //Audio
+    [Space]
+    [Header("Audio")]
+
     private AudioManager audioManager;
     [SerializeField] private string deathSound="Death", jumpSound="Jump", takeDamageSound="PlayerTakeDamage", wallStickSound="WallStick", 
         henshinSound="Henshin", recoveryPickupSound="PickupRecovery", healthPickupSound="PickupHitPoint", ammoRecoverySound="PickupBullet", 
         meterRecoverySound = "PickupEnergy", attackingSound="SwordSlash", comboA2Sound="SwordSlam", riderPunchSound="RiderPunch", bulletSound="Shoot";
+
+    [Space]
+    [Header("Particles")]
+    public ParticleSystem chargeJumpParticle;
+    public ParticleSystem chargeShotParticle;
+    public ParticleSystem dashParticle;
+    public ParticleSystem jumpParticle;
+    public ParticleSystem wallJumpParticle;
+    public ParticleSystem slideParticle;
 
     //bools
     private static Player instance;
@@ -131,8 +179,10 @@ public class Player : MonoBehaviour
     private bool isSwordmaster=true;
     bool isFacingRight_UseProperty = true;
     private bool canAimRight_UseProperty = true;
+    private bool coroutineStarted;
 
     [SerializeField] private RespawnPlayer playerRespawn;
+    [SerializeField] private PlayerAfterImage playerAfterImage;
 
     #region ButtonNames
     //public PlayerControllerManager controllerManager;
@@ -343,6 +393,7 @@ public class Player : MonoBehaviour
         currentAnim = GetComponent<Animator>();
         playerRespawn = GetComponent<RespawnPlayer>();
         _globalVars = GameObject.FindGameObjectWithTag("GV").GetComponent<GlobalVars>();
+        playerAfterImage = GetComponent<PlayerAfterImage>();
         //defaults
         RecoveryPoints = maxRecoveryPoints;
         currentSpecialEnergyMeter_UseProperty = maxSpecialEnergyMeter;
@@ -637,9 +688,9 @@ public class Player : MonoBehaviour
             case PlayerState.STATE_GROUND_DASHING_SM:
                 myRB.gravityScale = 0;
                 dashTimer += Time.fixedDeltaTime;
-                if (dashTimer >= maxDash)
+                if (dashTimer >= maxDashTime)
                 {
-                    dashTimer = maxDash;
+                    dashTimer = maxDashTime;
                     _state = PlayerState.STATE_GROUND_DASHING_CD_SM;
                 }
                 if (shouldJump == true || !isOnGround)
@@ -1007,7 +1058,8 @@ public class Player : MonoBehaviour
 
             #region TricksterStates
             case PlayerState.STATE_IDLE_TR:
-                if (shouldJump == true||!isOnGround)
+                ChargedJump();
+                if (hasReleasedJump||!isOnGround)
                 {
                     _state = PlayerState.STATE_JUMPING_TR;
                 }
@@ -1021,39 +1073,46 @@ public class Player : MonoBehaviour
                     _state = PlayerState.STATE_RUNNING_TR;
                 }
 
-                if (CurrentSpecialEnergyMeter >= shootCost && isAttackKeyDown)
+                if (isAttackKeyDown)
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_IDLE_TR;
                 }
 
-                if (isSpecialKeyDown||isDashKeyDown)
+                if (isDashKeyDown&&!hasDashed)
                 {
-                    //Right
-                    if (CanAimRight)
-                    {
-                        myRB.velocity = new Vector2(dashSpeed, 0);
-                        audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
-                    }
-                    //Left    
-                    else if (!CanAimRight)
-                    {
-                        myRB.velocity = new Vector2(-dashSpeed, 0);
-                        audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
-                    }
-                    NumberOfDashes--;
-                    _state = PlayerState.STATE_GROUND_DASHING_TR;
+                    audioManager.PlaySound("Dash");
+                    currentAnim.SetTrigger(dashAnimation);
+                    _state = PlayerState.STATE_DASHING_TR;
                 }
+                //if (isSpecialKeyDown||isDashKeyDown)
+                //{
+                //    //Right
+                //    if (CanAimRight)
+                //    {
+                //        myRB.velocity = new Vector2(dashSpeed, 0);
+                //        audioManager.PlaySound("Dash");
+                //        currentAnim.SetTrigger(dashAnimation);
+                //    }
+                //    //Left    
+                //    else if (!CanAimRight)
+                //    {
+                //        myRB.velocity = new Vector2(-dashSpeed, 0);
+                //        audioManager.PlaySound("Dash");
+                //        currentAnim.SetTrigger(dashAnimation);
+                //    }
+                //    NumberOfDashes--;
+                //    _state = PlayerState.STATE_GROUND_DASHING_TR;
+                //}
                 break;
             case PlayerState.STATE_RUNNING_TR:
                 Move();
+                ChargedJump();
                 if (horizontalInput == 0)
                 {
                     _state = PlayerState.STATE_IDLE_TR;
                 }
-                if (shouldJump == true || !isOnGround)
+                if (hasReleasedJump || !isOnGround)
                 {
                     _state = PlayerState.STATE_JUMPING_TR;
                 }
@@ -1062,35 +1121,42 @@ public class Player : MonoBehaviour
                     Henshin();
                     _state = PlayerState.STATE_RUNNING_SM;
                 }
-                if (CurrentSpecialEnergyMeter >= shootCost && isAttackKeyDown)
+                if (isAttackKeyDown)
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_RUNNING_TR;
                 }
-                if (isSpecialKeyDown || isDashKeyDown)
+                if (isDashKeyDown && !hasDashed)
                 {
-                    //Right
-                    if (CanAimRight)
-                    {
-                        myRB.velocity = new Vector2(dashSpeed, 0);
-                        audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
-                    }
-                    //Left    
-                    else if (!CanAimRight)
-                    {
-                        myRB.velocity = new Vector2(-dashSpeed, 0);
-                        audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
-                    }
-                    NumberOfDashes--;
-                    _state = PlayerState.STATE_GROUND_DASHING_TR;
+                    audioManager.PlaySound("Dash");
+                    currentAnim.SetTrigger(dashAnimation);
+                    _state = PlayerState.STATE_DASHING_TR;
                 }
+                //if (isSpecialKeyDown || isDashKeyDown)
+                //{
+                //    //Right
+                //    if (CanAimRight)
+                //    {
+                //        myRB.velocity = new Vector2(dashSpeed, 0);
+                //        audioManager.PlaySound("Dash");
+                //        currentAnim.SetTrigger(dashAnimation);
+                //    }
+                //    //Left    
+                //    else if (!CanAimRight)
+                //    {
+                //        myRB.velocity = new Vector2(-dashSpeed, 0);
+                //        audioManager.PlaySound("Dash");
+                //        currentAnim.SetTrigger(dashAnimation);
+                //    }
+                //    NumberOfDashes--;
+                //    _state = PlayerState.STATE_GROUND_DASHING_TR;
+                //}
                 break;
             case PlayerState.STATE_JUMPING_TR:
-                Jump();
+                ChargedJump();
                 BetterJump();
                 Move();
+                hasReleasedJump = false;
                 canWallSlide = true;
                 if (isOnGround)
                 {
@@ -1113,29 +1179,16 @@ public class Player : MonoBehaviour
                     Henshin();
                     _state = PlayerState.STATE_JUMPING_SM;
                 }
-                if (CurrentSpecialEnergyMeter >= shootCost && isAttackKeyDown)
+                if (isAttackKeyDown)
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_JUMPING_TR;
                 }
-                if (isSpecialKeyDown || isDashKeyDown)
+                if (isDashKeyDown && !hasDashed)
                 {
-                    //Right
-                    if (CanAimRight)
-                    {
-                        myRB.velocity = new Vector2(dashSpeed, 0);
-                        audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
-                    }
-                    //Left    
-                    else if (!CanAimRight)
-                    {
-                        myRB.velocity = new Vector2(-dashSpeed, 0);
-                        audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
-                    }
-                    NumberOfDashes--;
-                    _state = PlayerState.STATE_AIR_DASHING_TR;
+                    audioManager.PlaySound("Dash");
+                    currentAnim.SetTrigger(dashAnimation);
+                    _state = PlayerState.STATE_DASHING_TR;
                 }
                 break;
             case PlayerState.STATE_WALLSLIDING_TR:
@@ -1162,8 +1215,6 @@ public class Player : MonoBehaviour
                 if (wallJumpTimer > 0)
                 {
                     wallJumpTimer -= Time.fixedDeltaTime;
-
-
                 }
                 else if (wallJumpTimer <= 0)
                 {
@@ -1191,56 +1242,19 @@ public class Player : MonoBehaviour
                     _state = PlayerState.STATE_IDLE_TR;
                 }
                 break;
-            case PlayerState.STATE_GROUND_DASHING_TR:
-
-                myRB.gravityScale = 0;
-                dashTimer += Time.fixedDeltaTime;
-                if (dashTimer >= maxDash)
-                {
-                    dashTimer = maxDash;
-                    _state = PlayerState.STATE_GROUND_DASHING_CD_TR;
-                }
-                if (shouldJump == true && isOnGround)
-                {
-                    _state = PlayerState.STATE_JUMPING_TR;
-                }
-                break;
-            case PlayerState.STATE_GROUND_DASHING_CD_TR:
-                dashTimer -= Time.fixedDeltaTime;
-                myRB.gravityScale = SavedGravity;
-                if (dashTimer <= 0)
-                {
-                    dashTimer = 0;
-                    _state = PlayerState.STATE_IDLE_TR;
-                }
-                if (shouldJump == true || !isOnGround)
-                {
-                    _state = PlayerState.STATE_JUMPING_TR;
-                }
-                break;
-            case PlayerState.STATE_AIR_DASHING_TR:
-                myRB.gravityScale = 0;
-                dashTimer += Time.fixedDeltaTime;
-                if (dashTimer >= maxDash)
-                {
-                    dashTimer = maxDash;
-                    _state = PlayerState.STATE_GROUND_DASHING_CD_TR;
-                }
-                break;
-            case PlayerState.STATE_AIR_DASHING_CD_TR:
-                dashTimer -= Time.fixedDeltaTime;
-                myRB.gravityScale = SavedGravity;
-                if (dashTimer <= 0)
-                {
-                    dashTimer = 0;
-                    _state = PlayerState.STATE_JUMPING_TR;
-                }
+            case PlayerState.STATE_DASHING_TR:
+                ChargedJump();
+                Debug.Log(isDashing);
+                NumberOfDashes--;
+                if (!coroutineStarted)
+                    Dash(horizontalInput, verticalInput);
                 break;
             #region Trickster Shooting States
             case PlayerState.STATE_SHOOTING_IDLE_TR:
                     FireBullet();
                 currentAnim.SetTrigger("Shooting");
-                SpendMeter(shootCost);
+                //SpendMeter(shootCost);
+                ChargedJump();
                 if (attackTimer > 0)
                 {
                     attackTimer -= Time.fixedDeltaTime;
@@ -1250,7 +1264,7 @@ public class Player : MonoBehaviour
                         attackTimer = shootingCooldown;
                         _state = PlayerState.STATE_SHOOTING_RUNNING_TR;
                     }
-                    else if (isAttackKeyDown && shouldJump)
+                    else if (isAttackKeyDown && !isOnGround)
                     {
                         attackTimer = shootingCooldown;
                         _state = PlayerState.STATE_SHOOTING_JUMPING_TR;
@@ -1277,6 +1291,7 @@ public class Player : MonoBehaviour
                 Move();
                 FireBullet();
                 currentAnim.SetTrigger("Shooting");
+                ChargedJump();
                 if (attackTimer > 0)
                 {
                     attackTimer -= Time.fixedDeltaTime;
@@ -1286,7 +1301,7 @@ public class Player : MonoBehaviour
                         attackTimer = shootingCooldown;
                         _state = PlayerState.STATE_SHOOTING_IDLE_TR;
                     }
-                    else if (isAttackKeyDown && shouldJump)
+                    else if (isAttackKeyDown && !isOnGround)
                     {
                         attackTimer = shootingCooldown;
                         _state = PlayerState.STATE_SHOOTING_JUMPING_TR;
@@ -1311,9 +1326,10 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_SHOOTING_JUMPING_TR:
                 Move();
-                Jump();
+                ChargedJump();
                 FireBullet();
                 currentAnim.SetTrigger("Shooting");
+                hasReleasedJump = true;
                 if (attackTimer > 0)
                 {
                     attackTimer -= Time.fixedDeltaTime;
@@ -1323,7 +1339,7 @@ public class Player : MonoBehaviour
                         attackTimer = shootingCooldown;
                         _state = PlayerState.STATE_SHOOTING_IDLE_TR;
                     }
-                    else if (isAttackKeyDown && shouldJump)
+                    else if (isAttackKeyDown && !isOnGround)
                     {
                         attackTimer = shootingCooldown;
                         _state = PlayerState.STATE_SHOOTING_JUMPING_TR;
@@ -1456,13 +1472,15 @@ public class Player : MonoBehaviour
             shouldWallJump = true;
         }
 
+        shouldChargeJump = Input.GetButton(bottomFaceButtonName);
     }
     private void GetDashInput()
     {
-        if (Input.GetButtonDown(rightFaceButtonName)||Input.GetButtonDown(leftTriggerName) && NumberOfDashes > 0)
-            isDashKeyDown = true;
-        else
-            isDashKeyDown = false;
+        isDashKeyDown = (Input.GetButtonDown(rightFaceButtonName));
+        //if (Input.GetButtonDown(rightFaceButtonName)||Input.GetButtonDown(leftTriggerName) && NumberOfDashes > 0)
+        //    isDashKeyDown = true;
+        //else
+        //    isDashKeyDown = false;
     }
     private void GetAttackInput()
     {
@@ -1662,6 +1680,43 @@ public class Player : MonoBehaviour
             shouldJump = false;
         }
     }
+    private void ChargedJump()
+    {
+        if (shouldChargeJump)
+        {
+            if (jumpPressure < maxJumpPressure)
+            {
+                jumpPressure += Time.fixedDeltaTime * jumpChargeMultiplier;
+                chargeJumpParticle.Play();
+            }
+            else
+            {
+                jumpPressure = maxJumpPressure;
+                chargeShotParticle.Play();
+                chargeJumpParticle.Stop();
+            }
+        }
+        else
+        {
+            if (jumpPressure>0f&&isOnGround)
+            {
+                ShowAfterImage();
+                currentAnim.SetBool("Ground", false);
+                currentAnim.SetFloat("vSpeed", myRB.velocity.y);
+                hasReleasedJump = true;
+                jumpPressure = jumpPressure + minJumpPressure;
+                myRB.AddForce(new Vector2(0f, jumpPressure), ForceMode2D.Impulse);
+                jumpPressure = 0f;
+                audioManager.PlaySound(jumpSound);
+                jumpParticle.Play();
+                jumpParticle.Stop();
+                
+                isOnGround = false;
+                shouldJump = false;
+            }
+            chargeShotParticle.Stop();
+        }
+    }
     private void BetterJump()
     {
         if (myRB.velocity.y < 0)
@@ -1706,14 +1761,23 @@ public class Player : MonoBehaviour
         currentAnim.SetBool("Ground", isOnGround);
         if (isOnGround)
         {
-            currentAnim.SetBool("Ground", true);
-            NumberOfDashes = minimumNumberOfDashes;
+            GroundTouch();
         }
         if (myRB.velocity.y < 0)
         {
             currentAnim.SetBool("Ground", false);
         }
     }
+
+    private void GroundTouch()
+    {
+        currentAnim.SetBool("Ground", true);
+        hasDashed = false;
+        isDashing = false;
+        NumberOfDashes = minimumNumberOfDashes;
+        jumpParticle.Play();
+    }
+
     private void UpdateIsOnWall()
     {
         isOnWall = Physics2D.Linecast(transform.position, wallCheck.position, whatCountsAsWall);
@@ -1724,6 +1788,47 @@ public class Player : MonoBehaviour
         else
             isWallSliding = false;
         currentAnim.SetBool("WallSliding", isWallSliding);
+    }
+
+    private void Dash(float x, float y)
+    {
+        hasDashed = true;
+        myRB.velocity = Vector2.zero;
+        Vector2 dir = new Vector2(x, y);
+        myRB.velocity += dir.normalized * dashSpeed;
+        StartCoroutine(DashWait());
+    }
+
+    IEnumerator DashWait()
+    {
+        coroutineStarted = true;
+        ShowAfterImage();
+        StartCoroutine(GroundDash());
+        DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
+
+        dashParticle.Play();
+        myRB.gravityScale = 0;
+        isDashing = true;
+
+        yield return new WaitForSeconds(airDashTime);
+
+        dashParticle.Stop();
+        myRB.gravityScale = defaultGravityScale;
+        BetterJump();
+        isDashing = false;
+        coroutineStarted = false;
+        _state = PlayerState.STATE_JUMPING_TR;
+    }
+
+    IEnumerator GroundDash()
+    {
+        yield return new WaitForSeconds(groundDashTime);
+        if (isOnGround)
+            hasDashed = false;
+    }
+    void RigidbodyDrag(float x)
+    {
+        myRB.drag = x;
     }
     #endregion
     private void Henshin()
@@ -1744,7 +1849,28 @@ public class Player : MonoBehaviour
             StartCoroutine(WaitWhileRespawningCoroutine());
         }
     }
+    #region PolishRegion
+    public void ShowAfterImage()
+    {
+        Sequence s = DOTween.Sequence();
 
+        for (int i = 0; i < afterImageParent.childCount; i++)
+        {
+            Transform currentGhost = afterImageParent.GetChild(i);
+            s.AppendCallback(() => currentGhost.position = Player.Instance.transform.position);
+            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = CurrentSpriteRenderer.flipX);
+            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().sprite = CurrentSpriteRenderer.sprite);
+            s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(trailColor, 0));
+            s.AppendCallback(() => FadeSprite(currentGhost));
+            s.AppendInterval(aIInterval);
+        }
+    }
+    public void FadeSprite(Transform current)
+    {
+        current.GetComponent<SpriteRenderer>().material.DOKill();
+        current.GetComponent<SpriteRenderer>().material.DOColor(fadeColor, fadeTime);
+    }
+    #endregion
     #region Damage
     public void TakeDamage(int damageToGive)
     {
@@ -1903,6 +2029,7 @@ public class Player : MonoBehaviour
         STATE_WALLSLIDING_TR,
         STATE_WALLJUMPING_TR,
         STATE_DAMAGED_TR,
+        STATE_DASHING_TR,
         STATE_GROUND_DASHING_TR,
         STATE_GROUND_DASHING_CD_TR,
         STATE_AIR_DASHING_TR,
