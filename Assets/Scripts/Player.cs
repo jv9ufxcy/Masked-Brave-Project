@@ -43,12 +43,15 @@ public class Player : MonoBehaviour
     [Space]
     [Header("ChargedJump")]
 
+    [SerializeField]
     private float jumpPressure;
     [SerializeField] private float minJumpPressure = 6f;
     [SerializeField] private float maxJumpPressure = 24f;
     [SerializeField] private float jumpChargeMultiplier = 10f;
     private bool shouldChargeJump;
     private bool hasReleasedJump=false;
+    private bool hasJumpChargingStarted = false;
+    private bool hasReachedMaxJump = false;
     [Space]
     [Header("Dashing")]
     private float dashTimer;
@@ -163,9 +166,9 @@ public class Player : MonoBehaviour
     [Space]
     [Header("Particles")]
     public ParticleSystem chargeJumpParticle;
-    public ParticleSystem chargeShotParticle;
+    public ParticleSystem chargeJumpMaxColor;
     public ParticleSystem dashParticle;
-    public ParticleSystem jumpParticle;
+    public ParticleSystem landingParticles;
     public ParticleSystem wallJumpParticle;
     public ParticleSystem slideParticle;
 
@@ -1244,7 +1247,6 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_DASHING_TR:
                 ChargedJump();
-                Debug.Log(isDashing);
                 NumberOfDashes--;
                 if (!coroutineStarted)
                     Dash(horizontalInput, verticalInput);
@@ -1684,17 +1686,18 @@ public class Player : MonoBehaviour
     {
         if (shouldChargeJump)
         {
+            CheckParticles();
             if (jumpPressure < maxJumpPressure)
             {
                 jumpPressure += Time.fixedDeltaTime * jumpChargeMultiplier;
-                chargeJumpParticle.Play();
+                hasJumpChargingStarted = true;
             }
             else
             {
+                hasJumpChargingStarted = false;
                 jumpPressure = maxJumpPressure;
-                chargeShotParticle.Play();
-                chargeJumpParticle.Stop();
             }
+            
         }
         else
         {
@@ -1707,16 +1710,35 @@ public class Player : MonoBehaviour
                 jumpPressure = jumpPressure + minJumpPressure;
                 myRB.AddForce(new Vector2(0f, jumpPressure), ForceMode2D.Impulse);
                 jumpPressure = 0f;
-                audioManager.PlaySound(jumpSound);
-                jumpParticle.Play();
-                jumpParticle.Stop();
-                
+                audioManager.PlaySound(jumpSound);                
                 isOnGround = false;
                 shouldJump = false;
+                hasReachedMaxJump = false;
+                chargeJumpParticle.Stop();
+                chargeJumpMaxColor.Stop();
             }
-            chargeShotParticle.Stop();
         }
     }
+
+    private void CheckParticles()
+    {
+        if (!hasJumpChargingStarted)
+        {
+            chargeJumpParticle.Play();
+            hasJumpChargingStarted = true;
+        }
+
+        if (jumpPressure >= maxJumpPressure)
+        {
+            if (!hasReachedMaxJump)
+            {
+                hasReachedMaxJump = true;
+                chargeJumpMaxColor.Play();
+            }
+            chargeJumpParticle.Stop();
+        }
+    }
+
     private void BetterJump()
     {
         if (myRB.velocity.y < 0)
@@ -1775,7 +1797,7 @@ public class Player : MonoBehaviour
         hasDashed = false;
         isDashing = false;
         NumberOfDashes = minimumNumberOfDashes;
-        jumpParticle.Play();
+        landingParticles.Play();
     }
 
     private void UpdateIsOnWall()
