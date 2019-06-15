@@ -1785,12 +1785,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 322896086}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1178560459 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1729552007, guid: 0103869ff496891439ba425c4354be31,
-    type: 3}
-  m_PrefabInstance: {fileID: 2023415367}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1194342126
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2986,7 +2980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871327149313626, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.161184
+      value: 6.334705
       objectReference: {fileID: 0}
     - target: {fileID: 114771058291156574, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
         type: 3}
@@ -3035,7 +3029,7 @@ PrefabInstance:
     - target: {fileID: 114736783713232642, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
         type: 3}
       propertyPath: m_UpscaleRT
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
@@ -3171,53 +3165,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1415847496}
     - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: trailColor.r
-      value: 0.8000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: trailColor.g
-      value: 0.1764706
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: trailColor.b
-      value: 0.3529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: fadeColor.r
-      value: 0.8000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: fadeColor.g
-      value: 0.1764706
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: fadeColor.b
-      value: 0.3529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: fadeColor.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: trailColor.a
-      value: 0.3137255
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: chargeJumpMaxColor
+      propertyPath: criticalBusterPrefab
       value: 
-      objectReference: {fileID: 1178560459}
-    - target: {fileID: 80094580, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729552005, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729552004, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: m_Name
-      value: MaxJumpChargingPS
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1946779624007576, guid: ee0b10108ca7053499f52939ba8cde73,
+        type: 3}
+    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: busterPrefab
+      value: 
+      objectReference: {fileID: 1946779624007576, guid: 30c79b6ad12284d4faa7cc8d667ccdde,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0103869ff496891439ba425c4354be31, type: 3}
 --- !u!4 &2073880673 stripped

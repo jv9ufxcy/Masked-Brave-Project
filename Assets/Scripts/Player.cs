@@ -37,11 +37,12 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isOnGround;
     private float defaultGravityScale;
     private bool shouldJump;
+    private bool hasLanded=false;
     private bool shouldMove;
     private Vector2 jumpForce;
 
     [Space]
-    [Header("ChargedJump")]
+    [Header("Charged Jump")]
 
     [SerializeField]
     private float jumpPressure;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour
     private bool hasReleasedJump=false;
     private bool hasJumpChargingStarted = false;
     private bool hasReachedMaxJump = false;
+    
     [Space]
     [Header("Dashing")]
     private float dashTimer;
@@ -152,8 +154,21 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 velocity = new Vector2 (40f,0);
     [SerializeField] private float fireRate = 3.3f;
     private float timeToNextFire = 0f;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject bulletPrefab, busterPrefab, criticalBusterPrefab;
     [SerializeField] private Transform bulletMuzzle;
+
+    [Space]
+    [Header("Charged Buster")]
+
+    [SerializeField]
+    private float shotPressure;
+    [SerializeField] private float minShotPressure = 6f;
+    [SerializeField] private float maxShotPressure = 24f;
+    [SerializeField] private float shotChargeMultiplier = 10f;
+    private bool shouldChargeBuster;
+    private bool hasReleasedShot = false;
+    private bool hasShotChargingStarted = false;
+    private bool hasReachedMaxShotCharge = false;
     #endregion
     [Space]
     [Header("Audio")]
@@ -196,7 +211,6 @@ public class Player : MonoBehaviour
     public string altHorizontalAxisName;
     public string verticalAxisName;
     public string altVerticalAxisName;
-    
 
     public string topFaceButtonName { get; private set; }
     public string bottomFaceButtonName { get; private set; }
@@ -1408,28 +1422,88 @@ public class Player : MonoBehaviour
     }
     void FireBullet()
     {
-        if (Time.time > timeToNextFire)
+        if (CurrentNumberOfBullets>=1)
         {
-            timeToNextFire = Time.time + 1 / fireRate;
-            
-            if (CanAimRight)
-                ShootFromRightMuzzle();
-            else
-                ShootFromLeftMuzzle();
+            BusterShooting();
         }
-    }
+        else
+        {
+            if (Time.time > timeToNextFire)
+            {
+                timeToNextFire = Time.time + 1 / fireRate;
 
-    private void ShootFromRightMuzzle()
+                if (CanAimRight)
+                    ShootBulletRight();
+                else
+                    ShootBulletLeft();
+            }
+        }
+        
+    }
+    private void ShootBulletRight()
     {
         GameObject newbullet = Instantiate(bulletPrefab, bulletMuzzle.position, Quaternion.identity);
         newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
         audioManager.PlaySound(bulletSound);
     }
-    private void ShootFromLeftMuzzle()
+    private void ShootBulletLeft()
     {
         GameObject newbullet = Instantiate(bulletPrefab, bulletMuzzle.position, Quaternion.Euler(new Vector3(0, 0, -180)));
         newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
         audioManager.PlaySound(bulletSound);
+    }
+    private void BusterShooting()
+    {
+        if (Time.time > timeToNextFire)
+        {
+            timeToNextFire = Time.time + 1 / fireRate;
+
+            if (CanAimRight)
+                ShootBusterRight();
+            else
+                ShootBusterLeft();
+        }
+    }
+    private void ShootBusterRight()
+    {
+        GameObject newbullet = Instantiate(busterPrefab, bulletMuzzle.position, Quaternion.identity);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
+        audioManager.PlaySound(bulletSound);
+    }
+    private void ShootBusterLeft()
+    {
+        GameObject newbullet = Instantiate(busterPrefab, bulletMuzzle.position, Quaternion.Euler(new Vector3(0, 0, -180)));
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
+        audioManager.PlaySound(bulletSound);
+    }
+    private void CriticalBusterShooting()
+    {
+        if (Time.time > timeToNextFire)
+        {
+            timeToNextFire = Time.time + 1 / fireRate;
+
+            if (CanAimRight)
+                ShootCriticalBusterRight();
+            else
+                ShootCriticalBusterLeft();
+        }
+    }
+    private void ShootCriticalBusterRight()
+    {
+        GameObject newbullet = Instantiate(criticalBusterPrefab, bulletMuzzle.position, Quaternion.identity);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
+        audioManager.PlaySound(bulletSound);
+    }
+    private void ShootCriticalBusterLeft()
+    {
+        GameObject newbullet = Instantiate(criticalBusterPrefab, bulletMuzzle.position, Quaternion.Euler(new Vector3(0, 0, -180)));
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
+        audioManager.PlaySound(bulletSound);
+    }
+
+    private void AddBustersToCounter()
+    {
+        AddAmmo(1);
     }
 
     private void UpdateIsTargetReady()
@@ -1475,6 +1549,8 @@ public class Player : MonoBehaviour
         }
 
         shouldChargeJump = Input.GetButton(bottomFaceButtonName);
+        shouldChargeBuster = Input.GetButton(leftFaceButtonName);
+        shouldChargeBuster = Input.GetButton(rightBumperName);
     }
     private void GetDashInput()
     {
@@ -1717,9 +1793,57 @@ public class Player : MonoBehaviour
                 chargeJumpParticle.Stop();
                 chargeJumpMaxColor.Stop();
             }
+            else if (!shouldChargeJump)
+            {
+                jumpPressure = 0;
+            }
         }
     }
 
+    private void ChargedShot()
+    {
+        if (shouldChargeBuster)
+        {
+            CheckParticles();
+            if (shotPressure < maxShotPressure)
+            {
+                shotPressure += Time.fixedDeltaTime * shotChargeMultiplier;
+                hasJumpChargingStarted = true;
+            }
+            else
+            {
+                hasShotChargingStarted = false;
+                shotPressure = maxShotPressure;
+                AddBustersToCounter();
+            }
+
+        }
+        else
+        {
+            if (shotPressure > 0f)
+            {
+                hasReleasedShot = true;
+                shotPressure = shotPressure + minShotPressure;
+                shotPressure = 0f;
+                audioManager.PlaySound(jumpSound);
+                hasReachedMaxShotCharge = false;
+                chargeJumpParticle.Stop();
+                chargeJumpMaxColor.Stop();
+            }
+            else if (!shouldChargeBuster)
+            {
+                if (shotPressure>minShotPressure)
+                {
+                    BusterShooting();
+                }
+                else if (shotPressure>=maxShotPressure)
+                {
+                    CriticalBusterShooting();
+                }
+                shotPressure = 0;
+            }
+        }
+    }
     private void CheckParticles()
     {
         if (!hasJumpChargingStarted)
@@ -1735,7 +1859,7 @@ public class Player : MonoBehaviour
                 hasReachedMaxJump = true;
                 chargeJumpMaxColor.Play();
             }
-            chargeJumpParticle.Stop();
+            
         }
     }
 
@@ -1788,6 +1912,7 @@ public class Player : MonoBehaviour
         if (myRB.velocity.y < 0)
         {
             currentAnim.SetBool("Ground", false);
+            hasLanded = false;
         }
     }
 
@@ -1797,7 +1922,11 @@ public class Player : MonoBehaviour
         hasDashed = false;
         isDashing = false;
         NumberOfDashes = minimumNumberOfDashes;
-        landingParticles.Play();
+        if (!hasLanded)
+        {
+            hasLanded = true;
+            landingParticles.Play();
+        }
     }
 
     private void UpdateIsOnWall()
@@ -1964,31 +2093,31 @@ public class Player : MonoBehaviour
             currentRecoveryPoints_UseProperty = maxRecoveryPoints;
     }
 
-    //public void AddAmmo(int ammoToRestore)
-    //{
-    //    audioManager.PlaySound(ammoRecoverySound);
-    //    currentNumberOfBullets_UseProperty += ammoToRestore;
-    //    if (currentNumberOfBullets_UseProperty < 0)
-    //    {
-    //        currentNumberOfBullets_UseProperty = 0;
-    //    }
-    //    if (currentNumberOfBullets_UseProperty > maxNumberOfBullets)
-    //    {
-    //        currentNumberOfBullets_UseProperty = maxNumberOfBullets;
-    //    }
-    //}
-    //public void SpendAmmo(int ammoToSpend)
-    //{
-    //    currentNumberOfBullets_UseProperty -= ammoToSpend;
-    //    if (currentNumberOfBullets_UseProperty < 0)
-    //    {
-    //        currentNumberOfBullets_UseProperty = 0;
-    //    }
-    //    if (currentNumberOfBullets_UseProperty > maxNumberOfBullets)
-    //    {
-    //        currentNumberOfBullets_UseProperty = maxNumberOfBullets;
-    //    }
-    //}
+    public void AddAmmo(int ammoToRestore)
+    {
+        audioManager.PlaySound(ammoRecoverySound);
+        currentNumberOfBullets_UseProperty += ammoToRestore;
+        if (currentNumberOfBullets_UseProperty < 0)
+        {
+            currentNumberOfBullets_UseProperty = 0;
+        }
+        if (currentNumberOfBullets_UseProperty > maxNumberOfBullets)
+        {
+            currentNumberOfBullets_UseProperty = maxNumberOfBullets;
+        }
+    }
+    public void SpendAmmo(int ammoToSpend)
+    {
+        currentNumberOfBullets_UseProperty -= ammoToSpend;
+        if (currentNumberOfBullets_UseProperty < 0)
+        {
+            currentNumberOfBullets_UseProperty = 0;
+        }
+        if (currentNumberOfBullets_UseProperty > maxNumberOfBullets)
+        {
+            currentNumberOfBullets_UseProperty = maxNumberOfBullets;
+        }
+    }
 
     public void AddMeter(int meterToRestore)
     {
