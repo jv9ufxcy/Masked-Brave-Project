@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class HurtEnemyOnHit : MonoBehaviour
 {
     [SerializeField] private int damageToGive = 1;
     public DamageEffect _effect;
     public enum DamageEffect { stun, knockback, launch}
+
+    [SerializeField] private bool shouldScreenshakeOnHit = false;
 
     private EnemyHealthManager enemyHP;
     private EnemyHealthManager bossHP;
@@ -24,6 +27,9 @@ public class HurtEnemyOnHit : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D enemyCollision)
     {
+        if (shouldScreenshakeOnHit)
+            Screenshake();
+
         enemyHP = enemyCollision.gameObject.GetComponentInParent<EnemyHealthManager>();
         if (enemyCollision.CompareTag("Enemy"))
         {
@@ -35,5 +41,8 @@ public class HurtEnemyOnHit : MonoBehaviour
                 enemyHP.enemyKnockFromRight = false;
         }
     }
-    
+    private static void Screenshake()
+    {
+        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+    }
 }

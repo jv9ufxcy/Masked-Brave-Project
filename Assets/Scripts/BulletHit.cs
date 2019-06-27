@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class BulletHit : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class BulletHit : MonoBehaviour
 
     private AudioManager audioManager;
     [SerializeField] private string bulletCollisionSound;
+    [SerializeField] private bool shouldScreenshakeOnHit=false;
 
     // Use this for initialization
     void Start()
@@ -38,15 +40,19 @@ public class BulletHit : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-            RemoveForce();
-            //TODO: figure out the proper way to instantiate so that shooting on top of an enemy doesn't launch the enemy into the player.
-            Instantiate(bulletHitEffect, transform.position, transform.rotation);
-            //Debug.Log("Bullet has hit "+ other.name);
-            Destroy(gameObject);
+        if (shouldScreenshakeOnHit)
+            Screenshake();
+        RemoveForce();
+        Instantiate(bulletHitEffect, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
     private void RemoveForce()
     {
         //stops the bullet on collision
         bulletRB.velocity = new Vector2(0, 0);
+    }
+    private static void Screenshake()
+    {
+        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
     }
 }

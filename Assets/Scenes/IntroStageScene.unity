@@ -187,6 +187,163 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 305427800}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &136402633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136402634}
+  - component: {fileID: 136402636}
+  - component: {fileID: 136402635}
+  m_Layer: 5
+  m_Name: Bullets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &136402634
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136402633}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2066152961}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 64, y: -24}
+  m_SizeDelta: {x: 128, y: 48}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &136402635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136402633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 2d9153ee767125346918e246095fc658, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &136402636
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136402633}
+  m_CullTransparentMesh: 0
+--- !u!1 &149498807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1767442415577866, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
+    type: 3}
+  m_PrefabInstance: {fileID: 1907266002}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &149498813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149498807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: -1
+    m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    m_AmplitudeGain: 2
+    m_FrequencyGain: 2
+    m_RepeatMode: 0
+    m_Randomize: 0
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0.1
+      m_SustainTime: 0
+      m_DecayTime: 0.1
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 30
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 25
 --- !u!1001 &178921179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -314,9 +471,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
         type: 3}
+      propertyPath: busterSprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
       propertyPath: playerStats
       value: 
       objectReference: {fileID: 1974700440}
+    - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: busterUI
+      value: 
+      objectReference: {fileID: 136402635}
+    - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: busterSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 2d9153ee767125346918e246095fc658,
+        type: 3}
+    - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: busterSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300002, guid: 2d9153ee767125346918e246095fc658,
+        type: 3}
+    - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: busterSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300004, guid: 2d9153ee767125346918e246095fc658,
+        type: 3}
+    - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: busterSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300006, guid: 2d9153ee767125346918e246095fc658,
+        type: 3}
     - target: {fileID: 224049736987633598, guid: 025e0eaf4fd120a47afd5256730fbbe0,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1518,6 +1709,56 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.size
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[18].name
+      value: Buster
+      objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[18].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: acb9733fe0bd5a14da5541e8d8e8a85f, type: 3}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[18].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[18].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[19].name
+      value: CriticalBuster
+      objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[19].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a3035cd762d844c4fae49dc549983cb6, type: 3}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[19].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[19].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[7].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7116cf9da81747b43a5d4be22a146b15, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4092e24f632fcfe46a51ac39052b012f, type: 3}
 --- !u!1 &943375463 stripped
@@ -2980,7 +3221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871327149313626, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.334705
+      value: 6.325893
       objectReference: {fileID: 0}
     - target: {fileID: 114771058291156574, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
         type: 3}
@@ -3029,6 +3270,11 @@ PrefabInstance:
     - target: {fileID: 114736783713232642, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
         type: 3}
       propertyPath: m_UpscaleRT
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114736783713232642, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3164,18 +3410,309 @@ PrefabInstance:
       propertyPath: afterImageParent
       value: 
       objectReference: {fileID: 1415847496}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: criticalBusterPrefab
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_AmplitudeGain
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_FrequencyGain
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_Randomize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_ImpactRadius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_DissipationDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_UseImpactDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ScaleImpactWithMass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_RawSignal
       value: 
-      objectReference: {fileID: 1946779624007576, guid: ee0b10108ca7053499f52939ba8cde73,
-        type: 3}
-    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: busterPrefab
+      objectReference: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4,
+        type: 2}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076262319, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_AmplitudeGain
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_FrequencyGain
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_Randomize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_ImpactRadius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_DissipationDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_UseImpactDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_RawSignal
       value: 
-      objectReference: {fileID: 1946779624007576, guid: 30c79b6ad12284d4faa7cc8d667ccdde,
-        type: 3}
+      objectReference: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4,
+        type: 2}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137902771, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_RawSignal
+      value: 
+      objectReference: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4,
+        type: 2}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_AmplitudeGain
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_FrequencyGain
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_ImpactRadius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_DissipationDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_UseImpactDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_Randomize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_AttackShape.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504285712, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_DecayShape.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0103869ff496891439ba425c4354be31, type: 3}
+--- !u!224 &2066152961 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224687501969715320, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+    type: 3}
+  m_PrefabInstance: {fileID: 178921179}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2073880673 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7320103319243352444, guid: a3d116abf7b995e4688f89f3a7621e9d,

@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    //Health
+    [Header("Health")]
     [SerializeField] private Image healthUI;
     [SerializeField] private Sprite[] healthSprites;
-
-    //meter
+    [Header("Busters")]
+    [SerializeField] private Image busterUI;
+    [SerializeField] private Sprite[] busterSprites;
+    [Header("Energy")]
     [SerializeField] private Slider energySlider;
 
     [SerializeField] private Player playerStats;
@@ -26,6 +28,7 @@ public class HealthBar : MonoBehaviour
     private void UpdateHealthPips()
     {
         healthUI.sprite = healthSprites[playerStats.RecoveryPoints];
+        busterUI.sprite = busterSprites[playerStats.CurrentNumberOfBullets];
         energySlider.value = playerStats.CurrentEnergyMeterAsPercentage();
 
         //slider value must be between 0 and 1

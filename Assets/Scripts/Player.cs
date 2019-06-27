@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -116,6 +117,7 @@ public class Player : MonoBehaviour
     [Header("Swordmaster Attaacking Stats")]
 
     private bool isAttackKeyDown;
+    private bool isAttackKeyUp;
     private bool isSecondAttackKeyDown;
     private bool isThirdAttackKeyDown;
     private bool isSpecialKeyDown;
@@ -151,7 +153,7 @@ public class Player : MonoBehaviour
     [Header("Trickster Shooting Stats")]
 
     [SerializeField] private Vector2 bulletOffset = new Vector2(0, 0.5f);
-    [SerializeField] private Vector2 velocity = new Vector2 (40f,0);
+    [SerializeField] private Vector2 bulletVelocity = new Vector2 (20f,0), busterVelocity = new Vector2 (30f,0), critBusterVelocity = new Vector2(35f, 0);
     [SerializeField] private float fireRate = 3.3f;
     private float timeToNextFire = 0f;
     [SerializeField] private GameObject bulletPrefab, busterPrefab, criticalBusterPrefab;
@@ -169,6 +171,9 @@ public class Player : MonoBehaviour
     private bool hasReleasedShot = false;
     private bool hasShotChargingStarted = false;
     private bool hasReachedMaxShotCharge = false;
+    private bool firstCharge, secondCharge;
+    private Color c;
+
     #endregion
     [Space]
     [Header("Audio")]
@@ -176,7 +181,8 @@ public class Player : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] private string deathSound="Death", jumpSound="Jump", takeDamageSound="PlayerTakeDamage", wallStickSound="WallStick", 
         henshinSound="Henshin", recoveryPickupSound="PickupRecovery", healthPickupSound="PickupHitPoint", ammoRecoverySound="PickupBullet", 
-        meterRecoverySound = "PickupEnergy", attackingSound="SwordSlash", comboA2Sound="SwordSlam", riderPunchSound="RiderPunch", bulletSound="Shoot";
+        meterRecoverySound = "PickupEnergy", attackingSound="SwordSlash", comboA2Sound="SwordSlam", riderPunchSound="RiderPunch", 
+        bulletSound="Shoot", busterSound = "Buster", critBusterSound = "CriticalBuster";
 
     [Space]
     [Header("Particles")]
@@ -186,6 +192,15 @@ public class Player : MonoBehaviour
     public ParticleSystem landingParticles;
     public ParticleSystem wallJumpParticle;
     public ParticleSystem slideParticle;
+    [Header("ParticleGroups")]
+    public Transform gunChargeParticles;
+    public Transform jumpChargeParticles;
+    public Transform flashParticles;
+    public Color[] turboColors;
+    public List<ParticleSystem> primaryGunParticles = new List<ParticleSystem>();
+    public List<ParticleSystem> primaryJumpParticles = new List<ParticleSystem>();
+    public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
+
 
     //bools
     private static Player instance;
@@ -211,6 +226,7 @@ public class Player : MonoBehaviour
     public string altHorizontalAxisName;
     public string verticalAxisName;
     public string altVerticalAxisName;
+    private bool bulletCoroutineHasStarted;
 
     public string topFaceButtonName { get; private set; }
     public string bottomFaceButtonName { get; private set; }
@@ -421,6 +437,31 @@ public class Player : MonoBehaviour
         jumpForceBraveStrike = new Vector2(jumpDistBraveStrike, jumpStrengthBraveStrike);
         defaultGravityScale = myRB.gravityScale;
         currentAnim.SetBool("IsSwordmaster", isSwordmaster);
+
+        for (int i = 0; i < gunChargeParticles.GetChild(0).childCount; i++)
+        {
+            primaryGunParticles.Add(gunChargeParticles.GetChild(0).GetChild(i).GetComponent<ParticleSystem>());
+        }
+
+        //for (int i = 0; i < gunChargeParticles.GetChild(1).childCount; i++)
+        //{
+        //    primaryGunParticles.Add(gunChargeParticles.GetChild(1).GetChild(i).GetComponent<ParticleSystem>());
+        //}
+
+        foreach (ParticleSystem p in flashParticles.GetComponentsInChildren<ParticleSystem>())
+        {
+            secondaryParticles.Add(p);
+        }
+
+        for (int i = 0; i < jumpChargeParticles.GetChild(0).childCount; i++)
+        {
+            primaryJumpParticles.Add(jumpChargeParticles.GetChild(0).GetChild(i).GetComponent<ParticleSystem>());
+        }
+
+        //for (int i = 0; i < jumpChargeParticles.GetChild(1).childCount; i++)
+        //{
+        //    primaryJumpParticles.Add(jumpChargeParticles.GetChild(1).GetChild(i).GetComponent<ParticleSystem>());
+        //}
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -1075,7 +1116,7 @@ public class Player : MonoBehaviour
 
             #region TricksterStates
             case PlayerState.STATE_IDLE_TR:
-                ChargedJump();
+                HandleCharging();
                 if (hasReleasedJump||!isOnGround)
                 {
                     _state = PlayerState.STATE_JUMPING_TR;
@@ -1102,29 +1143,10 @@ public class Player : MonoBehaviour
                     currentAnim.SetTrigger(dashAnimation);
                     _state = PlayerState.STATE_DASHING_TR;
                 }
-                //if (isSpecialKeyDown||isDashKeyDown)
-                //{
-                //    //Right
-                //    if (CanAimRight)
-                //    {
-                //        myRB.velocity = new Vector2(dashSpeed, 0);
-                //        audioManager.PlaySound("Dash");
-                //        currentAnim.SetTrigger(dashAnimation);
-                //    }
-                //    //Left    
-                //    else if (!CanAimRight)
-                //    {
-                //        myRB.velocity = new Vector2(-dashSpeed, 0);
-                //        audioManager.PlaySound("Dash");
-                //        currentAnim.SetTrigger(dashAnimation);
-                //    }
-                //    NumberOfDashes--;
-                //    _state = PlayerState.STATE_GROUND_DASHING_TR;
-                //}
                 break;
             case PlayerState.STATE_RUNNING_TR:
                 Move();
-                ChargedJump();
+                HandleCharging();
                 if (horizontalInput == 0)
                 {
                     _state = PlayerState.STATE_IDLE_TR;
@@ -1149,28 +1171,9 @@ public class Player : MonoBehaviour
                     currentAnim.SetTrigger(dashAnimation);
                     _state = PlayerState.STATE_DASHING_TR;
                 }
-                //if (isSpecialKeyDown || isDashKeyDown)
-                //{
-                //    //Right
-                //    if (CanAimRight)
-                //    {
-                //        myRB.velocity = new Vector2(dashSpeed, 0);
-                //        audioManager.PlaySound("Dash");
-                //        currentAnim.SetTrigger(dashAnimation);
-                //    }
-                //    //Left    
-                //    else if (!CanAimRight)
-                //    {
-                //        myRB.velocity = new Vector2(-dashSpeed, 0);
-                //        audioManager.PlaySound("Dash");
-                //        currentAnim.SetTrigger(dashAnimation);
-                //    }
-                //    NumberOfDashes--;
-                //    _state = PlayerState.STATE_GROUND_DASHING_TR;
-                //}
                 break;
             case PlayerState.STATE_JUMPING_TR:
-                ChargedJump();
+                HandleCharging();
                 BetterJump();
                 Move();
                 hasReleasedJump = false;
@@ -1260,7 +1263,7 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.STATE_DASHING_TR:
-                ChargedJump();
+                HandleCharging();
                 NumberOfDashes--;
                 if (!coroutineStarted)
                     Dash(horizontalInput, verticalInput);
@@ -1268,9 +1271,7 @@ public class Player : MonoBehaviour
             #region Trickster Shooting States
             case PlayerState.STATE_SHOOTING_IDLE_TR:
                     FireBullet();
-                currentAnim.SetTrigger("Shooting");
-                //SpendMeter(shootCost);
-                ChargedJump();
+                HandleCharging();
                 if (attackTimer > 0)
                 {
                     attackTimer -= Time.fixedDeltaTime;
@@ -1306,8 +1307,7 @@ public class Player : MonoBehaviour
             case PlayerState.STATE_SHOOTING_RUNNING_TR:
                 Move();
                 FireBullet();
-                currentAnim.SetTrigger("Shooting");
-                ChargedJump();
+                HandleCharging();
                 if (attackTimer > 0)
                 {
                     attackTimer -= Time.fixedDeltaTime;
@@ -1342,9 +1342,8 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_SHOOTING_JUMPING_TR:
                 Move();
-                ChargedJump();
+                HandleCharging();
                 FireBullet();
-                currentAnim.SetTrigger("Shooting");
                 hasReleasedJump = true;
                 if (attackTimer > 0)
                 {
@@ -1424,14 +1423,17 @@ public class Player : MonoBehaviour
     {
         if (CurrentNumberOfBullets>=1)
         {
+            shotPressure = 0;
             BusterShooting();
+            
         }
         else
         {
             if (Time.time > timeToNextFire)
             {
+                currentAnim.SetTrigger("Shooting");
                 timeToNextFire = Time.time + 1 / fireRate;
-
+                audioManager.PlaySound(bulletSound);
                 if (CanAimRight)
                     ShootBulletRight();
                 else
@@ -1443,21 +1445,22 @@ public class Player : MonoBehaviour
     private void ShootBulletRight()
     {
         GameObject newbullet = Instantiate(bulletPrefab, bulletMuzzle.position, Quaternion.identity);
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
-        audioManager.PlaySound(bulletSound);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletVelocity.x * transform.localScale.x, bulletVelocity.y);
     }
     private void ShootBulletLeft()
     {
         GameObject newbullet = Instantiate(bulletPrefab, bulletMuzzle.position, Quaternion.Euler(new Vector3(0, 0, -180)));
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
-        audioManager.PlaySound(bulletSound);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletVelocity.x * transform.localScale.x, bulletVelocity.y);
     }
     private void BusterShooting()
     {
+        shotPressure = 0;
         if (Time.time > timeToNextFire)
         {
             timeToNextFire = Time.time + 1 / fireRate;
-
+            currentAnim.SetTrigger("Shooting");
+            SpendAmmo(1);
+            audioManager.PlaySound(busterSound);
             if (CanAimRight)
                 ShootBusterRight();
             else
@@ -1467,21 +1470,21 @@ public class Player : MonoBehaviour
     private void ShootBusterRight()
     {
         GameObject newbullet = Instantiate(busterPrefab, bulletMuzzle.position, Quaternion.identity);
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
-        audioManager.PlaySound(bulletSound);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(busterVelocity.x * transform.localScale.x, busterVelocity.y);
     }
     private void ShootBusterLeft()
     {
         GameObject newbullet = Instantiate(busterPrefab, bulletMuzzle.position, Quaternion.Euler(new Vector3(0, 0, -180)));
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
-        audioManager.PlaySound(bulletSound);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(busterVelocity.x * transform.localScale.x, busterVelocity.y);
     }
     private void CriticalBusterShooting()
     {
         if (Time.time > timeToNextFire)
         {
             timeToNextFire = Time.time + 1 / fireRate;
-
+            currentAnim.SetTrigger("Shooting");
+            audioManager.PlaySound(critBusterSound);
+            Screenshake();
             if (CanAimRight)
                 ShootCriticalBusterRight();
             else
@@ -1491,21 +1494,14 @@ public class Player : MonoBehaviour
     private void ShootCriticalBusterRight()
     {
         GameObject newbullet = Instantiate(criticalBusterPrefab, bulletMuzzle.position, Quaternion.identity);
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
-        audioManager.PlaySound(bulletSound);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(critBusterVelocity.x * transform.localScale.x, critBusterVelocity.y);
+        
     }
     private void ShootCriticalBusterLeft()
     {
         GameObject newbullet = Instantiate(criticalBusterPrefab, bulletMuzzle.position, Quaternion.Euler(new Vector3(0, 0, -180)));
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity.x * transform.localScale.x, velocity.y);
-        audioManager.PlaySound(bulletSound);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(critBusterVelocity.x * transform.localScale.x, critBusterVelocity.y);
     }
-
-    private void AddBustersToCounter()
-    {
-        AddAmmo(1);
-    }
-
     private void UpdateIsTargetReady()
     {
         anySlashReady = (upSlashReady || downSlashReady);
@@ -1549,8 +1545,7 @@ public class Player : MonoBehaviour
         }
 
         shouldChargeJump = Input.GetButton(bottomFaceButtonName);
-        shouldChargeBuster = Input.GetButton(leftFaceButtonName);
-        shouldChargeBuster = Input.GetButton(rightBumperName);
+        
     }
     private void GetDashInput()
     {
@@ -1589,6 +1584,21 @@ public class Player : MonoBehaviour
             isLauncherKeyDown = true;
         else
             isLauncherKeyDown = false;
+
+        //Buster
+        if (Input.GetButton(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
+        {
+            shouldChargeBuster = true;
+        }
+        else
+            shouldChargeBuster = false;
+
+        if (Input.GetButtonUp(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
+        {
+            isAttackKeyUp = true;
+        }
+        else
+            isAttackKeyUp = false;
 
     }
     private void GetTransformInput()
@@ -1758,7 +1768,13 @@ public class Player : MonoBehaviour
             shouldJump = false;
         }
     }
-    private void ChargedJump()
+    private void HandleCharging()
+    {
+        ChargeJump();
+        ChargedShot();
+    }
+
+    private void ChargeJump()
     {
         if (shouldChargeJump)
         {
@@ -1773,11 +1789,11 @@ public class Player : MonoBehaviour
                 hasJumpChargingStarted = false;
                 jumpPressure = maxJumpPressure;
             }
-            
+
         }
         else
         {
-            if (jumpPressure>0f&&isOnGround)
+            if (jumpPressure > 0f && isOnGround)
             {
                 ShowAfterImage();
                 currentAnim.SetBool("Ground", false);
@@ -1786,7 +1802,7 @@ public class Player : MonoBehaviour
                 jumpPressure = jumpPressure + minJumpPressure;
                 myRB.AddForce(new Vector2(0f, jumpPressure), ForceMode2D.Impulse);
                 jumpPressure = 0f;
-                audioManager.PlaySound(jumpSound);                
+                audioManager.PlaySound(jumpSound);
                 isOnGround = false;
                 shouldJump = false;
                 hasReachedMaxJump = false;
@@ -1800,50 +1816,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ChargedShot()
-    {
-        if (shouldChargeBuster)
-        {
-            CheckParticles();
-            if (shotPressure < maxShotPressure)
-            {
-                shotPressure += Time.fixedDeltaTime * shotChargeMultiplier;
-                hasJumpChargingStarted = true;
-            }
-            else
-            {
-                hasShotChargingStarted = false;
-                shotPressure = maxShotPressure;
-                AddBustersToCounter();
-            }
-
-        }
-        else
-        {
-            if (shotPressure > 0f)
-            {
-                hasReleasedShot = true;
-                shotPressure = shotPressure + minShotPressure;
-                shotPressure = 0f;
-                audioManager.PlaySound(jumpSound);
-                hasReachedMaxShotCharge = false;
-                chargeJumpParticle.Stop();
-                chargeJumpMaxColor.Stop();
-            }
-            else if (!shouldChargeBuster)
-            {
-                if (shotPressure>minShotPressure)
-                {
-                    BusterShooting();
-                }
-                else if (shotPressure>=maxShotPressure)
-                {
-                    CriticalBusterShooting();
-                }
-                shotPressure = 0;
-            }
-        }
-    }
+    
     private void CheckParticles()
     {
         if (!hasJumpChargingStarted)
@@ -1982,6 +1955,64 @@ public class Player : MonoBehaviour
         myRB.drag = x;
     }
     #endregion
+
+    #region ChargingShots
+    private void ChargedShot()
+    {
+        if (shouldChargeBuster)
+        {
+            
+            ColorCharge();
+            if (shotPressure < maxShotPressure)
+            {
+                shotPressure += Time.fixedDeltaTime * shotChargeMultiplier;
+
+                hasJumpChargingStarted = true;
+            }
+            else
+            {
+                hasShotChargingStarted = false;
+                shotPressure = maxShotPressure;
+                if (CurrentNumberOfBullets < maxNumberOfBullets)
+                {
+                    if (!bulletCoroutineHasStarted)
+                    {
+                        StartCoroutine(AddBulletsEveryTimeCoroutine());
+                    }
+                }
+            }
+
+        }
+        else if (isAttackKeyUp)
+        {
+            if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
+            {
+                BusterShooting();
+                shotPressure = 0f;
+            }
+            else if (shotPressure >= maxShotPressure)
+            {
+                CriticalBusterShooting();
+                shotPressure = 0f;
+            }
+            if (shotPressure > 0f)
+            {
+                hasReleasedShot = true;
+                shotPressure = 0f;
+                firstCharge = false; secondCharge = false;
+            }
+            if (!shouldChargeBuster)
+            {
+                foreach (ParticleSystem p in primaryGunParticles)
+                {
+                    p.startColor = Color.clear;
+                    p.Stop();
+                }
+            }
+        }
+    }
+    #endregion
+
     private void Henshin()
     {
         audioManager.PlaySound(henshinSound);
@@ -2021,6 +2052,60 @@ public class Player : MonoBehaviour
         current.GetComponent<SpriteRenderer>().material.DOKill();
         current.GetComponent<SpriteRenderer>().material.DOColor(fadeColor, fadeTime);
     }
+
+    public void ColorCharge()
+    {
+        if (!firstCharge)
+            c = Color.clear;
+
+        if (shotPressure >= minShotPressure && shotPressure < maxShotPressure && !firstCharge)
+        {
+            StartCoroutine(BlinkWhileChargingCoroutine());
+            foreach (ParticleSystem p in primaryGunParticles)
+            {
+                p.startColor = Color.clear;
+                p.Play();
+            }
+            firstCharge = true;
+            c = turboColors[0];
+
+            PlayFlashParticle(c);
+        }
+
+        if (shotPressure>=maxShotPressure && !secondCharge)
+        {
+            secondCharge = true;
+            c = turboColors[1];
+
+            PlayFlashParticle(c);
+        }
+        foreach (ParticleSystem p in primaryGunParticles)
+        {
+            var pmain = p.main;
+            pmain.startColor = c;
+        }
+
+        foreach (ParticleSystem p in secondaryParticles)
+        {
+            var pmain = p.main;
+            pmain.startColor = c;
+        }
+    }
+    void PlayFlashParticle(Color c)
+    {
+        Screenshake();
+
+        foreach (ParticleSystem p in secondaryParticles)
+        {
+            var pmain = p.main;
+            pmain.startColor = c;
+            p.Play();
+        }
+    }
+    private static void Screenshake()
+    {
+        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+    }
     #endregion
     #region Damage
     public void TakeDamage(int damageToGive)
@@ -2046,6 +2131,35 @@ public class Player : MonoBehaviour
         audioManager.PlaySound(takeDamageSound);
 
         OnDeath();
+    }
+    #endregion
+    #region CoRoutines
+    private IEnumerator BlinkWhileChargingCoroutine()
+    {
+        Color chargingColor = turboColors[0]; ;
+
+        float blinkInterval = .5f;
+
+        while (shouldChargeBuster)
+        {
+            CurrentSpriteRenderer.color = chargingColor;
+            yield return new WaitForSeconds(blinkInterval);
+
+            CurrentSpriteRenderer.color = defaultColor;
+            yield return new WaitForSeconds(blinkInterval);
+        }
+    }
+
+    private IEnumerator AddBulletsEveryTimeCoroutine()
+    {
+        bulletCoroutineHasStarted=true;
+        float bulletInterval = 1f;
+        while (CurrentNumberOfBullets<maxNumberOfBullets&&(shouldChargeBuster&&shotPressure>=maxShotPressure))
+        {
+            AddAmmo(1);
+            yield return new WaitForSeconds(bulletInterval);
+        }
+        bulletCoroutineHasStarted = false;
     }
     private IEnumerator DamageCooldownCoroutine()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class EnemyHealthManager : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class EnemyHealthManager : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] private string enemyTakeDamageSound;
     [SerializeField] private string enemyDeathSound;
+    Color defaultColor;
 
     public int CurrentHitPoints
     {
@@ -123,6 +125,7 @@ public class EnemyHealthManager : MonoBehaviour
         enemyRend = GetComponent<SpriteRenderer>();
         enemyAnim = GetComponent<Animator>();
         enemyRB = GetComponent<Rigidbody2D>();
+        defaultColor = enemyRend.color;
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -236,7 +239,7 @@ public class EnemyHealthManager : MonoBehaviour
 
     private IEnumerator BlinkWhileInvulnerableCoroutine()
     {
-        Color defaultColor = enemyRend.color;
+        
         Color invulnerableColor = Color.red;
 
         float blinkInterval = .10f;
@@ -250,8 +253,13 @@ public class EnemyHealthManager : MonoBehaviour
             yield return new WaitForSeconds(blinkInterval);
         }
     }
+    private static void Screenshake()
+    {
+        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+    }
     private void OnDeath()
     {
+        Screenshake();
         audioManager.PlaySound(enemyDeathSound);
         Instantiate(deathParticle, transform.position, transform.rotation);
         Instantiate(itemDropped, transform.position, transform.rotation);

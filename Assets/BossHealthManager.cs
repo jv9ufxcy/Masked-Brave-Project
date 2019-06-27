@@ -52,6 +52,7 @@ public class BossHealthManager : MonoBehaviour
     [SerializeField] private string enemyTakeDamageSound;
     [SerializeField] private string enemyDeathSound;
     private int deathCount=1;
+    Color defaultColor;
     #region Properties
     public int CurrentHitPoints
     {
@@ -162,6 +163,8 @@ public class BossHealthManager : MonoBehaviour
         defaultGravityScale = enemyRB.gravityScale;
 
         thePlayer = FindObjectOfType<Player>();
+
+        defaultColor = enemyRend.color;
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -294,7 +297,6 @@ public class BossHealthManager : MonoBehaviour
 
     private IEnumerator BlinkWhileInvulnerableCoroutine()
     {
-        Color defaultColor = enemyRend.color;
         Color invulnerableColor = Color.red;
 
         float blinkInterval = .10f;

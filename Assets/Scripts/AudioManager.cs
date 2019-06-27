@@ -24,6 +24,12 @@ public class Sound
         source.pitch = pitch;
         source.Play();
     }
+    public void Loop()
+    {
+        source.volume = volume;
+        source.pitch = pitch;
+        source.Play();
+    }
 }
 public class AudioManager : MonoBehaviour
 {
