@@ -76,7 +76,7 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
   - name: Shoot
-    clip: {fileID: 8300000, guid: 8f10cd801201e004c94a11ab4775928d, type: 3}
+    clip: {fileID: 8300000, guid: 7116cf9da81747b43a5d4be22a146b15, type: 3}
     volume: 1
     pitch: 1
   - name: PickupRecovery
@@ -119,6 +119,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c6fa80e90a115cb44ae64403285e860a, type: 3}
     volume: 0.5
     pitch: 1
+  - name: Buster
+    clip: {fileID: 8300000, guid: acb9733fe0bd5a14da5541e8d8e8a85f, type: 3}
+    volume: 0.5
+    pitch: 1
+  - name: CriticalBuster
+    clip: {fileID: 8300000, guid: a3035cd762d844c4fae49dc549983cb6, type: 3}
+    volume: 0.5
+    pitch: 1
 --- !u!82 &82603246854662192
 AudioSource:
   m_ObjectHideFlags: 0
@@ -131,7 +139,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 71d76848b71fb1d4cac1bf00b0f940d1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -240,3 +248,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastCheckpointPos: {x: -3.5, y: -4}
+  startingCheckpointPos: {fileID: 0}

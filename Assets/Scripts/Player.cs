@@ -1117,7 +1117,7 @@ public class Player : MonoBehaviour
             #region TricksterStates
             case PlayerState.STATE_IDLE_TR:
                 HandleCharging();
-                if (hasReleasedJump||!isOnGround)
+                if (shouldJump||!isOnGround)
                 {
                     _state = PlayerState.STATE_JUMPING_TR;
                 }
@@ -1151,7 +1151,7 @@ public class Player : MonoBehaviour
                 {
                     _state = PlayerState.STATE_IDLE_TR;
                 }
-                if (hasReleasedJump || !isOnGround)
+                if (shouldJump || !isOnGround)
                 {
                     _state = PlayerState.STATE_JUMPING_TR;
                 }
@@ -1174,6 +1174,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_JUMPING_TR:
                 HandleCharging();
+                Jump();
                 BetterJump();
                 Move();
                 hasReleasedJump = false;
@@ -1916,6 +1917,8 @@ public class Player : MonoBehaviour
 
     private void Dash(float x, float y)
     {
+        Screenshake();
+
         hasDashed = true;
         myRB.velocity = Vector2.zero;
         Vector2 dir = new Vector2(x, y);

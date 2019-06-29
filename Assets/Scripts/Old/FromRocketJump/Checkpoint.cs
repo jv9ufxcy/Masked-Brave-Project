@@ -24,7 +24,7 @@ public class Checkpoint : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
+        gm = GameManager.instance;
         DeactivateCheckpoint();
     }
 
