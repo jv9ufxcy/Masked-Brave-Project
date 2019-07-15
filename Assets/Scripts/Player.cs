@@ -201,14 +201,10 @@ public class Player : MonoBehaviour
     public List<ParticleSystem> primaryJumpParticles = new List<ParticleSystem>();
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
 
-    [Space]
-    [Header("Animation")]
-    [Space]
-    [Header("Brave")]
     [SerializeField]
-    private string braveDeath = "Death", braveDamaged = "BraveDamaged", braveHenshin = "Henshin", braveSlash1 = "BraveSlash1", braveSlash2 = "BraveSlash2", braveSlash3 = "BraveSlash3", braveASlash1 = "BraveASlash1",
+    private string braveDash = "BraveDash", braveDamaged = "BraveDamaged", braveHenshin = "Henshin", braveSlash1 = "BraveSlash1", braveSlash2 = "BraveSlash2", braveSlash3 = "BraveSlash3", braveASlash1 = "BraveASlash1",
         braveStrike = "braveStrike", braveLauncher = "BraveLauncher", braveSlam = "BraveSlam", braveKickUp = "BraveKickUp", braveKickDown = "BraveKickDown";
-    [Header("Bombadier")]
+    [SerializeField]
     private string bombGShot1 = "BombGShot1", bombGShot2 = "BombGShot2", bombAShot1 = "BombAShot1", bombAShot2 = "BombAShot2", bombRShot1 = "BombRShot1", bombRShot2 = "BombRShot2", bombDash = "BombDash", bombDamaged = "BombDamaged" ;
 
     //bools
@@ -550,14 +546,14 @@ public class Player : MonoBehaviour
                     {
                         myRB.velocity = new Vector2(dashSpeed, 0);
                         audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
+                        currentAnim.Play(braveDash);
                     }
                     //Left    
                     else if (!CanAimRight)
                     {
                         myRB.velocity = new Vector2(-dashSpeed, 0);
                         audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
+                        currentAnim.Play(braveDash);
                     }
                     NumberOfDashes--;
                     _state = PlayerState.STATE_GROUND_DASHING_SM;
@@ -603,14 +599,14 @@ public class Player : MonoBehaviour
                     {
                         myRB.velocity = new Vector2(dashSpeed, 0);
                         audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
+                        currentAnim.Play(braveDash);
                     }
                     //Left    
                     else if (!CanAimRight)
                     {
                         myRB.velocity = new Vector2(-dashSpeed, 0);
                         audioManager.PlaySound("Dash");
-                        currentAnim.SetTrigger(dashAnimation);
+                        currentAnim.Play(braveDash);
                     }
                     NumberOfDashes--;
                     _state = PlayerState.STATE_GROUND_DASHING_SM;
@@ -790,7 +786,7 @@ public class Player : MonoBehaviour
 
                     if (!hasAttacked)
                     {
-                        currentAnim.SetTrigger("Attack");
+                        currentAnim.Play(braveSlash1);
                         audioManager.PlaySound(attackingSound);
                         hasAttacked = true;
                     }
@@ -834,7 +830,7 @@ public class Player : MonoBehaviour
 
                     if (!hasAttacked)
                     {
-                        currentAnim.SetTrigger("AttackComboA1");
+                        currentAnim.Play(braveSlash2);
                         audioManager.PlaySound(attackingSound);
                         hasAttacked = true;
                     }
@@ -877,7 +873,7 @@ public class Player : MonoBehaviour
 
                     if (!hasAttacked)
                     {
-                        currentAnim.SetTrigger("AttackComboA2");
+                        currentAnim.Play(braveSlash3);
                         audioManager.PlaySound(comboA2Sound);
                         hasAttacked = true;
                     }
@@ -912,7 +908,7 @@ public class Player : MonoBehaviour
                     }
                     if (!hasAttacked)
                     {
-                        currentAnim.SetTrigger("AirAttack");
+                        currentAnim.Play(braveASlash1);
                         audioManager.PlaySound(attackingSound);
                         hasAttacked = true;
                     }
@@ -950,7 +946,7 @@ public class Player : MonoBehaviour
                     {
                         SpendMeter(strikeCost);
                         myRB.velocity = new Vector2(0, 0);
-                        currentAnim.SetTrigger("RiderPunch");
+                        currentAnim.Play(braveStrike);
                         audioManager.PlaySound(riderPunchSound);
                         hasAttacked = true;
                         if (CanAimRight)
@@ -983,7 +979,7 @@ public class Player : MonoBehaviour
                     if (!hasAttacked)
                     {
                         SpendMeter(launcherCost);
-                        currentAnim.SetTrigger("Launcher");
+                        currentAnim.Play(braveLauncher);
                         audioManager.PlaySound(attackingSound);
                         hasAttacked = true;
                     }
@@ -1005,7 +1001,7 @@ public class Player : MonoBehaviour
                     if (!hasAttacked)
                     {
                         SpendMeter(launcherCost);
-                        currentAnim.SetTrigger("Slam");
+                        currentAnim.Play(braveSlam);
                         audioManager.PlaySound(comboA2Sound);
                         hasAttacked = true;
                     }
@@ -1056,7 +1052,7 @@ public class Player : MonoBehaviour
                         myRB.AddForce(new Vector2(-horizontalDashSlashSpeed, UpVerticalDSSpeed), ForceMode2D.Impulse);
                     }
 
-                    currentAnim.SetTrigger("UpKick");
+                    currentAnim.Play(braveKickUp);
                     audioManager.PlaySound(attackingSound);
 
                     _state = PlayerState.STATE_BRAVE_KICK_CD_SM;
@@ -1105,7 +1101,7 @@ public class Player : MonoBehaviour
                         myRB.AddForce(new Vector2(-horizontalDashSlashSpeed, -DownVerticalDSSpeed), ForceMode2D.Impulse);
                     }
 
-                    currentAnim.SetTrigger("DownKick");
+                    currentAnim.Play(braveKickDown);
                     audioManager.PlaySound(attackingSound);
 
                     _state = PlayerState.STATE_BRAVE_KICK_CD_SM;
@@ -1149,7 +1145,7 @@ public class Player : MonoBehaviour
                 if (isDashKeyDown&&!hasDashed)
                 {
                     audioManager.PlaySound("Dash");
-                    currentAnim.SetTrigger(dashAnimation);
+                    currentAnim.Play(bombDash);
                     _state = PlayerState.STATE_DASHING_TR;
                 }
                 break;
@@ -1177,13 +1173,13 @@ public class Player : MonoBehaviour
                 if (isDashKeyDown && !hasDashed)
                 {
                     audioManager.PlaySound("Dash");
-                    currentAnim.SetTrigger(dashAnimation);
+                    currentAnim.Play(bombDash);
                     _state = PlayerState.STATE_DASHING_TR;
                 }
                 break;
             case PlayerState.STATE_JUMPING_TR:
                 HandleCharging();
-                Jump();
+                //Jump();
                 BetterJump();
                 Move();
                 hasReleasedJump = false;
@@ -1217,7 +1213,7 @@ public class Player : MonoBehaviour
                 if (isDashKeyDown && !hasDashed)
                 {
                     audioManager.PlaySound("Dash");
-                    currentAnim.SetTrigger(dashAnimation);
+                    currentAnim.Play(bombDash);
                     _state = PlayerState.STATE_DASHING_TR;
                 }
                 break;
@@ -1441,7 +1437,15 @@ public class Player : MonoBehaviour
         {
             if (Time.time > timeToNextFire)
             {
-                currentAnim.SetTrigger("Shooting");
+
+                if (isOnGround)
+                {
+                    currentAnim.Play(bombGShot1);
+                }
+                else
+                {
+                    currentAnim.Play(bombAShot1);
+                }
                 timeToNextFire = Time.time + 1 / fireRate;
                 audioManager.PlaySound(bulletSound);
                 if (CanAimRight)
@@ -1468,9 +1472,17 @@ public class Player : MonoBehaviour
         if (Time.time > timeToNextFire)
         {
             timeToNextFire = Time.time + 1 / fireRate;
-            currentAnim.SetTrigger("Shooting");
+            if (isOnGround)
+            {
+                currentAnim.Play(bombGShot2);
+            }
+            else
+            {
+                currentAnim.Play(bombAShot2);
+            }
             SpendAmmo(1);
             audioManager.PlaySound(busterSound);
+            Screenshake();
             if (CanAimRight)
                 ShootBusterRight();
             else
@@ -1492,7 +1504,14 @@ public class Player : MonoBehaviour
         if (Time.time > timeToNextFire)
         {
             timeToNextFire = Time.time + 1 / fireRate;
-            currentAnim.SetTrigger("Shooting");
+            if (isOnGround)
+            {
+                currentAnim.Play(bombGShot2);
+            }
+            else
+            {
+                currentAnim.Play(bombAShot2);
+            }
             audioManager.PlaySound(critBusterSound);
             Screenshake();
             if (CanAimRight)
@@ -1808,7 +1827,7 @@ public class Player : MonoBehaviour
             }
 
         }
-        else if (shouldChargeJump && isJumpKeyDown)
+        else if (isJumpKeyDown)
         {
             if (jumpPressure > 0f)
             {
@@ -1827,13 +1846,22 @@ public class Player : MonoBehaviour
             else if (!shouldChargeJump)
             {
                 jumpPressure = 0;
-                CheckParticles();
+                chargeJumpParticle.Stop();
+                chargeJumpMaxColor.Stop();
+            }
+            else
+            {
+                Jump();
+                jumpPressure = 0;
+                chargeJumpParticle.Stop();
+                chargeJumpMaxColor.Stop();
             }
         }
         else
         {
             jumpPressure = 0;
-            CheckParticles();
+            chargeJumpParticle.Stop();
+            chargeJumpMaxColor.Stop();
         }     
     }
     private void CheckParticles()
@@ -2133,10 +2161,16 @@ public class Player : MonoBehaviour
         if (!IsInvulnerable)
         {
             if (isSwordmaster)
+            {
+                currentAnim.Play(braveDamaged);
                 _state = PlayerState.STATE_DAMAGED_SM;
+            }
             else
+            {
+                currentAnim.Play(bombDamaged);
                 _state = PlayerState.STATE_DAMAGED_TR;
-            currentAnim.SetTrigger("Damaged");
+            }
+                
             RecoveryPoints -= damageToGive;
             audioManager.PlaySound(takeDamageSound);
             OnDeath();
@@ -2146,7 +2180,11 @@ public class Player : MonoBehaviour
     }
     public void KillPlayer(int damageToGive)
     {
-        currentAnim.SetTrigger("Damaged");
+        if (isSwordmaster)
+            currentAnim.Play(braveDamaged);
+        else
+            currentAnim.Play(bombDamaged);
+
         RecoveryPoints -= damageToGive;
         audioManager.PlaySound(takeDamageSound);
 
