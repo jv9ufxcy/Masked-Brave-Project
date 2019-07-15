@@ -201,6 +201,15 @@ public class Player : MonoBehaviour
     public List<ParticleSystem> primaryJumpParticles = new List<ParticleSystem>();
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
 
+    [Space]
+    [Header("Animation")]
+    [Space]
+    [Header("Brave")]
+    [SerializeField]
+    private string braveDeath = "Death", braveDamaged = "BraveDamaged", braveHenshin = "Henshin", braveSlash1 = "BraveSlash1", braveSlash2 = "BraveSlash2", braveSlash3 = "BraveSlash3", braveASlash1 = "BraveASlash1",
+        braveStrike = "braveStrike", braveLauncher = "BraveLauncher", braveSlam = "BraveSlam", braveKickUp = "BraveKickUp", braveKickDown = "BraveKickDown";
+    [Header("Bombadier")]
+    private string bombGShot1 = "BombGShot1", bombGShot2 = "BombGShot2", bombAShot1 = "BombAShot1", bombAShot2 = "BombAShot2", bombRShot1 = "BombRShot1", bombRShot2 = "BombRShot2", bombDash = "BombDash", bombDamaged = "BombDamaged" ;
 
     //bools
     private static Player instance;
@@ -1545,7 +1554,13 @@ public class Player : MonoBehaviour
             shouldWallJump = true;
         }
 
-        shouldChargeJump = Input.GetButton(bottomFaceButtonName);
+        if (verticalInput == -1 && isOnGround)
+        {
+            shouldChargeJump = true;
+        }
+        else
+            shouldChargeJump = false;
+        //shouldChargeJump = Input.GetButton(bottomFaceButtonName);
         
     }
     private void GetDashInput()
@@ -1783,6 +1798,7 @@ public class Player : MonoBehaviour
             if (jumpPressure < maxJumpPressure)
             {
                 jumpPressure += Time.fixedDeltaTime * jumpChargeMultiplier;
+                audioManager.PlaySound(henshinSound);
                 hasJumpChargingStarted = true;
             }
             else
@@ -1792,9 +1808,9 @@ public class Player : MonoBehaviour
             }
 
         }
-        else
+        else if (shouldChargeJump && isJumpKeyDown)
         {
-            if (jumpPressure > 0f && isOnGround)
+            if (jumpPressure > 0f)
             {
                 ShowAfterImage();
                 currentAnim.SetBool("Ground", false);
@@ -1804,8 +1820,6 @@ public class Player : MonoBehaviour
                 myRB.AddForce(new Vector2(0f, jumpPressure), ForceMode2D.Impulse);
                 jumpPressure = 0f;
                 audioManager.PlaySound(jumpSound);
-                isOnGround = false;
-                shouldJump = false;
                 hasReachedMaxJump = false;
                 chargeJumpParticle.Stop();
                 chargeJumpMaxColor.Stop();
@@ -1813,11 +1827,15 @@ public class Player : MonoBehaviour
             else if (!shouldChargeJump)
             {
                 jumpPressure = 0;
+                CheckParticles();
             }
         }
+        else
+        {
+            jumpPressure = 0;
+            CheckParticles();
+        }     
     }
-
-    
     private void CheckParticles()
     {
         if (!hasJumpChargingStarted)
@@ -1830,10 +1848,9 @@ public class Player : MonoBehaviour
         {
             if (!hasReachedMaxJump)
             {
-                hasReachedMaxJump = true;
                 chargeJumpMaxColor.Play();
+                hasReachedMaxJump = true;
             }
-            
         }
     }
 

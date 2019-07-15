@@ -96,7 +96,7 @@ public class EnemyJumpPatrol : MonoBehaviour
         else
         {
             enemyHealth.Knockback();
-            enemyAnim.SetTrigger("Damaged");
+            //enemyAnim.SetTrigger("Damaged");
         }
 
     }

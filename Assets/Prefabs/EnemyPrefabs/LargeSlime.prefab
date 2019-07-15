@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7495694687024069479}
   - component: {fileID: 1501330172038619297}
   - component: {fileID: 1322516482534839700}
+  - component: {fileID: 6058190810746553964}
   - component: {fileID: 7324962798786166758}
   - component: {fileID: 7541436812002660967}
   - component: {fileID: 6770851381519783842}
@@ -100,6 +101,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6058190810746553964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333711463060110063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b626aa55d406245a3322bb9eda563a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallDetectPoint: {fileID: 7907080242756555046}
+  groundDetectPoint: {fileID: 3740098366857519231}
+  DetectRadius: 0.2
+  whatCountsAsWall:
+    serializedVersion: 2
+    m_Bits: 0
+  edgeDetectPoint: {fileID: 3740098366857519231}
+  whatIsShootable:
+    serializedVersion: 2
+    m_Bits: 0
+  isShootableInRange: 0
+  moveSpeed: 0
+  jumpStrength: 0
+  moveRight: 0
+  shouldEnemyWalkOffEdge: 0
 --- !u!61 &7324962798786166758
 BoxCollider2D:
   m_ObjectHideFlags: 0
