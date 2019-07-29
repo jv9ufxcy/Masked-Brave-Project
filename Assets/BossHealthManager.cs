@@ -19,6 +19,8 @@ public class BossHealthManager : MonoBehaviour
 
     [SerializeField] private bool shouldDropAtHalf;
 
+    public int hpStock = 0, eStock = 0, ammoStock = 0;
+
     //knockback
     public float enemyKnockbackDuration, enemyForce, enemyMaxKnockbackDuration;
     public bool enemyKnockFromRight;

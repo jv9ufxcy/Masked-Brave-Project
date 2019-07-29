@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2229480685526312773}
   - component: {fileID: 1471424346696544662}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: Hitbox
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -41,21 +41,21 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.65}
+  m_Offset: {x: 0, y: -0.75}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 20, y: 20}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.75}
+  m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
 --- !u!1 &1850712348673569784
 GameObject:
@@ -67,11 +67,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7320103319243352444}
   - component: {fileID: 1084864138892510725}
+  - component: {fileID: 1850712348673569785}
   - component: {fileID: 7504296527954373151}
-  - component: {fileID: 4263505612507493645}
   - component: {fileID: 3991188050088239747}
   - component: {fileID: 5088250584219189745}
-  - component: {fileID: 1850712348673569785}
   m_Layer: 9
   m_Name: SmallSlime
   m_TagString: Enemy
@@ -111,22 +110,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyInvincible: 0
   currentEnemyHealth: 0
-  maxEnemyHealth: 5
-  _damagedState: 0
-  deathParticle: {fileID: 1756106632241220, guid: 581f36e8204ec674ca9cf38a21e0f97b,
+  maxEnemyHealth: 10
+  deathParticle: {fileID: 690, guid: 581f36e8204ec674ca9cf38a21e0f97b, type: 3}
+  damageParticle: {fileID: 8866245527520328343, guid: 0bceea63af579934f8abdb45d270fb11,
     type: 3}
   itemDropped: {fileID: 1251846719162076, guid: 908888155bfcc3e488e93b1343a8f6b3,
     type: 3}
   energyDropped: {fileID: 1214605765240008, guid: 47fb1b856b0351146b6f18848f50f296,
     type: 3}
   shouldDropAtHalf: 0
+  hpStock: 0
+  eStock: 0
+  ammoStock: 1
+  _damagedState: 0
+  enemyKnockFromRight: 0
   enemyKnockbackDuration: 0
-  enemyKnockbackForce: 5
+  enemyKnockbackForce: 15
   enemyMaxKnockbackDuration: 0.25
   maxEnemyStunDuration: 0.25
-  maxEnemyLaunchDuration: 0.005
-  launchForce: {x: 0, y: 10}
-  enemyKnockFromRight: 0
+  maxEnemyLaunchDuration: 0.05
+  launchForce: {x: 0, y: 20}
   damageCooldownInSeconds: 0.25
   wallDetectPoint: {fileID: 7058027136020591375}
   groundDetectPoint: {fileID: 7058027136020591375}
@@ -137,6 +140,44 @@ MonoBehaviour:
     m_Bits: 256
   enemyTakeDamageSound: TakeDamage
   enemyDeathSound: Death
+--- !u!114 &1850712348673569785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850712348673569784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b626aa55d406245a3322bb9eda563a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallDetectPoint: {fileID: 5878368984266868289}
+  groundDetectPoint: {fileID: 7058027136020591375}
+  obstacleDetectRadius: 0.2
+  playerDetectRadius: 0.5
+  whatCountsAsWall:
+    serializedVersion: 2
+    m_Bits: 33024
+  whatCountsAsPlayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  edgeDetectPoint: {fileID: 7058027136020591375}
+  whatIsShootable:
+    serializedVersion: 2
+    m_Bits: 2048
+  isShootableInRange: 0
+  moveSpeed: 3
+  jumpStrength: 10
+  forwardForce: 6
+  moveRight: 0
+  shouldEnemyWalkOffEdge: 1
+  attackAnimation: ssAttack
+  hurtAnimation: ssHurt
+  jumpAnimation: ssJump
+  windupAnimation: ssWindup
+  attackDelay: 1
+  enemyState: 0
 --- !u!50 &7504296527954373151
 Rigidbody2D:
   serializedVersion: 4
@@ -158,32 +199,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &4263505612507493645
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850712348673569784}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.65}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.75}
-  m_EdgeRadius: 0
 --- !u!212 &3991188050088239747
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -251,33 +266,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1850712348673569785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850712348673569784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b626aa55d406245a3322bb9eda563a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallDetectPoint: {fileID: 5878368984266868289}
-  groundDetectPoint: {fileID: 7058027136020591375}
-  DetectRadius: 0.2
-  whatCountsAsWall:
-    serializedVersion: 2
-    m_Bits: 33024
-  edgeDetectPoint: {fileID: 7058027136020591375}
-  whatIsShootable:
-    serializedVersion: 2
-    m_Bits: 2048
-  isShootableInRange: 0
-  moveSpeed: 3
-  jumpStrength: 10
-  moveRight: 0
-  shouldEnemyWalkOffEdge: 1
 --- !u!1 &2447843096499125990
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8142019878192588216
 Transform:
   m_ObjectHideFlags: 0
@@ -323,7 +311,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.75}
+  m_Offset: {x: -0.6, y: -0.7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -334,7 +322,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &9114700467959655130
 MonoBehaviour:

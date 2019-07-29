@@ -2,31 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using DG.Tweening;
 
 public class EnemyHealthManager : MonoBehaviour
 {
     [SerializeField] private bool isEnemyInvincible = false;
     [SerializeField] private int currentEnemyHealth;
     [SerializeField] private int maxEnemyHealth;
-
-    public DamageState _damagedState;
-    public enum DamageState { stunned, knockedback, launched }
-
-    [SerializeField] private GameObject deathParticle;
-
+    [SerializeField] private GameObject deathParticle, damageParticle;
     [SerializeField] private GameObject itemDropped;
-
     [SerializeField] private GameObject energyDropped;
     [SerializeField] private bool shouldDropAtHalf;
 
-    //knockback
+    public int hpStock=0, eStock=0, ammoStock=0;
+
+    [Header("Knockback")]
+    public DamageState _damagedState;
+    public enum DamageState { stunned, knockedback, launched }
+    public bool enemyKnockFromRight;
     public float enemyKnockbackDuration, enemyKnockbackForce, enemyMaxKnockbackDuration,  maxEnemyStunDuration, maxEnemyLaunchDuration;
     [SerializeField] private Vector2 launchForce =new Vector2 (0,15);
-    public bool enemyKnockFromRight;
     private bool isInvul;
     [SerializeField] private float damageCooldownInSeconds = .75f;
-
-    //patrol variables
+    [Space]
+    [Header("Detection")]
     [SerializeField] Transform wallDetectPoint;
     [SerializeField] Transform groundDetectPoint;
     [SerializeField] Transform edgeDetectPoint;
@@ -44,7 +43,9 @@ public class EnemyHealthManager : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] private string enemyTakeDamageSound;
     [SerializeField] private string enemyDeathSound;
-    Color defaultColor;
+    private bool coroutineStarted = false;
+    private Color defaultColor;
+    private float defaultGravityScale;
 
     public int CurrentHitPoints
     {
@@ -111,13 +112,39 @@ public class EnemyHealthManager : MonoBehaviour
             isOnGround = value;
         }
     }
+    public static EnemyHealthManager GetClosestEnemy(Vector3 position, float maxRange)
+    {
+        EnemyHealthManager closest = null;
+        foreach (EnemyHealthManager enemy in enemyList)
+        {
+            if (Vector3.Distance(position, enemy.transform.position) <= maxRange)
+            {
+                if (closest == null)
+                {
+                    closest = enemy;
+                }
+                else
+                {
+                    if (Vector3.Distance(position, enemy.transform.position) < Vector3.Distance(position, closest.transform.position))
+                    {
+                        closest = enemy;
+                    }
+                }
+            }
+        }
+        return closest;
+    }
+    private static List<EnemyHealthManager> enemyList = new List<EnemyHealthManager>();
 
+    private void Awake()
+    {
+        enemyList.Add(this);
+    }
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         Initialize();
     }
-
     private void Initialize()
     {
         currentEnemyHealth = maxEnemyHealth;
@@ -126,6 +153,7 @@ public class EnemyHealthManager : MonoBehaviour
         enemyAnim = GetComponent<Animator>();
         enemyRB = GetComponent<Rigidbody2D>();
         defaultColor = enemyRend.color;
+        defaultGravityScale = enemyRB.gravityScale;
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -171,7 +199,7 @@ public class EnemyHealthManager : MonoBehaviour
         switch (_damagedState)
         {
             case DamageState.stunned:
-                enemyRB.velocity = new Vector2(0, 0);
+                enemyRB.velocity = Vector2.zero;
                 enemyKnockbackDuration -= Time.deltaTime;
                 break;
             case DamageState.knockedback:
@@ -186,17 +214,15 @@ public class EnemyHealthManager : MonoBehaviour
                 enemyKnockbackDuration -= Time.deltaTime;
                 break;
             case DamageState.launched:
-                enemyRB.velocity = new Vector2(enemyRB.velocity.x, 0);
-                enemyRB.AddForce(launchForce, ForceMode2D.Impulse);
+                enemyRB.velocity = launchForce;
                 enemyKnockbackDuration -= Time.deltaTime;
+                if (!coroutineStarted)
+                    StartCoroutine(LaunchWait());
+                
                 break;
             default:
                 break;
         }
-    }
-    private void DropMeter()
-    {
-        Instantiate(energyDropped, transform.position, transform.rotation);
     }
     public void TakeDamage(int damageToTake, HurtEnemyOnHit.DamageEffect _effect)
     {
@@ -204,8 +230,9 @@ public class EnemyHealthManager : MonoBehaviour
         {
             if (!isEnemyInvincible)
             {
+                enemyRB.velocity = Vector2.zero;
                 currentEnemyHealth -= damageToTake;
-                DropMeter();
+                Instantiate(damageParticle, transform.position, transform.rotation);
             }
             switch (_effect)
             {
@@ -236,7 +263,15 @@ public class EnemyHealthManager : MonoBehaviour
         yield return new WaitForSeconds(damageCooldownInSeconds);
         IsInvul = false;
     }
-
+    private IEnumerator LaunchWait()
+    {
+        coroutineStarted = true;
+        DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
+        enemyRB.gravityScale = 0;
+        yield return new WaitForSeconds(enemyMaxKnockbackDuration);
+        enemyRB.gravityScale = defaultGravityScale;
+        coroutineStarted = false;
+    }
     private IEnumerator BlinkWhileInvulnerableCoroutine()
     {
         
@@ -253,12 +288,21 @@ public class EnemyHealthManager : MonoBehaviour
             yield return new WaitForSeconds(blinkInterval);
         }
     }
+    void RigidbodyDrag(float x)
+    {
+        enemyRB.drag = x;
+    }
     private static void Screenshake()
     {
         Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
     }
+    private void FreezeTime()
+    {
+        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame();
+    }
     private void OnDeath()
     {
+        FreezeTime();
         Screenshake();
         audioManager.PlaySound(enemyDeathSound);
         Instantiate(deathParticle, transform.position, transform.rotation);

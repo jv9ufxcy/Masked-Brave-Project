@@ -6,17 +6,20 @@ public class EnemyJumpPatrol : MonoBehaviour
 {
     private Player thePlayer;
     private EnemyHealthManager enemyHealth;
-    private Animator enemyAnim;
-
+    [Space]
+    [Header("Detect Points")]
     [SerializeField] Transform wallDetectPoint;
     [SerializeField] Transform groundDetectPoint;
-    [SerializeField] float DetectRadius = 0.2f;
+    [SerializeField] float obstacleDetectRadius = 0.2f, playerDetectRadius = 2f;
     [SerializeField] LayerMask whatCountsAsWall;
+    [SerializeField] LayerMask whatCountsAsPlayer;
 
     [SerializeField] Transform edgeDetectPoint;
+    private bool notAtEdge, hittingWall, isPlayerInRange;
 
     private AudioManager audioManager;
 
+    private bool coroutineStarted=false;
     private bool isFacingRight;
     private Rigidbody2D enemyRB;
     private SpriteRenderer enemyRend;
@@ -24,14 +27,24 @@ public class EnemyJumpPatrol : MonoBehaviour
     [SerializeField] private LayerMask whatIsShootable;
     [SerializeField] private bool isShootableInRange;
 
-    //grounded
+    [Space]
+    [Header("Enemy Stats")]
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpStrength;
+    [SerializeField] private float jumpStrength, forwardForce=6;
     [SerializeField] private bool moveRight;
     [SerializeField] private bool shouldEnemyWalkOffEdge;
     private bool isOnGround;
     private Vector2 jumpForce;
+    [Header("Animations for")]
+    private Animator enemyAnim;
+    [SerializeField] private string attackAnimation, hurtAnimation, jumpAnimation, windupAnimation;
+    [SerializeField] private float attackDelay = 2f;
 
+    [SerializeField] private EnemyState enemyState;
+    private enum EnemyState
+    {
+        Patrolling, Attacking, Damaged,
+    }
     // Use this for initialization
     void Start()
     {
@@ -49,15 +62,53 @@ public class EnemyJumpPatrol : MonoBehaviour
     }
     private void Update()
     {
-
+        PassAnimationSpeed();
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (enemyHealth.enemyKnockbackDuration <= 0)
-            TurnEnemyAround();
-        EnemyMovement();
-        PassAnimationSpeed();
+        switch (enemyState)
+        {
+            case EnemyState.Patrolling:
+                if (enemyHealth.enemyKnockbackDuration <= 0)
+                {
+                    enemyHealth.enemyKnockbackDuration = 0;
+                    CheckForObstacles();
+                    EnemyMovement();
+                }
+                else
+                {
+                    enemyState = EnemyState.Damaged;
+                }
+                    
+                break;
+            case EnemyState.Attacking:
+                if (enemyHealth.enemyKnockbackDuration > 0)
+                {
+                    //StopAllCoroutines();
+                    enemyState = EnemyState.Damaged;
+                }
+                else
+                {
+                    if (!coroutineStarted)
+                        StartCoroutine(AttackForward());
+                }
+                break;
+            case EnemyState.Damaged:
+                if (enemyHealth.enemyKnockbackDuration > 0)
+                {
+                    enemyHealth.Knockback();
+                    if (isOnGround)
+                        enemyAnim.Play(hurtAnimation);
+                    else
+                        enemyAnim.Play(jumpAnimation);
+                }
+                else
+                    enemyState = EnemyState.Patrolling;
+                break;
+            default:
+                break;
+        }
     }
 
     private void PassAnimationSpeed()
@@ -65,7 +116,7 @@ public class EnemyJumpPatrol : MonoBehaviour
         enemyAnim.SetFloat("vSpeed", enemyRB.velocity.y);
         enemyAnim.SetFloat("hSpeed", enemyRB.velocity.x);
 
-        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, DetectRadius, whatCountsAsWall);
+        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, obstacleDetectRadius, whatCountsAsWall);
         isOnGround = groundObjects.Length > 0;
 
         enemyAnim.SetBool("Ground", isOnGround);
@@ -95,8 +146,7 @@ public class EnemyJumpPatrol : MonoBehaviour
         }
         else
         {
-            enemyHealth.Knockback();
-            //enemyAnim.SetTrigger("Damaged");
+            enemyState = EnemyState.Damaged;
         }
 
     }
@@ -105,7 +155,7 @@ public class EnemyJumpPatrol : MonoBehaviour
         if (isOnGround)
         {
             enemyAnim.SetBool("Ground", false);
-            enemyAnim.SetFloat("vSpeed", enemyRB.velocity.y);
+            
             enemyRB.AddForce(jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
         }
@@ -116,12 +166,33 @@ public class EnemyJumpPatrol : MonoBehaviour
         moveRight = !moveRight;
         isFacingRight = !isFacingRight;
     }
-    private void TurnEnemyAround()
+    private void CheckForObstacles()
     {
-        bool notAtEdge = Physics2D.OverlapCircle(edgeDetectPoint.position, DetectRadius, whatCountsAsWall);
-        bool hittingWall = Physics2D.OverlapCircle(wallDetectPoint.position, DetectRadius, whatCountsAsWall);
+        notAtEdge = Physics2D.OverlapCircle(edgeDetectPoint.position, obstacleDetectRadius, whatCountsAsWall);
+        hittingWall = Physics2D.OverlapCircle(wallDetectPoint.position, obstacleDetectRadius, whatCountsAsWall);
         if (hittingWall || (!notAtEdge && !shouldEnemyWalkOffEdge))
             Flip();
 
+        isPlayerInRange = Physics2D.OverlapCircle(edgeDetectPoint.position, playerDetectRadius, whatCountsAsPlayer);
+        if (isPlayerInRange&&enemyState==EnemyState.Patrolling)
+            enemyState = EnemyState.Attacking;
+    }
+    IEnumerator AttackForward()
+    {
+        coroutineStarted = true;
+        enemyAnim.Play(windupAnimation);
+        enemyRB.velocity = Vector2.zero;
+        yield return new WaitForSeconds(attackDelay);
+        enemyAnim.Play(attackAnimation);
+        Jump();
+        if (moveRight)
+            enemyRB.velocity = new Vector2(forwardForce, enemyRB.velocity.y);
+        else
+            enemyRB.velocity = new Vector2(-forwardForce, enemyRB.velocity.y);
+        if (isOnGround)
+            enemyRB.velocity = Vector2.zero;
+        yield return new WaitForSeconds(attackDelay);
+        enemyState = EnemyState.Patrolling;
+        coroutineStarted = false;
     }
 }

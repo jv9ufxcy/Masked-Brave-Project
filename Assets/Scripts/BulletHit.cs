@@ -13,7 +13,7 @@ public class BulletHit : MonoBehaviour
 
     private AudioManager audioManager;
     [SerializeField] private string bulletCollisionSound;
-    [SerializeField] private bool shouldScreenshakeOnHit=false;
+    [SerializeField] private bool shouldScreenshakeOnHit=false, shouldStopOnHit = true;
 
     // Use this for initialization
     void Start()
@@ -42,14 +42,17 @@ public class BulletHit : MonoBehaviour
     {
         if (shouldScreenshakeOnHit)
             Screenshake();
-        RemoveForce();
-        Instantiate(bulletHitEffect, transform.position, transform.rotation);
-        Destroy(gameObject);
+        if (shouldStopOnHit)
+        {
+            RemoveForce();
+            Instantiate(bulletHitEffect, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
     }
     private void RemoveForce()
     {
         //stops the bullet on collision
-        bulletRB.velocity = new Vector2(0, 0);
+        bulletRB.velocity = Vector2.zero;
     }
     private static void Screenshake()
     {

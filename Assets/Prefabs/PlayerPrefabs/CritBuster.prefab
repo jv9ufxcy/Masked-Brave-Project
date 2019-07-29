@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 212310986017103336}
   - component: {fileID: 114135425130313622}
   - component: {fileID: 114241451822071140}
-  - component: {fileID: 114343392767956804}
   - component: {fileID: 95611479683623692}
   - component: {fileID: 50143070742357908}
   - component: {fileID: 61725261980514422}
@@ -107,7 +106,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1536
   bulletCollisionSound: 
-  shouldScreenshakeOnHit: 0
+  shouldScreenshakeOnHit: 1
+  shouldStopOnHit: 0
 --- !u!114 &114241451822071140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,21 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 5
+  meterToGive: 3
   _effect: 1
-  shouldScreenshakeOnHit: 0
---- !u!114 &114343392767956804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946779624007576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 704d8d8652b75ad4bae388631903a288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageToGive: 5
+  shouldScreenshakeOnHit: 1
+  shouldScreenFreeze: 1
 --- !u!95 &95611479683623692
 Animator:
   serializedVersion: 3
