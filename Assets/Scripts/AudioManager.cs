@@ -11,6 +11,7 @@ public class Sound
     public float volume = 0.7f;
     [Range(0.5f, 1.5f)]
     public float pitch = 1f;
+    public bool loop = false;
 
     private AudioSource source;
     public void SetSource(AudioSource _source)
@@ -20,8 +21,16 @@ public class Sound
     }
     public void Play()
     {
-        source.volume = volume;
-        source.pitch = pitch;
+        if (PauseManager.IsGamePaused)
+        {
+            source.volume = volume*.5f;
+            source.pitch = pitch * .5f;
+        }
+        else
+        {
+            source.volume = volume;
+            source.pitch = pitch;
+        }
         source.Play();
     }
     public void Loop()

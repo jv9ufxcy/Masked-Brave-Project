@@ -501,7 +501,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleInput();
+        if (!PauseManager.IsGamePaused)
+            HandleInput();
+
         UpdateIsOnGround();
         UpdateIsOnWall();
         UpdateIsTargetReady();
