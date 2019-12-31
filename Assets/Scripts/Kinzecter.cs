@@ -22,12 +22,16 @@ public class Kinzecter : MonoBehaviour
     private EnemyHealthManager enemy;
 
 [SerializeField] private State kState;
-    private bool shouldFly, coroutineStarted=false;
+    private bool shouldFly, essenceAdded=false;
     private float startScale, flightSpeed;
     [SerializeField] private int hpStock, eStock, ammoStock;
 
-    public DamageEffect _effect;
+    private bool isTooSlow;
+    private bool newEnemyTargeted=false;
+    private bool coroutineStarted=false;
+    Vector3 nextTargetDir;
 
+    public DamageEffect _effect;
     public enum DamageEffect { stun, knockback, launch }
 
     private enum State 
@@ -65,10 +69,12 @@ public class Kinzecter : MonoBehaviour
             transform.localScale = new Vector2(-startScale, transform.localScale.y);
         }
         flightSpeed = kzRB.velocity.magnitude;
-        if (flightSpeed<minLethalSpeed)
-        {
-            kzColl.enabled = false;
-        }
+
+        if (flightSpeed < minLethalSpeed)
+            isTooSlow = true;
+        else
+            isTooSlow = false;
+
         CheckParticles();
     }
     private void FixedUpdate()
@@ -79,7 +85,13 @@ public class Kinzecter : MonoBehaviour
                 CollectEssence();
                 break;
             case State.Thrown:
-                TryGrabKinzecter();
+                if (isTooSlow)
+                    TryGrabKinzecter();
+
+                if (!coroutineStarted)
+                {
+                    StartCoroutine(ReturnToPlayer());
+                }
                 break;
             case State.Recalling:
                 Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
@@ -105,7 +117,12 @@ public class Kinzecter : MonoBehaviour
                 break;
             case State.Thrown:
                 kinzecterParticles.Play();
-                kzColl.enabled = true;
+
+                if (isTooSlow)
+                    kzColl.enabled = false;
+                else
+                    kzColl.enabled = true;
+
                 kzSprite.enabled = true;
                 break;
             case State.Recalling:
@@ -178,45 +195,68 @@ public class Kinzecter : MonoBehaviour
             {
                 if (!enemy.IsInvul)
                 {
-                    if (!coroutineStarted)
+                    if (!essenceAdded)
                     {
                         StartCoroutine(AddEssecnce());
                     }
+                    if (shouldScreenshakeOnHit)
+                        Screenshake();
                 }
-                //EnemyHealthManager nextClosestEnemy = EnemyHealthManager.GetClosestEnemy(transform.position, targetNextEnemyDistance);
-                //if (nextClosestEnemy != null)
-                //{
-                //    Vector3 throwDir = (nextClosestEnemy.transform.position - transform.position).normalized;
-                //    kzRB.velocity = throwDir * flightSpeed;
-                //}
-                if (shouldScreenshakeOnHit)
-                    Screenshake();
+                if (!isTooSlow)
+                {
+                    EnemyHealthManager nextClosestEnemy = EnemyHealthManager.GetClosestEnemy(transform.position, targetNextEnemyDistance);
+                    if (nextClosestEnemy != null)
+                    {
+                        nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
+                        if (!newEnemyTargeted)
+                            StartCoroutine(TargetNextEnemy());
+                    }
+                }
             }
         }
         if (boss != null)
         {
             if (flightSpeed > minLethalSpeed)
             {
-                StartCoroutine(AddBossEssecnce());
+                if (!essenceAdded)
+                    StartCoroutine(AddBossEssecnce());
             }
         }
     }
     IEnumerator AddEssecnce()
     {
+        essenceAdded = true;
         ammoStock += enemy.ammoStock;
         eStock += enemy.eStock;
         hpStock += enemy.hpStock;
-        coroutineStarted = true;
         yield return new WaitForSeconds(.1f);
-        coroutineStarted = false;
+        essenceAdded = false;
     }
+    
     IEnumerator AddBossEssecnce()
     {
+        essenceAdded = true;
         ammoStock += boss.ammoStock;
         eStock += boss.eStock;
         hpStock += boss.hpStock;
-        coroutineStarted = true;
         yield return new WaitForSeconds(.1f);
+    }
+    IEnumerator TargetNextEnemy()
+    {
+        essenceAdded = true;
+        kzRB.velocity = nextTargetDir * flightSpeed;
+        yield return new WaitForSeconds(.5f);
+        essenceAdded = false;
+    }
+    IEnumerator ReturnToPlayer()
+    {
+        coroutineStarted = true;
+        while (kState==State.Thrown)
+        {
+            yield return new WaitForSeconds(10f);
+            kState = State.Recalling;
+        }
+        coroutineStarted = false;
     }
     private static void Screenshake()
     {

@@ -451,6 +451,11 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -301589167
       objectReference: {fileID: 0}
+    - target: {fileID: 223644703131728672, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114038423945828754, guid: 025e0eaf4fd120a47afd5256730fbbe0,
         type: 3}
       propertyPath: playerStats
@@ -469,7 +474,22 @@ PrefabInstance:
     - target: {fileID: 114543756469154402, guid: 025e0eaf4fd120a47afd5256730fbbe0,
         type: 3}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114543756469154402, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224130910179892246, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 45.751953
+      objectReference: {fileID: 0}
+    - target: {fileID: 224130910179892246, guid: 025e0eaf4fd120a47afd5256730fbbe0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20.400024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 025e0eaf4fd120a47afd5256730fbbe0, type: 3}
@@ -2239,6 +2259,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[16].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6c95f29ad8c38814199578c37f8035ac, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4092e24f632fcfe46a51ac39052b012f, type: 3}
 --- !u!4 &943375470 stripped
@@ -2657,6 +2682,11 @@ PrefabInstance:
       propertyPath: bossStats
       value: 
       objectReference: {fileID: 911092263}
+    - target: {fileID: 223012823366252600, guid: 54a17d9b7ccdd6b42a0cf7df9497dee3,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54a17d9b7ccdd6b42a0cf7df9497dee3, type: 3}
 --- !u!4 &1197472984 stripped
@@ -3440,6 +3470,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Roy
       objectReference: {fileID: 0}
+    - target: {fileID: 114300174697194262, guid: d951d0547117bae4a90217fac26f47d3,
+        type: 3}
+      propertyPath: shouldDropAtHalf
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4331771658227782, guid: d951d0547117bae4a90217fac26f47d3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3543,7 +3578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871327149313626, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.3298965
+      value: 6.3348365
       objectReference: {fileID: 0}
     - target: {fileID: 114771058291156574, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
         type: 3}
@@ -3575,6 +3610,20 @@ PrefabInstance:
       propertyPath: bossDoorExit
       value: 
       objectReference: {fileID: 190171972}
+    - target: {fileID: 114495916637607506, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
+        type: 3}
+      propertyPath: m_IgnoreTimeScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 149498814, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
+      propertyPath: freezeTimeScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114736783713232642, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
 --- !u!1 &1960807313
@@ -3703,6 +3752,10 @@ PrefabInstance:
       propertyPath: kinzecter
       value: 
       objectReference: {fileID: 1969973538}
+    - target: {fileID: 171757624, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0103869ff496891439ba425c4354be31, type: 3}
 --- !u!4 &2026647311 stripped
@@ -4120,6 +4173,16 @@ PrefabInstance:
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 953918080}
+    - target: {fileID: 4827906923938970431, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -121.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827906925305441265, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -40.416687
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d, type: 3}
 --- !u!1001 &5628300969535675361
@@ -4139,6 +4202,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1974700440}
+    - target: {fileID: 5628300968279044803, guid: 4ffcf5c05829f6946be1f93aa38f8d28,
+        type: 3}
+      propertyPath: minLethalSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5628300968279044801, guid: 4ffcf5c05829f6946be1f93aa38f8d28,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4193,11 +4261,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5628300968279044802, guid: 4ffcf5c05829f6946be1f93aa38f8d28,
-        type: 3}
-      propertyPath: shouldScreenFreeze
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ffcf5c05829f6946be1f93aa38f8d28, type: 3}

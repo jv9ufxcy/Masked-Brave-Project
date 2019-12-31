@@ -23,7 +23,7 @@ public class EnemyHealthManager : MonoBehaviour
     public float enemyKnockbackDuration, enemyKnockbackForce, enemyMaxKnockbackDuration,  maxEnemyStunDuration, maxEnemyLaunchDuration;
     [SerializeField] private Vector2 launchForce =new Vector2 (0,15);
     private bool isInvul;
-    [SerializeField] private float damageCooldownInSeconds = .75f;
+    [SerializeField] private float damageCooldownInSeconds = .75f, deathFreezeTime = 0.03f;
     [Space]
     [Header("Detection")]
     [SerializeField] Transform wallDetectPoint;
@@ -298,7 +298,7 @@ public class EnemyHealthManager : MonoBehaviour
     }
     private void FreezeTime()
     {
-        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame();
+        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame(deathFreezeTime);
     }
     private void OnDeath()
     {

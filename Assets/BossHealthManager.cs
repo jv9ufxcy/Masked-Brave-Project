@@ -178,11 +178,6 @@ public class BossHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (currentEnemyHealth <= maxEnemyHealth / 2 && shouldDropAtHalf == true)
-        //{
-        //    Instantiate(energyDropped, transform.position, transform.rotation);
-        //    shouldDropAtHalf = false;
-        //}
         if (currentEnemyHealth <= 0)
         {
             currentEnemyHealth = 0;
@@ -322,9 +317,8 @@ public class BossHealthManager : MonoBehaviour
             Instantiate(itemDropped, transform.position, transform.rotation);
             enemyAnim.SetTrigger("Death");
             isEnemyInvincible = true;
-            
-            //bossDoorTrigger.DeSpawnBoss();
+            gameObject.SetActive(false);
         }
-        bossHitbox.gameObject.SetActive(false);
+        
     }
 }

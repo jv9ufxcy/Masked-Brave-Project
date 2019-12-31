@@ -5,8 +5,8 @@ using UnityEngine;
 public class FreezeTime : MonoBehaviour
 {
     [SerializeField] private bool isFrozen=false;
-    [SerializeField] private float maxFreezeDuration, freezeTimeScale = 0f;
-    private float freezeDuration;
+    [SerializeField] private float freezeTimeScale = 0f;
+    private float freezeDuration = 0.03f;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class FreezeTime : MonoBehaviour
             StartCoroutine(DoFreeze());
         }
     }
-    public void FreezeFrame()
+    public void FreezeFrame(float maxFreezeDuration)
     {
         freezeDuration = maxFreezeDuration;
     }
@@ -31,7 +31,7 @@ public class FreezeTime : MonoBehaviour
         var originalTimeScale = Time.timeScale;
         Time.timeScale = freezeTimeScale;
 
-        yield return new WaitForSecondsRealtime(maxFreezeDuration);
+        yield return new WaitForSecondsRealtime(freezeDuration);
 
         Time.timeScale = originalTimeScale;
         freezeDuration = 0;

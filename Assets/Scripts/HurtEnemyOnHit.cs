@@ -10,6 +10,7 @@ public class HurtEnemyOnHit : MonoBehaviour
     public DamageEffect _effect;
     public enum DamageEffect { stun, knockback, launch}
 
+    [SerializeField] private float screenFreezeTime = 0.03f;
     [SerializeField] private bool shouldScreenshakeOnHit = false, shouldScreenFreeze = false;
     private EnemyHealthManager enemyHP;
     private BossHealthManager bossHP;
@@ -62,7 +63,7 @@ public class HurtEnemyOnHit : MonoBehaviour
     }
     private void FreezeTime()
     {
-        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame();
+        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame(screenFreezeTime);
     }
     private static void Screenshake()
     {

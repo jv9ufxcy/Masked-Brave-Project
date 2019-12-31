@@ -4745,6 +4745,7 @@ MonoBehaviour:
   damageToGive: 2
   meterToGive: 1
   _effect: 2
+  screenFreezeTime: 0.03
   shouldScreenshakeOnHit: 0
   shouldScreenFreeze: 1
 --- !u!61 &171757624
@@ -4771,7 +4772,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 4}
+  m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
 --- !u!1 &680105299
 GameObject:
@@ -19012,7 +19013,8 @@ MonoBehaviour:
   damageToGive: 3
   meterToGive: 1
   _effect: 1
-  shouldScreenshakeOnHit: 0
+  screenFreezeTime: 0.06
+  shouldScreenshakeOnHit: 1
   shouldScreenFreeze: 1
 --- !u!61 &1742924599
 BoxCollider2D:
@@ -23967,6 +23969,7 @@ MonoBehaviour:
   damageToGive: 2
   meterToGive: 1
   _effect: 0
+  screenFreezeTime: 0.03
   shouldScreenshakeOnHit: 0
   shouldScreenFreeze: 1
 --- !u!61 &1597203363817921083
@@ -24043,6 +24046,7 @@ MonoBehaviour:
   damageToGive: 5
   meterToGive: 1
   _effect: 1
+  screenFreezeTime: 0.09
   shouldScreenshakeOnHit: 1
   shouldScreenFreeze: 1
 --- !u!61 &4142192580474856093
@@ -33935,6 +33939,7 @@ MonoBehaviour:
   damageToGive: 1
   meterToGive: 1
   _effect: 2
+  screenFreezeTime: 0.03
   shouldScreenshakeOnHit: 1
   shouldScreenFreeze: 0
 --- !u!1 &4767021287074544167
@@ -34030,8 +34035,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 7
-  meterToGive: 1
+  meterToGive: 0
   _effect: 1
+  screenFreezeTime: 0.09
   shouldScreenshakeOnHit: 1
   shouldScreenFreeze: 1
 --- !u!1 &6107861290783571132
@@ -34141,6 +34147,7 @@ MonoBehaviour:
   damageToGive: 2
   meterToGive: 1
   _effect: 0
+  screenFreezeTime: 0.03
   shouldScreenshakeOnHit: 0
   shouldScreenFreeze: 1
 --- !u!61 &626733387358180539
@@ -34263,6 +34270,7 @@ MonoBehaviour:
   knockbackDuration: 0
   knockbackForce: 10
   maxKnockbackDuration: 0.2
+  damageScreenFreezeTime: 0.2
   knockbackFromRight: 0
   wallCheck: {fileID: 8333887593098743198}
   wallSpeed: -1.7
@@ -34543,8 +34551,9 @@ MonoBehaviour:
   damageToGive: 2
   meterToGive: 1
   _effect: 0
+  screenFreezeTime: 0.03
   shouldScreenshakeOnHit: 0
-  shouldScreenFreeze: 0
+  shouldScreenFreeze: 1
 --- !u!61 &3294233615060212762
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34619,6 +34628,7 @@ MonoBehaviour:
   damageToGive: 4
   meterToGive: 1
   _effect: 1
+  screenFreezeTime: 0.03
   shouldScreenshakeOnHit: 1
   shouldScreenFreeze: 1
 --- !u!61 &7021374135885698135
