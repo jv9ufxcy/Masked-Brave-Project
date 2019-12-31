@@ -166,7 +166,6 @@ public class PlayerAttacking : MonoBehaviour
 
                 //up dash slash
             case AttackState.UpSlashAttack:
-                myRB.gravityScale = 0;
                 myRB.velocity = new Vector2(0,0);
                 attackTimer = dashSlashMaxTime;
                 if (attackTimer >= dashSlashMaxTime)
@@ -188,7 +187,6 @@ public class PlayerAttacking : MonoBehaviour
                 break;
             //down dash slash
             case AttackState.DownSlashAttack:
-                myRB.gravityScale = 0;
                 myRB.velocity = new Vector2(0, 0);
                 attackTimer = dashSlashMaxTime;
                 if (attackTimer >= dashSlashMaxTime)

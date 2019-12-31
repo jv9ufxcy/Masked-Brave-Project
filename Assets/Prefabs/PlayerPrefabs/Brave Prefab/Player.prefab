@@ -34237,10 +34237,14 @@ MonoBehaviour:
   launcherCost: 0
   shootCost: 0
   burstCost: 15
-  movementSpeed: 8
+  movementSpeed: 12
   jumpStrength: 14
-  fallMultiplier: 4.5
-  lowJumpMultiplier: 6
+  horiDamping: 0.25
+  turnDamping: 0.75
+  brakeDamping: 0.65
+  fallAccelMultiplier: 0.25
+  maxCoyoteTime: 0.2
+  maxJumpInputMemory: 0.2
   isOnGround: 1
   jumpPressure: 0
   minJumpPressure: 10
@@ -34285,12 +34289,11 @@ MonoBehaviour:
   specialAttackCooldown: 0.8
   shootingCooldown: 0.1
   burstCooldown: 0.5
-  braveSlamSpeed: {x: 0, y: 3}
-  energyMeterCost: 5
-  jumpStrengthBraveStrike: 10
-  jumpDistBraveStrike: 3
-  UpVerticalDSSpeed: 18
-  DownVerticalDSSpeed: 12
+  braveSlamSpeed: 24
+  jumpStrengthBraveStrike: 12
+  jumpDistBraveStrike: 8
+  upVerticalDSSpeed: 18
+  downVerticalDSSpeed: 12
   horizontalDashSlashSpeed: 20
   dashSlashMaxTime: 0.3
   kinzecter: {fileID: 0}

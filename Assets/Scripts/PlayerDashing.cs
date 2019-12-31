@@ -108,7 +108,6 @@ public class PlayerDashing : MonoBehaviour
                 }
                 break;
             case DashState.Dashing:
-                myRB.gravityScale = 0;
                 dashTimer += Time.fixedDeltaTime;
                 if (dashTimer >= maxDash)
                 {
@@ -120,7 +119,6 @@ public class PlayerDashing : MonoBehaviour
                 break;
             case DashState.Cooldown:
                 dashTimer -= Time.fixedDeltaTime;
-                myRB.gravityScale = SavedGravity;
                 if (dashTimer <= 0)
                 {
                     dashTimer = 0;
