@@ -36,8 +36,9 @@ public class Player : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float horiDamping = 0.25f, turnDamping = 0.75f, brakeDamping = 0.65f;
     [SerializeField] [Range(-1, 1)] private float fallAccelMultiplier = .25f;
     [SerializeField] private float maxCoyoteTime = 0.2f, maxJumpInputMemory = 0.2f;
-    private float coyoteTimer, jumpInputMemory;
+    private float coyoteTimer, wallCoyoteTimer, jumpInputMemory;
     [SerializeField] private bool isOnGround;
+    private int direction;
     private float defaultGravityScale;
     private bool shouldJump;
     private bool hasLanded=false;
@@ -59,13 +60,13 @@ public class Player : MonoBehaviour
     
     [Space]
     [Header("Dashing")]
-    private float dashTimer;
-    [SerializeField] private float maxDashTime = 0.2f, airDashTime = 0.3f, groundDashTime = 0.15f, braveDashSpeed = 24f, bombDashSpeed = 40f;
     [SerializeField] private int dashCounter;
     [SerializeField] private int maxDashCounter = 3;
-    private bool isDashKeyDown = false;
-    private bool hasDashed;
-    private bool isDashing;
+    [SerializeField] private float maxDashTime = 0.2f, airDashTime = 0.3f, groundDashTime = 0.15f, braveDashSpeed = 24f, bombDashSpeed = 40f;
+    [SerializeField] private float dashTimer;
+    private bool isDashKeyDown = false, shouldChargeDash;
+    private bool hasAirDashed, hasBraveDashed;
+    [SerializeField]private bool isBombDashing, isDashing;
     private float savedGravity_UseProperty;
 
     [SerializeField]
@@ -73,7 +74,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform afterImageParent;
     [SerializeField]
-    private Color trailColor = new Vector4(50, 50, 50, 0.2f), fadeColor;
+    private Color bombTrailColor = new Vector4(50, 50, 50, 0.2f), bombTrailFadeColor,braveTrailColor, braveTrailFadeColor;
 
     [Space]
     [Header("Detect Bounds")]
@@ -169,7 +170,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem deathParticle, damageParticle;
     public ParticleSystem chargeJumpParticle;
     public ParticleSystem chargeJumpMaxColor;
-    public ParticleSystem dashParticle;
+    public ParticleSystem bombDashParticle,braveDashParticle;
     public ParticleSystem landingParticles;
     public ParticleSystem wallJumpParticle;
     public ParticleSystem slideParticle;
@@ -510,9 +511,12 @@ public class Player : MonoBehaviour
                 {
                     _state = PlayerState.STATE_RUNNING_BR;
                 }
-
+                if (isDashKeyDown)
+                {
+                    _state = PlayerState.STATE_GROUND_DASHING_BR;
+                }
                 GroundAttackInputs();
-                DashingBrave();
+                
                 break;
             case PlayerState.STATE_RUNNING_BR:
                 if (horizontalInput == 0)
@@ -528,8 +532,11 @@ public class Player : MonoBehaviour
                 {
                     _state = PlayerState.STATE_JUMPING_BR;
                 }
+                if (isDashKeyDown)
+                {
+                    _state = PlayerState.STATE_GROUND_DASHING_BR;
+                }
                 GroundAttackInputs();
-                DashingBrave();
                 break;
             case PlayerState.STATE_JUMPING_BR:
                 canWallSlide = true;
@@ -555,7 +562,6 @@ public class Player : MonoBehaviour
                     SpendMeter(strikeCost);
                     hasMovementStarted = false;
                     attackCoroutineStarted = false;
-                    attackTimer = specialAttackCooldown;
                     _state = PlayerState.STATE_BRAVE_STRIKE_BR;
                 }
                 if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
@@ -633,7 +639,6 @@ public class Player : MonoBehaviour
                     {
                         SpendMeter(strikeCost);
                         wallJumpTimer = 0;
-                        attackTimer = specialAttackCooldown;
                         hasMovementStarted = false;
                         attackCoroutineStarted = false;
                         _state = PlayerState.STATE_BRAVE_STRIKE_BR;
@@ -700,13 +705,37 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.STATE_GROUND_DASHING_BR:
+                isDashKeyDown = false;
+                ShowAfterImage(braveTrailColor, braveTrailFadeColor);
+                if (!hasBraveDashed)
+                {
+                    audioManager.PlaySound("Dash");
+                    currentAnim.Play(braveDash);
+                    ShowAfterImage(braveTrailColor, braveTrailFadeColor);
+                    braveDashParticle.Play();
+                    hasBraveDashed = true;
+                }
+
+                if (shouldChargeDash&&dashTimer<maxDashTime)
+                {
+                    isDashing = true;
+                }
+                else
+                {
+                    isDashing = false;
+                    braveDashParticle.Stop();
+                }
+
                 if (shouldJump == true || !isOnGround)
                 {
+                    braveDashParticle.Stop();
+                    hasBraveDashed = false;
                     dashTimer = 0;
                     _state = PlayerState.STATE_JUMPING_BR;
                 }
                 if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
                 {
+                    braveDashParticle.Stop();
                     dashTimer = 0;
                     SpendMeter(burstCost);
                     hasMovementStarted = false;
@@ -773,38 +802,32 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.STATE_JUMPING_ATTACK_BR:
-                if (attackTimer >= 0)
-                {
-                    if (!attackCoroutineStarted)
-                        StartCoroutine(PlayAttackAnim(braveASlash1, comboA2Sound));
+                if (!attackCoroutineStarted)
+                    StartCoroutine(PlayAttackAnim(braveASlash1, attackingSound));
 
-                    if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
-                    {
-                        TurnAround();
-                        SpendMeter(strikeCost);
-                        hasMovementStarted = false;
-                        attackCoroutineStarted = false;
-                        attackTimer = specialAttackCooldown;
-                        _state = PlayerState.STATE_BRAVE_STRIKE_BR;
-                    }
-                    if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
-                    {
-                        attackTimer = 0;
-                        SpendMeter(burstCost);
-                        hasMovementStarted = false;
-                        attackCoroutineStarted = false;
-                        _state = PlayerState.STATE_BRAVE_BURST_BR;
-                    }
-                    else if (isDownSpecialKeyDown && !isOnGround)
-                    {
-                        TurnAround();
-                        hasMovementStarted = false;
-                        attackCoroutineStarted = false;
-                        attackTimer = 0;
-                        _state = PlayerState.STATE_BRAVE_SLAM_BR;
-                    }
+                if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
+                {
+                    TurnAround();
+                    SpendMeter(strikeCost);
+                    hasMovementStarted = false;
+                    attackCoroutineStarted = false;
+                    _state = PlayerState.STATE_BRAVE_STRIKE_BR;
                 }
-                    break;
+                if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
+                {
+                    SpendMeter(burstCost);
+                    hasMovementStarted = false;
+                    attackCoroutineStarted = false;
+                    _state = PlayerState.STATE_BRAVE_BURST_BR;
+                }
+                else if (isDownSpecialKeyDown && !isOnGround)
+                {
+                    TurnAround();
+                    hasMovementStarted = false;
+                    attackCoroutineStarted = false;
+                    _state = PlayerState.STATE_BRAVE_SLAM_BR;
+                }
+                break;
             #endregion
             #region BraveAttacks
             case PlayerState.STATE_BRAVE_STRIKE_BR:
@@ -1015,7 +1038,7 @@ public class Player : MonoBehaviour
                     _state = PlayerState.STATE_SHOOTING_IDLE_BMB;
                 }
 
-                if (isDashKeyDown && !hasDashed)
+                if (isDashKeyDown && !hasAirDashed)
                 {
                     audioManager.PlaySound("Dash");
                     currentAnim.Play(bombDash);
@@ -1041,7 +1064,7 @@ public class Player : MonoBehaviour
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_RUNNING_BMB;
                 }
-                if (isDashKeyDown && !hasDashed)
+                if (isDashKeyDown && !hasAirDashed)
                 {
                     audioManager.PlaySound("Dash");
                     currentAnim.Play(bombDash);
@@ -1077,7 +1100,7 @@ public class Player : MonoBehaviour
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_JUMPING_BMB;
                 }
-                if (isDashKeyDown && !hasDashed)
+                if (isDashKeyDown && !hasAirDashed)
                 {
                     audioManager.PlaySound("Dash");
                     currentAnim.Play(bombDash);
@@ -1270,7 +1293,6 @@ public class Player : MonoBehaviour
                 Jump();
                 BetterJump();
                 CheckMove();
-                
                 break;
             case PlayerState.STATE_WALLSLIDING_BR:
                 WallSliding();
@@ -1283,12 +1305,7 @@ public class Player : MonoBehaviour
                 CheckMove();
                 break;
             case PlayerState.STATE_GROUND_DASHING_BR:
-                dashTimer += Time.fixedDeltaTime;
-                if (dashTimer >= maxDashTime)
-                {
-                    dashTimer = maxDashTime;
-                    _state = PlayerState.STATE_GROUND_DASHING_CD_BR;
-                }
+                DashingBrave();
                 break;
             case PlayerState.STATE_GROUND_DASHING_CD_BR:
                 dashTimer -= Time.fixedDeltaTime;
@@ -1336,36 +1353,20 @@ public class Player : MonoBehaviour
                 {
                     attackTimer -= Time.fixedDeltaTime;
                     isFirstAttackKeyDown = false;
-                    if (isOnGround)
-                    {
-                        myRB.velocity = new Vector2(0, myRB.velocity.y);
-                    }
-                    
                 }
-
-                    BetterJump();
-                    ReturnToIdleState();
+                if (isOnGround)
+                {
+                    myRB.velocity = new Vector2(0, myRB.velocity.y);
+                }
+                BetterJump();
+                ReturnToIdleState();
 
                 break;
             #endregion
             #region BraveAttacks
             case PlayerState.STATE_BRAVE_STRIKE_BR:
-                //BetterJump();
-                if (attackTimer >= 0)
-                {
-                    attackTimer -= Time.fixedDeltaTime;
-                    if (!hasMovementStarted)
-                    {
-                        StartCoroutine(BraveStrike());
-                    }
-
-                }
-                if (attackTimer <= 0)
-                {
-                    IsInvulnerable = false;
-                    attackTimer = 0;
-                    ReturnToIdleState();
-                }
+                if (!hasMovementStarted)
+                    StartCoroutine(BraveStrike());
                 break;
 
             case PlayerState.STATE_BRAVE_LAUNCHER_BR:
@@ -1378,7 +1379,8 @@ public class Player : MonoBehaviour
             case PlayerState.STATE_BRAVE_SLAM_BR:
                 if (!isOnGround)
                 {
-                    myRB.velocity = new Vector2(0f, -braveSlamSpeed);
+                    if (!hasMovementStarted)
+                        StartCoroutine(AttackMovement(0f, -braveSlamSpeed, true, .1f, .6f));
                 }
                 break;
             case PlayerState.STATE_UP_KICK_READY_BR:
@@ -1394,11 +1396,11 @@ public class Player : MonoBehaviour
                 {
                     if (CanAimRight)
                     {
-                        myRB.AddForce(new Vector2(horizontalDashSlashSpeed, upVerticalDSSpeed), ForceMode2D.Impulse);
+                        myRB.velocity = new Vector2(horizontalDashSlashSpeed, upVerticalDSSpeed);
                     }
                     else
                     {
-                        myRB.AddForce(new Vector2(-horizontalDashSlashSpeed, upVerticalDSSpeed), ForceMode2D.Impulse);
+                        myRB.velocity = new Vector2(-horizontalDashSlashSpeed, upVerticalDSSpeed);
                     }
                 }
                 break;
@@ -1505,14 +1507,13 @@ public class Player : MonoBehaviour
         {
             attackTimer = 0;
             if (horizontalInput != 0)
-            {
                 _state = PlayerState.STATE_RUNNING_BR;
-            }
-            if (horizontalInput == 0)
-            {
+            else
                 _state = PlayerState.STATE_IDLE_BR;
-            }
         }
+        braveDashParticle.Stop();
+        isDashing = false;
+        hasBraveDashed = false;
         upSlashReady = false;
         downSlashReady = false;
     }
@@ -1528,7 +1529,7 @@ public class Player : MonoBehaviour
         if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
         {
             SpendMeter(strikeCost);
-            attackTimer = specialAttackCooldown;
+
             hasMovementStarted = false;
             attackCoroutineStarted = false;
             _state = PlayerState.STATE_BRAVE_STRIKE_BR;
@@ -1550,7 +1551,7 @@ public class Player : MonoBehaviour
         {
             hasMovementStarted = false;
             attackCoroutineStarted = false;
-            attackTimer = attackCooldown;
+
             _state = PlayerState.STATE_BRAVE_LAUNCHER_BR;
         }
     }
@@ -1561,12 +1562,12 @@ public class Player : MonoBehaviour
             TurnAround();
             SpendMeter(strikeCost);
             hasMovementStarted = false;
-            attackTimer = specialAttackCooldown;
+            attackCoroutineStarted = false;
             _state = PlayerState.STATE_BRAVE_STRIKE_BR;
         }
         if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
         {
-            attackTimer = 0;
+
             SpendMeter(burstCost);
             hasMovementStarted = false;
             attackCoroutineStarted = false;
@@ -1577,7 +1578,7 @@ public class Player : MonoBehaviour
             TurnAround();
             hasMovementStarted = false;
             attackCoroutineStarted = false;
-            attackTimer = attackCooldown;
+
             _state = PlayerState.STATE_BRAVE_LAUNCHER_BR;
         }
 
@@ -1589,24 +1590,15 @@ public class Player : MonoBehaviour
     }
     private void DashingBrave()
     {
-        if (isDashKeyDown)
+        if (shouldChargeDash && dashTimer < maxDashTime)//shouldChargeDash uses GetButton && dash timer must be lower than maxTime
         {
-            //Right
-            if (CanAimRight)
-            {
-                myRB.velocity = new Vector2(braveDashSpeed, 0);
-                audioManager.PlaySound("Dash");
-                currentAnim.Play(braveDash);
-            }
-            //Left    
-            else if (!CanAimRight)
-            {
-                myRB.velocity = new Vector2(-braveDashSpeed, 0);
-                audioManager.PlaySound("Dash");
-                currentAnim.Play(braveDash);
-            }
-            NumberOfDashes--;
-            _state = PlayerState.STATE_GROUND_DASHING_BR;
+            dashTimer += Time.fixedDeltaTime;
+            myRB.velocity = new Vector2(braveDashSpeed * direction, 0);
+        }
+        else //released dash button || exceeded time
+        {
+            dashTimer = 0;
+            ReturnToIdleState();
         }
     }
     public void EnemyTargetedUpDash()
@@ -1770,7 +1762,7 @@ public class Player : MonoBehaviour
         {
             jumpInputMemory = maxJumpInputMemory;
         }
-        if (Input.GetButtonDown(bottomFaceButtonName) && isOnWall/* && isAtPeakJumpHeight*/)
+        if (Input.GetButtonDown(bottomFaceButtonName) && isWallSliding)
         {
             shouldWallJump = true;
         }
@@ -1798,6 +1790,10 @@ public class Player : MonoBehaviour
         coyoteTimer -= Time.deltaTime;
         if (isOnGround)
             coyoteTimer = maxCoyoteTime;
+
+        wallCoyoteTimer -= Time.deltaTime;
+        if(isOnWall)
+            wallCoyoteTimer = maxCoyoteTime;
     }
     void UpdateCoyoteTime()// holds the jump input for .2 seconds before landing/after walking off platforms; use until we implement an actual input buffer
     {
@@ -1807,10 +1803,10 @@ public class Player : MonoBehaviour
     private void GetDashInput()
     {
         isDashKeyDown = (Input.GetButtonDown(rightFaceButtonName));
-        //if (Input.GetButtonDown(rightFaceButtonName)||Input.GetButtonDown(leftTriggerName) && NumberOfDashes > 0)
-        //    isDashKeyDown = true;
-        //else
-        //    isDashKeyDown = false;
+        if (Input.GetButton(rightFaceButtonName))
+            shouldChargeDash = true;
+        else if (Input.GetButtonUp(rightFaceButtonName))
+            shouldChargeDash = false;
     }
     private void GetAttackInput()
     {
@@ -1859,7 +1855,6 @@ public class Player : MonoBehaviour
                 isDownSpecialKeyDown = false;
                 isUpSpecialKeyDown = false;
             }
-
             if (Input.GetButtonDown(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
                 isFirstAttackKeyDown = true;
             else
@@ -1878,7 +1873,6 @@ public class Player : MonoBehaviour
             else
                 isThirdAttackKeyDown = false;
         }
-
         //Buster
         if (Input.GetButton(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
         {
@@ -2033,21 +2027,12 @@ public class Player : MonoBehaviour
         if (shouldWallJump)
         {
             StopCoroutine(DisableMovement(0f));
-            StartCoroutine(DisableMovement(blinkInterval*3));
+            StartCoroutine(DisableMovement(.4f));
             canWallSlide = false;
             audioManager.PlaySound(jumpSound);
-            if (CanAimRight)
-            {
-                //jump to the left
-                myRB.velocity = new Vector2(-wallJumpDistance, wallJumpHeight);
-                shouldWallJump = false;
-            }
-            if (!CanAimRight)
-            {
-                //jump to the right
-                myRB.velocity = new Vector2(wallJumpDistance, wallJumpHeight);
-                shouldWallJump = false;
-            }
+
+            myRB.velocity = new Vector2(wallJumpDistance * -direction, wallJumpHeight);
+            shouldWallJump = false;
         }
 
     }
@@ -2055,11 +2040,13 @@ public class Player : MonoBehaviour
     {
         if (horizontalInput > 0)
         {
+            direction = 1;
             transform.localScale = new Vector3(1f, 1f, 1f);
             CanAimRight = true;
         }
         else if (horizontalInput < 0)
         {
+            direction = -1;
             transform.localScale = new Vector3(-1f, 1f, 1f);
             CanAimRight = false;
         }
@@ -2111,7 +2098,7 @@ public class Player : MonoBehaviour
         {
             if (jumpPressure > 0f)
             {
-                ShowAfterImage();
+                ShowAfterImage(invulColor, bombTrailFadeColor);
                 currentAnim.SetBool("Ground", false);
                 currentAnim.SetFloat("vSpeed", myRB.velocity.y);
                 hasReleasedJump = true;
@@ -2201,8 +2188,8 @@ public class Player : MonoBehaviour
     private void GroundTouch()
     {
         currentAnim.SetBool("Ground", true);
-        hasDashed = false;
-        isDashing = false;
+        hasAirDashed = false;
+        isBombDashing = false;
         NumberOfDashes = minimumNumberOfDashes;
         if (!hasLanded)
         {
@@ -2216,7 +2203,7 @@ public class Player : MonoBehaviour
         isOnWall = Physics2D.Linecast(transform.position, wallCheck.position, whatCountsAsWall);
         if (canWallSlide)
         {
-            isWallSliding = (CanAimRight && horizontalInput > 0.1f || !CanAimRight && horizontalInput < -0.1f) && (isOnWall && !isOnGround && isAtPeakJumpHeight);
+            isWallSliding = (CanAimRight && horizontalInput > 0.1f || !CanAimRight && horizontalInput < -0.1f) && (isOnWall && !isOnGround && myRB.velocity.y<=0);
         }
         else
             isWallSliding = false;
@@ -2231,11 +2218,11 @@ public class Player : MonoBehaviour
             SpendAmmo(1);
             if (CurrentNumberOfBullets <= 0)
             {
-                hasDashed = true;
+                hasAirDashed = true;
             }
         }
         else
-            hasDashed = true;
+            hasAirDashed = true;
 
         myRB.velocity = Vector2.zero;
         Vector2 dir = new Vector2(x, y);
@@ -2329,7 +2316,7 @@ public class Player : MonoBehaviour
         }
     }
     #region PolishRegion
-    public void ShowAfterImage()
+    public void ShowAfterImage(Color afterimageColor, Color fadeColor)
     {
         Sequence s = DOTween.Sequence();
 
@@ -2337,14 +2324,14 @@ public class Player : MonoBehaviour
         {
             Transform currentGhost = afterImageParent.GetChild(i);
             s.AppendCallback(() => currentGhost.position = Player.Instance.transform.position);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = CurrentSpriteRenderer.flipX);
+            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = !CanAimRight);
             s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().sprite = CurrentSpriteRenderer.sprite);
-            s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(trailColor, 0));
-            s.AppendCallback(() => FadeSprite(currentGhost));
+            s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(afterimageColor, 0));
+            s.AppendCallback(() => FadeSprite(currentGhost, fadeColor));
             s.AppendInterval(aIInterval);
         }
     }
-    public void FadeSprite(Transform current)
+    public void FadeSprite(Transform current, Color fadeColor)
     {
         current.GetComponent<SpriteRenderer>().material.DOKill();
         current.GetComponent<SpriteRenderer>().material.DOColor(fadeColor, fadeTime);
@@ -2456,18 +2443,18 @@ public class Player : MonoBehaviour
     IEnumerator DashWait()
     {
         coroutineStarted = true;
-        ShowAfterImage();
+        ShowAfterImage(bombTrailColor, bombTrailFadeColor);
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
 
-        dashParticle.Play();
-        isDashing = true;
+        bombDashParticle.Play();
+        isBombDashing = true;
 
         yield return new WaitForSeconds(airDashTime);
 
-        dashParticle.Stop();
+        bombDashParticle.Stop();
         BetterJump();
-        isDashing = false;
+        isBombDashing = false;
         coroutineStarted = false;
         _state = PlayerState.STATE_JUMPING_BMB;
     }
@@ -2476,7 +2463,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(groundDashTime);
         if (isOnGround)
-            hasDashed = false;
+            hasAirDashed = false;
     }
     private IEnumerator BlinkWhileChargingCoroutine()
     {
@@ -2545,7 +2532,10 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(.35f);
             myRB.velocity = new Vector2(-jumpDistBraveStrike, -jumpStrengthBraveStrike/2);
         }
-        
+        yield return new WaitForSeconds(specialAttackCooldown);
+        IsInvulnerable = false;
+        attackTimer = 0;
+        ReturnToIdleState();
     }
     IEnumerator BraveBurstTimer()
     {

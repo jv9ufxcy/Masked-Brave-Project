@@ -23,7 +23,7 @@ public class FreezeTime : MonoBehaviour
     }
     public void FreezeFrame(float maxFreezeDuration)
     {
-        freezeDuration = maxFreezeDuration;
+        //freezeDuration = maxFreezeDuration;
     }
     IEnumerator DoFreeze()
     {

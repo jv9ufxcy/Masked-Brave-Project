@@ -2259,11 +2259,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82603246854662192, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4572bfb00f94aef4088873ee1f7a9147, type: 3}
+    - target: {fileID: 82603246854662192, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
         type: 3}
       propertyPath: sounds.Array.data[16].clip
       value: 
       objectReference: {fileID: 8300000, guid: 6c95f29ad8c38814199578c37f8035ac, type: 3}
+    - target: {fileID: 114116608639138892, guid: 4092e24f632fcfe46a51ac39052b012f,
+        type: 3}
+      propertyPath: sounds.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a8e3ea1a6b2aecd40af6069795102149, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4092e24f632fcfe46a51ac39052b012f, type: 3}
 --- !u!4 &943375470 stripped
@@ -3578,7 +3593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871327149313626, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.3298965
+      value: 6.3350635
       objectReference: {fileID: 0}
     - target: {fileID: 114771058291156574, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
         type: 3}
@@ -3752,21 +3767,9 @@ PrefabInstance:
       propertyPath: kinzecter
       value: 
       objectReference: {fileID: 1969973538}
-    - target: {fileID: 171757625, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: screenFreezeTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 171757625, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: shouldScreenFreeze
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 171757624, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: m_Size.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 171757624, guid: 0103869ff496891439ba425c4354be31, type: 3}
-      propertyPath: m_Offset.y
-      value: 1
+    - target: {fileID: 1856400284, guid: 0103869ff496891439ba425c4354be31, type: 3}
+      propertyPath: maxDashTime
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0103869ff496891439ba425c4354be31, type: 3}
