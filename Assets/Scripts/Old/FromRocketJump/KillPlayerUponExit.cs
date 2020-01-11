@@ -21,7 +21,7 @@ public class KillPlayerUponExit : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             //TODO: replace with respawn
-            collision.gameObject.GetComponentInParent<EnemyHealthManager>().TakeDamage(killPlayerDamage, HurtEnemyOnHit.DamageEffect.launch);
+            collision.gameObject.GetComponentInParent<EnemyHealthManager>().TakeDamage(killPlayerDamage, 0,Vector2.zero,0);
         }
     }
 }

@@ -5,13 +5,13 @@ using Cinemachine;
 
 public class HurtEnemyOnHit : MonoBehaviour
 {
-    [SerializeField] private int damageToGive = 1;
-    [SerializeField] private int meterToGive = 1;
     public DamageEffect _effect;
     public enum DamageEffect { stun, knockback, launch}
-
-    [SerializeField] private float screenFreezeTime = 0.03f;
-    [SerializeField] private bool shouldScreenshakeOnHit = false, shouldScreenFreeze = false;
+    [Header("Damage Stats")]
+    [SerializeField] private Vector2 hitDistance;
+    [SerializeField] private int damageToGive = 1, meterToGive = 1;
+    [SerializeField] private float hitStopDuration = 0.1f, knockbackDuration = 0.5f;
+    [SerializeField] private bool shouldScreenshakeOnHit = false, shouldHitStop = true;
     private EnemyHealthManager enemyHP;
     private BossHealthManager bossHP;
 
@@ -32,16 +32,17 @@ public class HurtEnemyOnHit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D enemyColl)
     {
+        Vector2 enemySideDistance = hitDistance;
         enemyHP = enemyColl.gameObject.GetComponentInParent<EnemyHealthManager>();
         bossHP = enemyColl.GetComponentInParent<BossHealthManager>();
         if (enemyHP!=null)
         {
-            enemyHP.TakeDamage(damageToGive, _effect);
-
             if (enemyColl.transform.position.x < transform.position.x)
-                enemyHP.enemyKnockFromRight = true;
+                enemySideDistance.x *= -1;//is on ur right
             else
-                enemyHP.enemyKnockFromRight = false;
+                enemySideDistance.x *= 1;//is on ur left
+
+            enemyHP.TakeDamage(damageToGive, knockbackDuration, enemySideDistance, hitStopDuration);
         }
         if (bossHP!=null)
         {
@@ -58,12 +59,9 @@ public class HurtEnemyOnHit : MonoBehaviour
 
         if (shouldScreenshakeOnHit)
             Screenshake();
-        if (shouldScreenFreeze)
-            FreezeTime();
-    }
-    private void FreezeTime()
-    {
-        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame(screenFreezeTime);
+
+        if (shouldHitStop)
+            player.DoHitStop(hitStopDuration);
     }
     private static void Screenshake()
     {

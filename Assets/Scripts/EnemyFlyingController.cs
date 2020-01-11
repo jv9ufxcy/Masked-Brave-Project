@@ -53,13 +53,13 @@ public class EnemyFlyingController : MonoBehaviour
         isPlayerInRange = Physics2D.OverlapCircle(transform.position, detectionRange, whatIsShootable);
         if (isPlayerInRange)
         {
-            if (enemyHealth.enemyKnockbackDuration <= 0)
+            if (enemyHealth.CanMove)
             {
                 transform.position = Vector3.MoveTowards(transform.position, thePlayer.transform.position, flightSpeed * Time.fixedDeltaTime);
             }
             else
             {
-                enemyHealth.Knockback();
+                //enemyHealth.Knockback();
             }
         }
     }

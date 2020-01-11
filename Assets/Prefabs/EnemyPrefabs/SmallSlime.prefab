@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a957be431e693d74184cf259f15c087f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemyInvincible: 0
+  isEnemyDead: 0
   currentEnemyHealth: 0
   maxEnemyHealth: 10
   deathParticle: {fileID: 690, guid: 581f36e8204ec674ca9cf38a21e0f97b, type: 3}
@@ -123,21 +123,15 @@ MonoBehaviour:
   eStock: 0
   ammoStock: 1
   _damagedState: 0
-  enemyKnockFromRight: 0
-  enemyKnockbackDuration: 0
-  enemyKnockbackForce: 15
-  enemyMaxKnockbackDuration: 0.25
-  maxEnemyStunDuration: 0.25
-  maxEnemyLaunchDuration: 0.05
-  launchForce: {x: 0, y: 20}
   damageCooldownInSeconds: 0.25
+  deathFreezeTime: 0.1
   wallDetectPoint: {fileID: 7058027136020591375}
   groundDetectPoint: {fileID: 7058027136020591375}
   edgeDetectPoint: {fileID: 7058027136020591375}
   DetectRadius: 0.2
   whatCountsAsWall:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 33024
   enemyTakeDamageSound: TakeDamage
   enemyDeathSound: Death
 --- !u!114 &1850712348673569785
@@ -197,7 +191,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &3991188050088239747
 SpriteRenderer:

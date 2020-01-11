@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114457906118669710}
   - component: {fileID: 61936668711768910}
   - component: {fileID: 50123311571755754}
+  - component: {fileID: 8162099586308192447}
   m_Layer: 9
   m_Name: BubbleSlime
   m_TagString: Enemy
@@ -57,7 +58,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646099195830184}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -125,28 +126,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a957be431e693d74184cf259f15c087f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemyInvincible: 1
+  isEnemyDead: 1
   currentEnemyHealth: 0
-  maxEnemyHealth: 20
+  maxEnemyHealth: 9999
   deathParticle: {fileID: 1756106632241220, guid: 2f3b405dff359b6429fa5951466d6c6c,
+    type: 3}
+  damageParticle: {fileID: 6235274296515908431, guid: 72272d50084f1e4488f9f2ea80213e3d,
     type: 3}
   itemDropped: {fileID: 1251846719162076, guid: 908888155bfcc3e488e93b1343a8f6b3,
     type: 3}
   energyDropped: {fileID: 1214605765240008, guid: 47fb1b856b0351146b6f18848f50f296,
     type: 3}
-  shouldDropAtHalf: 1
+  shouldDropAtHalf: 0
   hpStock: 0
   eStock: 0
   ammoStock: 0
   _damagedState: 0
-  enemyKnockFromRight: 0
-  enemyKnockbackDuration: 0
-  enemyKnockbackForce: 5
-  enemyMaxKnockbackDuration: 0.25
-  maxEnemyStunDuration: 0
-  maxEnemyLaunchDuration: 0
-  launchForce: {x: 0, y: 15}
+  isInvul: 0
   damageCooldownInSeconds: 0.33
+  deathFreezeTime: 0.1
   wallDetectPoint: {fileID: 4255838615527880}
   groundDetectPoint: {fileID: 4255838615527880}
   edgeDetectPoint: {fileID: 4255838615527880}
@@ -173,7 +171,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20, y: 20}
+    oldSize: {x: 6, y: 6}
     newSize: {x: 3, y: 1.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -201,5 +199,24 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 3
+--- !u!95 &8162099586308192447
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646099195830184}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

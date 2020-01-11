@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class EnemyHealthManager : MonoBehaviour
 {
-    [SerializeField] private bool isEnemyInvincible = false;
+    [SerializeField] private bool isEnemyDead = false;
     [SerializeField] private int currentEnemyHealth;
     [SerializeField] private int maxEnemyHealth;
     [SerializeField] private GameObject deathParticle, damageParticle;
@@ -18,12 +18,9 @@ public class EnemyHealthManager : MonoBehaviour
 
     [Header("Knockback")]
     public DamageState _damagedState;
-    public enum DamageState { stunned, knockedback, launched }
-    public bool enemyKnockFromRight;
-    public float enemyKnockbackDuration, enemyKnockbackForce, enemyMaxKnockbackDuration,  maxEnemyStunDuration, maxEnemyLaunchDuration;
-    [SerializeField] private Vector2 launchForce =new Vector2 (0,15);
-    private bool isInvul;
-    [SerializeField] private float damageCooldownInSeconds = .75f, deathFreezeTime = 0.03f;
+    public enum DamageState { stunned, ableToMove }
+    [SerializeField] private bool isInvul;
+    [SerializeField] private float damageCooldownInSeconds = .75f, deathFreezeTime = 0.1f;
     [Space]
     [Header("Detection")]
     [SerializeField] Transform wallDetectPoint;
@@ -34,6 +31,7 @@ public class EnemyHealthManager : MonoBehaviour
     private bool notAtEdge;
     private bool hittingWall;
     private bool isOnGround;
+    private bool canMove_UseProperty=true;
 
     private bool isFacingRight;
     private Rigidbody2D enemyRB;
@@ -112,6 +110,9 @@ public class EnemyHealthManager : MonoBehaviour
             isOnGround = value;
         }
     }
+
+    public bool CanMove { get => canMove_UseProperty; set => canMove_UseProperty = value; }
+
     public static EnemyHealthManager GetClosestEnemy(Vector3 position, float maxRange)
     {
         EnemyHealthManager closest = null;
@@ -148,7 +149,8 @@ public class EnemyHealthManager : MonoBehaviour
     private void Initialize()
     {
         currentEnemyHealth = maxEnemyHealth;
-
+        //isEnemyDead = false;
+        canMove_UseProperty = true;
         enemyRend = GetComponent<SpriteRenderer>();
         enemyAnim = GetComponent<Animator>();
         enemyRB = GetComponent<Rigidbody2D>();
@@ -165,11 +167,6 @@ public class EnemyHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        //if (currentEnemyHealth<=maxEnemyHealth/2 && shouldDropAtHalf==true)
-        //{
-        //    Instantiate(energyDropped, transform.position, transform.rotation);
-        //    shouldDropAtHalf = false;
-        //}
 		if (currentEnemyHealth<=0)
         {
             currentEnemyHealth = 0;
@@ -193,67 +190,38 @@ public class EnemyHealthManager : MonoBehaviour
         Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, DetectRadius, whatCountsAsWall);
         IsOnGround = groundObjects.Length > 0;
     }
-
-    public void Knockback()
+    IEnumerator DoHitStop(float knockbackDuration, Vector2 hitDistance, float hitStopDuration)
     {
-        switch (_damagedState)
-        {
-            case DamageState.stunned:
-                enemyRB.velocity = Vector2.zero;
-                enemyKnockbackDuration -= Time.deltaTime;
-                break;
-            case DamageState.knockedback:
-                if (enemyKnockFromRight)
-                {
-                    enemyRB.velocity = new Vector2(-enemyKnockbackForce, 0);
-                }
-                if (!enemyKnockFromRight)
-                {
-                    enemyRB.velocity = new Vector2(enemyKnockbackForce, 0);
-                }
-                enemyKnockbackDuration -= Time.deltaTime;
-                break;
-            case DamageState.launched:
-                enemyRB.velocity = launchForce;
-                enemyKnockbackDuration -= Time.deltaTime;
-                if (!coroutineStarted)
-                    StartCoroutine(LaunchWait());
-                
-                break;
-            default:
-                break;
-        }
+        Vector2 savedVelocity = enemyRB.velocity;//get current velocity and save it
+
+        canMove_UseProperty=false;//stop letting player move
+        enemyRB.velocity = Vector2.zero;//set velocity to 0
+
+        enemyAnim.speed = 0;//set animator speed to 0
+        //stop enemy from moving
+        yield return new WaitForSeconds(hitStopDuration);
+
+        enemyRB.velocity = savedVelocity;//restore saved velocity
+        enemyAnim.speed = 1;//restore animator.speed to 1
+
+        //allow enemy to move again unless you have something else for knockback
+        //DoKnockback
+        enemyRB.velocity = hitDistance;
+        yield return new WaitForSeconds(knockbackDuration);
+        canMove_UseProperty=true;//let player move again
     }
-    public void TakeDamage(int damageToTake, HurtEnemyOnHit.DamageEffect _effect)
+    public void TakeDamage(int damageToTake,float knockbackDuration, Vector2 distance, float hitStopDuration)
     {
         if (!IsInvul)
         {
-            if (!isEnemyInvincible)
+            if (!isEnemyDead)
             {
-                enemyRB.velocity = Vector2.zero;
                 currentEnemyHealth -= damageToTake;
-                Instantiate(damageParticle, transform.position, transform.rotation);
             }
-            switch (_effect)
-            {
-                case HurtEnemyOnHit.DamageEffect.stun:
-                    enemyKnockbackDuration = maxEnemyStunDuration;
-                    _damagedState = DamageState.stunned;
-                    break;
-                case HurtEnemyOnHit.DamageEffect.knockback:
-                    enemyKnockbackDuration = enemyMaxKnockbackDuration;
-                    _damagedState = DamageState.knockedback;
-                    break;
-                case HurtEnemyOnHit.DamageEffect.launch:
-                    enemyKnockbackDuration = maxEnemyLaunchDuration;
-                    _damagedState = DamageState.launched;
-                    break;
-                default:
-                    break;
-            }
-            
-            audioManager.PlaySound(enemyTakeDamageSound);
+            Instantiate(damageParticle, transform.position, transform.rotation);
             StartCoroutine(DamageCooldownCoroutine());
+            StartCoroutine(DoHitStop(knockbackDuration, distance, hitStopDuration));
+            audioManager.PlaySound(enemyTakeDamageSound);
         }
     }
     private IEnumerator DamageCooldownCoroutine()
@@ -263,12 +231,12 @@ public class EnemyHealthManager : MonoBehaviour
         yield return new WaitForSeconds(damageCooldownInSeconds);
         IsInvul = false;
     }
-    private IEnumerator LaunchWait()
+    private IEnumerator LaunchWait(float knockbackDuration)
     {
         coroutineStarted = true;
         DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
         enemyRB.gravityScale = 0;
-        yield return new WaitForSeconds(enemyMaxKnockbackDuration);
+        yield return new WaitForSeconds(knockbackDuration);
         enemyRB.gravityScale = defaultGravityScale;
         coroutineStarted = false;
     }
@@ -302,13 +270,13 @@ public class EnemyHealthManager : MonoBehaviour
     }
     private void OnDeath()
     {
-        FreezeTime();
+        //FreezeTime();
         Screenshake();
         audioManager.PlaySound(enemyDeathSound);
         Instantiate(deathParticle, transform.position, transform.rotation);
         Instantiate(itemDropped, transform.position, transform.rotation);
         enemyAnim.SetTrigger("Death");
-        isEnemyInvincible = true;
+        isEnemyDead = true;
         this.gameObject.SetActive(false);
         //Destroy(this.gameObject);
     }

@@ -120,11 +120,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4008ea7da11d3db4abb8cdfa5ecb9981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effect: 1
+  hitDistance: {x: 15, y: 0}
   damageToGive: 5
   meterToGive: 3
-  _effect: 1
+  hitStopDuration: 0.1
+  knockbackDuration: 0.5
   shouldScreenshakeOnHit: 1
-  shouldScreenFreeze: 1
+  shouldHitStop: 0
 --- !u!95 &95611479683623692
 Animator:
   serializedVersion: 3

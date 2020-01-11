@@ -75,10 +75,6 @@ public class Kinzecter : MonoBehaviour
         else
             isTooSlow = false;
 
-        CheckParticles();
-    }
-    private void FixedUpdate()
-    {
         switch (kState)
         {
             case State.WithPlayer:
@@ -94,10 +90,28 @@ public class Kinzecter : MonoBehaviour
                 }
                 break;
             case State.Recalling:
+                TryGrabKinzecter();
+                break;
+            default:
+                break;
+        }
+        CheckParticles();
+    }
+    private void FixedUpdate()
+    {
+        switch (kState)
+        {
+            case State.WithPlayer:
+                
+                break;
+            case State.Thrown:
+                
+                break;
+            case State.Recalling:
                 Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
                 kzRB.velocity = dirToPlayer * kzRecallSpeed;
 
-                TryGrabKinzecter();
+                
                 break;
         }
     }
@@ -143,7 +157,7 @@ public class Kinzecter : MonoBehaviour
     }
     private void TryGrabKinzecter()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < returnDistance)
+        if (Vector3.Distance(transform.position, player.transform.position) <= returnDistance)
         {
             kState = State.WithPlayer;
             kzRB.velocity = Vector2.zero;

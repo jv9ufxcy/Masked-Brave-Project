@@ -55,7 +55,7 @@ public class EnemyPatrol : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate ()
     {
-        if (enemyHealth.enemyKnockbackDuration <= 0)
+        if (enemyHealth.CanMove)
             TurnEnemyAround();
         EnemyMovement();
         PassAnimationSpeed();
@@ -81,7 +81,7 @@ public class EnemyPatrol : MonoBehaviour
     }
     private void EnemyMovement()
     {
-        if (enemyHealth.enemyKnockbackDuration <= 0)
+        if (enemyHealth.CanMove)
         {
             if (moveRight)
             {
@@ -96,7 +96,7 @@ public class EnemyPatrol : MonoBehaviour
         }
         else
         {
-            enemyHealth.Knockback();
+            //enemyHealth.Knockback();
             enemyAnim.SetTrigger("Damaged");
         }
         

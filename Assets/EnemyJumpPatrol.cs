@@ -62,6 +62,30 @@ public class EnemyJumpPatrol : MonoBehaviour
     }
     private void Update()
     {
+        if (!enemyHealth.CanMove)
+        {
+            enemyState = EnemyState.Damaged;
+        }
+        switch (enemyState)
+        {
+            case EnemyState.Patrolling:
+                CheckForObstacles();
+                break;
+            case EnemyState.Attacking:
+                break;
+            case EnemyState.Damaged:
+                if (isOnGround)
+                    enemyAnim.Play(hurtAnimation);
+                else
+                    enemyAnim.Play(jumpAnimation);
+                if (enemyHealth.CanMove)
+                {
+                    enemyState = EnemyState.Patrolling;
+                }
+                break;
+            default:
+                break;
+        }
         PassAnimationSpeed();
     }
     // Update is called once per frame
@@ -70,41 +94,14 @@ public class EnemyJumpPatrol : MonoBehaviour
         switch (enemyState)
         {
             case EnemyState.Patrolling:
-                if (enemyHealth.enemyKnockbackDuration <= 0)
-                {
-                    enemyHealth.enemyKnockbackDuration = 0;
-                    CheckForObstacles();
-                    EnemyMovement();
-                }
-                else
-                {
-                    enemyState = EnemyState.Damaged;
-                }
-                    
+                EnemyMovement();
                 break;
             case EnemyState.Attacking:
-                if (enemyHealth.enemyKnockbackDuration > 0)
-                {
-                    //StopAllCoroutines();
-                    enemyState = EnemyState.Damaged;
-                }
-                else
-                {
-                    if (!coroutineStarted)
-                        StartCoroutine(AttackForward());
-                }
+                if (!coroutineStarted)
+                    StartCoroutine(AttackForward());
                 break;
             case EnemyState.Damaged:
-                if (enemyHealth.enemyKnockbackDuration > 0)
-                {
-                    enemyHealth.Knockback();
-                    if (isOnGround)
-                        enemyAnim.Play(hurtAnimation);
-                    else
-                        enemyAnim.Play(jumpAnimation);
-                }
-                else
-                    enemyState = EnemyState.Patrolling;
+                //ugokenai
                 break;
             default:
                 break;
@@ -131,24 +128,16 @@ public class EnemyJumpPatrol : MonoBehaviour
     }
     private void EnemyMovement()
     {
-        if (enemyHealth.enemyKnockbackDuration <= 0)
+        if (moveRight)
         {
-            if (moveRight)
-            {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-                enemyRB.velocity = new Vector2(moveSpeed, enemyRB.velocity.y);
-            }
-            else
-            {
-                transform.localScale = new Vector3(1f, 1f, 1f);
-                enemyRB.velocity = new Vector2(-moveSpeed, enemyRB.velocity.y);
-            }
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            enemyRB.velocity = new Vector2(moveSpeed, enemyRB.velocity.y);
         }
         else
         {
-            enemyState = EnemyState.Damaged;
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            enemyRB.velocity = new Vector2(-moveSpeed, enemyRB.velocity.y);
         }
-
     }
     public void Jump()
     {
@@ -156,7 +145,7 @@ public class EnemyJumpPatrol : MonoBehaviour
         {
             enemyAnim.SetBool("Ground", false);
             
-            enemyRB.AddForce(jumpForce, ForceMode2D.Impulse);
+            enemyRB.velocity=jumpForce;
             isOnGround = false;
         }
     }

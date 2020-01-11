@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
     private bool isAttackKeyDown, isAttackKeyUp, isFirstAttackKeyDown, isSecondAttackKeyDown, isThirdAttackKeyDown, isTransformKeyDown, isSpecialKeyDown, isNeutralSpecialKeyDown, isDownSpecialKeyDown, isUpSpecialKeyDown, isBurstKeyDown, isBraveStrikeKeyDown, isMeterBurnKeyDown;
     private bool hasMovementStarted,attackCoroutineStarted=false;
 
-    [SerializeField] private float attackCooldown = 0.45f, secondSlashCooldown = 0.45f, thirdSlashCooldown = 0.7f, specialAttackCooldown = 0.8f, shootingCooldown = 0.1f, burstCooldown = 0.5f;
+    [SerializeField] private float attackCooldown = 0.45f, secondSlashCooldown = 0.45f, thirdSlashCooldown = 0.6f, specialAttackCooldown = 0.8f, shootingCooldown = 0.1f, burstCooldown = 0.5f;
     [SerializeField] private float braveSlamSpeed = 12f, jumpStrengthBraveStrike = 12f, jumpDistBraveStrike = 8f, upVerticalDSSpeed = 18f, downVerticalDSSpeed = 12f, horizontalDashSlashSpeed = 20f, dashSlashMaxTime = 0.3f;
     private bool anySlashReady;
     private bool upSlashReady;
@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
 
     [SerializeField]
-    private string braveDash = "BraveDash", braveDamaged = "BraveDamaged", braveHenshin = "Henshin", braveSlash1 = "BraveSlash1", braveSlash2 = "BraveSlash2", braveSlash3 = "BraveSlash3", braveASlash1 = "BraveASlash1",
+    private string braveDash = "BraveDash", braveDamaged = "BraveDamaged", braveHenshin = "Henshin", braveSlash1 = "BraveSlash1", braveSlash2 = "BraveSlash2", braveSlash3 = "BraveSlash3", braveASlash1 = "BraveASlash1", braveASlash2 = "BraveASlash2",
         braveStrike = "braveStrike", braveLauncher = "BraveLauncher", braveSlam = "BraveSlam", braveKickUp = "BraveKickUp", braveKickDown = "BraveKickDown", braveBurst = "BraveBurst", braveABurst = "BraveABurst", braveFlourish = "BraveKinsectFlourish";
     [SerializeField]
     private string bombGShot1 = "BombGShot1", bombGShot2 = "BombGShot2", bombAShot1 = "BombAShot1", bombAShot2 = "BombAShot2", bombRShot1 = "BombRShot1", bombRShot2 = "BombRShot2", bombDash = "BombDash", bombDamage = "BombDamage" ;
@@ -600,7 +600,7 @@ public class Player : MonoBehaviour
                     hasMovementStarted = false;
                     attackCoroutineStarted = false;
                     attackTimer = attackCooldown;
-                    _state = PlayerState.STATE_JUMPING_ATTACK_BR;
+                    _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
                 }
                 if (isTransformKeyDown)
                 {
@@ -670,7 +670,7 @@ public class Player : MonoBehaviour
                         hasMovementStarted = false;
                         attackCoroutineStarted = false;
                         attackTimer = attackCooldown;
-                        _state = PlayerState.STATE_JUMPING_ATTACK_BR;
+                        _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
                     }
                     else if (isDownSpecialKeyDown)
                     {
@@ -763,24 +763,25 @@ public class Player : MonoBehaviour
                 {
                     if (!attackCoroutineStarted)
                         StartCoroutine(PlayAttackAnim(braveSlash1, attackingSound));
-
+                    attackTimer -= Time.deltaTime;
                     if (isFirstAttackKeyDown)
                     {
                         TurnAround();
                         hasMovementStarted = false;
                         attackCoroutineStarted = false;
-                        attackTimer = secondSlashCooldown;
                         _state = PlayerState.STATE_SECOND_ATTACK_BR;
                     }
                     GroundSpeciaLinks();
                 }
+                else
+                    ReturnToIdleState();
                 break;
             case PlayerState.STATE_SECOND_ATTACK_BR:
                 if (attackTimer >= 0)
                 {
                     if (!attackCoroutineStarted)
                         StartCoroutine(PlayAttackAnim(braveSlash2, attackingSound));
-
+                    attackTimer -= Time.deltaTime;
                     if (isFirstAttackKeyDown)
                     {
                         TurnAround();
@@ -791,48 +792,79 @@ public class Player : MonoBehaviour
                     }
                     GroundSpeciaLinks();
                 }
+                else
+                    ReturnToIdleState();
                 break;
             case PlayerState.STATE_THIRD_ATTACK_BR:
-                if (attackTimer>=0)
+                if (attackTimer >= 0)
                 {
+
                     if (!attackCoroutineStarted)
                         StartCoroutine(PlayAttackAnim(braveSlash3, comboA2Sound));
-
+                    attackTimer -= Time.deltaTime;
                     GroundSpeciaLinks();
                 }
+                else
+                    ReturnToIdleState();
                 break;
-            case PlayerState.STATE_JUMPING_ATTACK_BR:
-                if (!attackCoroutineStarted)
-                    StartCoroutine(PlayAttackAnim(braveASlash1, attackingSound));
+            case PlayerState.STATE_FIRST_JUMPING_ATTACK_BR:
+                if (attackTimer >= 0)
+                {
+                    if (!attackCoroutineStarted)
+                        StartCoroutine(PlayAttackAnim(braveASlash1, attackingSound));
 
-                if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
-                {
-                    TurnAround();
-                    SpendMeter(strikeCost);
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_BRAVE_STRIKE_BR;
+                    attackTimer -= Time.deltaTime;
+                    if (isFirstAttackKeyDown)
+                    {
+                        TurnAround();
+                        attackTimer = secondSlashCooldown;
+                        hasMovementStarted = false;
+                        attackCoroutineStarted = false;
+                        _state = PlayerState.STATE_SECOND_JUMPING_ATTACK_BR;
+                    }
+
+                    AirComboSpecialLinks();
                 }
-                if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
+                else
+                    ReturnToIdleState();
+                break;
+            case PlayerState.STATE_SECOND_JUMPING_ATTACK_BR:
+                if (attackTimer >= 0)
                 {
-                    SpendMeter(burstCost);
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_BRAVE_BURST_BR;
+                    if (!attackCoroutineStarted)
+                        StartCoroutine(PlayAttackAnim(braveASlash2, attackingSound));
+                    attackTimer -= Time.deltaTime;
+                    if (isFirstAttackKeyDown)
+                    {
+                        TurnAround();
+                        attackTimer = thirdSlashCooldown;
+                        hasMovementStarted = false;
+                        attackCoroutineStarted = false;
+                        _state = PlayerState.STATE_THIRD_JUMPING_ATTACK_BR;
+                    }
+
+                    AirComboSpecialLinks();
                 }
-                else if (isDownSpecialKeyDown && !isOnGround)
+                else
+                    ReturnToIdleState();
+                break;
+            case PlayerState.STATE_THIRD_JUMPING_ATTACK_BR:
+                if (attackTimer >= 0)
                 {
-                    TurnAround();
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_BRAVE_SLAM_BR;
+                    if (!attackCoroutineStarted)
+                        StartCoroutine(PlayAttackAnim(braveSlam, comboA2Sound));
+                    attackTimer -= Time.deltaTime;
+                    AirComboSpecialLinks();
                 }
+                else
+                    ReturnToIdleState();
                 break;
             #endregion
             #region BraveAttacks
             case PlayerState.STATE_BRAVE_STRIKE_BR:
                 if (attackTimer>=0)
                 {
+                    attackTimer -= Time.deltaTime;
                     if (!attackCoroutineStarted)
                     {
                         IsInvulnerable = true;
@@ -856,7 +888,7 @@ public class Player : MonoBehaviour
                     hasMovementStarted = false;
                     attackCoroutineStarted = false;
                     attackTimer = attackCooldown;
-                    _state = PlayerState.STATE_JUMPING_ATTACK_BR;
+                    _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
                 }
                 if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
                 {
@@ -906,7 +938,7 @@ public class Player : MonoBehaviour
                     hasMovementStarted = false;
                     attackCoroutineStarted = false;
                     attackTimer = attackCooldown;
-                    _state = PlayerState.STATE_JUMPING_ATTACK_BR;
+                    _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
                 }
                 if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
                 {
@@ -1007,8 +1039,8 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_KINZECTER_ACTION_BR:
                 if(!attackCoroutineStarted)
-                StartCoroutine(PlayAttackAnim(braveFlourish, meterRecoverySound));
-                KinzecterThrow();
+                    StartCoroutine(PlayAttackAnim(braveFlourish, meterRecoverySound));
+                
                 ReturnToIdleState();
                 break;
             case PlayerState.STATE_KINZECTER_RECALL_BR:
@@ -1263,6 +1295,35 @@ public class Player : MonoBehaviour
                 #endregion
         }
     }
+
+    private void AirComboSpecialLinks()
+    {
+        if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
+        {
+            TurnAround();
+            SpendMeter(strikeCost);
+            hasMovementStarted = false;
+            attackCoroutineStarted = false;
+            _state = PlayerState.STATE_BRAVE_STRIKE_BR;
+        }
+        if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
+        {
+            SpendMeter(burstCost);
+            hasMovementStarted = false;
+            attackCoroutineStarted = false;
+            _state = PlayerState.STATE_BRAVE_BURST_BR;
+        }
+        else if (isDownSpecialKeyDown && !isOnGround)
+        {
+            TurnAround();
+            hasMovementStarted = false;
+            attackCoroutineStarted = false;
+            _state = PlayerState.STATE_BRAVE_SLAM_BR;
+        }
+        if (isOnGround)
+            ReturnToIdleState();
+    }
+
     private void FixedUpdate()
     {
         if (!PauseManager.IsGamePaused)
@@ -1314,53 +1375,46 @@ public class Player : MonoBehaviour
             #region AttackingStates
             case PlayerState.STATE_FIRST_ATTACK_BR:
 
-                if (attackTimer >= 0)
-                {
-                    attackTimer -= Time.fixedDeltaTime;
-                    myRB.velocity = new Vector2(myRB.velocity.x / 2, myRB.velocity.y);
-                }
-                    ReturnToIdleState();
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(myRB.velocity.x / 2, myRB.velocity.y / 2, true, .1f, .6f));
+
                 break;
             case PlayerState.STATE_SECOND_ATTACK_BR:
 
-                if (attackTimer >= 0)
-                {
-                    attackTimer -= Time.fixedDeltaTime;
-                    myRB.velocity = new Vector2(myRB.velocity.x / 2, myRB.velocity.y);
-                }
-                    ReturnToIdleState();
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(myRB.velocity.x / 2, myRB.velocity.y / 2, true, .1f, .6f));
+
                 break;
             case PlayerState.STATE_THIRD_ATTACK_BR:
-                    
-                if (attackTimer >= 0)
-                {
-                    attackTimer -= Time.fixedDeltaTime;
-                    isFirstAttackKeyDown = false;
-                }
 
-                if (shouldJump == true || !isOnGround)
-                {
-                    attackTimer = 0;
-                    _state = PlayerState.STATE_JUMPING_BR;
-                }
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(myRB.velocity.x / 4, myRB.velocity.y / 2, true, .1f, .6f));
 
-                    ReturnToIdleState();
                 break;
-            case PlayerState.STATE_JUMPING_ATTACK_BR:
+            case PlayerState.STATE_FIRST_JUMPING_ATTACK_BR:
                 CheckMove();
                 BetterJump();
-                if (attackTimer >= 0)
-                {
-                    attackTimer -= Time.fixedDeltaTime;
-                    isFirstAttackKeyDown = false;
-                }
-                if (isOnGround)
-                {
-                    myRB.velocity = new Vector2(0, myRB.velocity.y);
-                }
-                BetterJump();
-                ReturnToIdleState();
 
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(myRB.velocity.x/2, myRB.velocity.y / 2, true, .1f, .6f));
+
+                break;
+            case PlayerState.STATE_SECOND_JUMPING_ATTACK_BR:
+                CheckMove();
+                BetterJump();
+
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(myRB.velocity.x / 2, myRB.velocity.y / 2, true, .1f, .6f));
+
+                break;
+            case PlayerState.STATE_THIRD_JUMPING_ATTACK_BR:
+                CheckMove();
+                BetterJump();
+                
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(myRB.velocity.x / 2, myRB.velocity.y / 2, true, .1f, .6f));
+
+                    ReturnToIdleState();
                 break;
             #endregion
             #region BraveAttacks
@@ -1433,6 +1487,7 @@ public class Player : MonoBehaviour
                     BraveBurst();
                 break;
             case PlayerState.STATE_KINZECTER_ACTION_BR:
+                KinzecterThrow();
                 break;
             #endregion
             #endregion
@@ -1547,7 +1602,7 @@ public class Player : MonoBehaviour
             attackCoroutineStarted = false;
             _state = PlayerState.STATE_KINZECTER_ACTION_BR;
         }
-        if (isDownSpecialKeyDown)
+        if (isUpSpecialKeyDown)
         {
             hasMovementStarted = false;
             attackCoroutineStarted = false;
@@ -1973,7 +2028,6 @@ public class Player : MonoBehaviour
     #region Movement Functions
     private void CheckMove()
     {
-
         if (knockbackDuration <= 0)
         {
             shouldMove = true;
@@ -2390,9 +2444,21 @@ public class Player : MonoBehaviour
     {
         Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
     }
-    private void FreezeTime()
+    public void DoHitStop(float hitStop)
     {
-        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame(damageScreenFreezeTime);
+        StartCoroutine(HitStopAttacker(hitStop));
+    }
+    IEnumerator HitStopAttacker(float hitStop)
+    {
+        Vector2 playerSpeed = myRB.velocity;//save speed ref
+        myRB.velocity = Vector2.zero;////stop moving
+        currentAnim.speed = 0;//stop animating
+        shouldMove = false;//don't let player input movement
+        yield return new WaitForSecondsRealtime(hitStop); //stop duration
+        //free my boys
+        myRB.velocity = playerSpeed;//return the saved speed reference
+        currentAnim.speed = 1;//let animator play
+        shouldMove = true;//let player input movement again
     }
     #endregion
     #region Damage
@@ -2411,7 +2477,7 @@ public class Player : MonoBehaviour
                 _state = PlayerState.STATE_DAMAGED_BMB;
             }
             Screenshake();
-            FreezeTime();
+            DoHitStop(0.1f);
             RecoveryPoints -= damageToGive;
             audioManager.PlaySound(takeDamageSound);
             OnDeath();
@@ -2680,9 +2746,9 @@ public class Player : MonoBehaviour
         STATE_SECOND_ATTACK_BR,
         STATE_THIRD_ATTACK_BR,
         STATE_FIRST_ATTACK_CD_SM,
-        STATE_SECOND_ATTACK_CD_SM,
-        STATE_THIRD_ATTACK_CD_SM,
-        STATE_JUMPING_ATTACK_BR,
+        STATE_FIRST_JUMPING_ATTACK_BR,
+        STATE_SECOND_JUMPING_ATTACK_BR,
+        STATE_THIRD_JUMPING_ATTACK_BR,
         STATE_JUMPING_ATTACK_CD_BR,
         STATE_UP_KICK_READY_BR,
         STATE_UP_KICK_ATTACK_BR,
