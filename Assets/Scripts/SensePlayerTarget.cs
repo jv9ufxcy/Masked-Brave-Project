@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SensePlayerTarget : MonoBehaviour
 {
-    [SerializeField] private bool isTopEnabled, isBottomEnabled;
+    private enum TargetSensor { isTopEnabled, isBottomEnabled };
+    [SerializeField] private TargetSensor targetSensor;
     private Player thePlayerStats;
     // Use this for initialization
     void Start ()
@@ -16,10 +17,18 @@ public class SensePlayerTarget : MonoBehaviour
     {
         if ((collision.CompareTag("Enemy") || collision.CompareTag("Boss")) && !thePlayerStats.PlayerIsOnGround)
         {
-            if (isTopEnabled)
-                thePlayerStats.EnemyTargetedUpDash();
-            else if (isBottomEnabled)
-                thePlayerStats.EnemyTargetedDownDash();
+            switch (targetSensor)
+            {
+                case TargetSensor.isTopEnabled:
+                    thePlayerStats.EnemyTargetedUpDash();
+                    break;
+                case TargetSensor.isBottomEnabled:
+                    thePlayerStats.EnemyTargetedDownDash();
+                    break;
+                default:
+                    break;
+            }
+                
         }
 
     }
@@ -27,10 +36,17 @@ public class SensePlayerTarget : MonoBehaviour
     {
         if ((collision.CompareTag("Enemy") || collision.CompareTag("Boss")) || thePlayerStats.PlayerIsOnGround)
         {
-            if (isTopEnabled)
-                thePlayerStats.UpDashEmpty();
-            else if (isBottomEnabled)
-                thePlayerStats.DownDashEmpty();
+            switch (targetSensor)
+            {
+                case TargetSensor.isTopEnabled:
+                    thePlayerStats.UpDashEmpty();
+                    break;
+                case TargetSensor.isBottomEnabled:
+                    thePlayerStats.DownDashEmpty();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

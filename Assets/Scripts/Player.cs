@@ -1602,7 +1602,7 @@ public class Player : MonoBehaviour
             attackCoroutineStarted = false;
             _state = PlayerState.STATE_KINZECTER_ACTION_BR;
         }
-        if (isUpSpecialKeyDown)
+        if (isUpSpecialKeyDown || isDownSpecialKeyDown)
         {
             hasMovementStarted = false;
             attackCoroutineStarted = false;

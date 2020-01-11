@@ -12,6 +12,7 @@ public class HurtEnemyOnHit : MonoBehaviour
     [SerializeField] private int damageToGive = 1, meterToGive = 1;
     [SerializeField] private float hitStopDuration = 0.1f, knockbackDuration = 0.5f;
     [SerializeField] private bool shouldScreenshakeOnHit = false, shouldHitStop = true;
+    [SerializeField] private ParticleSystem hitSpark;
     private EnemyHealthManager enemyHP;
     private BossHealthManager bossHP;
 
@@ -62,6 +63,8 @@ public class HurtEnemyOnHit : MonoBehaviour
 
         if (shouldHitStop)
             player.DoHitStop(hitStopDuration);
+
+        hitSpark.Play();
     }
     private static void Screenshake()
     {
