@@ -63,8 +63,8 @@ public class HurtEnemyOnHit : MonoBehaviour
 
         if (shouldHitStop)
             player.DoHitStop(hitStopDuration);
-
-        hitSpark.Play();
+        if (hitSpark!=null)
+            hitSpark.Play();
     }
     private static void Screenshake()
     {
