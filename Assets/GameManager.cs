@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public Vector2 lastCheckpointPos;
-    [SerializeField] private Transform startingCheckpointPos;
+    public Vector2 lastCheckpointPos, startingCheckpointPos = new Vector2(-4.5f, -3.5f);
     private void Awake()
     {
         if (instance == null)
@@ -24,7 +23,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestoreCheckpointStart()
     {
-        lastCheckpointPos = startingCheckpointPos.transform.position;
+        lastCheckpointPos = startingCheckpointPos;
     }
     public InputBuffer playerInputBuffer;
     //void OnGUI()

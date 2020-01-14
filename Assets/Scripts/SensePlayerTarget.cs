@@ -16,32 +16,49 @@ public class SensePlayerTarget : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if ((collision.CompareTag("Enemy") || collision.CompareTag("Boss")) && !thePlayerStats.PlayerIsOnGround)
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("Boss")) )
         {
             lockOn = collision.gameObject.GetComponentInChildren<LockOnImageActive>();
-            
-            switch (targetSensor)
+            if ((!thePlayerStats.PlayerIsOnGround && thePlayerStats.IsSwordmaster))
             {
-                case TargetSensor.isTopEnabled:
-                    thePlayerStats.EnemyTargetedUpDash();
-                    if (lockOn!=null)
-                        lockOn.ActivateUpSlash();
-                    break;
-                case TargetSensor.isBottomEnabled:
-                    thePlayerStats.EnemyTargetedDownDash();
-                    if (lockOn != null)
-                        lockOn.ActivateDownSlash();
-                    break;
-                default:
-                    break;
+                switch (targetSensor)
+                {
+                    case TargetSensor.isTopEnabled:
+                        thePlayerStats.EnemyTargetedUpDash();
+                        if (lockOn != null)
+                            lockOn.ActivateUpSlash();
+                        break;
+                    case TargetSensor.isBottomEnabled:
+                        thePlayerStats.EnemyTargetedDownDash();
+                        if (lockOn != null)
+                            lockOn.ActivateDownSlash();
+                        break;
+                    default:
+                        break;
+                }
             }
-                
+            else
+            {
+                if (lockOn != null)
+                    lockOn.StopSlash();
+                switch (targetSensor)
+                {
+                    case TargetSensor.isTopEnabled:
+                        thePlayerStats.UpDashEmpty();
+                        break;
+                    case TargetSensor.isBottomEnabled:
+                        thePlayerStats.DownDashEmpty();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if ((collision.CompareTag("Enemy") || collision.CompareTag("Boss")) || thePlayerStats.PlayerIsOnGround)
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("Boss")) || thePlayerStats.PlayerIsOnGround|| !thePlayerStats.IsSwordmaster)
         {
             lockOn = collision.gameObject.GetComponentInChildren<LockOnImageActive>();
             if (lockOn != null)

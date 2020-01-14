@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
+    GameManager GM;
     private Player player;
     public static bool IsGamePaused = false;
     [SerializeField] string sceneToLoad;
     [SerializeField] private GameObject pauseMenuUI;
     private void Start()
     {
+        GM = GameManager.instance;
         player = Player.Instance;
     }
     // Update is called once per frame
@@ -38,7 +40,9 @@ public class PauseManager : MonoBehaviour
     }
     public void LoadMenu()
     {
+        IsGamePaused = false;
         Time.timeScale = 1f;
+        GM.RestoreCheckpointStart();
         SceneManager.LoadScene(sceneToLoad);
     }
     public void Quit()

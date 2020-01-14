@@ -24,7 +24,7 @@ public class Sound
         if (PauseManager.IsGamePaused)
         {
             source.volume = volume*.5f;
-            source.pitch = pitch * .5f;
+            //source.pitch = pitch * .5f;
         }
         else
         {
