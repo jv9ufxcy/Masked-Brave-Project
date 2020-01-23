@@ -15,6 +15,7 @@ public class HurtEnemyOnHit : MonoBehaviour
     [SerializeField] private ParticleSystem hitSpark;
     private EnemyHealthManager enemyHP;
     private BossHealthManager bossHP;
+    private BombController bombHP;
 
     private Player player;
     private AudioManager audioManager;
@@ -36,6 +37,7 @@ public class HurtEnemyOnHit : MonoBehaviour
         Vector2 enemySideDistance = hitDistance;
         enemyHP = enemyColl.gameObject.GetComponentInParent<EnemyHealthManager>();
         bossHP = enemyColl.GetComponentInParent<BossHealthManager>();
+        bombHP = enemyColl.GetComponent<BombController>();
         if (enemyHP!=null)
         {
             if (enemyColl.transform.position.x < transform.position.x)
@@ -44,6 +46,16 @@ public class HurtEnemyOnHit : MonoBehaviour
                 enemySideDistance.x *= 1;//is on ur left
 
             enemyHP.TakeDamage(damageToGive, knockbackDuration, enemySideDistance, hitStopDuration);
+        }
+        if (bombHP != null)
+        {
+            if (enemyColl.transform.position.x < transform.position.x)
+                enemySideDistance.x *= -1;//is on ur right
+            else
+                enemySideDistance.x *= 1;//is on ur left
+
+            bombHP.TakeDamage(damageToGive);
+            bombHP.DoStopAndKnockback(knockbackDuration, enemySideDistance, hitStopDuration);
         }
         if (bossHP!=null)
         {

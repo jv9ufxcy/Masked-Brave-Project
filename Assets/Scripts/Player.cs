@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 bulletVelocity = new Vector2 (20f,0), busterVelocity = new Vector2 (30f,0), critBusterVelocity = new Vector2(35f, 0);
     [SerializeField] private float fireRate = 3.3f;
     private float timeToNextFire = 0f;
-    [SerializeField] private GameObject bulletPrefab, busterPrefab, criticalBusterPrefab;
+    [SerializeField] private GameObject bulletPrefab, busterPrefab, criticalBusterPrefab, bombPrefab;
     [SerializeField] private Transform bulletMuzzle;
 
     [Space]
@@ -469,7 +469,8 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        UpdateInput();
+        if (!PauseManager.IsGamePaused)
+            UpdateInput();
         DebugCommands();
         OnDeath();
         GetMovementInput();
@@ -1084,7 +1085,11 @@ public class Player : MonoBehaviour
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_IDLE_BMB;
                 }
-
+                if (isNeutralSpecialKeyDown)
+                {
+                    attackTimer = shootingCooldown;
+                    _state = PlayerState.STATE_CREATE_BOMB_BMB;
+                }
                 if (isDashKeyDown && !hasAirDashed)
                 {
                     audioManager.PlaySound(bombDashingSound);
@@ -1110,6 +1115,11 @@ public class Player : MonoBehaviour
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_RUNNING_BMB;
+                }
+                if (isNeutralSpecialKeyDown)
+                {
+                    attackTimer = shootingCooldown;
+                    _state = PlayerState.STATE_CREATE_BOMB_BMB;
                 }
                 if (isDashKeyDown && !hasAirDashed)
                 {
@@ -1146,6 +1156,11 @@ public class Player : MonoBehaviour
                 {
                     attackTimer = shootingCooldown;
                     _state = PlayerState.STATE_SHOOTING_JUMPING_BMB;
+                }
+                if (isNeutralSpecialKeyDown)
+                {
+                    attackTimer = shootingCooldown;
+                    _state = PlayerState.STATE_CREATE_BOMB_BMB;
                 }
                 if (isDashKeyDown && !hasAirDashed)
                 {
@@ -1298,6 +1313,40 @@ public class Player : MonoBehaviour
                     _state = PlayerState.STATE_JUMPING_BMB;
                 }
                 HandleCharging();
+                break;
+            case PlayerState.STATE_CREATE_BOMB_BMB:
+                CreateBomb();
+                HandleCharging();
+                if (attackTimer > 0)
+                {
+                    attackTimer -= Time.deltaTime;
+
+                    if (isAttackKeyDown && horizontalInput == 0)
+                    {
+                        attackTimer = shootingCooldown;
+                        _state = PlayerState.STATE_SHOOTING_IDLE_BMB;
+                    }
+                    else if (isAttackKeyDown && !isOnGround)
+                    {
+                        attackTimer = shootingCooldown;
+                        _state = PlayerState.STATE_SHOOTING_JUMPING_BMB;
+                    }
+                    else if (!isAttackKeyDown && horizontalInput != 0)
+                    {
+                        attackTimer = 0;
+                        _state = PlayerState.STATE_RUNNING_BMB;
+                    }
+                    else if (!isAttackKeyDown && shouldJump)
+                    {
+                        attackTimer = 0;
+                        _state = PlayerState.STATE_JUMPING_BMB;
+                    }
+                }
+                else if (attackTimer <= 0)
+                {
+                    attackTimer = 0;
+                    _state = PlayerState.STATE_IDLE_BMB;
+                }
                 break;
             default:
                 HandleCharging();
@@ -1659,6 +1708,26 @@ public class Player : MonoBehaviour
     {
         downSlashReady = false;
     }
+    private void CreateBomb()
+    {
+        if (CurrentNumberOfBullets >= 1)
+        {
+            if (Time.time > timeToNextFire)
+            {
+
+                if (isOnGround)
+                    currentAnim.Play(bombGShot2);
+                else
+                    currentAnim.Play(bombAShot2);
+
+                timeToNextFire = Time.time + 1 / fireRate;
+                audioManager.PlaySound(bulletSound);
+                SpendAmmo(1);
+                GameObject newBomb = Instantiate(bombPrefab, bulletMuzzle.position, Quaternion.identity);
+            }
+
+        }
+    }
     void FireBullet()
     {
         if (CurrentNumberOfBullets>=1)
@@ -1765,6 +1834,7 @@ public class Player : MonoBehaviour
         GameObject newbullet = Instantiate(criticalBusterPrefab, bulletMuzzle.position, Quaternion.Euler(new Vector3(0, 0, -180)));
         newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(critBusterVelocity.x * transform.localScale.x, critBusterVelocity.y);
     }
+    
     private void UpdateIsTargetReady()
     {
         anySlashReady = (upSlashReady || downSlashReady);
@@ -2880,5 +2950,6 @@ public class Player : MonoBehaviour
         STATE_SHOOTING_IDLE_BMB,
         STATE_SHOOTING_RUNNING_BMB,
         STATE_SHOOTING_JUMPING_BMB,
+        STATE_CREATE_BOMB_BMB,
     }
 }

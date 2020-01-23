@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4935215268734257206}
   - component: {fileID: 8437752497117124657}
   - component: {fileID: 4935215268734257207}
-  m_Layer: 0
+  - component: {fileID: 3032330281299154811}
+  m_Layer: 10
   m_Name: Bomb
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,6 +122,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bad0fa340b0d6344ad959d2fdd3fcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentBombTimer: 0
+  maxBombTime: 10
+  explosionLength: 0.65
+  hitFreezeTime: 0.1
+  spawnSound: BombSpawn
+  tickSound: BombTick
+  explosionSound: Explosion
+  explosionAnim: BombExplosion
 --- !u!95 &4935215268734257207
 Animator:
   serializedVersion: 3
@@ -140,6 +149,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &3032330281299154811
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935215268734257200}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 0.05
+  m_GravityScale: 3
+  m_Material: {fileID: 6200000, guid: fd6104433e19d8749af3801d183278e3, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &4935215270061286165
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +181,7 @@ GameObject:
   - component: {fileID: 4935215270061286164}
   - component: {fileID: 4935215270061286154}
   - component: {fileID: 4935215270061286155}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ExplosionHitbox
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -196,7 +226,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 4, y: 4}
   m_EdgeRadius: 0
 --- !u!114 &4935215270061286155
 MonoBehaviour:
@@ -212,10 +242,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _effect: 0
   hitDistance: {x: 7.5, y: 15}
-  damageToGive: 8
+  damageToGive: 10
   meterToGive: 5
   hitStopDuration: 0.1
   knockbackDuration: 1
   shouldScreenshakeOnHit: 1
   shouldHitStop: 0
-  hitSpark: {fileID: 0}
+  hitSpark: {fileID: 4721564266111689352, guid: 141a30506b4d9374a94801f03e7669b4,
+    type: 3}
