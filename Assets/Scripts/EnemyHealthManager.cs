@@ -20,7 +20,7 @@ public class EnemyHealthManager : MonoBehaviour
     public DamageState _damagedState;
     public enum DamageState { stunned, ableToMove }
     [SerializeField] private bool isInvul;
-    [SerializeField] private float damageCooldownInSeconds = .75f, deathFreezeTime = 0.1f;
+    [SerializeField] private float damageCooldownInSeconds = .75f, hitFreezeTime = 0.1f;
     [Space]
     [Header("Detection")]
     [SerializeField] Transform wallDetectPoint;
@@ -118,17 +118,20 @@ public class EnemyHealthManager : MonoBehaviour
         EnemyHealthManager closest = null;
         foreach (EnemyHealthManager enemy in enemyList)
         {
-            if (Vector3.Distance(position, enemy.transform.position) <= maxRange)
+            if (enemy!=null)
             {
-                if (closest == null)
+                if (Vector3.Distance(position, enemy.transform.position) <= maxRange)
                 {
-                    closest = enemy;
-                }
-                else
-                {
-                    if (Vector3.Distance(position, enemy.transform.position) < Vector3.Distance(position, closest.transform.position))
+                    if (closest == null)
                     {
                         closest = enemy;
+                    }
+                    else
+                    {
+                        if (Vector3.Distance(position, enemy.transform.position) < Vector3.Distance(position, closest.transform.position))
+                        {
+                            closest = enemy;
+                        }
                     }
                 }
             }
@@ -150,7 +153,7 @@ public class EnemyHealthManager : MonoBehaviour
     {
         currentEnemyHealth = maxEnemyHealth;
         //isEnemyDead = false;
-        canMove_UseProperty = true;
+        CanMove = true;
         enemyRend = GetComponent<SpriteRenderer>();
         enemyAnim = GetComponent<Animator>();
         enemyRB = GetComponent<Rigidbody2D>();
@@ -190,26 +193,7 @@ public class EnemyHealthManager : MonoBehaviour
         Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, DetectRadius, whatCountsAsWall);
         IsOnGround = groundObjects.Length > 0;
     }
-    IEnumerator DoHitStop(float knockbackDuration, Vector2 hitDistance, float hitStopDuration)
-    {
-        Vector2 savedVelocity = enemyRB.velocity;//get current velocity and save it
-
-        canMove_UseProperty=false;//stop letting player move
-        enemyRB.velocity = Vector2.zero;//set velocity to 0
-
-        enemyAnim.speed = 0;//set animator speed to 0
-        //stop enemy from moving
-        yield return new WaitForSeconds(hitStopDuration);
-
-        enemyRB.velocity = savedVelocity;//restore saved velocity
-        enemyAnim.speed = 1;//restore animator.speed to 1
-
-        //allow enemy to move again unless you have something else for knockback
-        //DoKnockback
-        enemyRB.velocity = hitDistance;
-        yield return new WaitForSeconds(knockbackDuration);
-        canMove_UseProperty=true;//let player move again
-    }
+    
     public void TakeDamage(int damageToTake,float knockbackDuration, Vector2 distance, float hitStopDuration)
     {
         if (!IsInvul)
@@ -219,10 +203,53 @@ public class EnemyHealthManager : MonoBehaviour
                 currentEnemyHealth -= damageToTake;
             }
             Instantiate(damageParticle, transform.position, transform.rotation);
-            StartCoroutine(DamageCooldownCoroutine());
-            StartCoroutine(DoHitStop(knockbackDuration, distance, hitStopDuration));
+            //StartCoroutine(DamageCooldownCoroutine());
+            StartCoroutine(DoHitStopAndKnockback(knockbackDuration, distance, hitStopDuration));
             audioManager.PlaySound(enemyTakeDamageSound);
         }
+    }
+    public void DoHitFreeze()
+    {
+        CanMove = false;
+        StartCoroutine(DoHitStop(hitFreezeTime));
+    }
+    public void DoHitKnockback(float knockbackDur, Vector2 hitDistance)
+    {
+        CanMove = false;
+        StartCoroutine(DoKnockback(knockbackDur, hitDistance));
+    }
+    public void DoStopAndKnockback(float knockbackDuration, Vector2 distance, float hitStopDuration)
+    {
+        StartCoroutine(DoHitStopAndKnockback(knockbackDuration, distance, hitStopDuration));
+    }
+    IEnumerator DoHitStop(float hitStopDuration)
+    {
+        Vector2 savedVelocity = enemyRB.velocity;//get current velocity and save it
+        enemyRB.velocity = Vector2.zero;//set velocity to 0
+        enemyAnim.speed = 0;//set animator speed to 0
+        //stop enemy from moving
+        yield return new WaitForSeconds(hitStopDuration);
+
+        enemyRB.velocity = savedVelocity;//restore saved velocity
+        enemyAnim.speed = 1;//restore animator.speed to 1
+        CanMove = true;
+    }
+    IEnumerator DoHitStopAndKnockback(float knockbackDuration, Vector2 hitDistance, float hitStopDuration)
+    {
+        StartCoroutine(DoHitStop(hitStopDuration));
+        CanMove = false;//stop letting player move
+        yield return new WaitForSeconds(hitStopDuration);
+        //allow enemy to move again unless you have something else for knockback
+        //DoKnockback
+        StartCoroutine(DoKnockback(knockbackDuration, hitDistance));
+        yield return new WaitForSeconds(knockbackDuration);
+        CanMove = true;//let player move again
+    }
+    private IEnumerator DoKnockback(float knockbackDur, Vector2 hitDistance)
+    {
+        enemyRB.velocity = hitDistance;
+        yield return new WaitForSeconds(knockbackDur);
+        CanMove = true;
     }
     private IEnumerator DamageCooldownCoroutine()
     {
@@ -266,7 +293,7 @@ public class EnemyHealthManager : MonoBehaviour
     }
     private void FreezeTime()
     {
-        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame(deathFreezeTime);
+        Camera.main.transform.GetComponent<FreezeTime>().FreezeFrame(hitFreezeTime);
     }
     private void OnDeath()
     {

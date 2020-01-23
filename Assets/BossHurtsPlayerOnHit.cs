@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossHurtsPlayerOnHit : MonoBehaviour
 {
     [SerializeField] private int damageToGive = 1;
+    [SerializeField] private float knockbackToGive = 0.2f;
     private Player player;
     private BossHealthManager bossHM;
 
@@ -23,9 +24,8 @@ public class BossHurtsPlayerOnHit : MonoBehaviour
             return;
         if (collision.CompareTag("Player") && !player.IsInvulnerable && !bossHM.IsInvul)
         {
-            player.TakeDamage(damageToGive);
+            player.TakeDamage(damageToGive, knockbackToGive, null);
 
-            player.knockbackDuration = player.maxKnockbackDuration;
             if (collision.transform.position.x < transform.position.x)
                 player.knockbackFromRight = true;
             else

@@ -5,6 +5,7 @@ using UnityEngine;
 public class HurtPlayerOnHit : MonoBehaviour
 {
     [SerializeField] private int damageToGive = 1;
+    [SerializeField] private float knockbackToGive = 0.2f;
     private Player player;
     private EnemyHealthManager enemyHM;
 
@@ -18,9 +19,9 @@ public class HurtPlayerOnHit : MonoBehaviour
         player=collision.gameObject.GetComponentInParent<Player>();
         if (collision.CompareTag("Player") && !player.IsInvulnerable && !enemyHM.IsInvul)
         {
-            player.TakeDamage(damageToGive);
+            player.TakeDamage(damageToGive, knockbackToGive, enemyHM);
+            enemyHM.DoHitFreeze();
 
-            player.knockbackDuration = player.maxKnockbackDuration;
             if (collision.transform.position.x < transform.position.x)
                 player.knockbackFromRight = true;
             else

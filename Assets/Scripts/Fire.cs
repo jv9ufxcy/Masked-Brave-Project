@@ -13,7 +13,7 @@ public class Fire : MonoBehaviour
 
         if (player != null)
         {
-            player.TakeDamage(damageToGive);
+            player.TakeDamage(damageToGive,0f, null);
             Debug.Log("Player Hit Ponts" + player.CurrentHitPoints);
         }
     }

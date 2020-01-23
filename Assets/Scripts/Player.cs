@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
     [Header("Dashing")]
     [SerializeField] private int dashCounter;
     [SerializeField] private int maxDashCounter = 3;
-    [SerializeField] private float maxDashTime = 0.2f, airDashTime = 0.3f, groundDashTime = 0.15f, braveDashSpeed = 24f, bombDashSpeed = 40f;
+    [SerializeField] private float maxBraveDashTime = 0.3f, airBombDashTime = 0.3f, groundBombDashTime = 0.15f, braveDashSpeed = 24f, bombDashSpeed = 40f;
     [SerializeField] private float dashTimer;
     private bool isDashKeyDown = false, shouldChargeDash;
     private bool hasAirDashed, hasBraveDashed;
@@ -86,8 +86,9 @@ public class Player : MonoBehaviour
     [Space]
     [Header("Damage and Invul")]
 
-    private bool isInvulnerable_UseProperty = false;
     [SerializeField] private float damageCooldownInSeconds = 2f;
+    [SerializeField] private float parryWindow = 0.15f, parryHitStop = 0.2f, parryPushbackDistance = 4f, takeDamageHitStop=0.1f;
+    private bool isInvulnerable_UseProperty = false, isParrying_UseProperty;
     public float knockbackDuration, knockbackForce, maxKnockbackDuration, damageScreenFreezeTime;
     public bool knockbackFromRight;
 
@@ -143,16 +144,13 @@ public class Player : MonoBehaviour
     [Space]
     [Header("Charged Buster")]
 
-    [SerializeField]
-    private float shotPressure;
-    [SerializeField] private float minShotPressure = 6f;
-    [SerializeField] private float maxShotPressure = 24f;
-    [SerializeField] private float shotChargeMultiplier = 10f;
+    [SerializeField] private float shotPressure;
+    [SerializeField] private float minShotPressure = 6f, maxShotPressure = 12f, shotChargeMultiplier = 10f;
     private bool shouldChargeBuster;
     private bool hasReleasedShot = false;
     private bool hasShotChargingStarted = false;
     private bool hasReachedMaxShotCharge = false;
-    private bool firstCharge, secondCharge;
+    [SerializeField] private bool firstCharge, secondCharge;
     private Color c;
 
 
@@ -162,13 +160,13 @@ public class Player : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] private string deathSound="Death", jumpSound="Jump", takeDamageSound="PlayerTakeDamage", wallStickSound="WallStick", 
         henshinSound="Henshin", recoveryPickupSound="PickupRecovery", healthPickupSound="PickupHitPoint", ammoRecoverySound="PickupBullet", 
-        meterRecoverySound = "PickupEnergy", attackingSound="SwordSlash", comboA2Sound="SwordSlam", riderPunchSound="RiderPunch", 
-        bulletSound="Shoot", busterSound = "Buster", critBusterSound = "CriticalBuster";
+        meterRecoverySound = "PickupEnergy", attackingSound="SwordSlash", comboA2Sound="SwordSlam", riderPunchSound="RiderPunch", braveDashingSound = "BraveDash",
+        bulletSound="Shoot", busterSound = "Buster", critBusterSound = "CriticalBuster", bombDashingSound = "BombDash";
 
     [Space]
     [Header("Particles")]
-    [SerializeField] private ParticleSystem deathParticle, damageParticle;
     public ParticleSystem chargeJumpParticle;
+    [SerializeField] private ParticleSystem deathParticle, damageParticle, parryParticle;
 
     public ParticleSystem bombDashParticle,braveDashParticle;
     public ParticleSystem landingParticles;
@@ -408,6 +406,8 @@ public class Player : MonoBehaviour
         private set { isSwordmaster = value; }
     }
 
+    public bool IsParrying { get => isParrying_UseProperty; set => isParrying_UseProperty = value; }
+
 
     #endregion
     void Start()
@@ -520,7 +520,7 @@ public class Player : MonoBehaviour
                     _state = PlayerState.STATE_GROUND_DASHING_BR;
                 }
                 GroundAttackInputs();
-                
+
                 break;
             case PlayerState.STATE_RUNNING_BR:
                 if (horizontalInput == 0)
@@ -705,18 +705,18 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_GROUND_DASHING_BR:
                 isDashKeyDown = false;
-                
+
                 if (!hasBraveDashed)
                 {
                     StartCoroutine(InvulnerableTime(2));
                     ShowAfterImage(braveTrailColor, braveTrailFadeColor, longDashInterval);
-                    audioManager.PlaySound("Dash");
+                    audioManager.PlaySound(braveDashingSound);
                     currentAnim.Play(braveDash);
                     braveDashParticle.Play();
                     hasBraveDashed = true;
                 }
 
-                if (shouldChargeDash&&dashTimer<maxDashTime)
+                if (shouldChargeDash && dashTimer < maxBraveDashTime)
                 {
                     isDashing = true;
                 }
@@ -758,7 +758,7 @@ public class Player : MonoBehaviour
                 break;
             #endregion
             #region AttackStates
-            
+
             case PlayerState.STATE_FIRST_ATTACK_BR:
                 if (attackTimer >= 0)
                 {
@@ -863,21 +863,24 @@ public class Player : MonoBehaviour
             #endregion
             #region BraveAttacks
             case PlayerState.STATE_BRAVE_STRIKE_BR:
-                if (attackTimer>=0)
+                if (attackTimer >= 0)
                 {
                     attackTimer -= Time.deltaTime;
                     if (!attackCoroutineStarted)
                     {
                         StartCoroutine(InvulnerableTime(2));
-                        
+
                         isBraveStrikeKeyDown = false;
                         StartCoroutine(PlayAttackAnim(braveStrike, riderPunchSound));
                     }
                 }
                 break;
             case PlayerState.STATE_UP_KICK_READY_BR:
-                if (isSpecialKeyDown)
+                if (isNeutralSpecialKeyDown)
+                {
+                    attackTimer = dashSlashMaxTime;
                     _state = PlayerState.STATE_UP_KICK_ATTACK_BR;
+                }
                 else if (isDownSpecialKeyDown)
                 {
                     hasMovementStarted = false;
@@ -917,17 +920,24 @@ public class Player : MonoBehaviour
                     _state = PlayerState.STATE_JUMPING_BR;
                 break;
             case PlayerState.STATE_UP_KICK_ATTACK_BR:
-                if (attackTimer >= dashSlashMaxTime)
+                if (attackTimer >= 0)
                 {
-                    currentAnim.Play(braveKickUp);
-                    audioManager.PlaySound(attackingSound);
-
-                    _state = PlayerState.STATE_BRAVE_KICK_CD_BR;
+                    if (!attackCoroutineStarted)
+                        StartCoroutine(PlayAttackAnim(braveKickUp, attackingSound));
+                    attackTimer -= Time.deltaTime;
                 }
+                else
+                    ReturnToIdleState();
                 break;
             case PlayerState.STATE_DOWN_KICK_READY_BR:
-                if (isSpecialKeyDown)
+                if (isNeutralSpecialKeyDown)
+                {
+                    attackTimer = dashSlashMaxTime;
+                    attackCoroutineStarted = false;
+                    hasMovementStarted = false;
                     _state = PlayerState.STATE_DOWN_KICK_ATTACK_BR;
+                }
+
                 else if (isDownSpecialKeyDown)
                 {
                     hasMovementStarted = false;
@@ -970,13 +980,14 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.STATE_DOWN_KICK_ATTACK_BR:
-                if (attackTimer >= dashSlashMaxTime)
+                if (attackTimer >= 0)
                 {
-                    currentAnim.Play(braveKickDown);
-                    audioManager.PlaySound(attackingSound);
-
-                    _state = PlayerState.STATE_BRAVE_KICK_CD_BR;
+                    if (!attackCoroutineStarted)
+                        StartCoroutine(PlayAttackAnim(braveKickDown, attackingSound));
+                    attackTimer -= Time.deltaTime;
                 }
+                else
+                    ReturnToIdleState();
                 break;
             case PlayerState.STATE_BRAVE_KICK_CD_BR:
                 isAttackKeyDown = false;
@@ -1041,9 +1052,10 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_KINZECTER_ACTION_BR:
                 if(!attackCoroutineStarted)
-                    StartCoroutine(PlayAttackAnim(braveFlourish, meterRecoverySound));
-                
-                ReturnToIdleState();
+                    StartCoroutine(PlayAttackAnim(braveFlourish, braveDashingSound));
+
+                if (!IsParrying)
+                    StartCoroutine(PerfectCallStart());
                 break;
             case PlayerState.STATE_KINZECTER_RECALL_BR:
                 break;
@@ -1075,7 +1087,7 @@ public class Player : MonoBehaviour
 
                 if (isDashKeyDown && !hasAirDashed)
                 {
-                    audioManager.PlaySound("Dash");
+                    audioManager.PlaySound(bombDashingSound);
                     currentAnim.Play(bombDash);
                     _state = PlayerState.STATE_DASHING_BMB;
                 }
@@ -1101,7 +1113,7 @@ public class Player : MonoBehaviour
                 }
                 if (isDashKeyDown && !hasAirDashed)
                 {
-                    audioManager.PlaySound("Dash");
+                    audioManager.PlaySound(bombDashingSound);
                     currentAnim.Play(bombDash);
                     _state = PlayerState.STATE_DASHING_BMB;
                 }
@@ -1137,7 +1149,7 @@ public class Player : MonoBehaviour
                 }
                 if (isDashKeyDown && !hasAirDashed)
                 {
-                    audioManager.PlaySound("Dash");
+                    audioManager.PlaySound(bombDashingSound);
                     currentAnim.Play(bombDash);
                     _state = PlayerState.STATE_DASHING_BMB;
                 }
@@ -1412,19 +1424,8 @@ public class Player : MonoBehaviour
                 
                 break;
             case PlayerState.STATE_UP_KICK_ATTACK_BR:
-                myRB.velocity = new Vector2(0, 0);
-                attackTimer = dashSlashMaxTime;
-                if (attackTimer >= dashSlashMaxTime)
-                {
-                    if (CanAimRight)
-                    {
-                        myRB.velocity = new Vector2(horizontalDashSlashSpeed, upVerticalDSSpeed);
-                    }
-                    else
-                    {
-                        myRB.velocity = new Vector2(-horizontalDashSlashSpeed, upVerticalDSSpeed);
-                    }
-                }
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(direction * horizontalDashSlashSpeed, upVerticalDSSpeed, false, .1f, dashSlashMaxTime));
                 break;
             case PlayerState.STATE_DOWN_KICK_READY_BR:
                 Jump();
@@ -1432,22 +1433,10 @@ public class Player : MonoBehaviour
                 CheckMove();
                 break;
             case PlayerState.STATE_DOWN_KICK_ATTACK_BR:
-                myRB.velocity = new Vector2(0, 0);
-                attackTimer = dashSlashMaxTime;
-                if (attackTimer >= dashSlashMaxTime)
-                {
-                    if (CanAimRight)
-                    {
-                        myRB.AddForce(new Vector2(horizontalDashSlashSpeed, -downVerticalDSSpeed), ForceMode2D.Impulse);
-                    }
-                    else
-                    {
-                        myRB.AddForce(new Vector2(-horizontalDashSlashSpeed, -downVerticalDSSpeed), ForceMode2D.Impulse);
-                    }
-                }
+                if (!hasMovementStarted)
+                    StartCoroutine(AttackMovement(direction * horizontalDashSlashSpeed, -downVerticalDSSpeed, false, .1f, dashSlashMaxTime));
                 break;
             case PlayerState.STATE_BRAVE_KICK_CD_BR:
-                attackTimer -= Time.fixedDeltaTime;
                 ReturnToIdleState();
                 break;
             case PlayerState.STATE_BRAVE_BURST_BR:
@@ -1455,7 +1444,6 @@ public class Player : MonoBehaviour
                     StartCoroutine(BraveBurstTimer());
                 break;
             case PlayerState.STATE_KINZECTER_ACTION_BR:
-                KinzecterThrow();
                 break;
             #endregion
             #endregion
@@ -1540,6 +1528,7 @@ public class Player : MonoBehaviour
         hasBraveDashed = false;
         upSlashReady = false;
         downSlashReady = false;
+        anySlashReady = false;
     }
     private void GroundAttackInputs()
     {
@@ -1641,7 +1630,7 @@ public class Player : MonoBehaviour
     }
     private void DashingBrave()
     {
-        if (shouldChargeDash && dashTimer < maxDashTime)//shouldChargeDash uses GetButton && dash timer must be lower than maxTime
+        if (shouldChargeDash && dashTimer < maxBraveDashTime)//shouldChargeDash uses GetButton && dash timer must be lower than maxTime
         {
             isDashing = true;
             
@@ -1882,7 +1871,7 @@ public class Player : MonoBehaviour
         {
             CheckParticles();
 
-            if (isSpecialKeyDown)
+            if (Input.GetButtonDown(topFaceButtonName))
                 isBurstKeyDown = true;
             else
                 isBurstKeyDown = false;
@@ -1896,29 +1885,24 @@ public class Player : MonoBehaviour
         {
             hasJumpChargingStarted = false;
             chargeJumpParticle.Stop();
-
             switch (myController)
             {
                 case ControllerList.keyboard:
-                    //isAttackKeyDown = (Input.GetMouseButtonDown(0));
-                    //isSpecialKeyDown = (Input.GetMouseButtonDown(1));
-                    //shouldChargeBuster = (Input.GetMouseButton(0));
-                    //isAttackKeyUp = (Input.GetMouseButtonUp(0));
-
                     if (Input.GetButtonDown(leftFaceButtonName) || Input.GetButtonDown(rightBumperName) || Input.GetMouseButtonDown(0))
-                    {
                         isAttackKeyDown = true;
-                        shouldChargeBuster = true;
-                    }
                     else
-                    {
                         isAttackKeyDown = false;
+
+                    if (Input.GetButton(leftFaceButtonName) || Input.GetButtonDown(rightBumperName) || Input.GetMouseButton(0))
+                        shouldChargeBuster = true;
+                    else
                         shouldChargeBuster = false;
-                    }
+
                     if (Input.GetButtonUp(leftFaceButtonName) || Input.GetButtonUp(rightBumperName) || Input.GetMouseButtonUp(0))
                         isAttackKeyUp = true;
                     else
                         isAttackKeyUp = false;
+
                     if (Input.GetButtonDown(topFaceButtonName) || Input.GetMouseButtonDown(1))
                         isSpecialKeyDown = true;
                     else
@@ -1926,15 +1910,14 @@ public class Player : MonoBehaviour
                     break;
                 case ControllerList.ps4:
                     if (Input.GetButtonDown(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
-                    {
                         isAttackKeyDown = true;
-                        shouldChargeBuster = true;
-                    }
                     else
-                    {
                         isAttackKeyDown = false;
+
+                    if (Input.GetButton(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
+                        shouldChargeBuster = true;
+                    else
                         shouldChargeBuster = false;
-                    }
 
                     if (Input.GetButtonUp(leftFaceButtonName) || Input.GetButtonUp(rightBumperName))
                         isAttackKeyUp = true;
@@ -1945,15 +1928,14 @@ public class Player : MonoBehaviour
                     break;
                 case ControllerList.xbox:
                     if (Input.GetButtonDown(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
-                    {
                         isAttackKeyDown = true;
-                        shouldChargeBuster = true;
-                    }
                     else
-                    {
                         isAttackKeyDown = false;
+
+                    if (Input.GetButton(leftFaceButtonName) || Input.GetButtonDown(rightBumperName))
+                        shouldChargeBuster = true;
+                    else
                         shouldChargeBuster = false;
-                    }
 
                     if (Input.GetButtonUp(leftFaceButtonName) || Input.GetButtonUp(rightBumperName))
                         isAttackKeyUp = true;
@@ -1966,33 +1948,34 @@ public class Player : MonoBehaviour
 
                     break;
             }
-
-            if (isSpecialKeyDown && verticalInput == 1)
-            {
-                isNeutralSpecialKeyDown = false;
-                isDownSpecialKeyDown = false;
-                isUpSpecialKeyDown = true;
-            }
-            else if (isSpecialKeyDown && verticalInput == -1)
-            {
-                isNeutralSpecialKeyDown = false;
-                isDownSpecialKeyDown = true;
-                isUpSpecialKeyDown = false;
-            }
-            else if (isSpecialKeyDown && verticalInput == 0)
-            {
-                isNeutralSpecialKeyDown = true;
-                isDownSpecialKeyDown = false;
-                isUpSpecialKeyDown = false;
-            }
-            else
-            {
-                isNeutralSpecialKeyDown = false;
-                isDownSpecialKeyDown = false;
-                isUpSpecialKeyDown = false;
-            }
         }
+        if (isSpecialKeyDown && verticalInput == 1)
+        {
+            isNeutralSpecialKeyDown = false;
+            isDownSpecialKeyDown = false;
+            isUpSpecialKeyDown = true;
+        }
+        else if (isSpecialKeyDown && verticalInput == -1)
+        {
+            isNeutralSpecialKeyDown = false;
+            isDownSpecialKeyDown = true;
+            isUpSpecialKeyDown = false;
+        }
+        else if (isSpecialKeyDown && verticalInput == 0)
+        {
+            isNeutralSpecialKeyDown = true;
+            isDownSpecialKeyDown = false;
+            isUpSpecialKeyDown = false;
+        }
+        else
+        {
+            isNeutralSpecialKeyDown = false;
+            isDownSpecialKeyDown = false;
+            isUpSpecialKeyDown = false;
+        }
+        
     }
+
     private void GetTransformInput()
     {
         isTransformKeyDown = (Input.GetButtonDown(leftBumperName));
@@ -2003,7 +1986,7 @@ public class Player : MonoBehaviour
 
         //int joystickNumber = Input.GetJoystickNames().Length;//get joystick name
         int joystickNumber = GlobalVars.controllerNumber;
-        Debug.Log(joystickNumber);
+        Debug.Log(joystickNumber + " " + myController.ToString());
         switch (joystickNumber)
         {
             case 0:/*was 19*/
@@ -2225,6 +2208,7 @@ public class Player : MonoBehaviour
         currentAnim.SetFloat("vSpeed", myRB.velocity.y);
         currentAnim.SetFloat("hSpeed", myRB.velocity.x);
         currentAnim.SetBool("IsSwordmaster", IsSwordmaster);
+        currentAnim.SetBool("IsDashing", isDashing);
     }
     private void UpdateIsOnGround()
     {
@@ -2348,13 +2332,15 @@ public class Player : MonoBehaviour
             {
                 BusterShooting();
                 shotPressure = 0f;
+                firstCharge = false; secondCharge = false;
             }
             else if (shotPressure >= maxShotPressure)
             {
                 CriticalBusterShooting();
                 shotPressure = 0f;
+                firstCharge = false; secondCharge = false;
             }
-            if (shotPressure > 0f)
+            if (shotPressure != 0f)
             {
                 hasReleasedShot = true;
                 shotPressure = 0f;
@@ -2483,7 +2469,7 @@ public class Player : MonoBehaviour
         if (!firstCharge)
             c = Color.clear;
 
-        if (shotPressure >= minShotPressure && shotPressure < maxShotPressure && !firstCharge)
+        if ((shotPressure >= minShotPressure && shotPressure < maxShotPressure) && !firstCharge)
         {
             StartCoroutine(BlinkWhileChargingCoroutine());
             foreach (ParticleSystem p in primaryGunParticles)
@@ -2518,8 +2504,6 @@ public class Player : MonoBehaviour
     }
     void PlayFlashParticle(Color c)
     {
-        Screenshake();
-
         foreach (ParticleSystem p in secondaryParticles)
         {
             var pmain = p.main;
@@ -2549,28 +2533,36 @@ public class Player : MonoBehaviour
     }
     #endregion
     #region Damage
-    public void TakeDamage(int damageToGive)
+    public void TakeDamage(int damageToGive, float damageDuration, EnemyHealthManager enemyWhoHit)
     {
         if (!IsInvulnerable)
         {
-            if (IsSwordmaster)
+            if (IsParrying)
             {
-                currentAnim.Play(braveDamaged);
-                _state = PlayerState.STATE_DAMAGED_BR;
+                StartCoroutine(DoParryCounter(enemyWhoHit));
             }
             else
             {
-                currentAnim.Play(bombDamage);
-                _state = PlayerState.STATE_DAMAGED_BMB;
+                if (IsSwordmaster)
+                {
+                    currentAnim.Play(braveDamaged);
+                    _state = PlayerState.STATE_DAMAGED_BR;
+                }
+                else
+                {
+                    currentAnim.Play(bombDamage);
+                    _state = PlayerState.STATE_DAMAGED_BMB;
+                }
+                knockbackDuration = damageDuration;
+                Screenshake();
+                DoHitStop(takeDamageHitStop);
+                RecoveryPoints -= damageToGive;
+                audioManager.PlaySound(takeDamageSound);
+                OnDeath();
+                damageParticle.Play();
+                //start damage cooldown
+                StartCoroutine(InvulnerableTime(damageCooldownInSeconds));
             }
-            Screenshake();
-            DoHitStop(0.1f);
-            RecoveryPoints -= damageToGive;
-            audioManager.PlaySound(takeDamageSound);
-            OnDeath();
-            damageParticle.Play();
-            //start damage cooldown
-            StartCoroutine(InvulnerableTime(damageCooldownInSeconds));
         }
     }
     public void KillPlayer(int damageToGive)
@@ -2603,7 +2595,7 @@ public class Player : MonoBehaviour
         bombDashParticle.Play();
         isBombDashing = true;
 
-        yield return new WaitForSeconds(airDashTime);
+        yield return new WaitForSeconds(airBombDashTime);
 
         bombDashParticle.Stop();
         BetterJump();
@@ -2614,7 +2606,7 @@ public class Player : MonoBehaviour
 
     IEnumerator GroundDash()
     {
-        yield return new WaitForSeconds(groundDashTime);
+        yield return new WaitForSeconds(groundBombDashTime);
         if (isOnGround)
             hasAirDashed = false;
     }
@@ -2625,10 +2617,10 @@ public class Player : MonoBehaviour
         while (shouldChargeBuster)
         {
             CurrentSpriteRenderer.color = chargingColor;
-            yield return new WaitForSeconds(blinkInterval);
+            yield return new WaitForSeconds(0.25f);
 
             CurrentSpriteRenderer.color = defaultColor;
-            yield return new WaitForSeconds(blinkInterval);
+            yield return new WaitForSeconds(0.25f);
         }
     }
 
@@ -2694,7 +2686,40 @@ public class Player : MonoBehaviour
         IsInvulnerable = false;
         _state = PlayerState.STATE_JUMPING_BR;
     }
+    private IEnumerator PerfectCallStart()
+    {
+        IsParrying = true;
+        yield return new WaitForSeconds(parryWindow);
+        KinzecterThrow();
+        audioManager.PlaySound(meterRecoverySound);
+        IsParrying = false;
 
+        if (_state==PlayerState.STATE_KINZECTER_ACTION_BR)//if parry whiffed
+        {
+            ReturnToIdleState();
+        }
+        
+    }
+    private IEnumerator DoParryCounter(EnemyHealthManager enemyWhoHit)
+    {
+        IsInvulnerable = true;
+        IsParrying = false;
+        parryParticle.Play();
+        PlayFlashParticle(powerColor);
+        audioManager.PlaySound(critBusterSound);
+
+        DoHitStop(parryHitStop);
+        if (enemyWhoHit!=null)
+            enemyWhoHit.DoStopAndKnockback(parryHitStop, new Vector2(direction * parryPushbackDistance, 0),parryHitStop);
+        yield return new WaitForSeconds(parryHitStop);
+       
+        hasMovementStarted = false;
+        attackCoroutineStarted = false;
+        attackTimer = thirdSlashCooldown;
+        _state = PlayerState.STATE_THIRD_ATTACK_BR;
+        yield return new WaitForSeconds(2f);
+        IsInvulnerable = false;
+    }
     private IEnumerator InvulnerableTime(float time)
     {
         IsInvulnerable=true;
