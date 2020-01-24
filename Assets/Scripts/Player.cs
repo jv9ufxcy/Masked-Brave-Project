@@ -1474,7 +1474,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_UP_KICK_ATTACK_BR:
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(direction * horizontalDashSlashSpeed, upVerticalDSSpeed, false, .1f, dashSlashMaxTime));
+                    StartCoroutine(AttackMovement(direction * horizontalDashSlashSpeed, upVerticalDSSpeed, true, .1f, dashSlashMaxTime));
                 break;
             case PlayerState.STATE_DOWN_KICK_READY_BR:
                 Jump();
@@ -1483,7 +1483,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_DOWN_KICK_ATTACK_BR:
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(direction * horizontalDashSlashSpeed, -downVerticalDSSpeed, false, .1f, dashSlashMaxTime));
+                    StartCoroutine(AttackMovement(direction * horizontalDashSlashSpeed, -downVerticalDSSpeed, true, .1f, dashSlashMaxTime));
                 break;
             case PlayerState.STATE_BRAVE_KICK_CD_BR:
                 ReturnToIdleState();
