@@ -16,6 +16,7 @@ public class HurtEnemyOnHit : MonoBehaviour
     private EnemyHealthManager enemyHP;
     private BossHealthManager bossHP;
     private BombController bombHP;
+    private BulletHit bulletController;
 
     private Player player;
     private AudioManager audioManager;
@@ -38,6 +39,7 @@ public class HurtEnemyOnHit : MonoBehaviour
         enemyHP = enemyColl.gameObject.GetComponentInParent<EnemyHealthManager>();
         bossHP = enemyColl.GetComponentInParent<BossHealthManager>();
         bombHP = enemyColl.GetComponent<BombController>();
+        bulletController = enemyColl.GetComponent<BulletHit>();
         if (enemyHP!=null)
         {
             if (enemyColl.transform.position.x < transform.position.x)
@@ -67,6 +69,11 @@ public class HurtEnemyOnHit : MonoBehaviour
             else
                 bossHP.enemyKnockFromRight = false;
         }
+        if (bulletController!=null)
+        {
+            bulletController.ReverseForce();
+        }
+
         if(player!=null)
             player.AddMeter(meterToGive);
 

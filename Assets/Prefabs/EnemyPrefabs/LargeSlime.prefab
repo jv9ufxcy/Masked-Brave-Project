@@ -69,7 +69,8 @@ MonoBehaviour:
   _damagedState: 0
   isInvul: 0
   damageCooldownInSeconds: 0.1
-  deathFreezeTime: 0.1
+  hitFreezeTime: 0.1
+  recoveryTimer: 0
   wallDetectPoint: {fileID: 3740098366857519231}
   groundDetectPoint: {fileID: 3740098366857519231}
   edgeDetectPoint: {fileID: 3740098366857519231}
@@ -77,6 +78,38 @@ MonoBehaviour:
   whatCountsAsWall:
     serializedVersion: 2
     m_Bits: 256
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6058190810746553964}
+        m_MethodName: OnDamaged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnRecovery:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6058190810746553964}
+        m_MethodName: OnRecovery
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   enemyTakeDamageSound: TakeDamage
   enemyDeathSound: Death
 --- !u!114 &6058190810746553964
@@ -97,7 +130,7 @@ MonoBehaviour:
   playerDetectRadius: 2
   whatCountsAsWall:
     serializedVersion: 2
-    m_Bits: 33024
+    m_Bits: 34048
   whatCountsAsPlayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -394,6 +427,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 2
+  knockbackToGive: 0.2
+  shouldHitStop: 0
+  enemyHM: {fileID: 0}
 --- !u!1001 &1042871129546439717
 PrefabInstance:
   m_ObjectHideFlags: 0

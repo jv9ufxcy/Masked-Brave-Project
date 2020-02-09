@@ -62,10 +62,6 @@ public class EnemyJumpPatrol : MonoBehaviour
     }
     private void Update()
     {
-        if (!enemyHealth.CanMove)
-        {
-            enemyState = EnemyState.Damaged;
-        }
         switch (enemyState)
         {
             case EnemyState.Patrolling:
@@ -74,14 +70,7 @@ public class EnemyJumpPatrol : MonoBehaviour
             case EnemyState.Attacking:
                 break;
             case EnemyState.Damaged:
-                if (isOnGround)
-                    enemyAnim.Play(hurtAnimation);
-                else
-                    enemyAnim.Play(jumpAnimation);
-                if (enemyHealth.CanMove)
-                {
-                    enemyState = EnemyState.Patrolling;
-                }
+
                 break;
             default:
                 break;
@@ -183,5 +172,17 @@ public class EnemyJumpPatrol : MonoBehaviour
         yield return new WaitForSeconds(attackDelay);
         enemyState = EnemyState.Patrolling;
         coroutineStarted = false;
+    }
+    public void OnDamaged()
+    {
+        enemyState = EnemyState.Damaged;
+        enemyAnim.SetBool("IsHurt", true);
+        StopCoroutine(AttackForward());
+        coroutineStarted = false;
+    }
+    public void OnRecovery()
+    {
+        enemyAnim.SetBool("IsHurt", false);
+        enemyState = EnemyState.Patrolling;
     }
 }

@@ -2056,7 +2056,6 @@ public class Player : MonoBehaviour
 
         //int joystickNumber = Input.GetJoystickNames().Length;//get joystick name
         int joystickNumber = GlobalVars.controllerNumber;
-        Debug.Log(joystickNumber + " " + myController.ToString());
         switch (joystickNumber)
         {
             case 0:/*was 19*/

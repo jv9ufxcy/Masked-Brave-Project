@@ -6,12 +6,16 @@ public class HurtPlayerOnHit : MonoBehaviour
 {
     [SerializeField] private int damageToGive = 1;
     [SerializeField] private float knockbackToGive = 0.2f;
+    [SerializeField] private bool shouldHitStop;
     private Player player;
-    private EnemyHealthManager enemyHM;
+    public EnemyHealthManager enemyHM;
 
     private void Start()
     {
+        if (enemyHM==null)
+        {
             enemyHM = GetComponentInParent<EnemyHealthManager>();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -20,8 +24,10 @@ public class HurtPlayerOnHit : MonoBehaviour
         if (collision.CompareTag("Player") && !player.IsInvulnerable && !enemyHM.IsInvul)
         {
             player.TakeDamage(damageToGive, knockbackToGive, enemyHM);
-            enemyHM.DoHitFreeze();
-
+            if (shouldHitStop)
+            {
+                enemyHM.DoHitFreeze();
+            }
             if (collision.transform.position.x < transform.position.x)
                 player.knockbackFromRight = true;
             else

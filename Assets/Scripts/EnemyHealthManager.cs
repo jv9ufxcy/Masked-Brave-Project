@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Cinemachine;
 using DG.Tweening;
 
@@ -20,7 +21,7 @@ public class EnemyHealthManager : MonoBehaviour
     public DamageState _damagedState;
     public enum DamageState { stunned, ableToMove }
     [SerializeField] private bool isInvul;
-    [SerializeField] private float damageCooldownInSeconds = .75f, hitFreezeTime = 0.1f;
+    [SerializeField] private float damageCooldownInSeconds = .75f, hitFreezeTime = 0.1f, recoveryTimer;
     [Space]
     [Header("Detection")]
     [SerializeField] Transform wallDetectPoint;
@@ -32,6 +33,8 @@ public class EnemyHealthManager : MonoBehaviour
     private bool hittingWall;
     private bool isOnGround;
     private bool canMove_UseProperty=true;
+
+    public UnityEvent OnDamaged,OnRecovery;
 
     private bool isFacingRight;
     private Rigidbody2D enemyRB;
@@ -112,6 +115,8 @@ public class EnemyHealthManager : MonoBehaviour
     }
 
     public bool CanMove { get => canMove_UseProperty; set => canMove_UseProperty = value; }
+    public bool IsEnemyDead()
+    { return isEnemyDead; }
 
     public static EnemyHealthManager GetClosestEnemy(Vector3 position, float maxRange)
     {
@@ -170,12 +175,34 @@ public class EnemyHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-		if (currentEnemyHealth<=0)
+        if (recoveryTimer > 0)
+        {
+            
+            CanMove = false;
+            UpdateRecoveryDuration();
+        }
+        UpdateHealthCheck();
+        PassPatrolVariables();
+    }
+
+    private void UpdateHealthCheck()
+    {
+        if (currentEnemyHealth <= 0)
         {
             currentEnemyHealth = 0;
             OnDeath();
         }
-        PassPatrolVariables();
+    }
+
+    private void UpdateRecoveryDuration()
+    {
+        recoveryTimer -= Time.deltaTime;
+        if (recoveryTimer <= 0 &&!CanMove)
+        {
+            recoveryTimer = 0;
+            OnRecovery.Invoke();
+            CanMove = true;
+        }
     }
     public void FlipFacingRight()
     {
@@ -198,24 +225,24 @@ public class EnemyHealthManager : MonoBehaviour
     {
         if (!IsInvul)
         {
-            if (!isEnemyDead)
+            if (!IsEnemyDead())
             {
                 currentEnemyHealth -= damageToTake;
             }
             Instantiate(damageParticle, transform.position, transform.rotation);
-            //StartCoroutine(DamageCooldownCoroutine());
+            OnDamaged.Invoke();
             StartCoroutine(DoHitStopAndKnockback(knockbackDuration, distance, hitStopDuration));
             audioManager.PlaySound(enemyTakeDamageSound);
         }
     }
     public void DoHitFreeze()
     {
-        CanMove = false;
+        recoveryTimer = hitFreezeTime;
         StartCoroutine(DoHitStop(hitFreezeTime));
     }
     public void DoHitKnockback(float knockbackDur, Vector2 hitDistance)
     {
-        CanMove = false;
+        recoveryTimer = knockbackDur;
         StartCoroutine(DoKnockback(knockbackDur, hitDistance));
     }
     public void DoStopAndKnockback(float knockbackDuration, Vector2 distance, float hitStopDuration)
@@ -232,24 +259,23 @@ public class EnemyHealthManager : MonoBehaviour
 
         enemyRB.velocity = savedVelocity;//restore saved velocity
         enemyAnim.speed = 1;//restore animator.speed to 1
-        CanMove = true;
     }
     IEnumerator DoHitStopAndKnockback(float knockbackDuration, Vector2 hitDistance, float hitStopDuration)
     {
         StartCoroutine(DoHitStop(hitStopDuration));
-        CanMove = false;//stop letting player move
+        //stop letting player move
         yield return new WaitForSeconds(hitStopDuration);
         //allow enemy to move again unless you have something else for knockback
         //DoKnockback
         StartCoroutine(DoKnockback(knockbackDuration, hitDistance));
         yield return new WaitForSeconds(knockbackDuration);
-        CanMove = true;//let player move again
+        //let player move again
     }
     private IEnumerator DoKnockback(float knockbackDur, Vector2 hitDistance)
     {
+        recoveryTimer = knockbackDur;
         enemyRB.velocity = hitDistance;
         yield return new WaitForSeconds(knockbackDur);
-        CanMove = true;
     }
     private IEnumerator DamageCooldownCoroutine()
     {

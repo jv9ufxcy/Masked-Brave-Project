@@ -6,12 +6,15 @@ using Cinemachine;
 public class BulletHit : MonoBehaviour
 {
     private Rigidbody2D bulletRB;
-    [SerializeField] private GameObject bulletHitEffect;
+    private AudioManager audioManager;
+    private HurtEnemyOnHit hurtEnemy;
+    private HurtPlayerOnHit hurtPlayer;
 
+    [SerializeField] private GameObject bulletHitEffect;
+    [SerializeField] private string tagToHit = "Enemy";
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private LayerMask whatLayersToHit;
 
-    private AudioManager audioManager;
     [SerializeField] private string bulletCollisionSound;
     [SerializeField] private bool shouldScreenshakeOnHit=false, shouldStopOnHit = true;
 
@@ -19,6 +22,8 @@ public class BulletHit : MonoBehaviour
     void Start()
     {
         bulletRB = GetComponent<Rigidbody2D>();
+        hurtEnemy = GetComponent<HurtEnemyOnHit>();
+        hurtPlayer = GetComponent<HurtPlayerOnHit>();
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -26,12 +31,12 @@ public class BulletHit : MonoBehaviour
             Debug.LogError("No Audio Manager in Scene");
         }
     }
-    private void FixedUpdate()
+    private void Update()
     {
         //Countdown to lifetime
         if (lifeTime > 0)
         {
-            lifeTime -= Time.fixedDeltaTime;
+            lifeTime -= Time.deltaTime;
         }
         else if (lifeTime <= 0)
         {
@@ -40,14 +45,25 @@ public class BulletHit : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (shouldScreenshakeOnHit)
-            Screenshake();
-        if (shouldStopOnHit)
+        if (other.CompareTag(tagToHit))
         {
-            RemoveForce();
-            Instantiate(bulletHitEffect, transform.position, transform.rotation);
-            Destroy(gameObject);
+            if (shouldScreenshakeOnHit)
+                Screenshake();
+            if (shouldStopOnHit)
+            {
+                RemoveForce();
+                Instantiate(bulletHitEffect, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
         }
+    }
+    public void ReverseForce()
+    {
+        tagToHit = "Enemy";
+        hurtPlayer.enabled = false;
+        hurtEnemy.enabled = true;
+        bulletRB.velocity = -bulletRB.velocity;
+        gameObject.layer = LayerMask.NameToLayer("Projectile");
     }
     private void RemoveForce()
     {
