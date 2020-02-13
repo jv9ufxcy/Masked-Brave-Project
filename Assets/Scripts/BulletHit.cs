@@ -60,8 +60,12 @@ public class BulletHit : MonoBehaviour
     public void ReverseForce()
     {
         tagToHit = "Enemy";
-        hurtPlayer.enabled = false;
-        hurtEnemy.enabled = true;
+        if (hurtPlayer!=null)
+            hurtPlayer.enabled = false;
+
+        if (hurtEnemy != null)
+            hurtEnemy.enabled = true;
+
         bulletRB.velocity = -bulletRB.velocity;
         gameObject.layer = LayerMask.NameToLayer("Projectile");
     }

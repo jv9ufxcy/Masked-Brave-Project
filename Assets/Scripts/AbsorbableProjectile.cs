@@ -6,7 +6,8 @@ public class AbsorbableProjectile : MonoBehaviour
 {
 
     [SerializeField] private int healthToGive = 0;
-    [SerializeField] private int meterToGive = 1;
+    [SerializeField] private int meterToGive = 3;
+    [SerializeField] private int ammoToGive = 1;
     [SerializeField] private string absorptionSound;
 
     private Player player;
@@ -35,6 +36,7 @@ public class AbsorbableProjectile : MonoBehaviour
             //Debug.Log("Bullet has been absorbed by " + collision.name + " for " + meterToGive + " METER and " + healthToGive + " HP.");
             player.AddRecovery(healthToGive);
             player.AddMeter(meterToGive);
+            player.AddAmmo(ammoToGive);
             Destroy(gameObject);
         }
     }

@@ -8,6 +8,7 @@ public class EnemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyHP=GetComponent<EnemyHealthManager>();
         gameObject.SetActive(false);
     }
 

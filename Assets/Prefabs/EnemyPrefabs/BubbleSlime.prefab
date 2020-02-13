@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 6128644618435032307}
   - component: {fileID: 245174973729777224}
   - component: {fileID: 3181492184263839868}
+  - component: {fileID: 90810729779463087}
   m_Layer: 9
   m_Name: BubbleSlime
   m_TagString: Enemy
@@ -445,7 +446,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!50 &6128644618435032307
 Rigidbody2D:
@@ -513,3 +514,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &90810729779463087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320392497740898268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

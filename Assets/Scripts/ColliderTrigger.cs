@@ -8,8 +8,8 @@ public class ColliderTrigger : MonoBehaviour
     public UnityEvent OnPlayerEnterTrigger;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Player player = collision.GetComponent<Player>();
-        if (player!=null)
+        //Player player = collision.GetComponent<Player>();
+        if (collision.CompareTag("Player"))
         {
             OnPlayerEnterTrigger.Invoke();
         }

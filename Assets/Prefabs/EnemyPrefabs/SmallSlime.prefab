@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 7504296527954373151}
   - component: {fileID: 3991188050088239747}
   - component: {fileID: 5088250584219189745}
+  - component: {fileID: 4358047042819997336}
   m_Layer: 9
   m_Name: SmallSlime
   m_TagString: Enemy
@@ -128,13 +129,13 @@ MonoBehaviour:
   damageCooldownInSeconds: 0.1
   hitFreezeTime: 0.1
   recoveryTimer: 0
-  wallDetectPoint: {fileID: 7058027136020591375}
+  wallDetectPoint: {fileID: 5878368984266868289}
   groundDetectPoint: {fileID: 7058027136020591375}
-  edgeDetectPoint: {fileID: 7058027136020591375}
+  edgeDetectPoint: {fileID: 5878368984266868289}
   DetectRadius: 0.2
   whatCountsAsWall:
     serializedVersion: 2
-    m_Bits: 33024
+    m_Bits: 34048
   OnDamaged:
     m_PersistentCalls:
       m_Calls:
@@ -200,7 +201,7 @@ MonoBehaviour:
   jumpStrength: 10
   forwardForce: 6
   moveRight: 0
-  shouldEnemyWalkOffEdge: 1
+  shouldEnemyWalkOffEdge: 0
   attackAnimation: ssAttack
   hurtAnimation: ssHurt
   jumpAnimation: ssJump
@@ -295,6 +296,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4358047042819997336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850712348673569784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2447843096499125990
 GameObject:
   m_ObjectHideFlags: 0

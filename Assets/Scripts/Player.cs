@@ -576,7 +576,7 @@ public class Player : MonoBehaviour
                     attackCoroutineStarted = false;
                     _state = PlayerState.STATE_BRAVE_BURST_BR;
                 }
-                if (isNeutralSpecialKeyDown)
+                if (isNeutralSpecialKeyDown&&!anySlashReady)
                 {
                     hasMovementStarted = false;
                     attackCoroutineStarted = false;
@@ -592,13 +592,23 @@ public class Player : MonoBehaviour
                 {
                     hasMovementStarted = false;
                     attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_UP_KICK_READY_BR;
+                    if (isNeutralSpecialKeyDown)
+                    {
+                        attackTimer = dashSlashMaxTime;
+                        _state = PlayerState.STATE_UP_KICK_ATTACK_BR;
+                    }
                 }
                 if (downSlashReady)
                 {
                     hasMovementStarted = false;
                     attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_DOWN_KICK_READY_BR;
+                    if (isNeutralSpecialKeyDown)
+                    {
+                        attackTimer = dashSlashMaxTime;
+                        attackCoroutineStarted = false;
+                        hasMovementStarted = false;
+                        _state = PlayerState.STATE_DOWN_KICK_ATTACK_BR;
+                    }
                 }
                 if (isAttackKeyDown)
                 {
@@ -660,14 +670,24 @@ public class Player : MonoBehaviour
                         wallJumpTimer = 0;
                         hasMovementStarted = false;
                         attackCoroutineStarted = false;
-                        _state = PlayerState.STATE_UP_KICK_READY_BR;
+                        if (isNeutralSpecialKeyDown)
+                        {
+                            attackTimer = dashSlashMaxTime;
+                            _state = PlayerState.STATE_UP_KICK_ATTACK_BR;
+                        }
                     }
                     if (downSlashReady)
                     {
                         wallJumpTimer = 0;
                         hasMovementStarted = false;
                         attackCoroutineStarted = false;
-                        _state = PlayerState.STATE_DOWN_KICK_READY_BR;
+                        if (isNeutralSpecialKeyDown)
+                        {
+                            attackTimer = dashSlashMaxTime;
+                            attackCoroutineStarted = false;
+                            hasMovementStarted = false;
+                            _state = PlayerState.STATE_DOWN_KICK_ATTACK_BR;
+                        }
                     }
                     if (isAttackKeyDown && !anySlashReady)
                     {
@@ -877,45 +897,41 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.STATE_UP_KICK_READY_BR:
-                if (isNeutralSpecialKeyDown)
-                {
-                    attackTimer = dashSlashMaxTime;
-                    _state = PlayerState.STATE_UP_KICK_ATTACK_BR;
-                }
-                else if (isDownSpecialKeyDown)
-                {
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_BRAVE_SLAM_BR;
-                }
+                
+                //else if (isDownSpecialKeyDown)
+                //{
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    _state = PlayerState.STATE_BRAVE_SLAM_BR;
+                //}
 
-                if (isAttackKeyDown)
-                {
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    attackTimer = attackCooldown;
-                    _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
-                }
-                if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
-                {
-                    TurnAround();
-                    SpendMeter(strikeCost);
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    attackTimer = specialAttackCooldown;
-                    _state = PlayerState.STATE_BRAVE_STRIKE_BR;
-                }
-                if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
-                {
-                    attackTimer = 0;
-                    SpendMeter(burstCost);
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_BRAVE_BURST_BR;
-                }
+                //if (isAttackKeyDown)
+                //{
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    attackTimer = attackCooldown;
+                //    _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
+                //}
+                //if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
+                //{
+                //    TurnAround();
+                //    SpendMeter(strikeCost);
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    attackTimer = specialAttackCooldown;
+                //    _state = PlayerState.STATE_BRAVE_STRIKE_BR;
+                //}
+                //if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
+                //{
+                //    attackTimer = 0;
+                //    SpendMeter(burstCost);
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    _state = PlayerState.STATE_BRAVE_BURST_BR;
+                //}
 
-                if (!upSlashReady && downSlashReady)
-                    _state = PlayerState.STATE_DOWN_KICK_READY_BR;
+                //if (!upSlashReady && downSlashReady)
+                //    _state = PlayerState.STATE_DOWN_KICK_READY_BR;
 
                 if (!anySlashReady)
                     _state = PlayerState.STATE_JUMPING_BR;
@@ -931,50 +947,48 @@ public class Player : MonoBehaviour
                     ReturnToIdleState();
                 break;
             case PlayerState.STATE_DOWN_KICK_READY_BR:
-                if (isNeutralSpecialKeyDown)
-                {
-                    attackTimer = dashSlashMaxTime;
-                    attackCoroutineStarted = false;
-                    hasMovementStarted = false;
-                    _state = PlayerState.STATE_DOWN_KICK_ATTACK_BR;
-                }
+                
 
-                else if (isDownSpecialKeyDown)
-                {
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_BRAVE_SLAM_BR;
-                }
+                //else if (isDownSpecialKeyDown)
+                //{
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    _state = PlayerState.STATE_BRAVE_SLAM_BR;
+                //}
 
-                if (isAttackKeyDown)
-                {
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    attackTimer = attackCooldown;
-                    _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
-                }
-                if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
-                {
-                    TurnAround();
-                    SpendMeter(strikeCost);
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    attackTimer = specialAttackCooldown;
-                    _state = PlayerState.STATE_BRAVE_STRIKE_BR;
-                }
-                if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
-                {
-                    attackTimer = 0;
-                    SpendMeter(burstCost);
-                    hasMovementStarted = false;
-                    attackCoroutineStarted = false;
-                    _state = PlayerState.STATE_BRAVE_BURST_BR;
-                }
+                //if (isAttackKeyDown)
+                //{
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    attackTimer = attackCooldown;
+                //    _state = PlayerState.STATE_FIRST_JUMPING_ATTACK_BR;
+                //}
+                //if (isBraveStrikeKeyDown && CurrentSpecialEnergyMeter >= strikeCost)
+                //{
+                //    TurnAround();
+                //    SpendMeter(strikeCost);
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    attackTimer = specialAttackCooldown;
+                //    _state = PlayerState.STATE_BRAVE_STRIKE_BR;
+                //}
+                //if (isBurstKeyDown && CurrentSpecialEnergyMeter >= burstCost)
+                //{
+                //    attackTimer = 0;
+                //    SpendMeter(burstCost);
+                //    hasMovementStarted = false;
+                //    attackCoroutineStarted = false;
+                //    _state = PlayerState.STATE_BRAVE_BURST_BR;
+                //}
 
-                if (!downSlashReady && upSlashReady)
-                {
-                    _state = PlayerState.STATE_UP_KICK_READY_BR;
-                }
+                //if (!downSlashReady && upSlashReady)
+                //{
+                //    if (isNeutralSpecialKeyDown)
+                //    {
+                //        attackTimer = dashSlashMaxTime;
+                //        _state = PlayerState.STATE_UP_KICK_ATTACK_BR;
+                //    }
+                //}
                 if (!anySlashReady)
                 {
                     _state = PlayerState.STATE_JUMPING_BR;
