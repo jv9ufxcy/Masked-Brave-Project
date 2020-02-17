@@ -18,7 +18,7 @@ public class Kinzecter : MonoBehaviour
     [SerializeField] private bool shouldScreenshakeOnHit;
 
     private AudioManager audioManager;
-    private BossHealthManager boss;
+    private BossPatrolManager boss;
     private EnemyHealthManager enemy;
 
 [SerializeField] private State kState;
@@ -201,7 +201,7 @@ public class Kinzecter : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D enemyColl)
     {
-        boss = enemyColl.GetComponentInParent<BossHealthManager>();
+        boss = enemyColl.GetComponentInParent<BossPatrolManager>();
         enemy = enemyColl.gameObject.GetComponentInParent<EnemyHealthManager>();
         if (enemy !=null)
         {
@@ -228,14 +228,6 @@ public class Kinzecter : MonoBehaviour
                 }
             }
         }
-        if (boss != null)
-        {
-            if (flightSpeed > minLethalSpeed)
-            {
-                if (!essenceAdded)
-                    StartCoroutine(AddBossEssecnce());
-            }
-        }
     }
     IEnumerator AddEssecnce()
     {
@@ -245,15 +237,6 @@ public class Kinzecter : MonoBehaviour
         hpStock += enemy.hpStock;
         yield return new WaitForSeconds(.1f);
         essenceAdded = false;
-    }
-    
-    IEnumerator AddBossEssecnce()
-    {
-        essenceAdded = true;
-        ammoStock += boss.ammoStock;
-        eStock += boss.eStock;
-        hpStock += boss.hpStock;
-        yield return new WaitForSeconds(.1f);
     }
     IEnumerator TargetNextEnemy()
     {

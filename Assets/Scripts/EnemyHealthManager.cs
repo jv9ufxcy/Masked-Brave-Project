@@ -8,8 +8,7 @@ using DG.Tweening;
 public class EnemyHealthManager : MonoBehaviour
 {
     [SerializeField] private bool isEnemyDead = false;
-    [SerializeField] private int currentEnemyHealth;
-    [SerializeField] private int maxEnemyHealth;
+    [SerializeField] private int currentEnemyHealth, maxEnemyHealth, currentPoise,maxPoise;
     [SerializeField] private GameObject deathParticle, damageParticle;
     [SerializeField] private GameObject itemDropped;
     [SerializeField] private GameObject energyDropped;
@@ -157,6 +156,7 @@ public class EnemyHealthManager : MonoBehaviour
     private void Initialize()
     {
         currentEnemyHealth = maxEnemyHealth;
+        currentPoise = maxPoise;
         //isEnemyDead = false;
         CanMove = true;
         enemyRend = GetComponent<SpriteRenderer>();
@@ -202,14 +202,17 @@ public class EnemyHealthManager : MonoBehaviour
             recoveryTimer = 0;
             OnRecovery.Invoke();
             CanMove = true;
+            currentPoise = maxPoise;
         }
     }
     public void FlipFacingRight()
     {
+        isFacingRight = true;
         transform.localScale = new Vector3(-1f, 1f, 1f);
     }
     public void FlipFacingLeft()
     {
+        isFacingRight = false;
         transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
@@ -228,11 +231,21 @@ public class EnemyHealthManager : MonoBehaviour
             if (!IsEnemyDead())
             {
                 currentEnemyHealth -= damageToTake;
+                currentPoise -= damageToTake;
+
+                Instantiate(damageParticle, transform.position, transform.rotation);
+                audioManager.PlaySound(enemyTakeDamageSound);
+                
+                if (currentPoise <= 0)
+                {
+                    OnDamaged.Invoke();
+                    StartCoroutine(DoHitStopAndKnockback(knockbackDuration, distance, hitStopDuration));
+                }
+                else
+                {
+                    StartCoroutine(DoHitStop(hitStopDuration));
+                }
             }
-            Instantiate(damageParticle, transform.position, transform.rotation);
-            OnDamaged.Invoke();
-            StartCoroutine(DoHitStopAndKnockback(knockbackDuration, distance, hitStopDuration));
-            audioManager.PlaySound(enemyTakeDamageSound);
         }
     }
     public void DoHitFreeze()
@@ -327,8 +340,9 @@ public class EnemyHealthManager : MonoBehaviour
         Screenshake();
         audioManager.PlaySound(enemyDeathSound);
         Instantiate(deathParticle, transform.position, transform.rotation);
-        Instantiate(itemDropped, transform.position, transform.rotation);
-        enemyAnim.SetTrigger("Death");
+        if(itemDropped!=null)
+            Instantiate(itemDropped, transform.position, transform.rotation);
+        //enemyAnim.SetTrigger("Death");
         isEnemyDead = true;
         this.gameObject.SetActive(false);
         //Destroy(this.gameObject);

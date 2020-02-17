@@ -55,17 +55,17 @@ CompositeCollider2D:
     m_ColliderPaths:
     - - X: 1920000000
         Y: 85000000
-      - X: -70000000
+      - X: -390000000
         Y: 85000000
-      - X: -70000000
+      - X: -390000000
         Y: -85000000
       - X: 1920000000
         Y: -85000000
   m_CompositePaths:
     m_Paths:
     - - {x: 192, y: 8.5}
-      - {x: -7, y: 8.5}
-      - {x: -7, y: -8.5}
+      - {x: -39, y: 8.5}
+      - {x: -39, y: -8.5}
       - {x: 192, y: -8.5}
   m_VertexDistance: 0.0005
 --- !u!61 &61272860311307350
@@ -81,7 +81,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 92.5, y: 0}
+  m_Offset: {x: 76.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -92,7 +92,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 199, y: 17}
+  m_Size: {x: 231, y: 17}
   m_EdgeRadius: 0
 --- !u!50 &50755316160153010
 Rigidbody2D:
@@ -206,17 +206,17 @@ CompositeCollider2D:
     m_ColliderPaths:
     - - X: 1430000000
         Y: 85000000
-      - X: 900000000
+      - X: 670000000
         Y: 85000000
-      - X: 900000000
+      - X: 670000000
         Y: -85000000
       - X: 1430000000
         Y: -85000000
   m_CompositePaths:
     m_Paths:
     - - {x: 143, y: 8.5}
-      - {x: 90, y: 8.5}
-      - {x: 90, y: -8.5}
+      - {x: 67, y: 8.5}
+      - {x: 67, y: -8.5}
       - {x: 143, y: -8.5}
   m_VertexDistance: 0.0005
 --- !u!61 &61563552838010150
@@ -232,7 +232,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 116.5, y: 0}
+  m_Offset: {x: 105, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -243,7 +243,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 53, y: 17}
+  m_Size: {x: 76, y: 17}
   m_EdgeRadius: 0
 --- !u!50 &50516357123348786
 Rigidbody2D:
@@ -482,9 +482,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4327310495964522}
-  - component: {fileID: 114496861662260472}
   - component: {fileID: 61097745879249938}
-  - component: {fileID: 95321020450695122}
+  - component: {fileID: 960696238}
   m_Layer: 0
   m_Name: BossDoorTrigger
   m_TagString: Untagged
@@ -506,22 +505,6 @@ Transform:
   m_Father: {fileID: 4505532567428542}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114496861662260472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1148082873849080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80b0c85bd1310d946b6f8f7c54ad6446, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossCharacter: {fileID: 0}
-  bossDoorEnter: {fileID: 0}
-  bossDoorExit: {fileID: 0}
-  boundingAnim: {fileID: 95316246081344902}
 --- !u!61 &61097745879249938
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -548,25 +531,67 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 18}
   m_EdgeRadius: 0
---- !u!95 &95321020450695122
-Animator:
-  serializedVersion: 3
+--- !u!114 &960696238
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148082873849080}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bd6a3b479bcc9d14998ff14cb5fc3ca0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82128c0a85cd094b85fa600415db622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlayerEnterTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1242253555367650}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1583427027281654}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1148082873849080}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: StartBattle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1179847777190670
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,16 +601,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4587677893580822}
-  - component: {fileID: 61619477502408234}
-  - component: {fileID: 114835338221676634}
-  - component: {fileID: 95517175664811442}
   m_Layer: 0
-  m_Name: CameraTransitionTriggerU->B
+  m_Name: BTT U->B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4587677893580822
 Transform:
   m_ObjectHideFlags: 0
@@ -600,67 +622,6 @@ Transform:
   m_Father: {fileID: 4505532567428542}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61619477502408234
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179847777190670}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2, y: 6}
-  m_EdgeRadius: 0
---- !u!114 &114835338221676634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179847777190670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39f01d5ef1b4644ca9ec91126568fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oldVirtualCamera: {fileID: 1242253555367650}
-  newVirtualCamera: {fileID: 1583427027281654}
-  oldTransitionCollider: {fileID: 1947247067094708}
-  animationTrigger: 
---- !u!95 &95517175664811442
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179847777190670}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7c076f9f9c92f6a47986d10ff32d5e33, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1242253555367650
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +649,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242253555367650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.0000005, y: -4.5, z: -10}
+  m_LocalPosition: {x: 33.5, y: -8.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4470677122541892}
@@ -774,10 +735,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4940483841021194}
   - component: {fileID: 61025695332606940}
-  - component: {fileID: 114085112010026130}
-  - component: {fileID: 95314115380889404}
+  - component: {fileID: 1907266012}
   m_Layer: 0
-  m_Name: CameraTransitionTriggerU->L
+  m_Name: CTT U->L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,7 +783,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114085112010026130
+--- !u!114 &1907266012
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -832,32 +792,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 1494666148867500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39f01d5ef1b4644ca9ec91126568fd9, type: 3}
+  m_Script: {fileID: 11500000, guid: b82128c0a85cd094b85fa600415db622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oldVirtualCamera: {fileID: 1242253555367650}
-  newVirtualCamera: {fileID: 1708649585347606}
-  oldTransitionCollider: {fileID: 1910538291616750}
-  animationTrigger: 
---- !u!95 &95314115380889404
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494666148867500}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7c076f9f9c92f6a47986d10ff32d5e33, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  OnPlayerEnterTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1242253555367650}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1708649585347606}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1494666148867500}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1910538291616750}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1583427027281654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767442415577866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.011595, y: -1.5625, z: -10}
+  m_LocalPosition: {x: 33.5, y: -1.5625, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4498155597709612}
@@ -1170,7 +1156,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -1192,7 +1178,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 0
   m_IgnoreTimeScale: 1
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 0
+  m_UpdateMethod: 1
   m_DefaultBlend:
     m_Style: 4
     m_Time: 0.2
@@ -1570,10 +1556,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4720414005359828}
   - component: {fileID: 61424575551476718}
-  - component: {fileID: 114559787135854626}
-  - component: {fileID: 95501605916455760}
+  - component: {fileID: 1907266010}
   m_Layer: 0
-  m_Name: CameraTransitionTrigger L->U (1)
+  m_Name: CTT L->U (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1619,7 +1604,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114559787135854626
+--- !u!114 &1907266010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1628,32 +1613,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 1882211357043414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39f01d5ef1b4644ca9ec91126568fd9, type: 3}
+  m_Script: {fileID: 11500000, guid: b82128c0a85cd094b85fa600415db622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oldVirtualCamera: {fileID: 1708649585347606}
-  newVirtualCamera: {fileID: 1242253555367650}
-  oldTransitionCollider: {fileID: 1887666795026586}
-  animationTrigger: 
---- !u!95 &95501605916455760
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882211357043414}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7c076f9f9c92f6a47986d10ff32d5e33, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  OnPlayerEnterTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1242253555367650}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1708649585347606}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1887666795026586}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1882211357043414}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1887666795026586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,10 +1675,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4157315686098642}
   - component: {fileID: 61501126908889138}
-  - component: {fileID: 114544536087516424}
-  - component: {fileID: 95475460726737412}
+  - component: {fileID: 1907266009}
   m_Layer: 0
-  m_Name: CameraTransitionTriggerU->L (1)
+  m_Name: CTT U->L (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1713,7 +1723,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114544536087516424
+--- !u!114 &1907266009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1722,32 +1732,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 1887666795026586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39f01d5ef1b4644ca9ec91126568fd9, type: 3}
+  m_Script: {fileID: 11500000, guid: b82128c0a85cd094b85fa600415db622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oldVirtualCamera: {fileID: 1242253555367650}
-  newVirtualCamera: {fileID: 1708649585347606}
-  oldTransitionCollider: {fileID: 1882211357043414}
-  animationTrigger: 
---- !u!95 &95475460726737412
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887666795026586}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7c076f9f9c92f6a47986d10ff32d5e33, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  OnPlayerEnterTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1242253555367650}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1708649585347606}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1887666795026586}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1882211357043414}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1910538291616750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1758,10 +1794,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4946375951505116}
   - component: {fileID: 61307772482967316}
-  - component: {fileID: 114934822109939092}
-  - component: {fileID: 95180193427767950}
+  - component: {fileID: 1907266011}
   m_Layer: 0
-  m_Name: CameraTransitionTrigger L->U
+  m_Name: CTT L->U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1807,7 +1842,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114934822109939092
+--- !u!114 &1907266011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1816,32 +1851,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 1910538291616750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39f01d5ef1b4644ca9ec91126568fd9, type: 3}
+  m_Script: {fileID: 11500000, guid: b82128c0a85cd094b85fa600415db622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oldVirtualCamera: {fileID: 1708649585347606}
-  newVirtualCamera: {fileID: 1494666148867500}
-  oldTransitionCollider: {fileID: 1494666148867500}
-  animationTrigger: 
---- !u!95 &95180193427767950
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1910538291616750}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7c076f9f9c92f6a47986d10ff32d5e33, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  OnPlayerEnterTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1242253555367650}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1708649585347606}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1494666148867500}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1910538291616750}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1947247067094708
 GameObject:
   m_ObjectHideFlags: 0

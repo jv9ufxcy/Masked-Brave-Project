@@ -7,11 +7,11 @@ public class BossHurtsPlayerOnHit : MonoBehaviour
     [SerializeField] private int damageToGive = 1;
     [SerializeField] private float knockbackToGive = 0.2f;
     private Player player;
-    private BossHealthManager bossHM;
+    private BossPatrolManager bossHM;
 
     private void Start()
     {
-        bossHM = GetComponentInParent<BossHealthManager>();
+        bossHM = GetComponentInParent<BossPatrolManager>();
         
     }
 

@@ -14,7 +14,7 @@ public class HurtEnemyOnHit : MonoBehaviour
     [SerializeField] private bool shouldScreenshakeOnHit = false, shouldHitStop = true;
     [SerializeField] private ParticleSystem hitSpark;
     private EnemyHealthManager enemyHP;
-    private BossHealthManager bossHP;
+    private BossPatrolManager bossHP;
     private BombController bombHP;
     private BulletHit bulletController;
 
@@ -37,7 +37,7 @@ public class HurtEnemyOnHit : MonoBehaviour
     {
         Vector2 enemySideDistance = hitDistance;
         enemyHP = enemyColl.gameObject.GetComponentInParent<EnemyHealthManager>();
-        bossHP = enemyColl.GetComponentInParent<BossHealthManager>();
+        bossHP = enemyColl.GetComponentInParent<BossPatrolManager>();
         bombHP = enemyColl.GetComponent<BombController>();
         bulletController = enemyColl.GetComponent<BulletHit>();
         if (enemyHP!=null)
@@ -59,16 +59,7 @@ public class HurtEnemyOnHit : MonoBehaviour
             bombHP.TakeDamage(damageToGive);
             bombHP.DoStopAndKnockback(knockbackDuration, enemySideDistance, hitStopDuration);
         }
-        if (bossHP!=null)
-        {
-            bossHP.TakeDamage(damageToGive);
 
-            bossHP.enemyKnockbackDuration = bossHP.enemyMaxKnockbackDuration;
-            if (bossHP.transform.position.x < transform.position.x)
-                bossHP.enemyKnockFromRight = true;
-            else
-                bossHP.enemyKnockFromRight = false;
-        }
         if (bulletController!=null)
         {
             bulletController.ReverseForce();

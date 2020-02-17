@@ -9,7 +9,7 @@ public class BossHealthBar : MonoBehaviour
     [SerializeField] private Image healthUI;
     [SerializeField] private Sprite[] healthSprites;
 
-    [SerializeField] private BossHealthManager bossStats;
+    [SerializeField] private EnemyHealthManager bossStats;
 
     private void Start()
     {

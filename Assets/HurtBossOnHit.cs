@@ -6,7 +6,7 @@ public class HurtBossOnHit : MonoBehaviour
 {
 
     [SerializeField] private int damageToGive = 2;
-    private BossHealthManager bossHP;
+    private BossPatrolManager bossHP;
 
 
     private AudioManager audioManager;
@@ -22,12 +22,12 @@ public class HurtBossOnHit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D bossCollision)
     {
-        bossHP = bossCollision.gameObject.GetComponentInParent<BossHealthManager>();
+        bossHP = bossCollision.gameObject.GetComponentInParent<BossPatrolManager>();
         if (bossHP == null)
             return;
         if (bossCollision.CompareTag("Boss"))
         {
-            bossHP.TakeDamage(damageToGive);
+            //bossHP.TakeDamage(damageToGive);
 
             bossHP.enemyKnockbackDuration = bossHP.enemyMaxKnockbackDuration;
             if (bossCollision.transform.position.x < transform.position.x)

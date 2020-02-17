@@ -12,7 +12,7 @@ public class RunningBehavior : StateMachineBehaviour
     [SerializeField] private int maxChanceToCharge = 8;
 
     private Player thePlayer;
-    private BossHealthManager bossHealthManager;
+    private BossPatrolManager bossHealthManager;
     private Animator enemyAnim;
 
     private AudioManager audioManager;
@@ -79,7 +79,7 @@ public class RunningBehavior : StateMachineBehaviour
         thePlayer = FindObjectOfType<Player>();
         enemyRB = animator.GetComponent<Rigidbody2D>();
         enemyRend = animator.GetComponent<SpriteRenderer>();
-        bossHealthManager = animator.GetComponent<BossHealthManager>();
+        bossHealthManager = animator.GetComponent<BossPatrolManager>();
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {

@@ -1888,10 +1888,6 @@ public class Player : MonoBehaviour
         {
             jumpInputMemory = maxJumpInputMemory;
         }
-        //if (Input.GetButtonDown(bottomFaceButtonName) && isWallSliding)
-        //{
-        //    shouldWallJump = true;
-        //}
 
         if (verticalInput == -1 && isOnGround)
         {

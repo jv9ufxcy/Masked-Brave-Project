@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class JumpBehavior : StateMachineBehaviour
 {
-    private BossHealthManager bossHealthManager;
+    private BossPatrolManager bossHealthManager;
     private Rigidbody2D enemyRB;
 
     [SerializeField] private float timerToTransition;
@@ -27,7 +27,7 @@ public class JumpBehavior : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemyRB = animator.GetComponent<Rigidbody2D>();
-        bossHealthManager = animator.GetComponent<BossHealthManager>();
+        bossHealthManager = animator.GetComponent<BossPatrolManager>();
         timerToTransition = Random.Range(minTime, maxTime);
         whichStateToTransitionTo = Random.Range(0, maxChanceToCharge);
         Initialize(animator);
@@ -60,7 +60,7 @@ public class JumpBehavior : StateMachineBehaviour
         //jumpForce = new Vector2(0, jumpStrength);
         
         enemyRB = animator.GetComponent<Rigidbody2D>();
-        bossHealthManager = animator.GetComponent<BossHealthManager>();
+        bossHealthManager = animator.GetComponent<BossPatrolManager>();
     }
     private void PassAnimationSpeed(Animator animator)
     {

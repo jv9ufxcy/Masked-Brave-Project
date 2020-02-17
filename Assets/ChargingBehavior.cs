@@ -8,7 +8,7 @@ public class ChargingBehavior : StateMachineBehaviour
     [SerializeField] private float timeToCharge;
     private float startChargeTime=0.8f;
     private bool isCharging;
-    private BossHealthManager bossHealthManager;
+    private BossPatrolManager bossHealthManager;
     private Rigidbody2D bossRB;
     private float defaultGravityScale;
 
@@ -16,7 +16,7 @@ public class ChargingBehavior : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timeToCharge = startChargeTime;
-        bossHealthManager = animator.GetComponent<BossHealthManager>();
+        bossHealthManager = animator.GetComponent<BossPatrolManager>();
 
         bossRB=animator.GetComponent<Rigidbody2D>();
         defaultGravityScale = bossRB.gravityScale;
