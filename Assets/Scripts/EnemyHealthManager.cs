@@ -33,7 +33,7 @@ public class EnemyHealthManager : MonoBehaviour
     private bool isOnGround;
     private bool canMove_UseProperty=true;
 
-    public UnityEvent OnDamaged,OnRecovery;
+    public UnityEvent OnDamaged,OnRecovery,OnHalfHealth;
 
     private bool isFacingRight;
     private Rigidbody2D enemyRB;

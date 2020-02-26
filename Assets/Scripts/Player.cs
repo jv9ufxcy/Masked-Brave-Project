@@ -2250,12 +2250,8 @@ public class Player : MonoBehaviour
             myRB.velocity = new Vector2(myRB.velocity.x, jumpStrength);
             jumpInputMemory = 0;
             coyoteTimer = 0;
-            currentAnim.SetBool("Ground", false);
-            currentAnim.SetFloat("vSpeed", myRB.velocity.y);
             audioManager.PlaySound(jumpSound);
             landingParticles.Play();
-
-            isOnGround = false;
         }
     }
     private void HandleCharging()
@@ -2301,14 +2297,12 @@ public class Player : MonoBehaviour
         }
         if (myRB.velocity.y < 0)
         {
-            currentAnim.SetBool("Ground", false);
             hasLanded = false;
         }
     }
 
     private void GroundTouch()
     {
-        currentAnim.SetBool("Ground", true);
         DashReset();
         if (!hasLanded)
         {
@@ -2435,67 +2429,67 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private void ChargeJump()
-    {
-        if (shouldChargeJump)
-        {
-            CheckParticles();
-            if (jumpPressure < maxJumpPressure)
-            {
-                jumpPressure += Time.fixedDeltaTime * jumpChargeMultiplier;
-                audioManager.PlaySound(henshinSound);
-                hasJumpChargingStarted = true;
-            }
-            else
-            {
-                hasJumpChargingStarted = false;
-                jumpPressure = maxJumpPressure;
-            }
+    //private void ChargeJump()
+    //{
+    //    if (shouldChargeJump)
+    //    {
+    //        CheckParticles();
+    //        if (jumpPressure < maxJumpPressure)
+    //        {
+    //            jumpPressure += Time.fixedDeltaTime * jumpChargeMultiplier;
+    //            audioManager.PlaySound(henshinSound);
+    //            hasJumpChargingStarted = true;
+    //        }
+    //        else
+    //        {
+    //            hasJumpChargingStarted = false;
+    //            jumpPressure = maxJumpPressure;
+    //        }
 
-        }
-        else if (isJumpKeyDown)
-        {
-            if (jumpPressure > 0f)
-            {
-                ShowAfterImage(invulColor, bombTrailFadeColor, shortDashInterval);
-                currentAnim.SetBool("Ground", false);
-                currentAnim.SetFloat("vSpeed", myRB.velocity.y);
-                hasReleasedJump = true;
-                jumpPressure = jumpPressure + minJumpPressure;
-                myRB.AddForce(new Vector2(0f, jumpPressure), ForceMode2D.Impulse);
-                jumpPressure = 0f;
-                audioManager.PlaySound(jumpSound);
-                hasReachedMaxJump = false;
-                chargeJumpParticle.Stop();
-                //chargeJumpMaxColor.Stop();
-            }
-            else if (!shouldChargeJump)
-            {
-                jumpPressure = 0;
-                chargeJumpParticle.Stop();
-                //chargeJumpMaxColor.Stop();
-            }
-            else
-            {
-                currentAnim.SetBool("Ground", false);
-                currentAnim.SetFloat("vSpeed", myRB.velocity.y);
-                //myRB.AddForce(jumpForce, ForceMode2D.Impulse);
-                audioManager.PlaySound(jumpSound);
+    //    }
+    //    else if (isJumpKeyDown)
+    //    {
+    //        if (jumpPressure > 0f)
+    //        {
+    //            ShowAfterImage(invulColor, bombTrailFadeColor, shortDashInterval);
+    //            currentAnim.SetBool("Ground", false);
+    //            currentAnim.SetFloat("vSpeed", myRB.velocity.y);
+    //            hasReleasedJump = true;
+    //            jumpPressure = jumpPressure + minJumpPressure;
+    //            myRB.AddForce(new Vector2(0f, jumpPressure), ForceMode2D.Impulse);
+    //            jumpPressure = 0f;
+    //            audioManager.PlaySound(jumpSound);
+    //            hasReachedMaxJump = false;
+    //            chargeJumpParticle.Stop();
+    //            //chargeJumpMaxColor.Stop();
+    //        }
+    //        else if (!shouldChargeJump)
+    //        {
+    //            jumpPressure = 0;
+    //            chargeJumpParticle.Stop();
+    //            //chargeJumpMaxColor.Stop();
+    //        }
+    //        else
+    //        {
+    //            currentAnim.SetBool("Ground", false);
+    //            currentAnim.SetFloat("vSpeed", myRB.velocity.y);
+    //            //myRB.AddForce(jumpForce, ForceMode2D.Impulse);
+    //            audioManager.PlaySound(jumpSound);
 
-                isOnGround = false;
-                shouldJump = false;
-                jumpPressure = 0;
-                chargeJumpParticle.Stop();
-                //chargeJumpMaxColor.Stop();
-            }
-        }
-        else
-        {
-            jumpPressure = 0;
-            chargeJumpParticle.Stop();
-            //chargeJumpMaxColor.Stop();
-        }
-    }
+    //            isOnGround = false;
+    //            shouldJump = false;
+    //            jumpPressure = 0;
+    //            chargeJumpParticle.Stop();
+    //            //chargeJumpMaxColor.Stop();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        jumpPressure = 0;
+    //        chargeJumpParticle.Stop();
+    //        //chargeJumpMaxColor.Stop();
+    //    }
+    //}
     #endregion
 
     private void Henshin()
@@ -2960,5 +2954,11 @@ public class Player : MonoBehaviour
         STATE_SHOOTING_RUNNING_BMB,
         STATE_SHOOTING_JUMPING_BMB,
         STATE_CREATE_BOMB_BMB,
+    }
+    public enum DamageState
+    {
+        Normal,
+        Damaged,
+        Trapped
     }
 }
