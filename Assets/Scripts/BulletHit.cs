@@ -16,7 +16,7 @@ public class BulletHit : MonoBehaviour
     [SerializeField] private LayerMask whatLayersToHit;
 
     [SerializeField] private string bulletCollisionSound;
-    [SerializeField] private bool shouldScreenshakeOnHit=false, shouldStopOnHit = true;
+    [SerializeField] private bool shouldScreenshakeOnHit=false, shouldStopOnHit = true, canReflect=true;
 
     // Use this for initialization
     void Start()
@@ -43,7 +43,7 @@ public class BulletHit : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(tagToHit))
         {
@@ -52,22 +52,27 @@ public class BulletHit : MonoBehaviour
             if (shouldStopOnHit)
             {
                 RemoveForce();
-                Instantiate(bulletHitEffect, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
+                Instantiate(bulletHitEffect, transform.position, transform.rotation);
         }
     }
     public void ReverseForce()
     {
-        tagToHit = "Enemy";
-        if (hurtPlayer!=null)
-            hurtPlayer.enabled = false;
+        if (canReflect)
+        {
+            tagToHit = "Enemy";
+            if (hurtPlayer != null)
+                hurtPlayer.enabled = false;
 
-        if (hurtEnemy != null)
-            hurtEnemy.enabled = true;
-
-        bulletRB.velocity = -bulletRB.velocity;
-        gameObject.layer = LayerMask.NameToLayer("Projectile");
+            if (hurtEnemy != null)
+                hurtEnemy.enabled = true;
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            bulletRB.velocity = -bulletRB.velocity;
+            gameObject.layer = LayerMask.NameToLayer("Projectile");
+        }
+        else
+            Destroy(gameObject);
     }
     private void RemoveForce()
     {

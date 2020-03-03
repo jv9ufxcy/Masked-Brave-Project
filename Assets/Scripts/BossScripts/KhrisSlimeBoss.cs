@@ -7,27 +7,29 @@ public class KhrisSlimeBoss : MonoBehaviour
 {
     [SerializeField] private Player thePlayer;
 
-    private Vector2 theTarget;
-    private enum BossStates { intro, idle, jump, slimeToss, slimeStab, stunned, frenzyIntro, frenzyIdle, frenzyJump, frenzySlam, frenzySlimeToss, frenzyFist, frenzySuperAttack };
+    private Vector2 theTarget,playerTarget;
+    private enum BossStates { intro, idle, jump, slimeToss, slimeStab, stunned, frenzyIntro, frenzyIdle, frenzyJump, frenzySlam, frenzySlimeToss, frenzyFist, frenzyArcherAttack };
     [SerializeField] private BossStates _bossStates;
 
-    [SerializeField] private string jumpAnim, slimeTossAnim, slimeStabAnim, frenzyAnim, fJumpAnim, fSlamAnim, fSlimeTossAnim, fFistAnim, fSuperAnim;
-    private bool isInvul;
+    [SerializeField] private string jumpAnim, slimeTossAnim, slimeStabAnim, frenzyAnim, fJumpAnim, fSlamAnim, fSlimeTossAnim, fFistAnim, fArcherAnim;
+    private bool isInvul, isFrenzy;
 
     [Header("Movement")]
-    [SerializeField] private float jumpStrength, frenzyJumpStrength=16f, jumpLength = 2f, frenzyJumpLength = 1.5f;
+    [SerializeField] private bool moveRight;
+    [SerializeField] private float jumpStrength, frenzyJumpStrength=16f, jumpLength = 2f, frenzyDuration = 1.5f;
+    private int direction = -1;
     protected float Animation;
-    private bool moveRight;
-    private Vector2 jumpForce;
-    private float defaultGravityScale;
-
+    [Space]
     [Header("Gun")]
-    [SerializeField] private GameObject slimeBullet;
-    [SerializeField] private float fireRate = .5f, timeToNextFire = 0f,bulletSpeed=5f;
-    //patrol variables
+    [SerializeField] private bool fired=false;
+    [SerializeField] private GameObject slimeBullet, greatArrow;
+    [SerializeField] private float timeToNextFire = 0f, slimeFireRate = .5f, archerFireRate = 2f, bulletSpeed = 20f, greatArrowSpeed = 30f;
+    [Space]
+    [Header("Patrol Variables")]
+    [SerializeField] Transform[] parabolaPoints;
     [SerializeField] private float detectionRange = 40, stabRangeDetect=4f, fistRangeDetect=6f;
     [SerializeField] Transform wallDetectPoint, groundDetectPoint, edgeDetectPoint;
-    [SerializeField] Transform[] parabolaPoints;
+    private Vector2 groundPosition;
     [SerializeField] float DetectRadius = 0.2f;
     [SerializeField] LayerMask whatCountsAsWall, whatCountsAsPlayer;
     private bool notAtEdge;
@@ -35,7 +37,7 @@ public class KhrisSlimeBoss : MonoBehaviour
     private bool isOnGround;
     [SerializeField] private bool playerIsToTheRight, isFacingRight,isPlayerInRange;
 
-    [SerializeField] private float timerToTransition, attackTimer, cooldownTimer = .6f, minTime = 1, maxTime = 2, throwSlimeDur = 0.8f, slimeStabDur=2f, fFistDur=2.2f, slimeArcher= 2.5f;
+    [SerializeField] private float timerToTransition, attackTimer, cooldownTimer = .6f, minTime = 1, maxTime = 2, throwSlimeDur = 0.6f, throwSlimeAction=0.3f, slimeStabDur=2f, fFistDur=2.2f, slimeArcherDur= 2.5f,slimeArcherShot=1.5f;
     [SerializeField] private int whichStateToTransitionTo, minChanceToCharge = 4, maxChanceToCharge = 8;
 
     private int randNum;
@@ -147,9 +149,10 @@ public class KhrisSlimeBoss : MonoBehaviour
         parabolaController = GetComponent<ParabolaController>();
         thePlayer = FindObjectOfType<Player>();
 
+        groundPosition = transform.position;
+
         if (thePlayer!=null)
             theTarget = thePlayer.transform.position;
-
         defaultColor = enemyRend.color;
         timerToTransition = minTime;
         audioManager = AudioManager.instance;
@@ -179,18 +182,9 @@ public class KhrisSlimeBoss : MonoBehaviour
                     {
                         EnemyAttackChange(slimeStabDur, minTime, slimeStabAnim, slimeFistSound, BossStates.slimeStab);
                     }
-                    else 
+                    else
                     {
-                        if (randNum>0)
-                        {
-                            GetTargetLocation();
-                            timerToTransition = minTime;
-                            enemyAnim.Play(jumpAnim);
-                            _bossStates = BossStates.jump;
-                        }
-                        else
-                            EnemyAttackChange(throwSlimeDur, minTime, slimeTossAnim, throwSlimeSound, BossStates.slimeToss);
-
+                        TransitionToJump(jumpAnim, BossStates.jump);
                     }
                 }
 
@@ -210,10 +204,7 @@ public class KhrisSlimeBoss : MonoBehaviour
                     {
                         if (randNum > 0)
                         {
-                            GetTargetLocation();
-                            timerToTransition = minTime;
-                            enemyAnim.Play(jumpAnim);
-                            _bossStates = BossStates.jump;
+                            TransitionToJump(jumpAnim, BossStates.jump);
                         }
                         else
                             EnemyAttackChange(throwSlimeDur, minTime, slimeTossAnim, throwSlimeSound, BossStates.slimeToss);
@@ -241,25 +232,38 @@ public class KhrisSlimeBoss : MonoBehaviour
                 break;
             case BossStates.slimeToss:
                 timeToNextFire -= Time.deltaTime;
-                if (timeToNextFire < 0)
+                if (!fired)
                 {
-                    ShootPlayer();
+                    StartCoroutine(ThrowSlime());
                 }
-                    if (attackTimer <= 0)
+                if (attackTimer <= 0)
+                {
+                    ThrowSlime();
+                    TransitionToJump(jumpAnim, BossStates.jump);
+                }
+                else
+                {
+                    timerToTransition = minTime;
+                    attackTimer -= Time.deltaTime;
+                }
+
+                break;
+            case BossStates.frenzyIntro:
+                randNum = UnityEngine.Random.Range(0, 2);
+
+                timerToTransition -= Time.deltaTime;
+                if (timerToTransition <= 0)
+                {
+                    if (isPlayerInRange)
                     {
-                        GetTargetLocation();
-                        timerToTransition = minTime;
-                        enemyAnim.Play(jumpAnim);
-                        _bossStates = BossStates.jump;
+                        EnemyAttackChange(fFistDur, minTime, fFistAnim, slimeFistSound, BossStates.frenzyFist);
                     }
                     else
                     {
-                        timerToTransition = minTime;
-                        attackTimer -= Time.deltaTime;
+                        TransitionToJump(fJumpAnim, BossStates.frenzyJump);
                     }
-                
-                    break;
-            case BossStates.frenzyIntro:
+                }
+
                 break;
             case BossStates.frenzyIdle:
                 timerToTransition -= Time.deltaTime;
@@ -274,47 +278,120 @@ public class KhrisSlimeBoss : MonoBehaviour
                     }
                     else
                     {
-                        if (randNum == 0)
+                        switch (randNum)
                         {
-                            timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-                            whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                            GetTargetLocation();
-                            enemyAnim.Play(fJumpAnim);
-                            _bossStates = BossStates.frenzyJump;
+                            case 0:
+                                TransitionToJump(fJumpAnim, BossStates.frenzyJump);
+                                break;
+                            case 1:
+                                EnemyAttackChange(throwSlimeDur, minTime, fSlimeTossAnim, throwSlimeSound, BossStates.frenzySlimeToss);
+                                break;
+                            case 2:
+                                EnemyAttackChange(slimeArcherDur, minTime, fArcherAnim, throwSlimeSound, BossStates.frenzyArcherAttack);
+                                break;
+                            default:
+                                break;
                         }
-                        else
-                            EnemyAttackChange(throwSlimeDur, minTime, fSlimeTossAnim, throwSlimeSound, BossStates.frenzySlimeToss);
-
                     }
                 }
                 break;
             case BossStates.frenzyJump:
-                if (isOnGround)
+                timerToTransition -= Time.deltaTime;
+                randNum = UnityEngine.Random.Range(0, 2);
+                if (IsOnGround && timerToTransition <= 0)
                 {
                     ChangeDirection();
-                    _bossStates = BossStates.frenzyIdle;
+                    if (!isPlayerInRange)
+                    {
+                        EnemyAttackChange(throwSlimeDur, minTime, fSlimeTossAnim, throwSlimeSound, BossStates.frenzySlimeToss);
+                    }
+                    else
+                    {
+                        switch (randNum)
+                        {
+                            case 0:
+                                EnemyAttackChange(slimeArcherDur, minTime, fArcherAnim, throwSlimeSound, BossStates.frenzyArcherAttack);
+                                break;
+                            case 1:
+                                EnemyAttackChange(throwSlimeDur, minTime, fSlimeTossAnim, throwSlimeSound, BossStates.frenzySlimeToss);
+                                break;
+                            case 2:
+                                EnemyAttackChange(slimeArcherDur, minTime, fArcherAnim, throwSlimeSound, BossStates.frenzyArcherAttack);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
                 break;
             case BossStates.frenzySlam:
                 break;
             case BossStates.frenzySlimeToss:
                 timeToNextFire -= Time.deltaTime;
-                if (timeToNextFire < 0)
+                randNum = UnityEngine.Random.Range(0, 2);
+                if (!fired)
                 {
-                    ShootPlayer();
+                    StartCoroutine(ThrowSlime());
                 }
+                if (attackTimer <= 0)
+                {
+                    switch (randNum)
+                    {
+                        case 0:
+                            TransitionToJump(fJumpAnim, BossStates.frenzyJump);
+                            break;
+                        case 1:
+                            EnemyAttackChange(slimeArcherDur, minTime, fArcherAnim, throwSlimeSound, BossStates.frenzyArcherAttack);
+                            break;
+                        case 2:
+                            EnemyAttackChange(slimeArcherDur, minTime, fArcherAnim, throwSlimeSound, BossStates.frenzyArcherAttack);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    timerToTransition = minTime;
+                    attackTimer -= Time.deltaTime;
+                }
+
                 break;
             case BossStates.frenzyFist:
                 break;
-            case BossStates.frenzySuperAttack:
+            case BossStates.frenzyArcherAttack:
+                timeToNextFire -= Time.deltaTime;
+                if (!fired)
+                {
+                    StartCoroutine(GreatArrowShot());
+                }
+                if (attackTimer <= 0)
+                {
+                    TransitionToJump(fJumpAnim, BossStates.frenzyJump);
+                }
+                else
+                {
+                    timerToTransition = minTime;
+                    attackTimer -= Time.deltaTime;
+                }
+
                 break;
             default:
                 break;
         }
     }
 
+    private void TransitionToJump(string jumpingAnimation, BossStates attackState)
+    {
+        GetTargetLocation();
+        timerToTransition = minTime;
+        enemyAnim.Play(jumpingAnimation);
+        _bossStates = attackState;
+    }
+
     private void EnemyAttackChange(float attackDuration, float transitionDelay,string attackAnim, string attackSound, BossStates attackState)
     {
+        fired = false;
         attackTimer = attackDuration;
         cooldownTimer = attackDuration;
         timerToTransition = transitionDelay;
@@ -341,9 +418,7 @@ public class KhrisSlimeBoss : MonoBehaviour
                 }
                 break;
             case BossStates.slimeToss:
-                
-                    enemyRB.velocity = Vector2.zero;
-
+                enemyRB.velocity = Vector2.zero;
                 break;
             case BossStates.slimeStab:
                 if (attackTimer <= 0)
@@ -362,37 +437,19 @@ public class KhrisSlimeBoss : MonoBehaviour
             case BossStates.frenzyIdle:
                 break;
             case BossStates.frenzyJump:
-                Jump(jumpStrength*2, jumpLength*2);
+                if (timerToTransition >= minTime)
+                {
+                    Jump(jumpStrength, jumpLength);
+                }
                 break;
             case BossStates.frenzySlam:
                 break;
             case BossStates.frenzySlimeToss:
-                if (attackTimer <= 0)
-                {
-                    _bossStates = BossStates.frenzyIdle;
-                }
-                else
-                {
-                    timerToTransition = maxTime;
-                    attackTimer -= Time.fixedDeltaTime;
-                    enemyRB.velocity = Vector2.zero;
-                }
+                enemyRB.velocity = Vector2.zero;
                 break;
             case BossStates.frenzyFist:
                 if (attackTimer <= 0)
                 {
-                    timerToTransition -= Time.fixedDeltaTime;
-                }
-                else
-                {
-                    timerToTransition = minTime;
-                    attackTimer -= Time.fixedDeltaTime;
-                    enemyRB.velocity = Vector2.zero;
-                }
-                break;
-            case BossStates.frenzySuperAttack:
-                if (attackTimer <= 0)
-                {
                     _bossStates = BossStates.frenzyIdle;
                 }
                 else
@@ -401,6 +458,9 @@ public class KhrisSlimeBoss : MonoBehaviour
                     attackTimer -= Time.fixedDeltaTime;
                     enemyRB.velocity = Vector2.zero;
                 }
+                break;
+            case BossStates.frenzyArcherAttack:
+                enemyRB.velocity = Vector2.zero;
                 break;
             default:
                 break;
@@ -418,24 +478,49 @@ public class KhrisSlimeBoss : MonoBehaviour
         //Animation %= 5f;
         //    transform.position = MathParabola.Parabola(transform.position, theTarget, jumpForce, Animation/5f);
     }
-    private void ShootPlayer()
+    IEnumerator ThrowSlime()
     {
-        timeToNextFire = fireRate;
+        fired = true;
+        GetPlayerLocation();
+        //timeToNextFire = slimeFireRate;
+
+        yield return new WaitForSeconds(throwSlimeAction);
         audioManager.PlaySound(attackFlashSound);
 
         Vector2 moveDirection = (thePlayer.transform.position - transform.position).normalized * bulletSpeed;
 
         GameObject newbullet = Instantiate(slimeBullet, wallDetectPoint.position, Quaternion.identity);
-        //newbullet.GetComponent<HurtPlayerOnHit>().enemyHM = enemyHM;
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(moveDirection.x, moveDirection.y);
+        newbullet.GetComponent<ParabolaController>().ParabolaRoot = parabolaController.ParabolaRoot;
+    }
+    IEnumerator GreatArrowShot()
+    {
+        fired = true;
+        GetPlayerLocation();
+        //timeToNextFire = archerFireRate;
+        audioManager.PlaySound(attackFlashSound);
+
+        yield return new WaitForSeconds(slimeArcherShot);
+
+        GameObject newArrow = Instantiate(greatArrow, wallDetectPoint.position, Quaternion.identity);
+        newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2(greatArrowSpeed*direction,0);
+        newArrow.transform.localScale= new Vector3(direction,1,1);
+
+        newArrow.GetComponent<HurtPlayerOnHit>().enemyHM = enemyHM;
     }
     public void OnHalfHealth()
     {
-        enemyAnim.SetBool("Frenzy", true);
+        Debug.Log("Phase 2");
+        isFrenzy = true;
+        enemyAnim.SetBool("Frenzy", isFrenzy);
+        enemyAnim.Play(frenzyAnim);
         _bossStates = BossStates.frenzyIntro;
+        timerToTransition = frenzyDuration;
+        parabolaController.Speed = 20;
     }
     public void OnDamaged()
     {
+        StopCoroutine(GreatArrowShot());
+        StopCoroutine(ThrowSlime());
         _bossStates = BossStates.stunned;
         enemyAnim.SetBool("IsHurt", true);
     }
@@ -443,8 +528,11 @@ public class KhrisSlimeBoss : MonoBehaviour
     {
         enemyAnim.SetBool("IsHurt", false);
         timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-        _bossStates = BossStates.idle;
+
+        if (isFrenzy)
+            _bossStates = BossStates.frenzyIdle;
+        else
+            _bossStates = BossStates.idle;
     }
     private void OnDrawGizmosSelected()
     {
@@ -482,12 +570,14 @@ public class KhrisSlimeBoss : MonoBehaviour
     }
     private void FlipFacingRight()
     {
+        direction = 1;
         moveRight = true;
         IsFacingRight = true;
         transform.localScale = new Vector3(-1f, 1f, 1f);
     }
     private void FlipFacingLeft()
     {
+        direction = -1;
         moveRight = false;
         IsFacingRight = false;
         transform.localScale = new Vector3(1f, 1f, 1f);
@@ -507,11 +597,27 @@ public class KhrisSlimeBoss : MonoBehaviour
     private void GetTargetLocation()
     {
         if (thePlayer != null)
-            theTarget = new Vector2(thePlayer.transform.position.x-3, transform.position.y);
+        {
+            theTarget = new Vector2(thePlayer.transform.position.x - (direction * 3), groundPosition.y);
+            playerTarget = new Vector2(thePlayer.transform.position.x - (direction * 3), groundPosition.y);
+        }
+            
         Debug.Log("TargetPos: " + theTarget);
         parabolaPoints[0].transform.position = transform.position;
-        //parabolaPoints[1].transform.position = new Vector2(transform.position.x/* + jumpLength*/, transform.position.y + jumpStrength);
+        parabolaPoints[1].transform.position = new Vector2((transform.position.x+theTarget.x)/2, transform.position.y + jumpStrength);
         parabolaPoints[2].transform.position = theTarget;
+    }
+    private void GetPlayerLocation()
+    {
+        if (thePlayer != null)
+        {
+            playerTarget = new Vector2(thePlayer.transform.position.x, groundPosition.y+1);
+        }
+            
+        Debug.Log("playerPos: " + playerTarget);
+        parabolaPoints[0].transform.position = transform.position;
+        parabolaPoints[1].transform.position = new Vector2((transform.position.x+playerTarget.x)/2, transform.position.y + jumpStrength);
+        parabolaPoints[2].transform.position = playerTarget;
     }
     private void ChangeDirection()
     {
@@ -527,16 +633,6 @@ public class KhrisSlimeBoss : MonoBehaviour
 }
 public class MathParabola
 {
-
-    //public static Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
-    //{
-    //    Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
-
-    //    var mid = Vector3.Lerp(start, end, t);
-
-    //    return new Vector3(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t), mid.z);
-    //}
-
     public static Vector2 Parabola(Vector2 start, Vector2 end, float height, float t)
     {
         Func<float, float> f = x => -4 * height * x * x + 4 * height * x;

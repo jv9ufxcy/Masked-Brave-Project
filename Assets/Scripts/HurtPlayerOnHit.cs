@@ -18,7 +18,7 @@ public class HurtPlayerOnHit : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         player=collision.gameObject.GetComponentInParent<Player>();
         if (collision.CompareTag("Player") && !player.IsInvulnerable && !enemyHM.IsInvul)

@@ -17,7 +17,7 @@ public class SlimeTrap : MonoBehaviour
     private float maxGroundTime = 0.3f;
 
     [SerializeField]
-    private float freezeTime=2f;
+    private float freezeTime=2f, lifeTime=6f;
 
     [SerializeField] private string stickSound, landSound, releaseSound;
     [SerializeField] private ParticleSystem burstFree;
@@ -32,6 +32,7 @@ public class SlimeTrap : MonoBehaviour
     private Animator slimeAnim;
     private AudioManager audioManager;
     private Player moveScript;
+    public ParabolaController trapParabola;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,14 +41,18 @@ public class SlimeTrap : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
         coll = GetComponent<BoxCollider2D>();
         slimeRB = GetComponent<Rigidbody2D>();
+        trapParabola = GetComponent<ParabolaController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         slimeAnim.SetBool("IsActive", active);
+        slimeAnim.SetBool("IsOnGround", landed);
+
         if (active&&moveScript!=null)
         {
+            trapParabola.enabled = false;
             moveScript.transform.position = transform.position;
             if (IsOnGround())
             {
@@ -55,6 +60,10 @@ public class SlimeTrap : MonoBehaviour
             }
             else
                 _stateOfTrap = TrapState.airHold;
+        }
+        else
+        {
+            CheckLifeTime();
         }
         switch (_stateOfTrap)
         {
@@ -65,9 +74,10 @@ public class SlimeTrap : MonoBehaviour
                 GroundCheck();
                 break;
             case TrapState.grounded:
+                transform.position = this.transform.position;
                 break;
             case TrapState.groundHold:
-                slimeRB.velocity = Vector2.zero;
+                transform.position = this.transform.position;
                 break;
             default:
                 break;
@@ -75,10 +85,23 @@ public class SlimeTrap : MonoBehaviour
         
     }
 
+    private void CheckLifeTime()
+    {
+        if (lifeTime > 0)
+        {
+            lifeTime -= Time.deltaTime;
+        }
+        else if (lifeTime <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void GroundCheck()
     {
         if (IsOnGround())//if it is touching a  ground tile
         {
+            
             if (!landed && groundTimer > maxGroundTime)//if it hasn't been grounded already and it's touched the ground for a little bit
                 SetTrapGrounded();//arm it
 
@@ -89,7 +112,8 @@ public class SlimeTrap : MonoBehaviour
     }
     void SetTrapGrounded()
     {
-        slimeAnim.SetBool("IsOnGround", true);//set the animator to do the ground animation
+        trapParabola.enabled = false;
+        //slimeAnim.SetBool("IsOnGround", true);//set the animator to do the ground animation
         slimeRB.velocity = Vector2.zero;//no sliding
         landed = true;//set the ice cream to armed
         audioManager.PlaySound(landSound);
@@ -121,6 +145,6 @@ public class SlimeTrap : MonoBehaviour
         //AUDIO play thaw sfx
         audioManager.PlaySound(releaseSound);
         //burstFree.Play();
-        Destroy(this.gameObject, .15f);//destroy after has been used
+        Destroy(gameObject);//destroy after has been used
     }
 }

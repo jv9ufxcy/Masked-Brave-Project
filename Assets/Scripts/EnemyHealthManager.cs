@@ -12,7 +12,7 @@ public class EnemyHealthManager : MonoBehaviour
     [SerializeField] private GameObject deathParticle, damageParticle;
     [SerializeField] private GameObject itemDropped;
     [SerializeField] private GameObject energyDropped;
-    [SerializeField] private bool shouldDropAtHalf;
+    private bool firstPhase=true;
 
     public int hpStock=0, eStock=0, ammoStock=0;
 
@@ -191,6 +191,12 @@ public class EnemyHealthManager : MonoBehaviour
         {
             currentEnemyHealth = 0;
             OnDeath();
+        }
+        if (currentEnemyHealth<maxEnemyHealth/2&&firstPhase)
+        {
+            OnHalfHealth.Invoke();
+            currentPoise = maxPoise;
+            firstPhase = false;
         }
     }
 

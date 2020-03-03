@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1362241432898700433}
   - component: {fileID: 1362241432898700432}
+  - component: {fileID: 498840704265918252}
+  - component: {fileID: 7496825472977038713}
   - component: {fileID: 1362241432898700430}
   - component: {fileID: 1362241432898700429}
   - component: {fileID: 1362241432898700428}
-  - component: {fileID: 1659944038580958130}
-  - component: {fileID: 8174564054948841564}
-  - component: {fileID: 7496825472977038713}
+  - component: {fileID: 8124190600868047491}
   m_Layer: 13
   m_Name: SlimeBall
   m_TagString: Projectile
@@ -58,11 +58,45 @@ MonoBehaviour:
     m_Bits: 33024
   maxGroundTime: 0.3
   freezeTime: 3
+  lifeTime: 6
   stickSound: BombTick
   landSound: WallStick
   releaseSound: BombTick
   burstFree: {fileID: 3806419790616851922}
   _stateOfTrap: 0
+  trapParabola: {fileID: 0}
+--- !u!114 &498840704265918252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362241432898700426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da50ed7e7aba13408b8ccd1a95b44ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 15
+  ParabolaRoot: {fileID: 0}
+  Autostart: 1
+  Animation: 1
+--- !u!58 &7496825472977038713
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362241432898700426}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.2}
+  serializedVersion: 2
+  m_Radius: 0.75
 --- !u!212 &1362241432898700430
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -146,12 +180,12 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: fd6104433e19d8749af3801d183278e3, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1659944038580958130
+--- !u!114 &8124190600868047491
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,58 +197,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletHitEffect: {fileID: 8866245527520328343, guid: 0bceea63af579934f8abdb45d270fb11,
-    type: 3}
+  bulletHitEffect: {fileID: 6880529271469774156}
   tagToHit: Enemy
   lifeTime: 6
   whatLayersToHit:
     serializedVersion: 2
-    m_Bits: 35072
+    m_Bits: 2304
   bulletCollisionSound: 
   shouldScreenshakeOnHit: 0
   shouldStopOnHit: 0
---- !u!61 &8174564054948841564
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362241432898700426}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: fd6104433e19d8749af3801d183278e3, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.01}
-  m_EdgeRadius: 0
---- !u!58 &7496825472977038713
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362241432898700426}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: fd6104433e19d8749af3801d183278e3, type: 2}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
-  serializedVersion: 2
-  m_Radius: 0.75
+  canReflect: 0
 --- !u!1 &1362241434206101511
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +216,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1362241434206101512}
-  m_Layer: 13
+  - component: {fileID: 1691353223584951877}
+  m_Layer: 9
   m_Name: GroundDetect
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -245,6 +238,32 @@ Transform:
   m_Father: {fileID: 1362241432898700433}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1691353223584951877
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362241434206101511}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &6656688052126711973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -319,6 +338,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c021369891874384b9124f6adb997c84, type: 3}
+--- !u!1 &6880529271469774156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 224549313525290473, guid: c021369891874384b9124f6adb997c84,
+    type: 3}
+  m_PrefabInstance: {fileID: 6656688052126711973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6314534949343662780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 846943462026809881, guid: c021369891874384b9124f6adb997c84,

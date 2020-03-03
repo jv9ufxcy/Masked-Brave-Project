@@ -96,26 +96,32 @@ MonoBehaviour:
   fSlamAnim: 
   fSlimeTossAnim: FrenzyThrowSlime
   fFistAnim: FrenzyGiantFist
-  fSuperAnim: FrenzyArcher
+  fArcherAnim: FrenzyArcher
+  moveRight: 0
   jumpStrength: 8
   frenzyJumpStrength: 16
   jumpLength: 10
-  frenzyJumpLength: 1.5
+  frenzyDuration: 1.5
+  fired: 0
   slimeBullet: {fileID: 1362241432898700426, guid: a0135fd923a0bc942a0aa8cbe06811b4,
     type: 3}
-  fireRate: 1
+  greatArrow: {fileID: 7844842843145421162, guid: 8e5e8cbc197c5564dbacc14e40647660,
+    type: 3}
   timeToNextFire: 0
+  slimeFireRate: 0.3
+  archerFireRate: 2
   bulletSpeed: 20
+  greatArrowSpeed: 30
+  parabolaPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   detectionRange: 20
   stabRangeDetect: 4
   fistRangeDetect: 6
   wallDetectPoint: {fileID: 1114815310865504375}
   groundDetectPoint: {fileID: 6748679497898722909}
   edgeDetectPoint: {fileID: 6748679497898722909}
-  parabolaPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   DetectRadius: 0.05
   whatCountsAsWall:
     serializedVersion: 2
@@ -132,9 +138,11 @@ MonoBehaviour:
   minTime: 0.2
   maxTime: 0.6
   throwSlimeDur: 0.8
+  throwSlimeAction: 0.3
   slimeStabDur: 2
   fFistDur: 2.2
-  slimeArcher: 2.5
+  slimeArcherDur: 2.5
+  slimeArcherShot: 1
   whichStateToTransitionTo: 0
   minChanceToCharge: 4
   maxChanceToCharge: 8
@@ -164,14 +172,13 @@ MonoBehaviour:
   maxEnemyHealth: 100
   currentPoise: 0
   maxPoise: 15
-  deathParticle: {fileID: 1756106632241220, guid: 2f3b405dff359b6429fa5951466d6c6c,
+  deathParticle: {fileID: 224549313525290473, guid: c021369891874384b9124f6adb997c84,
     type: 3}
-  damageParticle: {fileID: 4847973911462044704, guid: 141a30506b4d9374a94801f03e7669b4,
+  damageParticle: {fileID: 8866245527520328343, guid: 0bceea63af579934f8abdb45d270fb11,
     type: 3}
   itemDropped: {fileID: 0}
   energyDropped: {fileID: 1214605765240008, guid: 47fb1b856b0351146b6f18848f50f296,
     type: 3}
-  shouldDropAtHalf: 0
   hpStock: 1
   eStock: 0
   ammoStock: 0
@@ -221,7 +228,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnHalfHealth:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1045052940833656242}
+        m_MethodName: OnHalfHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   enemyTakeDamageSound: EnemyTakeDamage
@@ -244,7 +262,7 @@ Rigidbody2D:
   m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &2578009737949423324
@@ -392,7 +410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179650013962388598}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1940396631276134261}
@@ -500,7 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9195d3e520630474db9cef81bc8f09c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToGive: 4
+  damageToGive: 3
   knockbackToGive: 0.3
   shouldHitStop: 1
   enemyHM: {fileID: 3073588484040182247}
@@ -5340,7 +5358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9195d3e520630474db9cef81bc8f09c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToGive: 8
+  damageToGive: 6
   knockbackToGive: 0.6
   shouldHitStop: 1
   enemyHM: {fileID: 3073588484040182247}
