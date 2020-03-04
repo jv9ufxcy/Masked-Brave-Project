@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkillListItem : MonoBehaviour
 {
     private SkillListMenu skillMenu;
-    private string skillDescription;
+    [SerializeField] private string skillDescription;
     // Start is called before the first frame update
     void Start()
     {

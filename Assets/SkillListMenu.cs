@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SkillListMenu : MonoBehaviour
 {
-    [SerializeField] private Text descriptionAreaText;
+    [SerializeField] private TextMeshProUGUI descriptionAreaText;
     private void Start()
     {
         
