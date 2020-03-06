@@ -40,6 +40,7 @@ public class EnemyJumpPatrol : MonoBehaviour
     [SerializeField] private string attackAnimation, hurtAnimation, jumpAnimation, windupAnimation;
     [SerializeField] private float attackDelay = 2f;
 
+    [SerializeField] private ParticleSystem flashParticle;
     [SerializeField] private EnemyState enemyState;
     private enum EnemyState
     {
@@ -160,6 +161,7 @@ public class EnemyJumpPatrol : MonoBehaviour
         coroutineStarted = true;
         enemyAnim.Play(windupAnimation);
         enemyRB.velocity = Vector2.zero;
+        flashParticle.Play();
         yield return new WaitForSeconds(attackDelay);
         enemyAnim.Play(attackAnimation);
         Jump();

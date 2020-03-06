@@ -30,6 +30,7 @@ public class EnemyFlyingController : MonoBehaviour
 
     private enum FlyingState { idle, chase, firing, stunned };
     [SerializeField] private FlyingState _flyingState;
+    [SerializeField] private ParticleSystem flashParticle;
 
 
     // Use this for initialization
@@ -65,6 +66,7 @@ public class EnemyFlyingController : MonoBehaviour
                 isPlayerInShootingRange = Physics2D.OverlapCircle(transform.position, shootingRange, whatIsShootable);
                 if (isPlayerInShootingRange)
                 {
+                    flashParticle.Play();
                     bubbleAnim.Play(firingAnim);
                     _flyingState = FlyingState.firing;
                 }

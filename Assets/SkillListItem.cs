@@ -12,7 +12,7 @@ public class SkillListItem : MonoBehaviour
         skillMenu = GetComponentInParent<SkillListMenu>();
     }
 
-    public void OnValueCHanged()
+    public void OnValueChanged()
     {
         skillMenu.UpdateDescriptionAreaText(skillDescription);
     }

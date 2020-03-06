@@ -77,7 +77,8 @@ public class BulletHit : MonoBehaviour
     private void RemoveForce()
     {
         //stops the bullet on collision
-        bulletRB.velocity = Vector2.zero;
+        if (bulletRB!=null)
+            bulletRB.velocity = Vector2.zero;
     }
     private static void Screenshake()
     {

@@ -190,10 +190,16 @@ public class Kinzecter : MonoBehaviour
     {
         if (ammoStock>0)
             ammoPS.Play();
+        else
+            ammoPS.Stop();
         if (eStock>0)
             energyPS.Play();
+        else
+            energyPS.Stop();
         if (hpStock > 0)
             hpPS.Play();
+        else
+            hpPS.Stop();
     }
     public bool isWithPlayer()
     {
