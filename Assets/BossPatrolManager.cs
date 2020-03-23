@@ -6,69 +6,54 @@ using UnityEngine;
 public class BossPatrolManager : MonoBehaviour
 {
     [SerializeField] private Player thePlayer;
-    private enum BossStates { intro, idle, run, jump, longRangeAttack, closeRangeAttack, superAttack, stunned };
+
+    private Vector2 theTarget, playerTarget;
+    private enum BossStates { intro, idle, moveToPlayer, punchAttack, chargeAttack, stunned, formChangeAnim, frenzyIdle, frenzyJump, frenzySlam, frenzySlimeToss, frenzyFist, frenzyArcherAttack };
     [SerializeField] private BossStates _bossStates;
-    [SerializeField] private string jumpAnim, chargeAnim, idleAnim;
-    [SerializeField] private bool isEnemyInvincible = false;
-    [SerializeField] private int currentEnemyHealth, maxEnemyHealth;
 
-    [SerializeField] private GameObject deathParticle, itemDropped, energyDropped;
-
-    [SerializeField] private bool shouldDropAtHalf;
-
-
-    //knockback
-    public float enemyKnockbackDuration, enemyForce, enemyMaxKnockbackDuration;
-    public bool enemyKnockFromRight;
-    private bool isInvul;
-    [SerializeField] private float damageCooldownInSeconds = .75f;
+    [SerializeField] private string jumpAnim, punchAttackAnim, chargeAttackAnim, formChangeAnim, fJumpAnim, fSlamAnim, fSlimeTossAnim, fFistAnim, fArcherAnim;
+    private bool isInvul, isPhaseTwo;
 
     [Header("Movement")]
-    [SerializeField] private float jumpStrength, moveSpeed;
-    private bool moveRight;
-    private Vector2 jumpForce;
-    private float defaultGravityScale;
+    [SerializeField] private bool moveRight;
+    [SerializeField] private float walkSpeed = 4f, chargeAttackSpeed = 20f,jumpStrength, frenzyJumpStrength = 16f, jumpLength = 2f, frenzyDuration = 1.5f;
+    private int direction = -1;
 
-    //patrol variables
-    [SerializeField] private float detectionRange=40;
+    [Space]
+    [Header("Patrol Variables")]
     [SerializeField] Transform wallDetectPoint, groundDetectPoint, edgeDetectPoint;
-    [SerializeField] float DetectRadius = 0.2f;
-    [SerializeField] LayerMask whatCountsAsWall;
+    private Vector2 groundPosition;
+    [SerializeField] float groundedRadius = 0.2f;
+    [SerializeField] LayerMask whatCountsAsWall, whatCountsAsPlayer;
     private bool notAtEdge;
     private bool hittingWall;
     private bool isOnGround;
-    [SerializeField] private bool playerIsToTheRight, isFacingRight;
+    [SerializeField] private bool playerIsToTheRight, isFacingRight, isPlayerInRange;
 
-    [SerializeField] private float timerToTransition, attackTimer, cooldownTimer=.6f, minTime = 4, maxTime = 8, longRangeAttackTime=0.8f;
+    [Space]
+    [Header("Attacks")]
+    [SerializeField] private bool attackFired = false;
+    [SerializeField] private float punchRangeDetect = 2f;
+    [SerializeField] private float timerToTransition, attackTimer, cooldownTimer = .6f, minTime = 1, maxTime = 2, punchAttackDuration = 0.6f, punchDelay = 0.3f, chargeAttackDuration = 2f, chargeDelay = 1.5f;
     [SerializeField] private int whichStateToTransitionTo, minChanceToCharge = 4, maxChanceToCharge = 8;
+
+    private int randNum;
 
     private Rigidbody2D enemyRB;
     private SpriteRenderer enemyRend;
     private Animator enemyAnim;
-    [SerializeField] private BossDoorTrigger bossDoorTrigger;
+
     //audio
     private AudioManager audioManager;
-    [SerializeField] private string enemyTakeDamageSound, enemyDeathSound, jumpSound, shortRangeSound, longRangeSound, attackFlashSound;
-    private int deathCount=1;
+    [SerializeField] private string enemyTakeDamageSound, enemyDeathSound, jumpSound, chargeAttackSound, punchAttackSound, attackFlashSound;
+    private int deathCount = 1;
     [Header("Polish")]
     [SerializeField] private Color defaultColor;
     [SerializeField] private ParticleSystem landingParticles, attackFlashParticle;
+
+    private ParabolaController parabolaController;
+    private EnemyHealthManager enemyHM;
     #region Properties
-    public int CurrentHitPoints
-    {
-        get
-        {
-            return currentEnemyHealth;
-        }
-        private set
-        {
-            currentEnemyHealth = value;
-            if (currentEnemyHealth < 0)
-                currentEnemyHealth = 0;
-            if (currentEnemyHealth > maxEnemyHealth)
-                currentEnemyHealth = maxEnemyHealth;
-        }
-    }
 
     public bool IsInvul
     {
@@ -154,16 +139,17 @@ public class BossPatrolManager : MonoBehaviour
 
     private void Initialize()
     {
+        enemyHM = GetComponent<EnemyHealthManager>();
         enemyRend = GetComponent<SpriteRenderer>();
         enemyAnim = GetComponent<Animator>();
         enemyRB = GetComponent<Rigidbody2D>();
-        bossDoorTrigger = GetComponent<BossDoorTrigger>();
-        currentEnemyHealth = maxEnemyHealth;
-
-        defaultGravityScale = enemyRB.gravityScale;
-
+        parabolaController = GetComponent<ParabolaController>();
         thePlayer = FindObjectOfType<Player>();
 
+        groundPosition = transform.position;
+
+        if (thePlayer != null)
+            theTarget = thePlayer.transform.position;
         defaultColor = enemyRend.color;
         timerToTransition = minTime;
         audioManager = AudioManager.instance;
@@ -176,7 +162,7 @@ public class BossPatrolManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_bossStates != BossStates.longRangeAttack)
+        if (_bossStates != BossStates.punchAttack)
             TurnEnemyAround();
 
         PassPatrolVariables();
@@ -184,117 +170,128 @@ public class BossPatrolManager : MonoBehaviour
         switch (_bossStates)
         {
             case BossStates.intro:
-                int randNum = UnityEngine.Random.Range(0, 2);
+                randNum = UnityEngine.Random.Range(0, 2);
 
                 timerToTransition -= Time.deltaTime;
                 if (timerToTransition <= 0)
                 {
-                    if (randNum == 0)
+                    if (isPlayerInRange)
                     {
-                        timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-                        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                        ChangeDirection();
-                        _bossStates = BossStates.run;
+                        EnemyAttackChange(chargeAttackDuration, minTime, chargeAttackAnim, chargeAttackSound, BossStates.chargeAttack);
                     }
                     else
                     {
-                        timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-                        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                        enemyAnim.Play(jumpAnim);
-                        _bossStates = BossStates.jump;
+                        TransitionToMove(BossStates.moveToPlayer);
                     }
                 }
-                    
+
                 break;
             case BossStates.idle:
                 timerToTransition -= Time.deltaTime;
+                randNum = UnityEngine.Random.Range(0, minChanceToCharge);
+                ChangeDirection();
                 if (timerToTransition <= 0)
                 {
-                    if (whichStateToTransitionTo <= minChanceToCharge)
+                    if (isPlayerInRange)
                     {
-                        timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-                        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                        ChangeDirection();
-                        _bossStates = BossStates.run;
+                        EnemyAttackChange(punchAttackDuration, minTime, punchAttackAnim, punchAttackSound, BossStates.punchAttack);
                     }
                     else
                     {
-                        timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-                        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                        enemyAnim.Play(jumpAnim);
-                        _bossStates = BossStates.jump;
+                        if (randNum > 0)
+                            TransitionToMove(BossStates.moveToPlayer);
+                        else
+                             EnemyAttackChange(chargeAttackDuration, minTime, chargeAttackAnim, chargeAttackSound, BossStates.chargeAttack);
                     }
                 }
                 break;
-            case BossStates.run:
+            case BossStates.chargeAttack:
+
+                break;
+            case BossStates.moveToPlayer:
+                ChangeDirection();
                 timerToTransition -= Time.deltaTime;
+                
                 if (timerToTransition <= 0)
                 {
-                    if (whichStateToTransitionTo <= minChanceToCharge)
+                    if (isPlayerInRange)
                     {
-                        attackTimer = longRangeAttackTime;
-                        cooldownTimer = longRangeAttackTime;
-                        timerToTransition = minTime;
-                        attackFlashParticle.Play();
-                        ChangeDirection();
-                        enemyAnim.Play(chargeAnim);
-                        audioManager.PlaySound(jumpSound);
-                        _bossStates = BossStates.longRangeAttack;
+                        EnemyAttackChange(punchAttackDuration, minTime, punchAttackAnim, punchAttackSound, BossStates.punchAttack);
                     }
                     else
                     {
-                        timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-                        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                        enemyAnim.Play(jumpAnim);
-                        _bossStates = BossStates.jump;
+                        EnemyAttackChange(chargeAttackDuration, minTime, chargeAttackAnim, chargeAttackSound, BossStates.chargeAttack);
                     }
                 }
                 else
-                    timerToTransition -= Time.deltaTime;
-                break;
-            case BossStates.jump:
-                if (isOnGround)
                 {
-                    if (whichStateToTransitionTo <= minChanceToCharge)
+                    if (isPlayerInRange)
                     {
-                        attackTimer = longRangeAttackTime;
-                        cooldownTimer = longRangeAttackTime;
-                        timerToTransition = minTime;
-                        attackFlashParticle.Play();
-                        ChangeDirection();
-                        enemyAnim.Play(chargeAnim);
-                        audioManager.PlaySound(jumpSound);
-                        _bossStates = BossStates.longRangeAttack;
-                    }
-                    else
-                    {
-                        timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-                        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                        ChangeDirection();
-                        _bossStates = BossStates.run;
+                        EnemyAttackChange(punchAttackDuration, minTime, punchAttackAnim, punchAttackSound, BossStates.punchAttack);
                     }
                 }
                 break;
-            case BossStates.longRangeAttack:
-                if (timerToTransition<=0)
+            case BossStates.punchAttack:
+                if (!attackFired)
+                {
+                    StartCoroutine(PunchAttack());
+                }
+                if (attackTimer <= 0)
+                {
+                    TransitionToMove(BossStates.idle);
+                }
+                else
                 {
                     timerToTransition = minTime;
-                    whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-                    ChangeDirection();
-                    enemyAnim.SetBool("Shield", false);
-                    enemyAnim.Play(idleAnim);
-                    _bossStates = BossStates.idle;
+                    attackTimer -= Time.deltaTime;
                 }
 
                 break;
-            case BossStates.closeRangeAttack:
+            case BossStates.formChangeAnim:
+               
                 break;
-            case BossStates.superAttack:
+            case BossStates.frenzyIdle:
+               
+                break;
+            case BossStates.frenzyJump:
+               
+                break;
+            case BossStates.frenzySlam:
+                break;
+            case BossStates.frenzySlimeToss:
+                
+                break;
+            case BossStates.frenzyFist:
+                break;
+            case BossStates.frenzyArcherAttack:
+                
                 break;
             default:
                 break;
         }
     }
+
+    private void TransitionToMove( BossStates actionState)
+    {
+        GetTargetLocation();
+        timerToTransition = maxTime;
+        _bossStates = actionState;
+    }
+
+    private void EnemyAttackChange(float attackDuration, float transitionDelay, string attackAnim, string attackSound, BossStates ActionState)
+    {
+        attackFired = false;
+        attackTimer = attackDuration;
+        cooldownTimer = attackDuration;
+        timerToTransition = transitionDelay;
+        attackFlashParticle.Play();
+        audioManager.PlaySound(attackFlashSound);
+        ChangeDirection();
+
+        enemyAnim.Play(attackAnim);
+        _bossStates = ActionState;
+    }
+
     private void FixedUpdate()
     {
         switch (_bossStates)
@@ -303,82 +300,101 @@ public class BossPatrolManager : MonoBehaviour
                 break;
             case BossStates.idle:
                 break;
-            case BossStates.run:
-                RunningBehavior();
+            case BossStates.moveToPlayer:
+                Move(walkSpeed);
                 break;
-            case BossStates.jump:
-                Jump();
-                RunningBehavior();
+            case BossStates.punchAttack:
+                enemyRB.velocity = Vector2.zero;
                 break;
-            case BossStates.longRangeAttack:
-                
+            case BossStates.chargeAttack:
                 if (attackTimer <= 0)
                 {
-                    Charge();
-                    timerToTransition -= Time.fixedDeltaTime;
+                    _bossStates = BossStates.idle;
                 }
                 else
                 {
-                    timerToTransition = cooldownTimer;
+                    timerToTransition = maxTime;
                     attackTimer -= Time.fixedDeltaTime;
-                    enemyRB.velocity = Vector2.zero;
+                    if (!attackFired)
+                    {
+                        StartCoroutine(ChargeAttack());
+                    }
                 }
                 break;
-            case BossStates.closeRangeAttack:
+            case BossStates.formChangeAnim:
                 break;
-            case BossStates.superAttack:
+            case BossStates.frenzyIdle:
+                break;
+            case BossStates.frenzyJump:
+                break;
+            case BossStates.frenzySlam:
+                break;
+            case BossStates.frenzySlimeToss:
+                break;
+            case BossStates.frenzyFist:
+                break;
+            case BossStates.frenzyArcherAttack:
                 break;
             default:
                 break;
         }
 
     }
-    private void RunningBehavior()
-    {
-        if (moveRight)
-        {
-            FlipFacingRight();
-            enemyRB.velocity = new Vector2(moveSpeed, enemyRB.velocity.y);
-        }
-        else
-        {
-            FlipFacingLeft();
-            enemyRB.velocity = new Vector2(-moveSpeed, enemyRB.velocity.y);
-        }
-    }
 
-    public void Jump()
+    public void Move(float movementSpeed)
     {
-        if (isOnGround)
-        {
-            enemyRB.velocity = new Vector2(enemyRB.velocity.x,jumpStrength);
-            audioManager.PlaySound(jumpSound);
-            landingParticles.Play();
-        }
+        enemyRB.velocity = new Vector2(movementSpeed * direction, enemyRB.velocity.y);
+    }
+    IEnumerator PunchAttack()
+    {
+        attackFired = true;
+        GetPlayerLocation();
+        yield return new WaitForSeconds(punchDelay);
+        audioManager.PlaySound(punchAttackSound);
+
+    }
+    IEnumerator ChargeAttack()
+    {
+        attackFired = true;
+        enemyRB.velocity = Vector2.zero;
+        yield return new WaitForSeconds(chargeDelay);
+        audioManager.PlaySound(chargeAttackSound);
+        Move(chargeAttackSpeed);
+    }
+    public void OnHalfHealth()
+    {
+        Debug.Log("Phase 2");
+        isPhaseTwo = true;
+        enemyAnim.SetBool("PhaseTwo", isPhaseTwo);
+        //enemyAnim.Play(formChangeAnim);
+        //_bossStates = BossStates.formChangeAnim;
+        timerToTransition = frenzyDuration;
+        walkSpeed = 16f;
     }
     public void OnDamaged()
     {
+        StopCoroutine(ChargeAttack());
+        StopCoroutine(PunchAttack());
         _bossStates = BossStates.stunned;
-        enemyAnim.SetBool("Shield", false);
         enemyAnim.SetBool("IsHurt", true);
     }
     public void OnRecovery()
     {
         enemyAnim.SetBool("IsHurt", false);
         timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
-        whichStateToTransitionTo = UnityEngine.Random.Range(0, maxChanceToCharge);
-        _bossStates = BossStates.run;
+        _bossStates = BossStates.idle;
     }
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        Gizmos.DrawWireSphere(transform.position, punchRangeDetect);
     }
     private void PassPatrolVariables()
     {
-        IsNotAtEdge = Physics2D.OverlapCircle(edgeDetectPoint.position, DetectRadius, whatCountsAsWall);
-        IsHittingWall = Physics2D.OverlapCircle(wallDetectPoint.position, DetectRadius, whatCountsAsWall);
+        isPlayerInRange = Physics2D.OverlapCircle(transform.position, punchRangeDetect, whatCountsAsPlayer);
+        IsNotAtEdge = Physics2D.OverlapCircle(edgeDetectPoint.position, groundedRadius, whatCountsAsWall);
+        IsHittingWall = Physics2D.OverlapCircle(wallDetectPoint.position, groundedRadius, whatCountsAsWall);
 
-        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, DetectRadius, whatCountsAsWall);
+        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundedRadius, whatCountsAsWall);
         IsOnGround = groundObjects.Length > 0;
         enemyAnim.SetFloat("hSpeed", Mathf.Abs(enemyRB.velocity.x));
         enemyAnim.SetFloat("vSpeed", enemyRB.velocity.y);
@@ -402,14 +418,16 @@ public class BossPatrolManager : MonoBehaviour
         moveRight = !moveRight;
         IsFacingRight = !IsFacingRight;
     }
-    public void FlipFacingRight()
+    private void FlipFacingRight()
     {
+        direction = 1;
         moveRight = true;
         IsFacingRight = true;
         transform.localScale = new Vector3(-1f, 1f, 1f);
     }
-    public void FlipFacingLeft()
+    private void FlipFacingLeft()
     {
+        direction = -1;
         moveRight = false;
         IsFacingRight = false;
         transform.localScale = new Vector3(1f, 1f, 1f);
@@ -426,15 +444,22 @@ public class BossPatrolManager : MonoBehaviour
         else
             PlayerIsToTheRight = false;
     }
-    public void Charge()
+    private void GetTargetLocation()
     {
-        if (!IsFacingRight)
-            enemyRB.velocity = new Vector2(-enemyForce, 0);
-        else if (isFacingRight)
-            enemyRB.velocity = new Vector2(enemyForce, 0);
+        if (thePlayer != null)
+        {
+            theTarget = new Vector2(thePlayer.transform.position.x - (direction * 3), groundPosition.y);
+            playerTarget = new Vector2(thePlayer.transform.position.x - (direction * 3), groundPosition.y);
+        }
     }
-
-    public void ChangeDirection()
+    private void GetPlayerLocation()
+    {
+        if (thePlayer != null)
+        {
+            playerTarget = new Vector2(thePlayer.transform.position.x, groundPosition.y + 1);
+        }
+    }
+    private void ChangeDirection()
     {
         if (PlayerIsToTheRight)
         {

@@ -499,7 +499,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148082873849080}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 168.51, y: -5.0299997, z: 0}
+  m_LocalPosition: {x: 171.5, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4505532567428542}
@@ -649,7 +649,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242253555367650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.5, y: -8.5, z: -10}
+  m_LocalPosition: {x: -35, y: -8.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4470677122541892}
@@ -871,7 +871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583427027281654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.5000005, y: -3.78, z: -10}
+  m_LocalPosition: {x: -35, y: -8.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4148179526197950}
@@ -900,7 +900,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 7.5
+    OrthographicSize: 8.4375
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -1114,7 +1114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767442415577866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 33.5, y: -1.5625, z: -10}
+  m_LocalPosition: {x: -27.75, y: -1.5625, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4498155597709612}
@@ -1354,7 +1354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778115836508380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 179.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 181, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4732078921268522}
@@ -1380,20 +1380,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 61726815671358032}
     m_ColliderPaths:
-    - - X: 125000000
+    - - X: 150000000
         Y: 85000000
-      - X: -125000000
+      - X: -150000000
         Y: 85000000
-      - X: -125000000
+      - X: -150000000
         Y: -85000000
-      - X: 125000000
+      - X: 150000000
         Y: -85000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 12.5, y: 8.5}
-      - {x: -12.5, y: 8.5}
-      - {x: -12.5, y: -8.5}
-      - {x: 12.5, y: -8.5}
+    - - {x: 15, y: 8.5}
+      - {x: -15, y: 8.5}
+      - {x: -15, y: -8.5}
+      - {x: 15, y: -8.5}
   m_VertexDistance: 0.0005
 --- !u!61 &61726815671358032
 BoxCollider2D:
@@ -1419,7 +1419,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 25, y: 17}
+  m_Size: {x: 30, y: 17}
   m_EdgeRadius: 0
 --- !u!50 &50534496051187824
 Rigidbody2D:

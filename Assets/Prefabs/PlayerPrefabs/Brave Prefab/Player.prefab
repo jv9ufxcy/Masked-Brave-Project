@@ -4751,7 +4751,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 0
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &171757624
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4805,10 +4805,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4966559463652649092}
+  - {fileID: 551493047195729895}
   - {fileID: 4849127227552175252}
   - {fileID: 181634539526254864}
-  - {fileID: 6841667942616264160}
+  - {fileID: 6837117518247030143}
   - {fileID: 1703919833}
   - {fileID: 4177287540399603399}
   - {fileID: 839825709}
@@ -19024,7 +19024,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 1
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &1742924599
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23985,7 +23985,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 0
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &1597203363817921083
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -24064,7 +24064,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 0
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &2275923725146350489
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -24144,7 +24144,7 @@ MonoBehaviour:
   knockbackDuration: 0.6
   shouldScreenshakeOnHit: 1
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &4142192580474856093
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38626,7 +38626,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 0
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &1486673824747490159
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38917,7 +38917,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 1
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!1 &6107861290783571132
 GameObject:
   m_ObjectHideFlags: 0
@@ -39030,7 +39030,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 0
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &626733387358180539
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39117,25 +39117,22 @@ MonoBehaviour:
   launcherCost: 0
   shootCost: 0
   burstCost: 15
-  movementSpeed: 10
-  jumpStrength: 14
+  movementSpeed: 8
+  jumpStrength: 18
   horiDamping: 0.4
   turnDamping: 0.75
   brakeDamping: 0.65
-  fallAccelMultiplier: 0.25
+  fallAccelMultiplier: 0.5
   maxCoyoteTime: 0.2
   maxJumpInputMemory: 0.2
   isOnGround: 1
-  jumpPressure: 0
-  minJumpPressure: 10
-  maxJumpPressure: 18
-  jumpChargeMultiplier: 12
+  isAtPeakJumpHeight: 0
   dashCounter: 0
   maxDashCounter: 3
   maxBraveDashTime: 0.6
   airBombDashTime: 0.3
   groundBombDashTime: 0.15
-  braveDashSpeed: 24
+  braveDashSpeed: 20
   bombDashSpeed: 40
   dashTimer: 0
   isBombDashing: 0
@@ -39173,6 +39170,8 @@ MonoBehaviour:
   wallJumpMaxTimer: 0.2
   wallJumpTimer: 0
   attackTimer: 0
+  hasMovementStarted: 0
+  attackCoroutineStarted: 0
   attackCooldown: 0.45
   secondSlashCooldown: 0.45
   thirdSlashCooldown: 0.6
@@ -39226,7 +39225,7 @@ MonoBehaviour:
   critBusterSound: CriticalBuster
   bombDashingSound: BraveDash
   chargeJumpParticle: {fileID: 80094582}
-  deathParticle: {fileID: 6638576267823091432}
+  deathParticle: {fileID: 6837117518247029378}
   damageParticle: {fileID: 4721564266111689352}
   parryParticle: {fileID: 20435025204381452}
   bombDashParticle: {fileID: 1703919835}
@@ -39457,7 +39456,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 0
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &3294233615060212762
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39537,7 +39536,7 @@ MonoBehaviour:
   knockbackDuration: 0.25
   shouldScreenshakeOnHit: 1
   shouldHitStop: 1
-  hitSpark: {fileID: 5053339696041631384}
+  hitSpark: {fileID: 551493047195727904}
 --- !u!61 &7021374135885698135
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39792,13 +39791,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 141a30506b4d9374a94801f03e7669b4, type: 3}
---- !u!4 &4966559463652649092 stripped
+--- !u!4 &551493047195729895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
     type: 3}
   m_PrefabInstance: {fileID: 551493047195728912}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &5053339696041631384 stripped
+--- !u!198 &551493047195727904 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4721564266111689352, guid: 141a30506b4d9374a94801f03e7669b4,
     type: 3}
@@ -40023,13 +40022,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3b405dff359b6429fa5951466d6c6c, type: 3}
---- !u!198 &6638576267823091432 stripped
+--- !u!198 &6837117518247029378 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198905887821783112, guid: 2f3b405dff359b6429fa5951466d6c6c,
     type: 3}
   m_PrefabInstance: {fileID: 6837117518247030432}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6841667942616264160 stripped
+--- !u!4 &6837117518247030143 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4554822420726592, guid: 2f3b405dff359b6429fa5951466d6c6c,
     type: 3}

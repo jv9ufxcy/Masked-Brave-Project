@@ -540,7 +540,7 @@ public class KhrisSlimeBoss : MonoBehaviour
     }
     private void PassPatrolVariables()
     {
-        isPlayerInRange = Physics2D.OverlapCircle(edgeDetectPoint.position, stabRangeDetect, whatCountsAsPlayer);
+        isPlayerInRange = Physics2D.OverlapCircle(transform.position, stabRangeDetect, whatCountsAsPlayer);
         IsNotAtEdge = Physics2D.OverlapCircle(edgeDetectPoint.position, DetectRadius, whatCountsAsWall);
         IsHittingWall = Physics2D.OverlapCircle(wallDetectPoint.position, DetectRadius, whatCountsAsWall);
 
@@ -598,13 +598,21 @@ public class KhrisSlimeBoss : MonoBehaviour
     {
         if (thePlayer != null)
         {
-            theTarget = new Vector2(thePlayer.transform.position.x - (direction * 3), groundPosition.y);
-            playerTarget = new Vector2(thePlayer.transform.position.x - (direction * 3), groundPosition.y);
+            if (IsFacingRight)
+            {
+                theTarget = new Vector2(Mathf.Round(thePlayer.transform.position.x - 2), groundPosition.y);
+                playerTarget = new Vector2(Mathf.Round(thePlayer.transform.position.x - 2), groundPosition.y);
+            }
+            else
+            {
+                theTarget = new Vector2(Mathf.Round(thePlayer.transform.position.x + 2), groundPosition.y);
+                playerTarget = new Vector2(Mathf.Round(thePlayer.transform.position.x + 2), groundPosition.y);
+            }
         }
             
         Debug.Log("TargetPos: " + theTarget);
         parabolaPoints[0].transform.position = transform.position;
-        parabolaPoints[1].transform.position = new Vector2((transform.position.x+theTarget.x)/2, transform.position.y + jumpStrength);
+        parabolaPoints[1].transform.position = new Vector2((transform.position.x+theTarget.x)/2, groundPosition.y + jumpStrength);
         parabolaPoints[2].transform.position = theTarget;
     }
     private void GetPlayerLocation()
@@ -616,7 +624,7 @@ public class KhrisSlimeBoss : MonoBehaviour
             
         Debug.Log("playerPos: " + playerTarget);
         parabolaPoints[0].transform.position = transform.position;
-        parabolaPoints[1].transform.position = new Vector2((transform.position.x+playerTarget.x)/2, transform.position.y + jumpStrength);
+        parabolaPoints[1].transform.position = new Vector2((transform.position.x+playerTarget.x)/2, groundPosition.y + jumpStrength);
         parabolaPoints[2].transform.position = playerTarget;
     }
     private void ChangeDirection()

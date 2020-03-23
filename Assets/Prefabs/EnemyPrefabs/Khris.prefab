@@ -111,7 +111,7 @@ MonoBehaviour:
   slimeFireRate: 0.3
   archerFireRate: 2
   bulletSpeed: 20
-  greatArrowSpeed: 30
+  greatArrowSpeed: 40
   parabolaPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   enemyTakeDamageSound: TakeDamage
   enemyDeathSound: Death
   jumpSound: Jump
-  slimeFistSound: Signal
+  slimeFistSound: SuperAttack
   throwSlimeSound: Signal
   attackFlashSound: Signal
   defaultColor: {r: 0, g: 0, b: 0, a: 0}
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9195d3e520630474db9cef81bc8f09c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToGive: 3
+  damageToGive: 2
   knockbackToGive: 0.3
   shouldHitStop: 1
   enemyHM: {fileID: 3073588484040182247}
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9195d3e520630474db9cef81bc8f09c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToGive: 6
+  damageToGive: 3
   knockbackToGive: 0.6
   shouldHitStop: 1
   enemyHM: {fileID: 3073588484040182247}
