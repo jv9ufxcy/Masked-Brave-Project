@@ -48,6 +48,10 @@ public class HurtEnemyOnHit : MonoBehaviour
                 enemySideDistance.x *= 1;//is on ur left
 
             enemyHP.TakeDamage(damageToGive, knockbackDuration, enemySideDistance, hitStopDuration);
+            if (shouldScreenshakeOnHit)
+                Screenshake();
+            if (player != null)
+                player.AddMeter(meterToGive);
         }
         if (bombHP != null)
         {
@@ -58,18 +62,14 @@ public class HurtEnemyOnHit : MonoBehaviour
 
             bombHP.TakeDamage(damageToGive);
             bombHP.DoStopAndKnockback(knockbackDuration, enemySideDistance, hitStopDuration);
+            if (shouldScreenshakeOnHit)
+                Screenshake();
         }
 
         if (bulletController!=null)
         {
             bulletController.ReverseForce();
         }
-
-        if(player!=null)
-            player.AddMeter(meterToGive);
-
-        if (shouldScreenshakeOnHit)
-            Screenshake();
 
         if (shouldHitStop)
             player.DoHitStop(hitStopDuration);

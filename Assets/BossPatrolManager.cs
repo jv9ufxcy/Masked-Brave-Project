@@ -34,7 +34,7 @@ public class BossPatrolManager : MonoBehaviour
     [Header("Attacks")]
     [SerializeField] private bool attackFired = false;
     [SerializeField] private float punchRangeDetect = 2f;
-    [SerializeField] private float timerToTransition, attackTimer, cooldownTimer = .6f, minTime = 1, maxTime = 2, punchAttackDuration = 0.6f, punchDelay = 0.3f, chargeAttackDuration = 2f, chargeDelay = 1.5f;
+    [SerializeField] private float timerToTransition, attackTimer, cooldownTimer = .6f, minTime = 1, walkDuration = 2, punchAttackDuration = 0.6f, punchDelay = 0.3f, chargeAttackDuration = 2f, chargeDelay = 1.5f;
     [SerializeField] private int whichStateToTransitionTo, minChanceToCharge = 4, maxChanceToCharge = 8;
 
     private int randNum;
@@ -274,7 +274,7 @@ public class BossPatrolManager : MonoBehaviour
     private void TransitionToMove( BossStates actionState)
     {
         GetTargetLocation();
-        timerToTransition = maxTime;
+        timerToTransition = walkDuration;
         _bossStates = actionState;
     }
 
@@ -282,8 +282,8 @@ public class BossPatrolManager : MonoBehaviour
     {
         attackFired = false;
         attackTimer = attackDuration;
-        cooldownTimer = attackDuration;
-        timerToTransition = transitionDelay;
+        //cooldownTimer = attackDuration;
+        //timerToTransition = transitionDelay;
         attackFlashParticle.Play();
         audioManager.PlaySound(attackFlashSound);
         ChangeDirection();
@@ -313,7 +313,7 @@ public class BossPatrolManager : MonoBehaviour
                 }
                 else
                 {
-                    timerToTransition = maxTime;
+                    timerToTransition = minTime;
                     attackTimer -= Time.fixedDeltaTime;
                     if (!attackFired)
                     {
@@ -381,7 +381,7 @@ public class BossPatrolManager : MonoBehaviour
     public void OnRecovery()
     {
         enemyAnim.SetBool("IsHurt", false);
-        timerToTransition = UnityEngine.Random.Range(minTime, maxTime);
+        timerToTransition = minTime;
         _bossStates = BossStates.idle;
     }
     private void OnDrawGizmosSelected()

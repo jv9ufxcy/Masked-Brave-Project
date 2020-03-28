@@ -43,13 +43,9 @@ public class Player : MonoBehaviour
     private bool shouldJump;
     private bool hasLanded=false;
     private bool shouldMove;
-    private Vector2 jumpForce;
+    private Vector2 velocity;
     [SerializeField] private bool isAtPeakJumpHeight;
-
-    private float jumpPressure;
-    private float minJumpPressure = 10f;
-    private float maxJumpPressure = 18f;
-    private float jumpChargeMultiplier = 12f;
+    [SerializeField] private float gravity, maxJumpHeight = 4f, minJumpHeight = 1f, timeToJumpApex = .4f, accelTimeGrounded = .1f, accelTimeAirborne = 2f, minJumpVelocity, maxJumpVelocity;
     private bool shouldChargeJump;
     private bool hasReleasedJump=false;
     private bool hasJumpChargingStarted = false;
@@ -107,8 +103,6 @@ public class Player : MonoBehaviour
     private Vector2 jumpLeftForce;
     private Vector2 jumpRightForce;
     
-
-
     [Space]
     [Header("Swordmaster Attacking Stats")]
     [SerializeField] private float attackTimer;
@@ -410,9 +404,14 @@ public class Player : MonoBehaviour
     void Start()
     {
         Initialize();
-
+        InitializeJumpVars();
     }
-
+    private void InitializeJumpVars()
+    {
+        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+    }
     private void Initialize()
     {
         _globalVars = GlobalVars.instance;
@@ -475,11 +474,17 @@ public class Player : MonoBehaviour
         GetDashInput();
         GetTransformInput();
         GetAttackInput();
+        UpdateVelocity();
         UpdateCoyoteTime();
         UpdateIsOnGround();
         UpdateIsOnWall();
         UpdateIsTargetReady();
         PassAnimationStats();
+    }
+
+    private void UpdateVelocity()
+    {
+        myRB.velocity = velocity;
     }
 
     private void DebugCommands()
@@ -727,7 +732,6 @@ public class Player : MonoBehaviour
 
                 if (shouldJump == true || !isOnGround)
                 {
-                    Debug.Log("Jumped out of Dash");
                     braveDashParticle.Stop();
                     isDashing = true;
                     hasBraveDashed = false;
@@ -2280,6 +2284,18 @@ public class Player : MonoBehaviour
             landingParticles.Play();
         }
     }
+    private void BetterJump()
+    {
+        if (isAtPeakJumpHeight)
+        {
+            if (myRB.velocity.y > minJumpVelocity)
+            {
+                myRB.velocity = new Vector2(myRB.velocity.x, minJumpVelocity);
+                //myRB.velocity = new Vector2(myRB.velocity.x, myRB.velocity.y * fallAccelMultiplier);
+            }
+        }
+
+    }
     private void HandleCharging()
     {
         //ChargeJump();
@@ -2297,17 +2313,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void BetterJump()
-    {
-        if (isAtPeakJumpHeight)
-        {
-            Debug.Log("releasedJump " + isAtPeakJumpHeight);
-            if (myRB.velocity.y > 0)
-            {
-                myRB.velocity = new Vector2(myRB.velocity.x, myRB.velocity.y * fallAccelMultiplier);
-            }
-        }      
-    }
+   
     private void PassAnimationStats()
     {
         currentAnim.SetFloat("vSpeed", myRB.velocity.y);
