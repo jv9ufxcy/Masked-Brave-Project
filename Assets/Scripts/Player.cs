@@ -31,26 +31,35 @@ public class Player : MonoBehaviour
     [Space]
     [Header("Movement")]
 
+    [SerializeField] private Vector2 velocity;
     [SerializeField] private float movementSpeed = 8f;
-    [SerializeField] float jumpStrength = 14f;
-    [SerializeField] [Range(0, 1)] private float horiDamping = 0.25f, turnDamping = 0.75f, brakeDamping = 0.65f;
-    [SerializeField] [Range(0, 1)] private float fallAccelMultiplier = .25f;
     [SerializeField] private float maxCoyoteTime = 0.2f, maxJumpInputMemory = 0.2f;
-    private float coyoteTimer, wallCoyoteTimer, jumpInputMemory;
+    [SerializeField] private float coyoteTimer, wallCoyoteTimer, jumpInputMemory;
     [SerializeField] private bool isOnGround;
     private int direction = 1;
     private float defaultGravityScale;
     private bool shouldJump;
     private bool hasLanded=false;
     private bool shouldMove;
-    private Vector2 velocity;
+    [Header("Jump")]
     [SerializeField] private bool isAtPeakJumpHeight;
-    [SerializeField] private float gravity, maxJumpHeight = 4f, minJumpHeight = 1f, timeToJumpApex = .4f, accelTimeGrounded = .1f, accelTimeAirborne = 2f, minJumpVelocity, maxJumpVelocity;
+    [SerializeField] private float gravity, maxJumpHeight = 3f, minJumpHeight = 1.5f, timeToJumpApex = .4f, minJumpVelocity, maxJumpVelocity;
     private bool shouldChargeJump;
     private bool hasReleasedJump=false;
     private bool hasJumpChargingStarted = false;
     private bool hasReachedMaxJump = false;
-    
+
+    [Space]
+    [Header("Wall Jump")]
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private float wallSpeed = -1.7f, wallJumpDistance = 4f, wallJumpHeight = 16f, wallJumpMaxTimer = 0.2f, wallJumpTimer;
+    private bool isAtPeakWallJumpHeight;
+    private bool canWallSlide = true;
+    private bool isJumpKeyDown;
+    private bool isOnWall;
+    private bool isWallSliding;
+    private bool shouldWallJump;
+
     [Space]
     [Header("Dashing")]
     [SerializeField] private int dashCounter;
@@ -69,6 +78,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Color bombTrailColor = new Vector4(50, 50, 50, 0.2f), bombTrailFadeColor,braveTrailColor, braveTrailFadeColor;
 
+    [SerializeField] [Range(0, 1)] private float horiDamping = 0.25f, turnDamping = 0.75f, brakeDamping = 0.65f;
+    [SerializeField] [Range(0, 1)] private float fallAccelMultiplier = .25f;
     [Space]
     [Header("Detect Bounds")]
 
@@ -84,24 +95,6 @@ public class Player : MonoBehaviour
     private bool isInvulnerable_UseProperty = false, isParrying_UseProperty;
     public float knockbackDuration, knockbackForce, maxKnockbackDuration, damageScreenFreezeTime;
     public bool knockbackFromRight;
-
-    [Space]
-    [Header("Wall Jump")]
-
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private float wallSpeed = -1.7f;
-    [SerializeField] float wallJumpDistance = 4f;
-    [SerializeField] float wallJumpHeight = 16f;
-    [SerializeField] float wallJumpMaxTimer = 0.2f;
-    [SerializeField] private float wallJumpTimer;
-    private bool isAtPeakWallJumpHeight;
-    private bool canWallSlide=true;
-    private bool isJumpKeyDown;
-    private bool isOnWall;
-    private bool isWallSliding;
-    private bool shouldWallJump;
-    private Vector2 jumpLeftForce;
-    private Vector2 jumpRightForce;
     
     [Space]
     [Header("Swordmaster Attacking Stats")]
@@ -112,6 +105,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float attackCooldown = 0.45f, secondSlashCooldown = 0.45f, thirdSlashCooldown = 0.6f, specialAttackCooldown = 0.8f, shootingCooldown = 0.1f, burstCooldown = 0.5f;
     [SerializeField] private float braveSlamSpeed = 12f, jumpStrengthBraveStrike = 12f, jumpDistBraveStrike = 8f, upVerticalDSSpeed = 18f, downVerticalDSSpeed = 12f, horizontalDashSlashSpeed = 20f, dashSlashMaxTime = 0.3f;
+    [SerializeField] float jumpStrength = 14f;
     private bool anySlashReady;
     private bool upSlashReady;
     private bool downSlashReady;
@@ -497,7 +491,7 @@ public class Player : MonoBehaviour
     }
     void UpdateInput()
     {
-        //inputBuffer.Update();
+        inputBuffer.Update();
         switch (_state)
         {
             #region SwordmasterStates
@@ -543,6 +537,7 @@ public class Player : MonoBehaviour
                 GroundAttackInputs();
                 break;
             case PlayerState.STATE_JUMPING_BR:
+                BetterJump();
                 canWallSlide = true;
                 if (isOnGround)
                 {
@@ -623,6 +618,7 @@ public class Player : MonoBehaviour
                     
                 break;
             case PlayerState.STATE_WALLJUMPING_BR:
+                BetterJump();
                 if (wallJumpTimer > 0)
                 {
                     wallJumpTimer -= Time.deltaTime;
@@ -816,6 +812,7 @@ public class Player : MonoBehaviour
                     ReturnToIdleState();
                 break;
             case PlayerState.STATE_FIRST_JUMPING_ATTACK_BR:
+                BetterJump();
                 if (attackTimer >= 0)
                 {
                     attackTimer -= Time.deltaTime;
@@ -837,6 +834,7 @@ public class Player : MonoBehaviour
                     ReturnToIdleState();
                 break;
             case PlayerState.STATE_SECOND_JUMPING_ATTACK_BR:
+                BetterJump();
                 if (attackTimer >= 0)
                 {
                     attackTimer -= Time.deltaTime;
@@ -857,6 +855,7 @@ public class Player : MonoBehaviour
                     ReturnToIdleState();
                 break;
             case PlayerState.STATE_THIRD_JUMPING_ATTACK_BR:
+                BetterJump();
                 if (attackTimer >= 0)
                 {
                     if (!attackCoroutineStarted)
@@ -883,7 +882,7 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.STATE_UP_KICK_READY_BR:
-                
+                BetterJump();
                 //else if (isDownSpecialKeyDown)
                 //{
                 //    hasMovementStarted = false;
@@ -933,7 +932,7 @@ public class Player : MonoBehaviour
                     ReturnToIdleState();
                 break;
             case PlayerState.STATE_DOWN_KICK_READY_BR:
-                
+                BetterJump();
 
                 //else if (isDownSpecialKeyDown)
                 //{
@@ -1134,6 +1133,7 @@ public class Player : MonoBehaviour
                 HandleCharging();
                 break;
             case PlayerState.STATE_JUMPING_BMB:
+                BetterJump();
                 hasReleasedJump = false;
                 canWallSlide = true;
                 if (isOnGround)
@@ -1194,6 +1194,7 @@ public class Player : MonoBehaviour
                 HandleCharging();
                 break;
             case PlayerState.STATE_WALLJUMPING_BMB:
+                BetterJump();
                 if (wallJumpTimer > 0)
                 {
                     wallJumpTimer -= Time.deltaTime;
@@ -1381,7 +1382,7 @@ public class Player : MonoBehaviour
             #region SwordmasterStates
             #region SwordmasterMovementStates
             case PlayerState.STATE_IDLE_BR:              
-                myRB.velocity = new Vector2(0, myRB.velocity.y);
+               velocity.x = 0;
                 break;
             case PlayerState.STATE_RUNNING_BR:
                 CheckMove();
@@ -1413,46 +1414,46 @@ public class Player : MonoBehaviour
             case PlayerState.STATE_FIRST_ATTACK_BR:
 
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(myRB.velocity.x / 2, myRB.velocity.y, true, .1f, .6f));
+                    StartCoroutine(AttackMovement(velocity.x / 2, velocity.y, true, .1f, .6f));
 
                 break;
             case PlayerState.STATE_SECOND_ATTACK_BR:
 
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(0, myRB.velocity.y, true, .1f, .6f));
+                    StartCoroutine(AttackMovement(0, velocity.y, true, .1f, .6f));
 
                 break;
             case PlayerState.STATE_THIRD_ATTACK_BR:
 
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(0, myRB.velocity.y, true, .1f, .6f));
+                    StartCoroutine(AttackMovement(0, velocity.y, true, .1f, .6f));
 
                 break;
             case PlayerState.STATE_FIRST_JUMPING_ATTACK_BR:
                 CheckMove();
                 Jump();
-                BetterJump();
+                //BetterJump();
 
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(myRB.velocity.x, myRB.velocity.y/2, true, .1f, .6f));
+                    StartCoroutine(AttackMovement(velocity.x, velocity.y/2, true, .1f, .6f));
 
                 break;
             case PlayerState.STATE_SECOND_JUMPING_ATTACK_BR:
                 CheckMove();
                 Jump();
-                BetterJump();
+                //BetterJump();
 
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(myRB.velocity.x, myRB.velocity.y/2, true, .1f, .6f));
+                    StartCoroutine(AttackMovement(velocity.x, velocity.y/2, true, .1f, .6f));
 
                 break;
             case PlayerState.STATE_THIRD_JUMPING_ATTACK_BR:
                 CheckMove();
                 Jump();
-                BetterJump();
+                //BetterJump();
                 
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(myRB.velocity.x, myRB.velocity.y/2, true, .1f, .6f));
+                    StartCoroutine(AttackMovement(velocity.x, velocity.y/2, true, .1f, .6f));
 
                 break;
             #endregion
@@ -1464,7 +1465,7 @@ public class Player : MonoBehaviour
 
             case PlayerState.STATE_BRAVE_LAUNCHER_BR:
                 if(!hasMovementStarted)
-                    StartCoroutine(AttackMovement(myRB.velocity.x/2, jumpStrength,true, .1f, .6f));
+                    StartCoroutine(AttackMovement(velocity.x/2, jumpStrength,true, .1f, .6f));
 
                     jumpInputMemory = 0;
                     coyoteTimer = 0;
@@ -1478,7 +1479,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_UP_KICK_READY_BR:
                 Jump();
-                BetterJump();
+                //BetterJump();
                 CheckMove();
                 
                 break;
@@ -1488,7 +1489,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_DOWN_KICK_READY_BR:
                 Jump();
-                BetterJump();
+                //BetterJump();
                 CheckMove();
                 break;
             case PlayerState.STATE_DOWN_KICK_ATTACK_BR:
@@ -1508,7 +1509,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_KINZECTER_ACTION_BR:
                 if (!hasMovementStarted)
-                    StartCoroutine(AttackMovement(myRB.velocity.x / 2, myRB.velocity.y / 2, true, .1f, .6f));
+                    StartCoroutine(AttackMovement(velocity.x / 2,velocity.y, true, .1f, .6f));
                 break;
             #endregion
             #endregion
@@ -1524,7 +1525,7 @@ public class Player : MonoBehaviour
             case PlayerState.STATE_JUMPING_BMB:
                 Jump();
                 WallJump();
-                BetterJump();
+                //BetterJump();
                 CheckMove();
                
                 break;
@@ -1533,7 +1534,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.STATE_WALLJUMPING_BMB:
                 WallJump();
-                BetterJump();
+                //BetterJump();
                 break;
             case PlayerState.STATE_DAMAGED_BMB:
                 CheckMove();
@@ -1724,7 +1725,7 @@ public class Player : MonoBehaviour
     }
     private void DashingBrave()
     {
-        myRB.velocity = new Vector2(braveDashSpeed * direction, 0);
+        velocity.x = (braveDashSpeed * direction);
     }
     public void EnemyTargetedUpDash()
     {
@@ -1930,7 +1931,7 @@ public class Player : MonoBehaviour
         else
             shouldJump = false;
 
-        if ((jumpInputMemory > 0) && (wallCoyoteTimer > 0))// if the buffer has time remaining the jump will execute
+        if ((jumpInputMemory > 0) && (wallCoyoteTimer > 0))// if the buffer has time remaining the walljump will execute
         {
             jumpInputMemory = 0;
             wallCoyoteTimer = 0;
@@ -1940,10 +1941,10 @@ public class Player : MonoBehaviour
             shouldWallJump = false;
 
         coyoteTimer -= Time.fixedDeltaTime;
-        if (isOnGround)
-            coyoteTimer = maxCoyoteTime;
 
         wallCoyoteTimer -= Time.fixedDeltaTime;
+        if (isOnGround)
+            coyoteTimer = maxCoyoteTime;
         if(isOnWall)
             wallCoyoteTimer = maxCoyoteTime;
     }
@@ -2197,11 +2198,11 @@ public class Player : MonoBehaviour
             shouldMove = false;
             if (knockbackFromRight)
             {
-                myRB.velocity = new Vector2(-knockbackForce, knockbackForce / 2);
+                velocity = new Vector2(-knockbackForce, knockbackForce / 2);
             }
             if (!knockbackFromRight)
             {
-                myRB.velocity = new Vector2(knockbackForce, knockbackForce / 2);
+                velocity = new Vector2(knockbackForce, knockbackForce / 2);
             }
             knockbackDuration -= Time.deltaTime;
         }
@@ -2209,7 +2210,7 @@ public class Player : MonoBehaviour
 
     private void DirectMove(float moveSpeed)
     {
-        myRB.velocity = new Vector2(moveSpeed * horizontalInput, myRB.velocity.y);
+        velocity.x = (moveSpeed * horizontalInput);
         TurnAround();
     }
     private void InertiaMove(float moveSpeed)
@@ -2224,13 +2225,13 @@ public class Player : MonoBehaviour
         else
             horiVelocity *= Mathf.Pow(1f - horiDamping, Time.deltaTime * moveSpeed);
 
-        myRB.velocity = new Vector2(horiVelocity, myRB.velocity.y);
+        velocity.x = horiVelocity;
         TurnAround();
     }
 
     private void WallSliding()
     {
-        myRB.velocity = (new Vector2(myRB.velocity.x, wallSpeed));
+        velocity.y = wallSpeed;
         currentAnim.SetBool("WallSliding", isWallSliding);
         currentAnim.SetFloat("vSpeed", myRB.velocity.y);
     }
@@ -2248,7 +2249,7 @@ public class Player : MonoBehaviour
             landingParticles.Play();
             slideParticle.Stop();
 
-            myRB.velocity = new Vector2(wallJumpDistance * -direction, wallJumpHeight);
+            velocity = new Vector2(wallJumpDistance * -direction, maxJumpVelocity);
             shouldWallJump = false;
         }
 
@@ -2277,7 +2278,7 @@ public class Player : MonoBehaviour
     {
         if (shouldJump)
         {
-            myRB.velocity = new Vector2(myRB.velocity.x, jumpStrength);
+            velocity.y = maxJumpVelocity;
             jumpInputMemory = 0;
             coyoteTimer = 0;
             audioManager.PlaySound(jumpSound);
@@ -2286,15 +2287,14 @@ public class Player : MonoBehaviour
     }
     private void BetterJump()
     {
-        if (isAtPeakJumpHeight)
+        if (Input.GetButtonUp(bottomFaceButtonName))
         {
-            if (myRB.velocity.y > minJumpVelocity)
+            if (velocity.y > minJumpVelocity)
             {
-                myRB.velocity = new Vector2(myRB.velocity.x, minJumpVelocity);
+                velocity.y = minJumpVelocity;
                 //myRB.velocity = new Vector2(myRB.velocity.x, myRB.velocity.y * fallAccelMultiplier);
             }
         }
-
     }
     private void HandleCharging()
     {
@@ -2330,11 +2330,15 @@ public class Player : MonoBehaviour
         if (isOnGround)
         {
             GroundTouch();
+            
         }
-        if (myRB.velocity.y < 0)
+        else
+            velocity.y += gravity * Time.deltaTime;
+        if (velocity.y < 0)
         {
             hasLanded = false;
         }
+        
     }
 
     private void GroundTouch()
@@ -2342,6 +2346,7 @@ public class Player : MonoBehaviour
         DashReset();
         if (!hasLanded)
         {
+            velocity.y = 0;
             isDashing = false;
             hasLanded = true;
             landingParticles.Play();
@@ -2399,9 +2404,9 @@ public class Player : MonoBehaviour
         if (x==0&&y==0)//if no directional input is used
             x = direction;//dash horizontally in direction player is facing
 
-        myRB.velocity = Vector2.zero;
+        velocity = Vector2.zero;
         Vector2 dir = new Vector2(x, y);
-        myRB.velocity += dir.normalized * bombDashSpeed;
+        velocity += dir.normalized * bombDashSpeed;
         StartCoroutine(DashWait());
     }
     void RigidbodyDrag(float x)
@@ -2632,13 +2637,13 @@ public class Player : MonoBehaviour
     }
     IEnumerator HitStopAttacker(float hitStop)
     {
-        Vector2 playerSpeed = myRB.velocity;//save speed ref
-        myRB.velocity = Vector2.zero;////stop moving
+        Vector2 playerSpeed = velocity;//save speed ref
+        velocity = Vector2.zero;////stop moving
         currentAnim.speed = 0;//stop animating
         shouldMove = false;//don't let player input movement
         yield return new WaitForSecondsRealtime(hitStop); //stop duration
         //free my boys
-        myRB.velocity = playerSpeed;//return the saved speed reference
+        velocity = playerSpeed;//return the saved speed reference
         currentAnim.speed = 1;//let animator play
         shouldMove = true;//let player input movement again
     }
@@ -2759,28 +2764,21 @@ public class Player : MonoBehaviour
         hasMovementStarted = true;
         if (hasStartup)
         {
-            myRB.velocity = Vector2.zero;
+            velocity = Vector2.zero;
             yield return new WaitForSeconds(startup);
         }
-        myRB.velocity = new Vector2(velocityX, velocityY);
+        velocity = new Vector2(velocityX, velocityY);
         yield return new WaitForSeconds(cooldown);
         ReturnToIdleState();
     }
     IEnumerator BraveStrike()
     {
         hasMovementStarted = true;
-        if (CanAimRight)
-        {
-            myRB.velocity=new Vector2(jumpDistBraveStrike, jumpStrengthBraveStrike);
+
+            velocity=new Vector2(direction*jumpDistBraveStrike, jumpStrengthBraveStrike);
             yield return new WaitForSeconds(.35f);
-            myRB.velocity = new Vector2(jumpDistBraveStrike, -jumpStrengthBraveStrike/2);
-        }
-        else
-        {
-            myRB.velocity = new Vector2(-jumpDistBraveStrike, jumpStrengthBraveStrike);
-            yield return new WaitForSeconds(.35f);
-            myRB.velocity = new Vector2(-jumpDistBraveStrike, -jumpStrengthBraveStrike/2);
-        }
+            velocity = new Vector2(direction * jumpDistBraveStrike, -jumpStrengthBraveStrike/2);
+
         yield return new WaitForSeconds(specialAttackCooldown);
         IsInvulnerable = false;
         attackTimer = 0;
@@ -2791,7 +2789,7 @@ public class Player : MonoBehaviour
         
         hasMovementStarted = true;
         IsInvulnerable = true;
-        myRB.velocity = Vector2.zero;
+        velocity = Vector2.zero;
 
         yield return new WaitForSeconds(burstCooldown);
         IsInvulnerable = false;
