@@ -537,7 +537,6 @@ public class Player : MonoBehaviour
                 GroundAttackInputs();
                 break;
             case PlayerState.STATE_JUMPING_BR:
-                BetterJump();
                 canWallSlide = true;
                 if (isOnGround)
                 {
@@ -1589,7 +1588,6 @@ public class Player : MonoBehaviour
         downSlashReady = false;
         anySlashReady = false;
 
-        Debug.Log("ReturnToIdle Reached");
         if (isDashing&&isOnGround)
         {
             _state = PlayerState.STATE_GROUND_DASHING_BR;
@@ -2289,9 +2287,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButtonUp(bottomFaceButtonName))
         {
-            if (velocity.y > minJumpVelocity)
+            if (velocity.y > 0)
             {
-                velocity.y = minJumpVelocity;
+                velocity.y /= minJumpVelocity;
                 //myRB.velocity = new Vector2(myRB.velocity.x, myRB.velocity.y * fallAccelMultiplier);
             }
         }
