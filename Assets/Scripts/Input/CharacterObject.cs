@@ -89,7 +89,7 @@ public class CharacterObject : MonoBehaviour
 
     void DoEventScript(int _index, float _var)
     {
-        switch(_index)
+        switch(_index)//index = element in characterscripts
         {
             case 0://Jump
                 VelocityY(_var);
@@ -114,6 +114,7 @@ public class CharacterObject : MonoBehaviour
         }
         
         velocity.x += _mov * moveSpeed * _pow;
+        //velocity.x = _mov * moveSpeed * _pow;
     }
 
     void VelocityY(float _pow)

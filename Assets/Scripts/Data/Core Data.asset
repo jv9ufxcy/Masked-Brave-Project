@@ -12,17 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6b7b03345b92e4baaebb497235f779, type: 3}
   m_Name: Core Data
   m_EditorClassIdentifier: 
-  globalStates:
+  characterStates:
   - stateName: Neutral
     index: 0
-    length: 0
-    frame: 0
-    currentTime: 0
-    currentState: 0
-    events: []
-  - stateName: Jump
-    index: 0
-    length: 0
+    length: 60
+    loop: 1
     frame: 0
     currentTime: 0
     currentState: 0
@@ -31,7 +25,111 @@ MonoBehaviour:
       end: 0
       variable: 0
       script: 0
+  - stateName: Jump
+    index: 0
+    length: 60
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events:
+    - start: 10
+      end: 10
+      variable: 0.2
+      script: 0
+    - start: 10
+      end: 60
+      variable: 1
+      script: 3
+  - stateName: Dash
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events:
+    - start: 0
+      end: 0
+      variable: 0.5
+      script: 0
+  - stateName: Slash
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events: []
+  - stateName: Henshin
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events: []
+  - stateName: Neutral
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events: []
+  - stateName: Neutral
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events: []
+  - stateName: Neutral
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events: []
+  - stateName: Neutral
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events: []
+  - stateName: Neutral
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    currentTime: 0
+    currentState: 0
+    events: []
   characterScripts:
   - index: 0
-    name: Jump
+    name: VelocityY
     variable: 0
+  - index: 0
+    name: Front Velocity
+    variable: 0
+  - index: 0
+    name: Velocity XZ
+    variable: 0
+  - index: 0
+    name: StickMove
+    variable: 0
+  commands:
+  - inputString: Jump
+    state: 1
+  - inputString: Dash
+    state: 2
+  - inputString: 
+    state: 0
+  - inputString: 
+    state: 0
+  - inputString: 
+    state: 0

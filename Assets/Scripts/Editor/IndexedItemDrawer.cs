@@ -23,9 +23,10 @@ public class IndexedItemDrawer : PropertyDrawer
         switch (indexedItem.type)
         {
             case IndexedItemAttribute.IndexedItemType.SCRIPTS:
-                property.intValue = EditorGUI.IntPopup(position, property.intValue, GameEngine.coreData.GetScriptNames(), null);
+                property.intValue = EditorGUI.IntPopup(position, property.intValue, coreData.GetScriptNames(), null);
                 break;
             case IndexedItemAttribute.IndexedItemType.STATES:
+                property.intValue = EditorGUI.IntPopup(position, property.intValue, coreData.GetStateNames(), null);
                 break;
             default:
                 break;

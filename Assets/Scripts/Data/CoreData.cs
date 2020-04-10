@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Core Data", menuName = "Character Action/Core Data", order = 1)]
-[System.Serializable]
 public class CoreData : ScriptableObject
 {
     //Character States

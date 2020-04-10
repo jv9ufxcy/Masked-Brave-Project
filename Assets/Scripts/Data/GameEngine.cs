@@ -14,8 +14,6 @@ public class GameEngine : MonoBehaviour
     {
         coreData = coreDataObject;
 	}
-	
-    
 
 	// Update is called once per frame
 	void Update ()
