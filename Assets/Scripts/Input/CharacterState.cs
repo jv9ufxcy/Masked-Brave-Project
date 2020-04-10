@@ -9,6 +9,7 @@ public class CharacterState
     public int index;
 
     public float length;
+    public bool loop;
     public int frame;
 
     public float currentTime;
@@ -22,14 +23,23 @@ public class StateEvent
     public float start;
     public float end;
     public float variable;
+
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.SCRIPTS)]
     public int script;
 }
 [System.Serializable]
-public class CharacterScriot
+public class CharacterScript
 {
     [HideInInspector]
     public int index;
 
     public string name;
     public float variable;
+}
+[System.Serializable]
+public class InputCommand
+{
+    public string inputString;
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
+    public int state;
 }
