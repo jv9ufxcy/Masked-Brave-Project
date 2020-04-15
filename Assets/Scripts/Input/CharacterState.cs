@@ -11,6 +11,7 @@ public class CharacterState
     public float length;
     public bool loop;
     public int frame;
+    public float blendRate = 0.1f;
 
     public float currentTime;
     public int currentState;

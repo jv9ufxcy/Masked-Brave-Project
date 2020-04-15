@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,21 +9,24 @@ public class CharacterObject : MonoBehaviour
     public Vector3 velocity;
 
     public float gravity = -0.01f;
+    public float aniMoveSpeed;
 
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
 
-    public CharacterController myController;
+    public Rigidbody2D myRB;
 
     public int currentState;
     public float currentStateTime;
     public float prevStateTime;
 
-   
+    private Animator characterAnim;
+    private float direction;
 
     // Use this for initialization
     void Start()
     {
-        myController = GetComponent<CharacterController>();
+        characterAnim = GetComponent<Animator>();
+        myRB = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -38,13 +42,37 @@ public class CharacterObject : MonoBehaviour
 
         //Update Physcis
         UpdatePhysics();
-
+        //
+        UpdateAnimator();
+        UpdateIsOnGround();
     }
-
+    void UpdateAnimator()
+    {
+        Vector3 latSpeed = new Vector3(velocity.x, 0, velocity.z);
+        aniMoveSpeed = Vector3.SqrMagnitude(latSpeed) * 30f;
+        animFallSpeed = velocity.y /** 30f*/;
+        characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
+        characterAnim.SetFloat("aerialState", animAerialState);
+        characterAnim.SetFloat("fallSpeed", animFallSpeed);
+        FaceVelocity();
+    }
+    void FaceVelocity()
+    {
+        if (CheckVelocityDeadZone())
+        {
+            if (direction > 0)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+            else if (direction < 0)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+        }
+    }
     void UpdateState()
     {
         CharacterState myCurrentState = GameEngine.coreData.characterStates[currentState];
-
         UpdateStateEvents();
 
         prevStateTime = currentStateTime;
@@ -94,11 +122,19 @@ public class CharacterObject : MonoBehaviour
             case 0://Jump
                 VelocityY(_var);
                 break;
+            case 1:
+                FrontVelocity(_var);
+                break;
             case 3:
                 StickMove(_var);
                 break;
                 
         }
+    }
+
+    private void FrontVelocity(float _pow)
+    {
+        velocity.x = _pow*direction;
     }
 
     void StickMove(float _pow)
@@ -112,9 +148,10 @@ public class CharacterObject : MonoBehaviour
         {
             _mov = -1;
         }
-        
-        velocity.x += _mov * moveSpeed * _pow;
-        //velocity.x = _mov * moveSpeed * _pow;
+            direction = _mov;
+
+        //velocity.x += _mov * moveSpeed * _pow;
+        velocity.x = _mov * moveSpeed * _pow;
     }
 
     void VelocityY(float _pow)
@@ -132,8 +169,16 @@ public class CharacterObject : MonoBehaviour
         currentState = _newState;
         prevStateTime = -1;
         currentStateTime = 0;
-    }
 
+        SetAnimation(GameEngine.coreData.characterStates[currentState].stateName);
+    }
+    void SetAnimation(string animName)
+    {
+        characterAnim.CrossFadeInFixedTime(animName, GameEngine.coreData.characterStates[currentState].blendRate);
+        //characterAnim.CrossFadeInFixedTime(animName,0.13f);
+        Debug.Log("Start " + animName);
+        //characterAnim.Play(animName);
+    }
     void UpdateInput()
     {
         foreach (InputCommand c in GameEngine.coreData.commands)
@@ -151,20 +196,92 @@ public class CharacterObject : MonoBehaviour
         }
 
     }
+    public bool CheckVelocityDeadZone()
+    {
+        if (velocity.x > 0.001f) { return true; }
+        if (velocity.x < -0.001f) { return true; }
+        if (velocity.z > 0.001f) { return true; }
+        if (velocity.z < -0.001f) { return true; }
+        return false;
+    }
 
+    private bool aerialFlag,isOnGround;
+    [SerializeField] private float aerialTimer,groundDetectRadius, animAerialState,animFallSpeed;
+    [SerializeField]
+    private Transform groundDetectPoint;
+
+    [SerializeField]
+    private LayerMask whatCountsAsGround;
     void UpdatePhysics()
     {
-
+        if (isOnGround)
+        {
+            aerialFlag = false;
+            aerialTimer = 0;
+            animAerialState = 0f;
+            //velocity.y *= 0.3f;
+        }
+        else
+        {
+            if (!aerialFlag)
+            {
+                aerialTimer++;
+            }
+            if (aerialTimer >= 6)//coyote time
+            {
+                aerialFlag = true;
+                if (animAerialState<=1f)
+                {
+                    animAerialState += 0.1f;
+                }
+            }
+            velocity.y += gravity;
+        }
         
 
-        velocity.y += gravity;
 
-        myController.Move(velocity);
+        Move(velocity);
 
         velocity.Scale(friction);
 
         //transform.position += velocity;
         //charact
 
+    }
+    void Move(Vector3 velocity)
+    {
+        myRB.velocity = velocity;
+    }
+    private void UpdateIsOnGround()
+    {
+        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundDetectRadius, whatCountsAsGround);
+        isOnGround = groundObjects.Length > 0;
+
+        //characterAnim.SetBool("Ground", isOnGround);
+        //if (aerialFlag)
+        //{
+        //    GroundTouch();
+
+        //}
+        //else
+        //    velocity.y += gravity * Time.deltaTime;
+        if (velocity.y < 0)
+        {
+            hasLanded = false;
+        }
+    }
+    private bool hasLanded;
+    private void GroundTouch()
+    {
+        //DashReset();
+        if (!hasLanded)
+        {
+            Debug.Log("hasLanded");
+            velocity.y = 0f;
+            animFallSpeed = 0f;
+            //isDashing = false;
+            hasLanded = true;
+            //landingParticles.Play();
+        }
     }
 }
