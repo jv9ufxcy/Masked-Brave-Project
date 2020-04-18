@@ -110,7 +110,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4866,7 +4866,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -9532,6 +9532,7 @@ GameObject:
   - component: {fileID: 4849127227552175252}
   - component: {fileID: 4719948916723940484}
   - component: {fileID: 4721564266111689352}
+  - component: {fileID: 8816975014443871318}
   m_Layer: 11
   m_Name: HitParticles
   m_TagString: Untagged
@@ -9547,7 +9548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4847973911462044704}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4852033595707262344}
@@ -9634,7 +9635,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -14280,6 +14281,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &8816975014443871318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847973911462044704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9530c502e605b5e409df743dc7ff0587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6014294698189388773
 GameObject:
   m_ObjectHideFlags: 0
@@ -14390,7 +14403,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1

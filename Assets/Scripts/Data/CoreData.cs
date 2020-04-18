@@ -12,6 +12,8 @@ public class CoreData : ScriptableObject
     public List<CharacterScript> characterScripts;
 
     public List<InputCommand> commands;
+
+    public List<GameObject> globalPrefabs;
     //Save Files
 
 
@@ -31,6 +33,15 @@ public class CoreData : ScriptableObject
         for (int i = 0; i < _names.Length; i++)
         {
             _names[i] = characterStates[i].stateName;
+        }
+        return _names;
+    }
+    public string[] GetPrefabNames()
+    {
+        string[] _names = new string[globalPrefabs.Count];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = globalPrefabs[i].name;
         }
         return _names;
     }

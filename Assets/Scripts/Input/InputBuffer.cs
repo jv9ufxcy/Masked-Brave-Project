@@ -17,7 +17,7 @@ public class InputBuffer
     public List<InputBufferItem> inputList = new List<InputBufferItem>();
     public void Update()
     {
-        GameManager.instance.playerInputBuffer = this;
+        GameEngine.gameEngine.playerInputBuffer = this;
         if (inputList.Count < rawInputList.Length || inputList.Count==0)
         {
             InitializeBuffer();
@@ -26,7 +26,7 @@ public class InputBuffer
         foreach (InputBufferItem c in inputList)
         {
             c.ResolveCommand();
-
+            //set first input to last slot, each subsequent input goes in the slot before it
             for (int b = 0; b < c.buffer.Count - 1; b++)
             {
                 c.buffer[b].hold = c.buffer[b + 1].hold;
@@ -79,7 +79,7 @@ public class InputStateItem
         if (hold == 1 && !used){return true;}
         return false;
     }
-    public void HoldUp()
+    public void HoldUp()//1 = pressing
     {
         if (hold < 0)
         {

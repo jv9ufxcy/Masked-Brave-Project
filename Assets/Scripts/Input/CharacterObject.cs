@@ -19,42 +19,112 @@ public class CharacterObject : MonoBehaviour
     public float currentStateTime;
     public float prevStateTime;
 
-    private Animator characterAnim;
+    public GameObject character;
+    public GameObject draw;
+    public Animator characterAnim;
     private float direction;
+    public enum ControlType { AI, PLAYER };
+    public ControlType controlType;
+
+    public Hitbox hitbox;
+    public bool canCancel;
+    public int hitConfirm;
+
+    public InputBuffer inputBuffer = new InputBuffer();
 
     // Use this for initialization
     void Start()
     {
-        characterAnim = GetComponent<Animator>();
         myRB = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //UpdateInputBuffer
+        if (GameEngine.hitStop<=0)
+        {
+            //UpdateInputBuffer
 
-        //Update Input
-        UpdateInput();
-        
-        //Update State Machine
-        UpdateState();
+            //Update Input
+            //HitCancel();
+            switch (controlType)
+            {
+                case ControlType.AI:
+                    UpdateAI();
+                    break;
+                case ControlType.PLAYER:
+                    UpdateInput();
+                    break;
+                default:
+                    break;
+            }
 
-        //Update Physcis
-        UpdatePhysics();
-        //
-        UpdateAnimator();
-        UpdateIsOnGround();
+            //Update State Machine
+            UpdateState();
+            //Update Physcis
+            UpdatePhysics();
+            //
+        }
+            UpdateAnimator();
+            UpdateIsOnGround();
     }
+
+    private void UpdateAI()
+    {
+
+    }
+    public float animSpeed;
     void UpdateAnimator()
     {
+        animSpeed = 1;
+        if (GameEngine.hitStop>0)
+        {
+            animSpeed = 0;
+        }
+
         Vector3 latSpeed = new Vector3(velocity.x, 0, velocity.z);
         aniMoveSpeed = Vector3.SqrMagnitude(latSpeed) * 30f;
         animFallSpeed = velocity.y /** 30f*/;
         characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
         characterAnim.SetFloat("aerialState", animAerialState);
         characterAnim.SetFloat("fallSpeed", animFallSpeed);
-        FaceVelocity();
+        characterAnim.SetFloat("hitAnimX", curHitAnim.x);
+        characterAnim.SetFloat("hitAnimY", curHitAnim.y);
+        characterAnim.SetFloat("animSpeed", animSpeed);
+
+        if (hitStun<=0)
+        {
+            FaceVelocity();
+        }
+    }
+    void CameraRelativeStickMove(float _val)
+    {
+        Vector3 velHelp = new Vector3(0, 0, 0);
+        Vector3 velDir;
+
+        //leftStick = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+
+        if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
+        {
+
+            //if (stickHelp.sqrMagnitude > 1) { stickHelp.Normalize(); }
+
+
+            velDir = Camera.main.transform.forward;
+            velDir.y = 0;
+            velDir.Normalize();
+            velHelp += velDir * leftStick.y;
+
+            velHelp += Camera.main.transform.right * leftStick.x;
+            velHelp.y = 0;
+
+
+
+            velHelp *= _val;
+
+            velocity += velHelp;
+        }
     }
     void FaceVelocity()
     {
@@ -73,20 +143,29 @@ public class CharacterObject : MonoBehaviour
     void UpdateState()
     {
         CharacterState myCurrentState = GameEngine.coreData.characterStates[currentState];
-        UpdateStateEvents();
 
-        prevStateTime = currentStateTime;
-        currentStateTime++;
-
-       
-        if (currentStateTime >= myCurrentState.length)
+        if (hitStun > 0)
         {
-            if (myCurrentState.loop) { LoopState(); }
-            else { EndState(); }
+            GettingHit();
+        }
+        else
+        {
+
+            UpdateStateEvents();
+            UpdateStateAttacks();
+
+            prevStateTime = currentStateTime;
+            currentStateTime++;
+
+
+            if (currentStateTime >= myCurrentState.length)
+            {
+                if (myCurrentState.loop) { LoopState(); }
+                else { EndState(); }
+            }
         }
 
     }
-
     void LoopState()
     {
         currentStateTime = 0;
@@ -114,7 +193,53 @@ public class CharacterObject : MonoBehaviour
             }
         }
     }
+    public float hitActive;
+    public int currentAttackIndex;
+    void UpdateStateAttacks()
+    {
+        int _cur = 0;
+        foreach (AttackEvent _atk in GameEngine.coreData.characterStates[currentState].attacks)
+        {
+            if (currentStateTime == _atk.start)
+            {
+                hitActive = _atk.length;
+                hitbox.transform.localScale = _atk.hitBoxScale;
+                hitbox.transform.localPosition = _atk.hitBoxPos;
+                currentAttackIndex = _cur;
+            }
+            if (currentStateTime==_atk.start+_atk.length)
+            {
+                hitActive = 0;
+            }
+            //HitCancel
+            float cWindow = _atk.start + _atk.cancelWindow;
+            if (currentStateTime >= cWindow)
+                if (hitConfirm > 0)
+                    canCancel = true;
 
+            if (currentStateTime >= cWindow + whiffWindow)
+                canCancel = true;
+
+            _cur++;
+        }
+    }
+    public static float whiffWindow = 8f;
+    void HitCancel()
+    {
+        //if (currentStateTime >= _ev.start && currentStateTime <= _ev.end)
+        //{
+        //foreach (AttackEvent _atk in GameEngine.coreData.characterStates[currentState].attacks)
+        //{
+        float cWindow = GameEngine.coreData.characterStates[currentState].attacks[currentAttackIndex].start + 
+            GameEngine.coreData.characterStates[currentState].attacks[currentAttackIndex].cancelWindow;
+
+        if (currentStateTime == cWindow)
+            if (hitConfirm > 0)
+                canCancel = true;
+
+        if (currentStateTime == cWindow + whiffWindow)
+            canCancel = true;
+    }
     void DoEventScript(int _index, float _var)
     {
         switch(_index)//index = element in characterscripts
@@ -128,30 +253,53 @@ public class CharacterObject : MonoBehaviour
             case 3:
                 StickMove(_var);
                 break;
+            case 4:
+                GettingHit();
+                break;
+            case 5:
+                GlobalPrefab(_var);
+                break;
+            case 6:
+                CanCancel(_var);
+                break;
                 
         }
     }
-
+    void CanCancel(float _val)
+    {
+        if (_val > 0)
+        {
+            canCancel = true;
+        }
+        else
+            canCancel = false;
+    }
+    void GlobalPrefab(float _index)
+    {
+        GameEngine.GlobalPrefab((int)_index, gameObject);
+    }
     private void FrontVelocity(float _pow)
     {
         velocity.x = _pow*direction;
     }
-
+    public Vector2 leftStick;
     void StickMove(float _pow)
     {
-        float _mov = 0;
-        if (Input.GetAxisRaw("Horizontal") > deadzone)
+        if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
         {
-            _mov = 1;
-        }
-        if (Input.GetAxisRaw("Horizontal") < -deadzone)
-        {
-            _mov = -1;
-        }
+            float _mov = 0;
+            if (leftStick.x > deadzone)
+            {
+                _mov = 1;
+            }
+            if (leftStick.x < -deadzone)
+            {
+                _mov = -1;
+            }
             direction = _mov;
-
-        //velocity.x += _mov * moveSpeed * _pow;
-        velocity.x = _mov * moveSpeed * _pow;
+            //velocity.x += _mov * moveSpeed * _pow;
+            velocity.x = _mov * moveSpeed * _pow;
+        }
     }
 
     void VelocityY(float _pow)
@@ -169,32 +317,68 @@ public class CharacterObject : MonoBehaviour
         currentState = _newState;
         prevStateTime = -1;
         currentStateTime = 0;
+        canCancel = false;
+
+        //Attacks
+        hitActive = 0;
+        hitConfirm = 0;
 
         SetAnimation(GameEngine.coreData.characterStates[currentState].stateName);
     }
     void SetAnimation(string animName)
     {
         characterAnim.CrossFadeInFixedTime(animName, GameEngine.coreData.characterStates[currentState].blendRate);
-        //characterAnim.CrossFadeInFixedTime(animName,0.13f);
+
         Debug.Log("Start " + animName);
         //characterAnim.Play(animName);
     }
     void UpdateInput()
     {
-        foreach (InputCommand c in GameEngine.coreData.commands)
+        leftStick = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        inputBuffer.Update();
+
+        bool startState = false;
+        foreach (InputCommand c in GameEngine.coreData.commands)//go through each command
         {
-            if (c.inputString != "")
+            if (startState){break; }
+            foreach (InputBufferItem bItem in inputBuffer.inputList)
             {
-                if (Input.GetButtonDown(c.inputString))
+                if (startState){break; }
+                foreach (InputStateItem bState in bItem.buffer)
                 {
-                    StartState(c.state);
-                    break;
-                    //Continue From Here!
-                    //--> Hold state until out of command list and then check if you can Cancel or not
+                    if (c.inputString == bItem.button)
+                    {
+                        if (bState.CanExecute())
+                        {
+                            if (canCancel)
+                            {
+                                startState = true;
+                                bState.used = true;
+                                StartState(c.state);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
+                //if (c.inputString != "")
+                //{
+                //    //for (int b = 0; b < inputBuffer.inputList[c].buffer.Count; b++)
+                //    if (Input.GetButtonDown(GameEngine.coreData.commands[c].inputString))
+                //    {
+                //        if (canCancel)
+                //        {
+                //            StartState(c.state);
+                //            break;
+                //            //Continue From Here!
+                //            //--> Hold state until out of command list and then check if you can Cancel or not
+                //        }
+                //    }
+                //}
+            
         }
-
+        
     }
     public bool CheckVelocityDeadZone()
     {
@@ -237,15 +421,10 @@ public class CharacterObject : MonoBehaviour
             }
             velocity.y += gravity;
         }
-        
-
 
         Move(velocity);
 
         velocity.Scale(friction);
-
-        //transform.position += velocity;
-        //charact
 
     }
     void Move(Vector3 velocity)
@@ -256,15 +435,6 @@ public class CharacterObject : MonoBehaviour
     {
         Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundDetectRadius, whatCountsAsGround);
         isOnGround = groundObjects.Length > 0;
-
-        //characterAnim.SetBool("Ground", isOnGround);
-        //if (aerialFlag)
-        //{
-        //    GroundTouch();
-
-        //}
-        //else
-        //    velocity.y += gravity * Time.deltaTime;
         if (velocity.y < 0)
         {
             hasLanded = false;
@@ -283,5 +453,52 @@ public class CharacterObject : MonoBehaviour
             hasLanded = true;
             //landingParticles.Play();
         }
+    }
+    public void SetVelocity(Vector3 v)
+    {
+        velocity = v;
+    }
+    public Vector2 curHitAnim;
+    public Vector2 targetHitAnim;
+
+    public void GetHit(CharacterObject attacker)
+    {
+        AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
+
+        attacker.hitActive = 0;//careful cant hit 2 enemies
+        //Vector3 targetOffset = transform.position;
+        Vector3 nextKnockback = curAtk.knockback;
+        //Vector3 knockOrientation = attacker.character.transform.forward;
+        Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
+        knockOrientation.Normalize();
+        nextKnockback.x *= knockOrientation.x;
+        Debug.Log("Knockback is: " + nextKnockback);
+        //nextKnockback = knockOrientation*nextKnockback;
+        SetVelocity(nextKnockback*0.7f);//dampen a bit
+        targetHitAnim.x = curAtk.hitAnim.x;
+        targetHitAnim.y = curAtk.hitAnim.y;
+
+        Debug.Log("Combined Knockback is: " + nextKnockback + " Post Dampening is: " + nextKnockback * 0.7f);
+        
+        //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+        //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+
+        curHitAnim = targetHitAnim * .25f;
+
+        GameEngine.SetHitPause(curAtk.hitStop);
+        hitStun = curAtk.hitStun;
+        attacker.hitConfirm += 1;
+        StartState(6);//hitstun state in coreData
+        GlobalPrefab(0);
+    }
+    public float hitStun;
+    public void GettingHit()
+    {
+        hitStun--;
+        if (hitStun<=0)
+        {
+            EndState();
+        }
+        curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
     }
 }

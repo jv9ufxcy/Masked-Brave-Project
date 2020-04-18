@@ -17,6 +17,7 @@ public class CharacterState
     public int currentState;
 
     public List<StateEvent> events;
+    public List<AttackEvent> attacks;
 }
 [System.Serializable]
 public class StateEvent

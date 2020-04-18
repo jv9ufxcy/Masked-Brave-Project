@@ -26,6 +26,11 @@ MonoBehaviour:
       end: 60
       variable: 1
       script: 3
+    - start: 0
+      end: 60
+      variable: 1
+      script: 6
+    attacks: []
   - stateName: Jump
     index: 0
     length: 15
@@ -35,7 +40,7 @@ MonoBehaviour:
     currentTime: 0
     currentState: 0
     events:
-    - start: 0
+    - start: 2
       end: 10
       variable: 20
       script: 0
@@ -43,6 +48,11 @@ MonoBehaviour:
       end: 60
       variable: 1
       script: 3
+    - start: 4
+      end: 60
+      variable: 1
+      script: 6
+    attacks: []
   - stateName: Dash
     index: 0
     length: 0
@@ -56,6 +66,7 @@ MonoBehaviour:
       end: 0
       variable: 0.5
       script: 0
+    attacks: []
   - stateName: Slash1
     index: 0
     length: 25
@@ -73,6 +84,16 @@ MonoBehaviour:
       end: 25
       variable: 0.001
       script: 3
+    attacks:
+    - start: 5
+      length: 10
+      hitStun: 20
+      hitStop: 5
+      hitAnim: {x: 1, y: -1}
+      knockback: {x: 10, y: 10, z: 0}
+      hitBoxPos: {x: 0.8, y: 0.8, z: 0}
+      hitBoxScale: {x: 3.8, y: 1.8, z: 1}
+      cancelWindow: 2
   - stateName: Slash2
     index: 0
     length: 25
@@ -90,6 +111,40 @@ MonoBehaviour:
       end: 25
       variable: 0.001
       script: 3
+    attacks:
+    - start: 5
+      length: 10
+      hitStun: 30
+      hitStop: 10
+      hitAnim: {x: 1, y: -1}
+      knockback: {x: 0, y: 30, z: 0}
+      hitBoxPos: {x: 0.8, y: 0.8, z: 0}
+      hitBoxScale: {x: 3.8, y: 3.8, z: 1}
+      cancelWindow: 2
+  - stateName: Slash3
+    index: 0
+    length: 0
+    loop: 0
+    frame: 0
+    blendRate: 0.1
+    currentTime: 0
+    currentState: 0
+    events: []
+    attacks: []
+  - stateName: HitStun
+    index: 0
+    length: 10
+    loop: 1
+    frame: 0
+    blendRate: 0.1
+    currentTime: 0
+    currentState: 0
+    events:
+    - start: 0
+      end: 10
+      variable: 0
+      script: 4
+    attacks: []
   - stateName: Neutral
     index: 0
     length: 0
@@ -99,6 +154,7 @@ MonoBehaviour:
     currentTime: 0
     currentState: 0
     events: []
+    attacks: []
   - stateName: Neutral
     index: 0
     length: 0
@@ -108,6 +164,7 @@ MonoBehaviour:
     currentTime: 0
     currentState: 0
     events: []
+    attacks: []
   - stateName: Neutral
     index: 0
     length: 0
@@ -117,24 +174,7 @@ MonoBehaviour:
     currentTime: 0
     currentState: 0
     events: []
-  - stateName: Neutral
-    index: 0
-    length: 0
-    loop: 0
-    frame: 0
-    blendRate: 0.1
-    currentTime: 0
-    currentState: 0
-    events: []
-  - stateName: Neutral
-    index: 0
-    length: 0
-    loop: 0
-    frame: 0
-    blendRate: 0.1
-    currentTime: 0
-    currentState: 0
-    events: []
+    attacks: []
   characterScripts:
   - index: 0
     name: VelocityY
@@ -148,6 +188,15 @@ MonoBehaviour:
   - index: 0
     name: StickMove
     variable: 0
+  - index: 0
+    name: GettingHit
+    variable: 0
+  - index: 0
+    name: GlobalPrefab
+    variable: 0
+  - index: 0
+    name: CanCancel
+    variable: 0
   commands:
   - inputString: Jump
     state: 1
@@ -155,7 +204,9 @@ MonoBehaviour:
     state: 2
   - inputString: Attack
     state: 3
-  - inputString: Henshin
+  - inputString: Special
     state: 4
   - inputString: 
     state: 0
+  globalPrefabs:
+  - {fileID: 4847973911462044704, guid: 141a30506b4d9374a94801f03e7669b4, type: 3}
