@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6476919978724093374}
   - component: {fileID: 6476919978724093373}
   - component: {fileID: 6476919978724093372}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   gravity: -2
   aniMoveSpeed: 0
-  friction: {x: 0.5, y: 0.99, z: 0}
+  friction: {x: 0.95, y: 0.99, z: 0}
   myRB: {fileID: 6476919978724093373}
   currentState: 0
   currentStateTime: 0
@@ -59,6 +59,9 @@ MonoBehaviour:
   characterAnim: {fileID: 6476919979961269262}
   controlType: 0
   hitbox: {fileID: 6476919980345759422}
+  canCancel: 0
+  hitConfirm: 0
+  animSpeed: 0
   hitActive: 0
   currentAttackIndex: 0
   leftStick: {x: 0, y: 0}
@@ -73,8 +76,10 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
-  hitAnimX: 0
-  hitAnimY: 0
+  jumps: 0
+  jumpMax: 1
+  curHitAnim: {x: 0, y: 0}
+  targetHitAnim: {x: 0, y: 0}
   hitStun: 0
 --- !u!50 &6476919978724093373
 Rigidbody2D:
@@ -132,7 +137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6476919979401484990}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Draw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6476919979580406228}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundDetect
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -193,7 +198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6476919979767440957}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +233,7 @@ GameObject:
   - component: {fileID: 6476919979961269260}
   - component: {fileID: 6476919979961269261}
   - component: {fileID: 6476919979961269262}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6476919980321844979}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +363,7 @@ GameObject:
   - component: {fileID: 6476919980345759421}
   - component: {fileID: 6476919980345759423}
   - component: {fileID: 6476919980345759422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

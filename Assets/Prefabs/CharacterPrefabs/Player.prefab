@@ -355,22 +355,29 @@ MonoBehaviour:
   characterAnim: {fileID: 2833465961720813668}
   controlType: 1
   hitbox: {fileID: 7513360881928160874}
+  canCancel: 0
+  hitConfirm: 0
+  animSpeed: 0
   hitActive: 0
   currentAttackIndex: 0
   leftStick: {x: 0, y: 0}
   deadzone: 0.2
   moveSpeed: 10
   jumpPow: 12
+  aerialFlag: 0
+  isOnGround: 0
   aerialTimer: 0
-  groundDetectRadius: 0.25
+  groundDetectRadius: 0.5
   animAerialState: 0
   animFallSpeed: 0
   groundDetectPoint: {fileID: 2833465961454588525}
   whatCountsAsGround:
     serializedVersion: 2
-    m_Bits: 256
-  hitAnimX: 0
-  hitAnimY: 0
+    m_Bits: 768
+  jumps: 0
+  jumpMax: 1
+  curHitAnim: {x: 0, y: 0}
+  targetHitAnim: {x: 0, y: 0}
   hitStun: 0
 --- !u!50 &2833465963085331512
 Rigidbody2D:

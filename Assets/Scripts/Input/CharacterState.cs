@@ -10,14 +10,41 @@ public class CharacterState
 
     public float length;
     public bool loop;
-    public int frame;
     public float blendRate = 0.1f;
 
-    public float currentTime;
-    public int currentState;
+    //public int frame;
+
+    //public float currentTime;
+    //public int currentState;
 
     public List<StateEvent> events;
     public List<AttackEvent> attacks;
+
+    public int jumpReq;
+    public int meterReq;
+    public float dashCooldownReq;
+    public bool groundedReq;
+
+    public bool ConditionsMet(CharacterObject character)
+    {
+        if (character.jumps<jumpReq){ return false;}
+
+        if (groundedReq&&character.aerialFlag){ return false;}
+
+        if (dashCooldownReq>0)
+        {
+            if (character.dashCooldown > 0) { return false; }
+            else { character.dashCooldown = dashCooldownReq; }
+        }
+        if (meterReq>0)
+        {
+            if (character.specialMeter <meterReq) { return false; }
+            else { character.UseMeter(meterReq); }
+        }
+        
+        //else { character.jumps--; }
+        return true;
+    }
 }
 [System.Serializable]
 public class StateEvent

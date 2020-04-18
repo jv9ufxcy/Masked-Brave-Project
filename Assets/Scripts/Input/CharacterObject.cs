@@ -5,27 +5,27 @@ using UnityEngine;
 
 public class CharacterObject : MonoBehaviour
 {
-
+    [Header("Movement")]
     public Vector3 velocity;
 
     public float gravity = -0.01f;
     public float aniMoveSpeed;
 
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
+    private float direction=1;
 
     public Rigidbody2D myRB;
-
+    [Header("CurrentState")]
     public int currentState;
     public float currentStateTime;
     public float prevStateTime;
-
+    [Header("CharacterModel")]
     public GameObject character;
     public GameObject draw;
     public Animator characterAnim;
-    private float direction;
     public enum ControlType { AI, PLAYER };
     public ControlType controlType;
-
+    [Header("HitCancel")]
     public Hitbox hitbox;
     public bool canCancel;
     public int hitConfirm;
@@ -65,8 +65,14 @@ public class CharacterObject : MonoBehaviour
             UpdatePhysics();
             //
         }
-            UpdateAnimator();
-            UpdateIsOnGround();
+        UpdateTimers();
+        UpdateAnimator();
+        UpdateIsOnGround();
+    }
+
+    void UpdateTimers()
+    {
+        if (dashCooldown > 0) { dashCooldown -= dashCooldownRate; }
     }
 
     private void UpdateAI()
@@ -91,10 +97,9 @@ public class CharacterObject : MonoBehaviour
         characterAnim.SetFloat("hitAnimX", curHitAnim.x);
         characterAnim.SetFloat("hitAnimY", curHitAnim.y);
         characterAnim.SetFloat("animSpeed", animSpeed);
-
-        if (hitStun<=0)
+        if (hitStun <= 0)
         {
-            FaceVelocity();
+            FaceStick();
         }
     }
     void CameraRelativeStickMove(float _val)
@@ -125,19 +130,15 @@ public class CharacterObject : MonoBehaviour
 
             velocity += velHelp;
         }
+        
     }
-    void FaceVelocity()
+    void FaceStick()
     {
         if (CheckVelocityDeadZone())
         {
-            if (direction > 0)
-            {
-                transform.localScale = new Vector3(1f, 1f, 1f);
-            }
-            else if (direction < 0)
-            {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-            }
+            if (leftStick.x > 0) { direction = 1; }
+            else if (leftStick.x < 0) { direction = -1; }
+            transform.localScale = new Vector3(direction, 1f, 1f);
         }
     }
     void UpdateState()
@@ -193,6 +194,7 @@ public class CharacterObject : MonoBehaviour
             }
         }
     }
+    [Header("CurrentAttack")]
     public float hitActive;
     public int currentAttackIndex;
     void UpdateStateAttacks()
@@ -262,8 +264,19 @@ public class CharacterObject : MonoBehaviour
             case 6:
                 CanCancel(_var);
                 break;
+            case 7:
+                Jump(_var);
+                break;
+            case 8:
+                FaceStick();
+                break;
                 
         }
+    }
+    void Jump(float _pow)
+    {
+        velocity.y = _pow;
+        jumps--;
     }
     void CanCancel(float _val)
     {
@@ -282,6 +295,7 @@ public class CharacterObject : MonoBehaviour
     {
         velocity.x = _pow*direction;
     }
+    [Header("MovementVectors")]
     public Vector2 leftStick;
     void StickMove(float _pow)
     {
@@ -299,6 +313,10 @@ public class CharacterObject : MonoBehaviour
             direction = _mov;
             //velocity.x += _mov * moveSpeed * _pow;
             velocity.x = _mov * moveSpeed * _pow;
+        }
+        if (hitStun <= 0)
+        {
+            FaceStick();
         }
     }
 
@@ -353,10 +371,13 @@ public class CharacterObject : MonoBehaviour
                         {
                             if (canCancel)
                             {
-                                startState = true;
-                                bState.used = true;
-                                StartState(c.state);
-                                break;
+                                if (GameEngine.coreData.characterStates[c.state].ConditionsMet(this))
+                                {
+                                    startState = true;
+                                    bState.used = true;
+                                    StartState(c.state);
+                                    break;
+                                }
                             }
                         }
                     }
@@ -384,18 +405,37 @@ public class CharacterObject : MonoBehaviour
     {
         if (velocity.x > 0.001f) { return true; }
         if (velocity.x < -0.001f) { return true; }
-        if (velocity.z > 0.001f) { return true; }
-        if (velocity.z < -0.001f) { return true; }
+        if (velocity.y > 0.001f) { return true; }
+        if (velocity.y < -0.001f) { return true; }
         return false;
     }
-
-    private bool aerialFlag,isOnGround;
+    [Header("Grounded Check")]
+    public bool aerialFlag,isOnGround;
     [SerializeField] private float aerialTimer,groundDetectRadius, animAerialState,animFallSpeed;
     [SerializeField]
     private Transform groundDetectPoint;
-
     [SerializeField]
     private LayerMask whatCountsAsGround;
+
+    public int jumps, jumpMax = 1;
+
+    [Header("Timers")]
+    public float dashCooldown, dashCooldownRate = 1f;
+    public float specialMeter, specialMeterMax = 100f;
+
+    public void UseMeter(float _val)
+    {
+        ChangeMeter(-_val);
+    }
+    public void BuildMeter(float _val)
+    {
+        ChangeMeter(_val);
+    }
+    public void ChangeMeter(float _val)
+    {
+        specialMeter += _val;
+        specialMeter = Mathf.Clamp(specialMeter, 0f, specialMeterMax);
+    }
     void UpdatePhysics()
     {
         if (isOnGround)
@@ -403,7 +443,7 @@ public class CharacterObject : MonoBehaviour
             aerialFlag = false;
             aerialTimer = 0;
             animAerialState = 0f;
-            //velocity.y *= 0.3f;
+            jumps = jumpMax;
         }
         else
         {
@@ -417,6 +457,10 @@ public class CharacterObject : MonoBehaviour
                 if (animAerialState<=1f)
                 {
                     animAerialState += 0.1f;
+                }
+                if (jumps==jumpMax)
+                {
+                    jumps--;
                 }
             }
             velocity.y += gravity;
@@ -458,6 +502,7 @@ public class CharacterObject : MonoBehaviour
     {
         velocity = v;
     }
+    [Header("Hit Stun")]
     public Vector2 curHitAnim;
     public Vector2 targetHitAnim;
 
@@ -488,9 +533,11 @@ public class CharacterObject : MonoBehaviour
         GameEngine.SetHitPause(curAtk.hitStop);
         hitStun = curAtk.hitStun;
         attacker.hitConfirm += 1;
-        StartState(6);//hitstun state in coreData
+        attacker.BuildMeter(10f);
+        StartState(hitStunStateIndex);
         GlobalPrefab(0);
     }
+    public int hitStunStateIndex = 7;//hitstun state in coreData
     public float hitStun;
     public void GettingHit()
     {

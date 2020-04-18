@@ -17,10 +17,7 @@ MonoBehaviour:
     index: 0
     length: 60
     loop: 1
-    frame: 0
     blendRate: 0.1
-    currentTime: 0
-    currentState: 0
     events:
     - start: 0
       end: 60
@@ -31,19 +28,20 @@ MonoBehaviour:
       variable: 1
       script: 6
     attacks: []
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Jump
     index: 0
     length: 15
     loop: 0
-    frame: 0
     blendRate: 0.1
-    currentTime: 0
-    currentState: 0
     events:
     - start: 2
-      end: 10
-      variable: 20
-      script: 0
+      end: 2
+      variable: 30
+      script: 7
     - start: 0
       end: 60
       variable: 1
@@ -53,28 +51,38 @@ MonoBehaviour:
       variable: 1
       script: 6
     attacks: []
+    jumpReq: 1
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Dash
     index: 0
-    length: 0
+    length: 45
     loop: 0
-    frame: 0
     blendRate: 0.1
-    currentTime: 0
-    currentState: 0
     events:
     - start: 0
-      end: 0
-      variable: 0.5
-      script: 0
+      end: 45
+      variable: 20
+      script: 1
+    - start: 0
+      end: 45
+      variable: 1
+      script: 8
+    - start: 0
+      end: 45
+      variable: 1
+      script: 6
     attacks: []
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Slash1
     index: 0
     length: 25
     loop: 0
-    frame: 0
     blendRate: 0.05
-    currentTime: 0
-    currentState: 0
     events:
     - start: 0
       end: 1
@@ -82,26 +90,27 @@ MonoBehaviour:
       script: 1
     - start: 1
       end: 25
-      variable: 0.001
-      script: 3
+      variable: 1
+      script: 8
     attacks:
     - start: 5
       length: 10
       hitStun: 20
       hitStop: 5
       hitAnim: {x: 1, y: -1}
-      knockback: {x: 10, y: 10, z: 0}
+      knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0.8, y: 0.8, z: 0}
       hitBoxScale: {x: 3.8, y: 1.8, z: 1}
       cancelWindow: 2
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Slash2
     index: 0
     length: 25
     loop: 0
-    frame: 0
     blendRate: 0.05
-    currentTime: 0
-    currentState: 0
     events:
     - start: 0
       end: 1
@@ -109,72 +118,134 @@ MonoBehaviour:
       script: 1
     - start: 1
       end: 25
-      variable: 0.001
-      script: 3
+      variable: 1
+      script: 8
     attacks:
     - start: 5
       length: 10
       hitStun: 30
-      hitStop: 10
+      hitStop: 5
       hitAnim: {x: 1, y: -1}
-      knockback: {x: 0, y: 30, z: 0}
+      knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0.8, y: 0.8, z: 0}
       hitBoxScale: {x: 3.8, y: 3.8, z: 1}
       cancelWindow: 2
+    jumpReq: 0
+    meterReq: 30
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Slash3
     index: 0
-    length: 0
+    length: 40
     loop: 0
-    frame: 0
-    blendRate: 0.1
-    currentTime: 0
-    currentState: 0
-    events: []
-    attacks: []
+    blendRate: 0.05
+    events:
+    - start: 0
+      end: 1
+      variable: 0
+      script: 1
+    - start: 1
+      end: 25
+      variable: 1
+      script: 8
+    attacks:
+    - start: 5
+      length: 10
+      hitStun: 30
+      hitStop: 15
+      hitAnim: {x: 1, y: -1}
+      knockback: {x: 15, y: 5, z: 0}
+      hitBoxPos: {x: 0.8, y: 0.8, z: 0}
+      hitBoxScale: {x: 3.8, y: 3.8, z: 1}
+      cancelWindow: 2
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+  - stateName: BraveStrike
+    index: 0
+    length: 75
+    loop: 0
+    blendRate: 0.05
+    events:
+    - start: 5
+      end: 5
+      variable: 25
+      script: 0
+    - start: 30
+      end: 60
+      variable: -25
+      script: 0
+    - start: 1
+      end: 45
+      variable: 10
+      script: 1
+    - start: 45
+      end: 60
+      variable: 5
+      script: 1
+    attacks:
+    - start: 35
+      length: 15
+      hitStun: 30
+      hitStop: 15
+      hitAnim: {x: 0, y: -1}
+      knockback: {x: 35, y: 45, z: 0}
+      hitBoxPos: {x: 1, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 2.5, z: 1}
+      cancelWindow: 2
+    jumpReq: 0
+    meterReq: 30
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: HitStun
     index: 0
     length: 10
     loop: 1
-    frame: 0
     blendRate: 0.1
-    currentTime: 0
-    currentState: 0
     events:
     - start: 0
       end: 10
       variable: 0
       script: 4
     attacks: []
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Neutral
     index: 0
     length: 0
     loop: 0
-    frame: 0
     blendRate: 0.1
-    currentTime: 0
-    currentState: 0
     events: []
     attacks: []
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Neutral
     index: 0
     length: 0
     loop: 0
-    frame: 0
     blendRate: 0.1
-    currentTime: 0
-    currentState: 0
     events: []
     attacks: []
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   - stateName: Neutral
     index: 0
     length: 0
     loop: 0
-    frame: 0
     blendRate: 0.1
-    currentTime: 0
-    currentState: 0
     events: []
     attacks: []
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
   characterScripts:
   - index: 0
     name: VelocityY
@@ -197,6 +268,12 @@ MonoBehaviour:
   - index: 0
     name: CanCancel
     variable: 0
+  - index: 0
+    name: Jump
+    variable: 0
+  - index: 0
+    name: FaceStick
+    variable: 0
   commands:
   - inputString: Jump
     state: 1
@@ -205,7 +282,7 @@ MonoBehaviour:
   - inputString: Attack
     state: 3
   - inputString: Special
-    state: 4
+    state: 6
   - inputString: 
     state: 0
   globalPrefabs:
