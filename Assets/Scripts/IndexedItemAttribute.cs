@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class IndexedItemAttribute : PropertyAttribute
 {
-    public enum IndexedItemType { SCRIPTS, STATES }
+    public enum IndexedItemType { SCRIPTS, STATES, CONDITIONS, RAW_INPUTS, CHAIN_COMMAND, COMMAND_STATES }
     public IndexedItemType type;
 
     public IndexedItemAttribute(IndexedItemType type)

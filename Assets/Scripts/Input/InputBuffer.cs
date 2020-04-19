@@ -37,17 +37,17 @@ public class InputBuffer
     void InitializeBuffer()
     {
         inputList = new List<InputBufferItem>();
-        foreach (string s in rawInputList)
+        for (int i = 0; i < GameEngine.coreData.rawInputs.Count;i++)
         {
             InputBufferItem newB = new InputBufferItem();
-            newB.button = s;
+            newB.button = i;
             inputList.Add(newB);
         }
     }
 }
 public class InputBufferItem
 {
-    public string button;
+    public int button;
     public List<InputStateItem> buffer;
     public static int bufferWindow = 12;
     public InputBufferItem()
@@ -60,7 +60,7 @@ public class InputBufferItem
     }
     public void ResolveCommand()
     {
-        if (Input.GetButton(button))
+        if (Input.GetButton(GameEngine.coreData.rawInputs[button]))
         {
             buffer[buffer.Count - 1].HoldUp();
         }

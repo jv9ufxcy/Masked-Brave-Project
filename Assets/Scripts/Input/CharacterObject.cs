@@ -102,43 +102,43 @@ public class CharacterObject : MonoBehaviour
             FaceStick();
         }
     }
-    void CameraRelativeStickMove(float _val)
-    {
-        Vector3 velHelp = new Vector3(0, 0, 0);
-        Vector3 velDir;
+    //void CameraRelativeStickMove(float _val)
+    //{
+    //    Vector3 velHelp = new Vector3(0, 0, 0);
+    //    Vector3 velDir;
 
-        //leftStick = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-
-        if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
-        {
-
-            //if (stickHelp.sqrMagnitude > 1) { stickHelp.Normalize(); }
+    //    //leftStick = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 
-            velDir = Camera.main.transform.forward;
-            velDir.y = 0;
-            velDir.Normalize();
-            velHelp += velDir * leftStick.y;
+    //    if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
+    //    {
 
-            velHelp += Camera.main.transform.right * leftStick.x;
-            velHelp.y = 0;
+    //        //if (stickHelp.sqrMagnitude > 1) { stickHelp.Normalize(); }
 
 
+    //        velDir = Camera.main.transform.forward;
+    //        velDir.y = 0;
+    //        velDir.Normalize();
+    //        velHelp += velDir * leftStick.y;
 
-            velHelp *= _val;
+    //        velHelp += Camera.main.transform.right * leftStick.x;
+    //        velHelp.y = 0;
 
-            velocity += velHelp;
-        }
+
+
+    //        velHelp *= _val;
+
+    //        velocity += velHelp;
+    //    }
         
-    }
+    //}
     void FaceStick()
     {
         if (CheckVelocityDeadZone())
         {
-            if (leftStick.x > 0) { direction = 1; }
-            else if (leftStick.x < 0) { direction = -1; }
-            transform.localScale = new Vector3(direction, 1f, 1f);
+            if (leftStick.x > 0) { direction = 1; transform.localScale = new Vector3(1f, 1f, 1f); }
+            else if (leftStick.x < 0) { direction = -1; transform.localScale = new Vector3(-1f, 1f, 1f); }
+            
         }
     }
     void UpdateState()
@@ -350,6 +350,26 @@ public class CharacterObject : MonoBehaviour
         Debug.Log("Start " + animName);
         //characterAnim.Play(animName);
     }
+
+    public int currentCommandState;
+    public int currentCommandStep;
+
+    public void GetCommandState()
+    {
+        currentCommandState = 0;
+        for (int c = 0; c < GameEngine.coreData.commandStates.Count; c++)
+        {
+            CommandState s = GameEngine.coreData.commandStates[c];
+            if (s.aerial==aerialFlag)
+            {
+                currentCommandState = c;
+                return;
+            }
+        }
+    }
+
+    int[] cancelStepList = new int[2];
+
     void UpdateInput()
     {
         leftStick = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -357,49 +377,50 @@ public class CharacterObject : MonoBehaviour
         inputBuffer.Update();
 
         bool startState = false;
-        foreach (InputCommand c in GameEngine.coreData.commands)//go through each command
+
+        GetCommandState();
+        CommandState comState = GameEngine.coreData.commandStates[currentCommandState];
+
+        if (currentCommandStep >= comState.commandSteps.Count) { currentCommandStep = 0; }
+        cancelStepList[0] = currentCommandStep;//base sub-state
+        cancelStepList[1] = 0;
+
+        for (int s = 0; s < cancelStepList.Length; s++)
         {
-            if (startState){break; }
-            foreach (InputBufferItem bItem in inputBuffer.inputList)
+            if (comState.commandSteps[currentCommandStep].strict && s > 0) { break; }
+            for (int f = 0; f < comState.commandSteps[cancelStepList[s]].followUps.Count; f++)
             {
-                if (startState){break; }
-                foreach (InputStateItem bState in bItem.buffer)
+                CommandStep nextStep = comState.commandSteps[comState.commandSteps[cancelStepList[s]].followUps[f]];
+                InputCommand stepCommand = nextStep.command;
+                if (startState) { break; }
+                foreach (InputBufferItem bItem in inputBuffer.inputList)
                 {
-                    if (c.inputString == bItem.button)
+                    if (startState) { break; }
+                    foreach (InputStateItem bState in bItem.buffer)
                     {
-                        if (bState.CanExecute())
+                        if (stepCommand.input == bItem.button)
                         {
-                            if (canCancel)
+                            if (bState.CanExecute())
                             {
-                                if (GameEngine.coreData.characterStates[c.state].ConditionsMet(this))
+                                if (canCancel)
                                 {
-                                    startState = true;
-                                    bState.used = true;
-                                    StartState(c.state);
-                                    break;
+                                    if (GameEngine.coreData.characterStates[stepCommand.state].ConditionsMet(this))
+                                    {
+                                        startState = true;
+                                        bState.used = true;
+                                        if (nextStep.followUps.Count > 0) { currentCommandStep = nextStep.idIndex; }
+                                        else { currentCommandStep = 0; }
+                                        Debug.Log("Current Step: " + currentCommandStep);
+                                        StartState(stepCommand.state);
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-                //if (c.inputString != "")
-                //{
-                //    //for (int b = 0; b < inputBuffer.inputList[c].buffer.Count; b++)
-                //    if (Input.GetButtonDown(GameEngine.coreData.commands[c].inputString))
-                //    {
-                //        if (canCancel)
-                //        {
-                //            StartState(c.state);
-                //            break;
-                //            //Continue From Here!
-                //            //--> Hold state until out of command list and then check if you can Cancel or not
-                //        }
-                //    }
-                //}
-            
-        }
-        
+        }        
     }
     public bool CheckVelocityDeadZone()
     {
@@ -537,6 +558,7 @@ public class CharacterObject : MonoBehaviour
         StartState(hitStunStateIndex);
         GlobalPrefab(0);
     }
+    [Tooltip("hitstun index in coreData")]
     public int hitStunStateIndex = 7;//hitstun state in coreData
     public float hitStun;
     public void GettingHit()

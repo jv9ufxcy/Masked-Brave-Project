@@ -11,12 +11,14 @@ public class CoreData : ScriptableObject
 
     public List<CharacterScript> characterScripts;
 
-    public List<InputCommand> commands;
+    public List<CommandState> commandStates;
+
+    //public List<InputCommand> commands;
 
     public List<GameObject> globalPrefabs;
     //Save Files
-
-
+    //Raw Inputs
+    public List<string> rawInputs;
     public string[] GetScriptNames()
     {
         string[] _names = new string[characterScripts.Count];
@@ -42,6 +44,51 @@ public class CoreData : ScriptableObject
         for (int i = 0; i < _names.Length; i++)
         {
             _names[i] = globalPrefabs[i].name;
+        }
+        return _names;
+    }
+    public string[] GetRawInputNames()
+    {
+        string[] _names = new string[rawInputs.Count];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = rawInputs[i];
+        }
+        return _names;
+    }
+
+
+    public string[] GetFollowUpNames(int _commandState, bool _deleteField)
+    {
+        int nameCount = commandStates[_commandState].commandSteps.Count;
+        if (_deleteField) { nameCount += 2; }
+        string[] _names = new string[nameCount];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            if (i < _names.Length - 2)
+            {
+                _names[i] = commandStates[_commandState].commandSteps[i].idIndex.ToString();
+            }
+            else if (i < _names.Length - 1)
+            {
+                _names[i] = "+ ADD";
+            }
+            else
+            {
+                _names[i] = "- DELETE";
+            }
+        }
+
+        return _names;
+    }
+
+
+    public string[] GetCommandStateNames()
+    {
+        string[] _names = new string[commandStates.Count];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = commandStates[i].stateName.ToString();
         }
         return _names;
     }
