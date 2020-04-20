@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892618619340630428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2833465961549340970}
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  stateIndex: 3
+  stateIndex: 16
 --- !u!1 &2833465961454588524
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +364,8 @@ MonoBehaviour:
   deadzone: 0.2
   moveSpeed: 10
   jumpPow: 12
+  currentCommandState: 0
+  currentCommandStep: 0
   aerialFlag: 0
   isOnGround: 0
   aerialTimer: 0
@@ -376,8 +378,14 @@ MonoBehaviour:
     m_Bits: 768
   jumps: 0
   jumpMax: 1
+  dashCooldown: 0
+  dashCooldownRate: 1
+  specialMeter: 0
+  specialMeterMax: 100
+  coyoteTimer: 3
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
+  hitStunStateIndex: 7
   hitStun: 0
 --- !u!50 &2833465963085331512
 Rigidbody2D:
@@ -394,7 +402,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

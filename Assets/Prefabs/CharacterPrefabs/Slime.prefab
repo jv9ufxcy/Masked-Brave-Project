@@ -68,6 +68,10 @@ MonoBehaviour:
   deadzone: 0.2
   moveSpeed: 10
   jumpPow: 12
+  currentCommandState: 0
+  currentCommandStep: 0
+  aerialFlag: 0
+  isOnGround: 0
   aerialTimer: 0
   groundDetectRadius: 0.25
   animAerialState: 0
@@ -78,8 +82,14 @@ MonoBehaviour:
     m_Bits: 256
   jumps: 0
   jumpMax: 1
+  dashCooldown: 0
+  dashCooldownRate: 1
+  specialMeter: 0
+  specialMeterMax: 100
+  coyoteTimer: 3
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
+  hitStunStateIndex: 7
   hitStun: 0
 --- !u!50 &6476919978724093373
 Rigidbody2D:
@@ -96,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

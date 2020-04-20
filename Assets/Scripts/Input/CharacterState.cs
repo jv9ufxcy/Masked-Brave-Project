@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterState
 {
     public string stateName;
-    public int index;
+    [HideInInspector] public int index;
 
     public float length;
     public bool loop;
@@ -28,8 +28,10 @@ public class CharacterState
     public bool ConditionsMet(CharacterObject character)
     {
         if (character.jumps<jumpReq){ return false;}
-
-        if (groundedReq&&character.aerialFlag){ return false;}
+        if (groundedReq)
+        {
+            if (character.aerialFlag) { return false; }
+        }
 
         if (dashCooldownReq>0)
         {
@@ -38,7 +40,7 @@ public class CharacterState
         }
         if (meterReq>0)
         {
-            if (character.specialMeter <meterReq) { return false; }
+            if (character.specialMeter < meterReq) { return false; }
             else { character.UseMeter(meterReq); }
         }
         

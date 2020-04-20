@@ -97,10 +97,10 @@ public class CharacterObject : MonoBehaviour
         characterAnim.SetFloat("hitAnimX", curHitAnim.x);
         characterAnim.SetFloat("hitAnimY", curHitAnim.y);
         characterAnim.SetFloat("animSpeed", animSpeed);
-        if (hitStun <= 0)
-        {
-            FaceStick();
-        }
+        //if (hitStun <= 0)
+        //{
+        //    FaceStick();
+        //}
     }
     //void CameraRelativeStickMove(float _val)
     //{
@@ -277,6 +277,9 @@ public class CharacterObject : MonoBehaviour
     {
         velocity.y = _pow;
         jumps--;
+        isOnGround = false;
+        aerialTimer = coyoteTimer+1f;
+        aerialFlag = true;
     }
     void CanCancel(float _val)
     {
@@ -337,6 +340,8 @@ public class CharacterObject : MonoBehaviour
         currentStateTime = 0;
         canCancel = false;
 
+        if (_newState == 0) { currentCommandStep = 0; }
+
         //Attacks
         hitActive = 0;
         hitConfirm = 0;
@@ -381,14 +386,17 @@ public class CharacterObject : MonoBehaviour
         GetCommandState();
         CommandState comState = GameEngine.coreData.commandStates[currentCommandState];
 
+
         if (currentCommandStep >= comState.commandSteps.Count) { currentCommandStep = 0; }
+
+
         cancelStepList[0] = currentCommandStep;//base sub-state
         cancelStepList[1] = 0;
 
         for (int s = 0; s < cancelStepList.Length; s++)
         {
             if (comState.commandSteps[currentCommandStep].strict && s > 0) { break; }
-            for (int f = 0; f < comState.commandSteps[cancelStepList[s]].followUps.Count; f++)
+            for (int f = 0; f < comState.commandSteps[cancelStepList[s]].followUps.Count; f++)// (CommandStep cStep in comState.commandSteps[currentCommandStep])
             {
                 CommandStep nextStep = comState.commandSteps[comState.commandSteps[cancelStepList[s]].followUps[f]];
                 InputCommand stepCommand = nextStep.command;
@@ -410,7 +418,7 @@ public class CharacterObject : MonoBehaviour
                                         bState.used = true;
                                         if (nextStep.followUps.Count > 0) { currentCommandStep = nextStep.idIndex; }
                                         else { currentCommandStep = 0; }
-                                        Debug.Log("Current Step: " + currentCommandStep);
+                                        Debug.Log("Current Step:" + currentCommandStep);
                                         StartState(stepCommand.state);
                                         break;
                                     }
@@ -420,7 +428,7 @@ public class CharacterObject : MonoBehaviour
                     }
                 }
             }
-        }        
+        }
     }
     public bool CheckVelocityDeadZone()
     {
@@ -441,6 +449,7 @@ public class CharacterObject : MonoBehaviour
     public int jumps, jumpMax = 1;
 
     [Header("Timers")]
+    public float coyoteTimer = 3f;
     public float dashCooldown, dashCooldownRate = 1f;
     public float specialMeter, specialMeterMax = 100f;
 
@@ -472,7 +481,7 @@ public class CharacterObject : MonoBehaviour
             {
                 aerialTimer++;
             }
-            if (aerialTimer >= 6)//coyote time
+            if (aerialTimer >= coyoteTimer )//coyote time
             {
                 aerialFlag = true;
                 if (animAerialState<=1f)

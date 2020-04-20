@@ -39,19 +39,17 @@ public class GameEngine : MonoBehaviour
     public InputBuffer playerInputBuffer;
     void OnGUI()
     {
-
         int xSpace = 20;
         int ySpace = 25;
+        //GUI.Label(new Rect(10, 10, 100, 20), "Hello World!");
         for (int i = 0; i < playerInputBuffer.inputList.Count; i++)
         {
-            GUI.Label(new Rect(xSpace, i * ySpace, 100, 20), playerInputBuffer.inputList[i].button + ":");
+            GUI.Label(new Rect(xSpace, i * ySpace, 100, 20), coreData.rawInputs[playerInputBuffer.inputList[i].button] + ":");
             for (int j = 0; j < playerInputBuffer.inputList[i].buffer.Count; j++)
             {
                 if (playerInputBuffer.inputList[i].buffer[i].used)
-                {
-                    GUI.Label(new Rect(j * xSpace + 100, i * ySpace, 100, 20), playerInputBuffer.inputList[i].buffer[j].hold.ToString() + "*");
-                }
-                GUI.Label(new Rect(j * xSpace + 100, i * ySpace, 100, 20), playerInputBuffer.inputList[i].buffer[j].hold.ToString());
+                { GUI.Label(new Rect(j * xSpace + 100, i * ySpace, 100, 20), playerInputBuffer.inputList[i].buffer[j].hold.ToString() + "*"); }
+                else { GUI.Label(new Rect(j * xSpace + 100, i * ySpace, 100, 20), playerInputBuffer.inputList[i].buffer[j].hold.ToString()); }
             }
         }
     }
