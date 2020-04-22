@@ -8,13 +8,13 @@ public class ChainEditorWindow : EditorWindow
     [MenuItem("Window/Movelist Editor")]
     static void Init()
     {
-        EditorWindow.GetWindow(typeof(ChainEditorWindow),false, "Movelist Editor");
+        EditorWindow.GetWindow(typeof(ChainEditorWindow), false, "Movelist Editor");
     }
 
     public int currentCommandState;
     public int currentChainStep;
 
-    
+
 
     CoreData coreData;
     Vector2 scrollView;
@@ -22,7 +22,7 @@ public class ChainEditorWindow : EditorWindow
     int sizerStep = 30;
     Vector2 xButton = new Vector2(20, 20);
 
-    
+
     public enum LineDrawType { CENTER, END_TO_END, BEZIER_END_TO_END }
     public LineDrawType currentLineType;
     //public string[] lineTypes = new string[] { "Center", "End to End", "End to End Bezier" };
@@ -30,7 +30,7 @@ public class ChainEditorWindow : EditorWindow
     bool drawBaseToggle;
     private void OnGUI()
     {
-        
+
         //GUI.DrawTexture(new Rect(0,0,maxSize.x,maxSize.y), Texture2D.blackTexture,ScaleMode.StretchToFill);
         if (coreData == null)
         {
@@ -39,11 +39,11 @@ public class ChainEditorWindow : EditorWindow
                 coreData = AssetDatabase.LoadAssetAtPath<CoreData>(AssetDatabase.GUIDToAssetPath(guid));
             }
         }
-        
+
         currentCommandState = Mathf.Clamp(currentCommandState, 0, coreData.commandStates.Count - 1);
         GUILayout.BeginHorizontal();
         currentCommandState = GUILayout.Toolbar(currentCommandState, coreData.GetCommandStateNames());
-        if(GUILayout.Button("New Command State", GUILayout.Width(175))) { coreData.commandStates.Add(new CommandState()); }
+        if (GUILayout.Button("New Command State", GUILayout.Width(175))) { coreData.commandStates.Add(new CommandState()); }
         GUILayout.EndHorizontal();
         coreData.commandStates[currentCommandState].stateName = GUILayout.TextField(coreData.commandStates[currentCommandState].stateName, GUILayout.Width(200));
         //coreData.commandStates[currentCommandState].stateName = GUI.TextField(new Rect(0, 0, 300, 50), coreData.commandStates[currentCommandState].stateName);
@@ -54,7 +54,7 @@ public class ChainEditorWindow : EditorWindow
             if (coreData.commandStates[currentCommandState].commandSteps == null) { coreData.commandStates[currentCommandState].commandSteps = new List<CommandStep>(); }
             coreData.commandStates[currentCommandState].AddCommandStep();
             coreData.commandStates[currentCommandState].CleanUpBaseState();
-            
+
             //coreData.commandStates[currentCommandState].chainSteps.Add(new ChainStep(coreData.commandStates[currentCommandState].chainSteps.Count));
         }
         GUILayout.Label("Draw Style:", GUILayout.Width(75));
@@ -68,11 +68,11 @@ public class ChainEditorWindow : EditorWindow
 
         //draw your nodes here
 
-        
+
         Handles.BeginGUI();
 
         int sCounter = 0;
-        
+
         foreach (CommandStep s in coreData.commandStates[currentCommandState].commandSteps)
         {
             if (sCounter > drawBase)
@@ -139,14 +139,14 @@ public class ChainEditorWindow : EditorWindow
         int cCounter = 0;
         foreach (CommandStep c in coreData.commandStates[currentCommandState].commandSteps)
         {
-            
+
             if (c.activated && cCounter > drawBase)
             {
                 c.myRect = GUI.Window(c.idIndex, c.myRect, WindowFunction, "", EditorStyles.miniButton);
             }
             cCounter++;
         }
-        
+
         EndWindows();
         EditorGUILayout.EndScrollView();
         EditorUtility.SetDirty(coreData);
@@ -154,41 +154,47 @@ public class ChainEditorWindow : EditorWindow
 
     void WindowFunction(int windowID)
     {
-        if(currentCommandState>= coreData.commandStates.Count) { currentCommandState = 0; }
+        if (currentCommandState >= coreData.commandStates.Count) { currentCommandState = 0; }
         if (windowID >= coreData.commandStates[currentCommandState].commandSteps.Count) { return; }
-        coreData.commandStates[currentCommandState].commandSteps[windowID].myRect.width = 240;
-        coreData.commandStates[currentCommandState].commandSteps[windowID].myRect.height = 30;
-        
-        
+        coreData.commandStates[currentCommandState].commandSteps[windowID].myRect.width = 175;
+        coreData.commandStates[currentCommandState].commandSteps[windowID].myRect.height = 50;
+
+
         EditorGUI.LabelField(new Rect(6, 7, 35, 20), windowID.ToString());
+        coreData.commandStates[currentCommandState].commandSteps[windowID].command.motionCommand =
+            EditorGUI.IntPopup(new Rect(25, 5, 50, 20), coreData.commandStates[currentCommandState].commandSteps[windowID].command.motionCommand, coreData.GetMotionCommandNames(), null, EditorStyles.miniButtonLeft);
+
         coreData.commandStates[currentCommandState].commandSteps[windowID].command.input =
-            EditorGUI.IntPopup(new Rect(25, 5, 65, 20), coreData.commandStates[currentCommandState].commandSteps[windowID].command.input, coreData.GetRawInputNames(), null, EditorStyles.miniButtonLeft);
+            EditorGUI.IntPopup(new Rect(75, 5, 65, 20), coreData.commandStates[currentCommandState].commandSteps[windowID].command.input, coreData.GetRawInputNames(), null, EditorStyles.miniButtonMid);
         coreData.commandStates[currentCommandState].commandSteps[windowID].command.state =
-            EditorGUI.IntPopup(new Rect(90, 5, 125, 20), coreData.commandStates[currentCommandState].commandSteps[windowID].command.state, coreData.GetStateNames(), null, EditorStyles.miniButtonRight);
+            EditorGUI.IntPopup(new Rect(40, 26, 70, 20), coreData.commandStates[currentCommandState].commandSteps[windowID].command.state, coreData.GetStateNames(), null, EditorStyles.miniButton);
 
-        
-        
+        coreData.commandStates[currentCommandState].commandSteps[windowID].priority =
+           EditorGUI.IntField(new Rect(6, 26, 20, 20), coreData.commandStates[currentCommandState].commandSteps[windowID].priority);
+
+
         int nextFollowup = -1;
-        nextFollowup = EditorGUI.IntPopup(new Rect(215, 5, 21, 20), nextFollowup, coreData.GetFollowUpNames(currentCommandState, true), null, EditorStyles.miniButton);
+        nextFollowup = EditorGUI.IntPopup(new Rect(150, 15, 21, 20), nextFollowup, coreData.GetFollowUpNames(currentCommandState, true), null, EditorStyles.miniButton);
 
-        if(nextFollowup != -1)
+        if (nextFollowup != -1)
         {
             if (coreData.commandStates[currentCommandState].commandSteps.Count > 0)
             {
                 if (nextFollowup >= coreData.commandStates[currentCommandState].commandSteps.Count + 1)
                 {
                     coreData.commandStates[currentCommandState].RemoveChainCommands(windowID);
+
                 }
-                else if(nextFollowup >= coreData.commandStates[currentCommandState].commandSteps.Count)
+                else if (nextFollowup >= coreData.commandStates[currentCommandState].commandSteps.Count)
                 {
                     CommandStep nextCommand = coreData.commandStates[currentCommandState].AddCommandStep();
                     nextCommand.myRect.x = coreData.commandStates[currentCommandState].commandSteps[windowID].myRect.xMax + 40f;
                     nextCommand.myRect.y = coreData.commandStates[currentCommandState].commandSteps[windowID].myRect.center.y - 15f;
                     nextCommand.command.input = coreData.commandStates[currentCommandState].commandSteps[windowID].command.input;
                     nextCommand.command.state = coreData.commandStates[currentCommandState].commandSteps[windowID].command.state;
-                    
+
                     coreData.commandStates[currentCommandState].commandSteps[windowID].AddFollowUp(nextCommand.idIndex);
-                    
+
                 }
                 else { coreData.commandStates[currentCommandState].commandSteps[windowID].AddFollowUp(nextFollowup); }
             }
@@ -203,10 +209,11 @@ public class ChainEditorWindow : EditorWindow
         {
             currentChainStep = windowID;
         }
-        
+
         GUI.DragWindow();
-        
+
 
     }
+
 
 }

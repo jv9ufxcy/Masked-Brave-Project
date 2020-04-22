@@ -12,19 +12,23 @@ public class CharacterObject : MonoBehaviour
     public float aniMoveSpeed;
 
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
-    private float direction=1;
+    [SerializeField]private float direction=1;
 
     public Rigidbody2D myRB;
+    public BoxCollider2D boxCollider2D;
+
     [Header("CurrentState")]
     public int currentState;
     public float currentStateTime;
     public float prevStateTime;
+
     [Header("CharacterModel")]
     public GameObject character;
     public GameObject draw;
     public Animator characterAnim;
     public enum ControlType { AI, PLAYER };
     public ControlType controlType;
+
     [Header("HitCancel")]
     public Hitbox hitbox;
     public bool canCancel;
@@ -36,6 +40,7 @@ public class CharacterObject : MonoBehaviour
     void Start()
     {
         myRB = GetComponent<Rigidbody2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -97,41 +102,39 @@ public class CharacterObject : MonoBehaviour
         characterAnim.SetFloat("hitAnimX", curHitAnim.x);
         characterAnim.SetFloat("hitAnimY", curHitAnim.y);
         characterAnim.SetFloat("animSpeed", animSpeed);
-        //if (hitStun <= 0)
-        //{
-        //    FaceStick();
-        //}
+
     }
-    //void CameraRelativeStickMove(float _val)
-    //{
-    //    Vector3 velHelp = new Vector3(0, 0, 0);
-    //    Vector3 velDir;
+    /*public Vector2 leftStick;
+     void CameraRelativeStickMove(float _val)
+    {
+        Vector3 velHelp = new Vector3(0, 0, 0);
+        Vector3 velDir;
 
-    //    //leftStick = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-
-    //    if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
-    //    {
-
-    //        //if (stickHelp.sqrMagnitude > 1) { stickHelp.Normalize(); }
+        //leftStick = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 
-    //        velDir = Camera.main.transform.forward;
-    //        velDir.y = 0;
-    //        velDir.Normalize();
-    //        velHelp += velDir * leftStick.y;
+        if ((leftStick.x > GameEngine.gameEngine.deadZone || leftStick.x < -GameEngine.gameEngine.deadZone || leftStick.y > GameEngine.gameEngine.deadZone || leftStick.y < -GameEngine.gameEngine.deadZone))
+        {
 
-    //        velHelp += Camera.main.transform.right * leftStick.x;
-    //        velHelp.y = 0;
+            //if (stickHelp.sqrMagnitude > 1) { stickHelp.Normalize(); }
 
 
+            velDir = Camera.main.transform.forward;
+            velDir.y = 0;
+            velDir.Normalize();
+            velHelp += velDir * leftStick.y;
 
-    //        velHelp *= _val;
+            velHelp += Camera.main.transform.right * leftStick.x;
+            velHelp.y = 0;
 
-    //        velocity += velHelp;
-    //    }
-        
-    //}
+
+
+            velHelp *= _val;
+            
+            velocity += velHelp;
+        }
+    }
+    */
     void FaceStick()
     {
         if (CheckVelocityDeadZone())
@@ -290,9 +293,13 @@ public class CharacterObject : MonoBehaviour
         else
             canCancel = false;
     }
-    void GlobalPrefab(float _index)
+    void GlobalPrefab(float _index, int _act, int _ev)
     {
-        GameEngine.GlobalPrefab((int)_index, gameObject);
+        GameEngine.GlobalPrefab((int)_index, character,_act,_ev);
+    }
+    void GlobalPrefab(float _prefab)
+    {
+        GlobalPrefab(_prefab, -1, -1);
     }
     private void FrontVelocity(float _pow)
     {
@@ -300,6 +307,7 @@ public class CharacterObject : MonoBehaviour
     }
     [Header("MovementVectors")]
     public Vector2 leftStick;
+    public string horizontalAxis = "altPs4Horizontal", verticalAxis = "altPs4Vertical";
     void StickMove(float _pow)
     {
         if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
@@ -313,7 +321,7 @@ public class CharacterObject : MonoBehaviour
             {
                 _mov = -1;
             }
-            direction = _mov;
+            //direction = _mov;
             //velocity.x += _mov * moveSpeed * _pow;
             velocity.x = _mov * moveSpeed * _pow;
         }
@@ -377,7 +385,7 @@ public class CharacterObject : MonoBehaviour
 
     void UpdateInput()
     {
-        leftStick = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        leftStick = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 
         inputBuffer.Update();
 
@@ -392,43 +400,55 @@ public class CharacterObject : MonoBehaviour
 
         cancelStepList[0] = currentCommandStep;//base sub-state
         cancelStepList[1] = 0;
-
+        int finalS = -1;
+        int finalF = -1;
+        int currentPriority = -1;
         for (int s = 0; s < cancelStepList.Length; s++)
         {
             if (comState.commandSteps[currentCommandStep].strict && s > 0) { break; }
+            if (!comState.commandSteps[currentCommandStep].activated) { break; }
+
             for (int f = 0; f < comState.commandSteps[cancelStepList[s]].followUps.Count; f++)// (CommandStep cStep in comState.commandSteps[currentCommandStep])
             {
                 CommandStep nextStep = comState.commandSteps[comState.commandSteps[cancelStepList[s]].followUps[f]];
-                InputCommand stepCommand = nextStep.command;
-                if (startState) { break; }
-                foreach (InputBufferItem bItem in inputBuffer.inputList)
+                InputCommand nextCommand = nextStep.command;
+
+                //if(inputBuffer.)
+                if (CheckInputCommand(nextCommand))
                 {
-                    if (startState) { break; }
-                    foreach (InputStateItem bState in bItem.buffer)
+                    if (canCancel)
                     {
-                        if (stepCommand.input == bItem.button)
+                        if (GameEngine.coreData.characterStates[nextCommand.state].ConditionsMet(this))
                         {
-                            if (bState.CanExecute())
+
+                            if (nextStep.priority > currentPriority)
                             {
-                                if (canCancel)
-                                {
-                                    if (GameEngine.coreData.characterStates[stepCommand.state].ConditionsMet(this))
-                                    {
-                                        startState = true;
-                                        bState.used = true;
-                                        if (nextStep.followUps.Count > 0) { currentCommandStep = nextStep.idIndex; }
-                                        else { currentCommandStep = 0; }
-                                        Debug.Log("Current Step:" + currentCommandStep);
-                                        StartState(stepCommand.state);
-                                        break;
-                                    }
-                                }
+                                currentPriority = nextStep.priority;
+                                startState = true;
+                                finalS = s;
+                                finalF = f;
+
                             }
                         }
                     }
                 }
             }
         }
+        if (startState)
+        {
+            CommandStep nextStep = comState.commandSteps[comState.commandSteps[cancelStepList[finalS]].followUps[finalF]];
+            InputCommand nextCommand = nextStep.command;
+            inputBuffer.UseInput(nextCommand.input);
+            if (nextStep.followUps.Count > 0) { currentCommandStep = nextStep.idIndex; }
+            else { currentCommandStep = 0; }
+            StartState(nextCommand.state);
+        }
+    }
+    public bool CheckInputCommand(InputCommand _in)
+    {
+        if (inputBuffer.buttonCommandCheck[_in.input] < 0) { return false; }
+        if (inputBuffer.motionCommandCheck[_in.motionCommand] < 0) { return false; }
+        return true;
     }
     public bool CheckVelocityDeadZone()
     {
@@ -440,7 +460,7 @@ public class CharacterObject : MonoBehaviour
     }
     [Header("Grounded Check")]
     public bool aerialFlag,isOnGround;
-    [SerializeField] private float aerialTimer,groundDetectRadius, animAerialState,animFallSpeed;
+    [SerializeField] private float aerialTimer,groundDetectHeight, animAerialState,animFallSpeed;
     [SerializeField]
     private Transform groundDetectPoint;
     [SerializeField]
@@ -468,7 +488,7 @@ public class CharacterObject : MonoBehaviour
     }
     void UpdatePhysics()
     {
-        if (isOnGround)
+        if (IsGrounded())
         {
             aerialFlag = false;
             aerialTimer = 0;
@@ -505,9 +525,23 @@ public class CharacterObject : MonoBehaviour
     {
         myRB.velocity = velocity;
     }
+    public bool IsGrounded()
+    {
+        RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
+        Color rayColor;
+        if (rayCastHit.collider != null)
+            rayColor = Color.green;
+        else
+            rayColor = Color.red;
+        Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y+groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
+
+        return rayCastHit.collider != null;
+    }
     private void UpdateIsOnGround()
     {
-        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundDetectRadius, whatCountsAsGround);
+        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundDetectHeight, whatCountsAsGround);
         isOnGround = groundObjects.Length > 0;
         if (velocity.y < 0)
         {
@@ -573,10 +607,7 @@ public class CharacterObject : MonoBehaviour
     public void GettingHit()
     {
         hitStun--;
-        if (hitStun<=0)
-        {
-            EndState();
-        }
+        if (hitStun <= 0){ EndState(); }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
     }
 }

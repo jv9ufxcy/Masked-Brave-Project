@@ -347,6 +347,7 @@ MonoBehaviour:
   aniMoveSpeed: 0
   friction: {x: 0.5, y: 1, z: 0}
   myRB: {fileID: 2833465963085331512}
+  boxCollider2D: {fileID: 0}
   currentState: 0
   currentStateTime: 0
   prevStateTime: 0
@@ -369,7 +370,7 @@ MonoBehaviour:
   aerialFlag: 0
   isOnGround: 0
   aerialTimer: 0
-  groundDetectRadius: 0.5
+  groundDetectHeight: 1
   animAerialState: 0
   animFallSpeed: 0
   groundDetectPoint: {fileID: 2833465961454588525}
@@ -378,11 +379,11 @@ MonoBehaviour:
     m_Bits: 768
   jumps: 0
   jumpMax: 1
+  coyoteTimer: 3
   dashCooldown: 0
   dashCooldownRate: 1
   specialMeter: 0
   specialMeterMax: 100
-  coyoteTimer: 3
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
   hitStunStateIndex: 7

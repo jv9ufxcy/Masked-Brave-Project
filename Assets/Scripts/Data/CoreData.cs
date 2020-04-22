@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Core Data", menuName = "Character Action/Core Data", order = 1)]
+[System.Serializable]
 public class CoreData : ScriptableObject
 {
     //Character States
@@ -17,8 +18,11 @@ public class CoreData : ScriptableObject
 
     public List<GameObject> globalPrefabs;
     //Save Files
+
     //Raw Inputs
-    public List<string> rawInputs;
+    public List<RawInput> rawInputs;
+    public List<MotionCommand> motionCommands;
+
     public string[] GetScriptNames()
     {
         string[] _names = new string[characterScripts.Count];
@@ -38,6 +42,7 @@ public class CoreData : ScriptableObject
         }
         return _names;
     }
+
     public string[] GetPrefabNames()
     {
         string[] _names = new string[globalPrefabs.Count];
@@ -47,16 +52,26 @@ public class CoreData : ScriptableObject
         }
         return _names;
     }
+
     public string[] GetRawInputNames()
     {
         string[] _names = new string[rawInputs.Count];
         for (int i = 0; i < _names.Length; i++)
         {
-            _names[i] = rawInputs[i];
+            _names[i] = rawInputs[i].name;
         }
         return _names;
     }
 
+    public string[] GetMotionCommandNames()
+    {
+        string[] _names = new string[motionCommands.Count];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = motionCommands[i].name;
+        }
+        return _names;
+    }
 
     public string[] GetFollowUpNames(int _commandState, bool _deleteField)
     {

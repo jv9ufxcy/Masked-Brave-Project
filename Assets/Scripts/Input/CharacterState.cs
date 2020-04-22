@@ -55,8 +55,18 @@ public class StateEvent
     public float end;
     public float variable;
 
+
+
     [IndexedItem(IndexedItemAttribute.IndexedItemType.SCRIPTS)]
     public int script;
+
+    public List<ScriptParameters> parameters;
+}
+[System.Serializable]
+public class ScriptParameters
+{
+    public string name;
+    public float val;
 }
 [System.Serializable]
 public class CharacterScript
@@ -65,17 +75,24 @@ public class CharacterScript
     public int index;
 
     public string name;
-    public float variable;
+
+    public List<ScriptParameters> parameters;
+    //public float variable;
 }
 [System.Serializable]
 public class InputCommand
 {
-    //[IndexedItem(IndexedItemAttribute.IndexedItemType.RAW_INPUTS)]
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.MOTION_COMMAND)]
+    public int motionCommand;
+
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.RAW_INPUTS)]
     public int input;
 
-    public string inputString;
+    //public string inputString;
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int state;
+
+    public List<int> inputs;
 }
 [System.Serializable]
 public class CommandState
@@ -135,12 +152,22 @@ public class CommandState
             for (int m = 0; m < omitList.Count; m++)
             {
                 if (omitList[m] == s) { skip = true; }
+                if (omitList[m] >= commandSteps.Count) { skip = true; }
+                if (!commandSteps[s].activated) { skip = true; }
             }
             if (!skip) { nextFollowups.Add(s); }
 
         }
 
         commandSteps[0].followUps = nextFollowups;
+
+    }
+    public void CleanUpFollowups()
+    {
+        for (int s = 0; s < commandSteps.Count; s++)
+        {
+            omitList = new List<int>();
+        }
 
     }
 }
@@ -160,6 +187,8 @@ public class CommandStep
     public Rect myRect;
 
     public bool activated;
+
+    public int priority;
 
     public void AddFollowUp(int _nextID)
     {

@@ -7,10 +7,17 @@ public class GameEngine : MonoBehaviour
 
     public CoreData coreDataObject;
     public static CoreData coreData;
+
     public static float hitStop;
+
     public static GameEngine gameEngine;
-	// Use this for initialization
-	void Start ()
+
+    public float deadZone = 0.2f;
+
+    public CharacterObject mainCharacter;
+
+    // Use this for initialization
+    void Start ()
     {
         coreData = coreDataObject;
         gameEngine = this;
@@ -30,27 +37,61 @@ public class GameEngine : MonoBehaviour
             hitStop--;
         }
 	}
-    public static void GlobalPrefab(int _index, GameObject _obj)
+    public static void GlobalPrefab(int _index, GameObject _parentObj, int _state, int _ev)
     {
-        GameObject nextPrefab = Instantiate(coreData.globalPrefabs[_index], _obj.transform.position, Quaternion.identity, _obj.transform.root);
+        GameObject nextPrefab = Instantiate(coreData.globalPrefabs[_index], _parentObj.transform.position, _parentObj.transform.rotation, _parentObj.transform);
+        if (_state!=-1)
+        {
+            StateEvent thisEvent = coreData.characterStates[_state].events[_ev];
+
+            nextPrefab.transform.localPosition += new Vector3(thisEvent.parameters[0].val, thisEvent.parameters[1].val, thisEvent.parameters[2].val);
+            nextPrefab.transform.localRotation = Quaternion.Euler(new Vector3(thisEvent.parameters[3].val, thisEvent.parameters[4].val, thisEvent.parameters[5].val));
+            nextPrefab.transform.localScale =Vector3.Scale(nextPrefab.transform.localScale, new Vector3(thisEvent.parameters[6].val, thisEvent.parameters[7].val, thisEvent.parameters[8].val));
+        }
+
+        //foreach (Animator myAnimator in nextPrefab.transform.GetComponentsInChildren<Animator>())
+        //{
+        //    VFXControl[] behaviors = myAnimator.GetBehaviours<VFXCOntrol>();
+        //    for (int i = 0; i < behaviors.Length; i++)
+        //    {
+        //        behaviors[i].vfxRoot = nextPrefab.transform;
+        //    }
+        //    if (_state != -1)
+        //    {
+        //        StateEvent thisEvent = coreData.characterStates[_state].events[_ev];
+        //        myAnimator.speed *= thisEvent.parameters[9].val;
+        //    }
+        //}
     }
 
 
     public InputBuffer playerInputBuffer;
     void OnGUI()
     {
-        int xSpace = 20;
-        int ySpace = 25;
+        int xSpace = 25;
+        int ySpace = 15;
         //GUI.Label(new Rect(10, 10, 100, 20), "Hello World!");
-        for (int i = 0; i < playerInputBuffer.inputList.Count; i++)
+        for (int i = 0; i < playerInputBuffer.buttonCommandCheck.Count; i++)
         {
-            GUI.Label(new Rect(xSpace, i * ySpace, 100, 20), coreData.rawInputs[playerInputBuffer.inputList[i].button] + ":");
-            for (int j = 0; j < playerInputBuffer.inputList[i].buffer.Count; j++)
+            GUI.Label(new Rect(10f + (i * xSpace), 15f, 100, 20), playerInputBuffer.buttonCommandCheck[i].ToString());
+        }
+        for (int b = 0; b < playerInputBuffer.buffer.Count; b++)
+        {
+            //GUI.Label(new Rect(xSpace - 10f, b * ySpace, 100, 20), b.ToString() + ":");
+            for (int i = 0; i < playerInputBuffer.buffer[b].rawInputs.Count; i++)
             {
-                if (playerInputBuffer.inputList[i].buffer[i].used)
-                { GUI.Label(new Rect(j * xSpace + 100, i * ySpace, 100, 20), playerInputBuffer.inputList[i].buffer[j].hold.ToString() + "*"); }
-                else { GUI.Label(new Rect(j * xSpace + 100, i * ySpace, 100, 20), playerInputBuffer.inputList[i].buffer[j].hold.ToString()); }
+                if (playerInputBuffer.buffer[b].rawInputs[i].used)
+                { GUI.Label(new Rect(10f + (i * xSpace), 35f + (b * ySpace), 100, 20), playerInputBuffer.buffer[b].rawInputs[i].hold.ToString("0") + ">"); }
+                else { GUI.Label(new Rect(10f + (i * xSpace), 35f + (b * ySpace), 100, 20), playerInputBuffer.buffer[b].rawInputs[i].hold.ToString("0")); }
             }
         }
+
+        for (int m = 0; m < playerInputBuffer.motionCommandCheck.Count; m++)
+        {
+            GUI.Label(new Rect(500f - 25f, m * ySpace, 100, 20), playerInputBuffer.motionCommandCheck[m].ToString());
+            GUI.Label(new Rect(500f, m * ySpace, 100, 20), coreData.motionCommands[m].name);
+
+        }
+
     }
 }

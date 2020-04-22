@@ -23,10 +23,12 @@ MonoBehaviour:
       end: 60
       variable: 1
       script: 3
+      parameters: []
     - start: 0
       end: 60
       variable: 1
       script: 6
+      parameters: []
     attacks: []
     jumpReq: 0
     meterReq: 0
@@ -42,14 +44,17 @@ MonoBehaviour:
       end: 2
       variable: 30
       script: 7
+      parameters: []
     - start: 0
       end: 60
       variable: 1
       script: 3
+      parameters: []
     - start: 4
       end: 60
       variable: 1
       script: 6
+      parameters: []
     attacks: []
     jumpReq: 1
     meterReq: 0
@@ -58,26 +63,29 @@ MonoBehaviour:
   - stateName: Dash
     index: 0
     length: 30
-    loop: 1
+    loop: 0
     blendRate: 0.1
     events:
     - start: 0
-      end: 45
+      end: 30
       variable: 20
       script: 1
+      parameters: []
     - start: 0
-      end: 45
+      end: 30
       variable: 1
       script: 8
-    - start: 0
-      end: 45
+      parameters: []
+    - start: 1
+      end: 30
       variable: 1
       script: 6
+      parameters: []
     attacks: []
     jumpReq: 0
     meterReq: 0
-    dashCooldownReq: 0
-    groundedReq: 0
+    dashCooldownReq: 10
+    groundedReq: 1
   - stateName: Slash1
     index: 0
     length: 25
@@ -88,14 +96,17 @@ MonoBehaviour:
       end: 1
       variable: 0
       script: 1
+      parameters: []
     - start: 1
       end: 25
       variable: 1
       script: 8
+      parameters: []
     - start: 1
       end: 25
       variable: 1
       script: 6
+      parameters: []
     attacks:
     - start: 5
       length: 10
@@ -120,10 +131,12 @@ MonoBehaviour:
       end: 1
       variable: 0
       script: 1
+      parameters: []
     - start: 1
       end: 25
       variable: 1
       script: 6
+      parameters: []
     attacks:
     - start: 5
       length: 10
@@ -148,10 +161,12 @@ MonoBehaviour:
       end: 1
       variable: 0
       script: 1
+      parameters: []
     - start: 1
       end: 25
       variable: 1
       script: 8
+      parameters: []
     attacks:
     - start: 5
       length: 10
@@ -176,18 +191,22 @@ MonoBehaviour:
       end: 5
       variable: 25
       script: 0
+      parameters: []
     - start: 30
       end: 60
       variable: -25
       script: 0
+      parameters: []
     - start: 1
       end: 45
       variable: 10
       script: 1
+      parameters: []
     - start: 45
       end: 60
       variable: 5
       script: 1
+      parameters: []
     attacks:
     - start: 35
       length: 15
@@ -212,6 +231,7 @@ MonoBehaviour:
       end: 10
       variable: 0
       script: 4
+      parameters: []
     attacks: []
     jumpReq: 0
     meterReq: 0
@@ -227,6 +247,7 @@ MonoBehaviour:
       end: 25
       variable: 1
       script: 3
+      parameters: []
     attacks:
     - start: 5
       length: 15
@@ -251,10 +272,12 @@ MonoBehaviour:
       end: 25
       variable: 1
       script: 3
+      parameters: []
     - start: 0
       end: 25
       variable: 1
       script: 0
+      parameters: []
     attacks:
     - start: 5
       length: 15
@@ -279,10 +302,12 @@ MonoBehaviour:
       end: 25
       variable: 1
       script: 3
+      parameters: []
     - start: 0
       end: 25
       variable: 1
       script: 0
+      parameters: []
     attacks:
     - start: 5
       length: 15
@@ -307,6 +332,7 @@ MonoBehaviour:
       end: 90
       variable: 1
       script: 3
+      parameters: []
     attacks:
     - start: 5
       length: 15
@@ -405,10 +431,12 @@ MonoBehaviour:
       end: 16
       variable: 20
       script: 0
+      parameters: []
     - start: 20
       end: 25
       variable: 2
       script: 0
+      parameters: []
     attacks:
     - start: 5
       length: 15
@@ -419,7 +447,7 @@ MonoBehaviour:
       hitBoxPos: {x: 1.5, y: 1.5, z: 0}
       hitBoxScale: {x: 3, y: 4, z: 1}
       cancelWindow: 0
-    jumpReq: 0
+    jumpReq: 1
     meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
@@ -433,14 +461,17 @@ MonoBehaviour:
       end: 10
       variable: 2
       script: 0
+      parameters: []
     - start: 10
       end: 25
       variable: -25
       script: 0
+      parameters: []
     - start: 10
       end: 25
       variable: 25
       script: 1
+      parameters: []
     attacks:
     - start: 10
       length: 15
@@ -485,6 +516,7 @@ MonoBehaviour:
       end: 25
       variable: 2
       script: 0
+      parameters: []
     attacks:
     - start: 5
       length: 15
@@ -509,14 +541,17 @@ MonoBehaviour:
       end: 45
       variable: 2
       script: 3
+      parameters: []
     - start: 0
       end: 45
       variable: 1
       script: 6
+      parameters: []
     - start: 2
       end: 2
       variable: 30
       script: 0
+      parameters: []
     attacks: []
     jumpReq: 1
     meterReq: 0
@@ -532,18 +567,22 @@ MonoBehaviour:
       end: 45
       variable: 20
       script: 1
+      parameters: []
     - start: 0
       end: 45
       variable: 1
       script: 8
+      parameters: []
     - start: 0
       end: 45
       variable: 1
       script: 6
+      parameters: []
     - start: 0
       end: 45
       variable: 2
       script: 0
+      parameters: []
     attacks: []
     jumpReq: 0
     meterReq: 0
@@ -552,31 +591,51 @@ MonoBehaviour:
   characterScripts:
   - index: 0
     name: VelocityY
-    variable: 0
+    parameters: []
   - index: 0
     name: Front Velocity
-    variable: 0
+    parameters: []
   - index: 0
     name: Velocity XZ
-    variable: 0
+    parameters: []
   - index: 0
     name: StickMove
-    variable: 0
+    parameters: []
   - index: 0
     name: GettingHit
-    variable: 0
+    parameters: []
   - index: 0
     name: GlobalPrefab
-    variable: 0
+    parameters:
+    - name: Position X
+      val: 0
+    - name: Position Y
+      val: 0
+    - name: Position Z
+      val: 0
+    - name: Rotation X
+      val: 0
+    - name: Rotation Y
+      val: 0
+    - name: Rotation Z
+      val: 0
+    - name: Scale X
+      val: 0
+    - name: Scale Y
+      val: 0
+    - name: Scale Z
+      val: 0
+    - name: Speed
+      val: 0
   - index: 0
     name: CanCancel
-    variable: 0
+    parameters: []
   - index: 0
     name: Jump
-    variable: 0
+    parameters: []
   - index: 0
     name: FaceStick
-    variable: 0
+    parameters: []
   commandStates:
   - stateName: Grounded
     aerial: 0
@@ -585,10 +644,11 @@ MonoBehaviour:
     commandSteps:
     - idIndex: 0
       command:
+        motionCommand: 0
         input: 14
-        inputString: 
         state: 0
-      followUps: 0100000002000000050000000600000007000000
+        inputs: 
+      followUps: 0100000002000000050000000700000008000000090000000a0000000b0000000d000000
       strict: 0
       myRect:
         serializedVersion: 2
@@ -597,162 +657,217 @@ MonoBehaviour:
         width: 240
         height: 30
       activated: 1
+      priority: 0
     - idIndex: 1
       command:
+        motionCommand: 0
         input: 0
-        inputString: 
         state: 1
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 127
-        y: 107
-        width: 240
-        height: 30
+        x: 73
+        y: 31
+        width: 175
+        height: 50
       activated: 1
+      priority: 0
     - idIndex: 2
       command:
+        motionCommand: 0
         input: 1
-        inputString: 
         state: 3
+        inputs: 
       followUps: 03000000
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 20
-        y: 205
-        width: 240
-        height: 30
+        x: 40
+        y: 114
+        width: 175
+        height: 50
       activated: 1
+      priority: 0
     - idIndex: 3
       command:
+        motionCommand: 0
         input: 1
-        inputString: 
         state: 4
-      followUps: 0400000008000000
+        inputs: 
+      followUps: 04000000
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 191
-        y: 249
-        width: 240
-        height: 30
+        x: 236
+        y: 149
+        width: 175
+        height: 50
       activated: 1
+      priority: 1
     - idIndex: 4
       command:
+        motionCommand: 0
         input: 1
-        inputString: 
         state: 5
-      followUps: 09000000
+        inputs: 
+      followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 393
-        y: 288
-        width: 240
-        height: 30
+        x: 434
+        y: 185
+        width: 175
+        height: 50
       activated: 1
+      priority: 1
     - idIndex: 5
       command:
-        input: 4
-        inputString: 
-        state: 6
-      followUps: 
+        motionCommand: 0
+        input: 2
+        state: 2
+        inputs: 
+      followUps: 06000000
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 173
-        y: 331
-        width: 240
-        height: 30
+        x: 67
+        y: 248
+        width: 175
+        height: 50
       activated: 1
+      priority: 0
     - idIndex: 6
       command:
-        input: 2
-        inputString: 
-        state: 2
-      followUps: 0b000000
+        motionCommand: 0
+        input: 0
+        state: 17
+        inputs: 
+      followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 178
-        y: 369
-        width: 240
-        height: 30
+        x: 268
+        y: 251
+        width: 175
+        height: 50
       activated: 1
+      priority: 1
     - idIndex: 7
       command:
-        input: 3
-        inputString: 
-        state: 12
-      followUps: 0a000000
+        motionCommand: 0
+        input: 5
+        state: 6
+        inputs: 
+      followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 178
-        y: 401
-        width: 240
-        height: 30
+        x: 491
+        y: 20
+        width: 175
+        height: 50
       activated: 1
+      priority: 0
     - idIndex: 8
       command:
-        input: 3
-        inputString: 
-        state: 13
+        motionCommand: 4
+        input: 5
+        state: 16
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 493
-        y: 235
-        width: 240
-        height: 30
+        x: 692
+        y: 20
+        width: 175
+        height: 50
       activated: 1
+      priority: 6
     - idIndex: 9
       command:
-        input: 3
-        inputString: 
-        state: 15
+        motionCommand: 3
+        input: 1
+        state: 13
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 675
-        y: 286
-        width: 240
-        height: 30
+        x: 489
+        y: 81
+        width: 175
+        height: 50
       activated: 1
+      priority: 4
     - idIndex: 10
       command:
-        input: 4
-        inputString: 
-        state: 16
+        motionCommand: 4
+        input: 1
+        state: 13
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 456
-        y: 404
-        width: 240
-        height: 30
+        x: 681
+        y: 80
+        width: 175
+        height: 50
       activated: 1
+      priority: 5
     - idIndex: 11
       command:
+        motionCommand: 1
+        input: 15
+        state: 2
+        inputs: 
+      followUps: 0c000000
+      strict: 0
+      myRect:
+        serializedVersion: 2
+        x: 70
+        y: 304
+        width: 175
+        height: 50
+      activated: 1
+      priority: 0
+    - idIndex: 12
+      command:
+        motionCommand: 0
         input: 0
-        inputString: 
         state: 17
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 446
-        y: 369
-        width: 240
-        height: 30
+        x: 265
+        y: 304
+        width: 175
+        height: 50
       activated: 1
-    omitList: 030000000400000008000000090000000b0000000a000000
-    nextFollowups: 0100000002000000050000000600000007000000
+      priority: 1
+    - idIndex: 13
+      command:
+        motionCommand: 0
+        input: 3
+        state: 12
+        inputs: 
+      followUps: 
+      strict: 0
+      myRect:
+        serializedVersion: 2
+        x: 672
+        y: 148
+        width: 175
+        height: 50
+      activated: 1
+      priority: 0
+    omitList: 0300000004000000060000000c000000
+    nextFollowups: 0100000002000000050000000700000008000000090000000a0000000b0000000d000000
   - stateName: Aerial
     aerial: 1
     explicitState: 0
@@ -760,10 +875,11 @@ MonoBehaviour:
     commandSteps:
     - idIndex: 0
       command:
+        motionCommand: 0
         input: 0
-        inputString: 
         state: 0
-      followUps: 01000000040000000500000007000000
+        inputs: 
+      followUps: 01000000040000000500000006000000070000000800000009000000
       strict: 0
       myRect:
         serializedVersion: 2
@@ -772,111 +888,236 @@ MonoBehaviour:
         width: 240
         height: 30
       activated: 1
+      priority: 0
     - idIndex: 1
       command:
+        motionCommand: 0
         input: 1
-        inputString: 
         state: 8
+        inputs: 
       followUps: 02000000
       strict: 0
       myRect:
         serializedVersion: 2
         x: 322
         y: 4
-        width: 240
-        height: 30
+        width: 175
+        height: 50
       activated: 1
+      priority: 0
     - idIndex: 2
       command:
+        motionCommand: 0
         input: 1
-        inputString: 
         state: 9
+        inputs: 
       followUps: 03000000
       strict: 0
       myRect:
         serializedVersion: 2
         x: 419
         y: 73
-        width: 240
-        height: 30
+        width: 175
+        height: 50
       activated: 1
+      priority: 1
     - idIndex: 3
       command:
+        motionCommand: 0
         input: 1
-        inputString: 
         state: 10
-      followUps: 06000000
+        inputs: 
+      followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
         x: 502
         y: 131
-        width: 240
-        height: 30
+        width: 175
+        height: 50
       activated: 1
+      priority: 1
     - idIndex: 4
       command:
-        input: 4
-        inputString: 
+        motionCommand: 4
+        input: 5
         state: 16
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 26
-        y: 109
-        width: 240
-        height: 30
+        x: 49
+        y: 113
+        width: 175
+        height: 50
       activated: 1
+      priority: 0
     - idIndex: 5
       command:
-        input: 3
-        inputString: 
+        motionCommand: 3
+        input: 1
         state: 11
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
         x: 120
         y: 172
-        width: 240
-        height: 30
+        width: 175
+        height: 50
       activated: 1
+      priority: 1
     - idIndex: 6
       command:
-        input: 3
-        inputString: 
+        motionCommand: 4
+        input: 1
         state: 14
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 634
-        y: 178
-        width: 240
-        height: 30
+        x: 312
+        y: 174
+        width: 175
+        height: 50
       activated: 1
+      priority: 0
     - idIndex: 7
       command:
+        motionCommand: 0
         input: 2
-        inputString: 
         state: 18
+        inputs: 
       followUps: 
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 190
-        y: 223
-        width: 240
-        height: 30
+        x: 129
+        y: 235
+        width: 175
+        height: 50
       activated: 1
-    omitList: 020000000300000006000000
-    nextFollowups: 01000000040000000500000007000000
+      priority: 0
+    - idIndex: 8
+      command:
+        motionCommand: 1
+        input: 15
+        state: 18
+        inputs: 
+      followUps: 
+      strict: 0
+      myRect:
+        serializedVersion: 2
+        x: 321
+        y: 234
+        width: 175
+        height: 50
+      activated: 1
+      priority: 0
+    - idIndex: 9
+      command:
+        motionCommand: 0
+        input: 5
+        state: 6
+        inputs: 
+      followUps: 
+      strict: 0
+      myRect:
+        serializedVersion: 2
+        x: 519
+        y: 238
+        width: 175
+        height: 50
+      activated: 1
+      priority: 0
+    omitList: 0200000003000000
+    nextFollowups: 01000000040000000500000006000000070000000800000009000000
   globalPrefabs:
   - {fileID: 4847973911462044704, guid: 141a30506b4d9374a94801f03e7669b4, type: 3}
   rawInputs:
-  - Jump
-  - Attack
-  - Dash
-  - Henshin
-  - Special
+  - inputType: 0
+    name: Ps4X
+  - inputType: 0
+    name: Ps4Square
+  - inputType: 0
+    name: Ps4O
+  - inputType: 0
+    name: Ps4Triangle
+  - inputType: 0
+    name: Ps4L1
+  - inputType: 0
+    name: Ps4R1
+  - inputType: 2
+    name: Ps4L2
+  - inputType: 2
+    name: Ps4R2
+  - inputType: 0
+    name: Ps4Options
+  - inputType: 0
+    name: Ps4Share
+  - inputType: 0
+    name: Ps4Touchpad
+  - inputType: 1
+    name: Ps4Horizontal
+  - inputType: 1
+    name: Ps4Vertical
+  - inputType: 1
+    name: altPs4Horizontal
+  - inputType: 1
+    name: altPs4Vertical
+  - inputType: 4
+    name: NONE
+  motionCommands:
+  - name: None
+    motionWindow: 0
+    confirmWindow: 0
+    commands: 
+    clean: 0
+    anyOrder: 0
+    checkStep: 0
+    angleChange: 0
+    prevAngle: 0
+    curAngle: 0
+  - name: '>>'
+    motionWindow: 0
+    confirmWindow: 0
+    commands: 00000000030000000000000003000000
+    clean: 0
+    anyOrder: 0
+    checkStep: 1
+    angleChange: 0
+    prevAngle: 0
+    curAngle: 0
+  - name: '>'
+    motionWindow: 0
+    confirmWindow: 0
+    commands: 0000000003000000
+    clean: 0
+    anyOrder: 0
+    checkStep: 1
+    angleChange: 0
+    prevAngle: 0
+    curAngle: 0
+  - name: ^
+    motionWindow: 0
+    confirmWindow: 0
+    commands: 0000000001000000
+    clean: 0
+    anyOrder: 0
+    checkStep: 1
+    angleChange: 0
+    prevAngle: 0
+    curAngle: 0
+  - name: V
+    motionWindow: 0
+    confirmWindow: 0
+    commands: 0000000002000000
+    clean: 0
+    anyOrder: 0
+    checkStep: 1
+    angleChange: 0
+    prevAngle: 0
+    curAngle: 0
