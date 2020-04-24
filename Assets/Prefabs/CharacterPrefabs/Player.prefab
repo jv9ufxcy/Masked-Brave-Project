@@ -346,6 +346,7 @@ MonoBehaviour:
   gravity: -2
   aniMoveSpeed: 0
   friction: {x: 0.5, y: 1, z: 0}
+  direction: 1
   myRB: {fileID: 2833465963085331512}
   boxCollider2D: {fileID: 0}
   currentState: 0
@@ -362,11 +363,19 @@ MonoBehaviour:
   hitActive: 0
   currentAttackIndex: 0
   leftStick: {x: 0, y: 0}
+  horizontalAxis: altPs4Horizontal
+  verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 10
   jumpPow: 12
   currentCommandState: 0
   currentCommandStep: 0
+  shotPressure: 0
+  maxShotPressure: 12
+  chargeAttackIndex: 15
+  firstCharge: 0
+  secondCharge: 0
+  chargeIncrement: 1
   aerialFlag: 0
   isOnGround: 0
   aerialTimer: 0
@@ -379,7 +388,7 @@ MonoBehaviour:
     m_Bits: 768
   jumps: 0
   jumpMax: 1
-  coyoteTimer: 3
+  coyoteTimer: 1
   dashCooldown: 0
   dashCooldownRate: 1
   specialMeter: 0

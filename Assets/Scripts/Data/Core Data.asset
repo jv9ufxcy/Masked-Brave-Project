@@ -36,7 +36,7 @@ MonoBehaviour:
     groundedReq: 0
   - stateName: Jump
     index: 0
-    length: 15
+    length: 20
     loop: 0
     blendRate: 0.1
     events:
@@ -50,7 +50,7 @@ MonoBehaviour:
       variable: 1
       script: 3
       parameters: []
-    - start: 4
+    - start: 0
       end: 60
       variable: 1
       script: 6
@@ -324,7 +324,7 @@ MonoBehaviour:
     groundedReq: 0
   - stateName: SpinSlash
     index: 0
-    length: 55
+    length: 40
     loop: 0
     blendRate: 0.05
     events:
@@ -335,15 +335,6 @@ MonoBehaviour:
       parameters: []
     attacks:
     - start: 5
-      length: 15
-      hitStun: 20
-      hitStop: 5
-      hitAnim: {x: 1, y: -1}
-      knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: 0.75, z: 0}
-      hitBoxScale: {x: 1.5, y: 3, z: 1}
-      cancelWindow: 4
-    - start: 20
       length: 5
       hitStun: 10
       hitStop: 5
@@ -352,7 +343,7 @@ MonoBehaviour:
       hitBoxPos: {x: 1, y: 1.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 25
+    - start: 10
       length: 5
       hitStun: 10
       hitStop: 5
@@ -361,7 +352,7 @@ MonoBehaviour:
       hitBoxPos: {x: 1, y: -0.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 30
+    - start: 15
       length: 5
       hitStun: 10
       hitStop: 5
@@ -370,7 +361,7 @@ MonoBehaviour:
       hitBoxPos: {x: 0, y: -1.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 35
+    - start: 20
       length: 5
       hitStun: 10
       hitStop: 5
@@ -379,7 +370,7 @@ MonoBehaviour:
       hitBoxPos: {x: -2, y: -0.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 40
+    - start: 25
       length: 5
       hitStun: 20
       hitStop: 5
@@ -388,7 +379,7 @@ MonoBehaviour:
       hitBoxPos: {x: -0.5, y: 2, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 45
+    - start: 30
       length: 5
       hitStun: 20
       hitStop: 5
@@ -397,7 +388,7 @@ MonoBehaviour:
       hitBoxPos: {x: 0.5, y: 2, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 50
+    - start: 35
       length: 5
       hitStun: 20
       hitStop: 10
@@ -428,9 +419,9 @@ MonoBehaviour:
     blendRate: 0
     events:
     - start: 10
-      end: 16
-      variable: 20
-      script: 0
+      end: 12
+      variable: 30
+      script: 7
       parameters: []
     - start: 20
       end: 25
@@ -491,7 +482,17 @@ MonoBehaviour:
     length: 40
     loop: 0
     blendRate: 0.05
-    events: []
+    events:
+    - start: 0
+      end: 40
+      variable: 1
+      script: 9
+      parameters: []
+    - start: 0
+      end: 40
+      variable: 0
+      script: 6
+      parameters: []
     attacks:
     - start: 15
       length: 15
@@ -586,7 +587,7 @@ MonoBehaviour:
     attacks: []
     jumpReq: 0
     meterReq: 0
-    dashCooldownReq: 90
+    dashCooldownReq: 30
     groundedReq: 0
   characterScripts:
   - index: 0
@@ -636,6 +637,9 @@ MonoBehaviour:
   - index: 0
     name: FaceStick
     parameters: []
+  - index: 0
+    name: AirMove
+    parameters: []
   commandStates:
   - stateName: Grounded
     aerial: 0
@@ -648,7 +652,7 @@ MonoBehaviour:
         input: 14
         state: 0
         inputs: 
-      followUps: 0100000002000000050000000700000008000000090000000a0000000b0000000d000000
+      followUps: 0100000002000000050000000700000008000000090000000a0000000b0000000c0000000d000000
       strict: 0
       myRect:
         serializedVersion: 2
@@ -748,8 +752,8 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 268
-        y: 251
+        x: 300
+        y: 304
         width: 175
         height: 50
       activated: 1
@@ -812,8 +816,8 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 681
-        y: 80
+        x: 689
+        y: 79
         width: 175
         height: 50
       activated: 1
@@ -824,7 +828,7 @@ MonoBehaviour:
         input: 15
         state: 2
         inputs: 
-      followUps: 0c000000
+      followUps: 06000000
       strict: 0
       myRect:
         serializedVersion: 2
@@ -837,22 +841,6 @@ MonoBehaviour:
     - idIndex: 12
       command:
         motionCommand: 0
-        input: 0
-        state: 17
-        inputs: 
-      followUps: 
-      strict: 0
-      myRect:
-        serializedVersion: 2
-        x: 265
-        y: 304
-        width: 175
-        height: 50
-      activated: 1
-      priority: 1
-    - idIndex: 13
-      command:
-        motionCommand: 0
         input: 3
         state: 12
         inputs: 
@@ -860,14 +848,30 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 672
-        y: 148
+        x: 691
+        y: 138
+        width: 175
+        height: 50
+      activated: 1
+      priority: 1
+    - idIndex: 13
+      command:
+        motionCommand: 0
+        input: 4
+        state: 2
+        inputs: 
+      followUps: 06000000
+      strict: 0
+      myRect:
+        serializedVersion: 2
+        x: 69
+        y: 359
         width: 175
         height: 50
       activated: 1
       priority: 0
-    omitList: 0300000004000000060000000c000000
-    nextFollowups: 0100000002000000050000000700000008000000090000000a0000000b0000000d000000
+    omitList: 0300000004000000060000000600000006000000
+    nextFollowups: 0100000002000000050000000700000008000000090000000a0000000b0000000c0000000d000000
   - stateName: Aerial
     aerial: 1
     explicitState: 0
@@ -879,7 +883,7 @@ MonoBehaviour:
         input: 0
         state: 0
         inputs: 
-      followUps: 01000000040000000500000006000000070000000800000009000000
+      followUps: 010000000400000005000000060000000700000008000000090000000a000000
       strict: 0
       myRect:
         serializedVersion: 2
@@ -899,8 +903,8 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 322
-        y: 4
+        x: 93
+        y: 28
         width: 175
         height: 50
       activated: 1
@@ -915,8 +919,8 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 419
-        y: 73
+        x: 243
+        y: 88
         width: 175
         height: 50
       activated: 1
@@ -931,8 +935,8 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 502
-        y: 131
+        x: 407
+        y: 145
         width: 175
         height: 50
       activated: 1
@@ -947,8 +951,8 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 49
-        y: 113
+        x: 699
+        y: 241
         width: 175
         height: 50
       activated: 1
@@ -963,12 +967,12 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 120
-        y: 172
+        x: 699
+        y: 296
         width: 175
         height: 50
       activated: 1
-      priority: 1
+      priority: 5
     - idIndex: 6
       command:
         motionCommand: 4
@@ -979,12 +983,12 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 312
-        y: 174
+        x: 517
+        y: 296
         width: 175
         height: 50
       activated: 1
-      priority: 0
+      priority: 5
     - idIndex: 7
       command:
         motionCommand: 0
@@ -1011,8 +1015,8 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 321
-        y: 234
+        x: 145
+        y: 288
         width: 175
         height: 50
       activated: 1
@@ -1027,14 +1031,30 @@ MonoBehaviour:
       strict: 0
       myRect:
         serializedVersion: 2
-        x: 519
-        y: 238
+        x: 518
+        y: 240
+        width: 175
+        height: 50
+      activated: 1
+      priority: 0
+    - idIndex: 10
+      command:
+        motionCommand: 0
+        input: 4
+        state: 18
+        inputs: 
+      followUps: 
+      strict: 0
+      myRect:
+        serializedVersion: 2
+        x: 168
+        y: 337
         width: 175
         height: 50
       activated: 1
       priority: 0
     omitList: 0200000003000000
-    nextFollowups: 01000000040000000500000006000000070000000800000009000000
+    nextFollowups: 010000000400000005000000060000000700000008000000090000000a000000
   globalPrefabs:
   - {fileID: 4847973911462044704, guid: 141a30506b4d9374a94801f03e7669b4, type: 3}
   rawInputs:

@@ -273,6 +273,9 @@ public class CharacterObject : MonoBehaviour
             case 8:
                 FaceStick();
                 break;
+            case 9:
+                AirMove(_var);
+                break;
                 
         }
     }
@@ -321,8 +324,6 @@ public class CharacterObject : MonoBehaviour
             {
                 _mov = -1;
             }
-            //direction = _mov;
-            //velocity.x += _mov * moveSpeed * _pow;
             velocity.x = _mov * moveSpeed * _pow;
         }
         if (hitStun <= 0)
@@ -330,7 +331,29 @@ public class CharacterObject : MonoBehaviour
             FaceStick();
         }
     }
-
+    void AirMove(float _pow)
+    {
+        if (!IsGrounded())
+        {
+            if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
+            {
+                float _mov = 0;
+                if (leftStick.x > deadzone)
+                {
+                    _mov = 1;
+                }
+                if (leftStick.x < -deadzone)
+                {
+                    _mov = -1;
+                }
+                velocity.x = _mov * moveSpeed * _pow;
+            }
+        }
+        if (hitStun <= 0)
+        {
+            FaceStick();
+        }
+    }
     void VelocityY(float _pow)
     {
         velocity.y = _pow;
@@ -385,6 +408,8 @@ public class CharacterObject : MonoBehaviour
 
     void UpdateInput()
     {
+        JumpCut();
+        ChargeAttack();
         leftStick = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 
         inputBuffer.Update();
@@ -457,6 +482,48 @@ public class CharacterObject : MonoBehaviour
         if (velocity.y > 0.001f) { return true; }
         if (velocity.y < -0.001f) { return true; }
         return false;
+    }
+    [Space]
+    [Header("Charged Slash")]
+
+    [SerializeField] private float shotPressure;
+    [SerializeField] private float maxShotPressure = 60f;
+    private bool shouldChargeBuster;
+    public int chargeAttackIndex = 15;
+    [SerializeField] private bool firstCharge, secondCharge;
+    private Color c;
+
+    public float chargeIncrement = 1f;
+    void ChargeAttack()
+    {
+        if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
+        {
+            ShargeUp(chargeIncrement);
+        }
+        if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
+        {
+            if (shotPressure > maxShotPressure)
+            {
+                StartState(chargeAttackIndex);
+            }
+            shotPressure = 0;
+        }
+    }
+    void JumpCut()
+    {
+        if (currentState==1)
+        {
+            if (velocity.y > 0 && Input.GetButtonUp(GameEngine.coreData.rawInputs[0].name))
+            {
+                VelocityY(-2);
+            if (IsGrounded())
+                StartState(0);
+            }
+        }
+    }
+    void ShargeUp(float _val)
+    {
+        shotPressure += _val;
     }
     [Header("Grounded Check")]
     public bool aerialFlag,isOnGround;
