@@ -409,6 +409,7 @@ public class CharacterObject : MonoBehaviour
     void UpdateInput()
     {
         JumpCut();
+        DashCut();
         ChargeAttack();
         leftStick = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 
@@ -511,12 +512,23 @@ public class CharacterObject : MonoBehaviour
     }
     void JumpCut()
     {
-        if (currentState==1)
+        if (currentState==1)//jump state
         {
             if (velocity.y > 0 && Input.GetButtonUp(GameEngine.coreData.rawInputs[0].name))
             {
                 VelocityY(-2);
             if (IsGrounded())
+                StartState(0);
+            }
+        }
+    }
+    void DashCut()
+    {
+        if (currentState == 2||currentState==18)//dash and airdashState
+        {
+            if (Input.GetButtonUp(GameEngine.coreData.rawInputs[2].name))
+            {
+                dashCooldown = 0;
                 StartState(0);
             }
         }

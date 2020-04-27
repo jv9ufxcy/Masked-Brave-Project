@@ -329,13 +329,13 @@ MonoBehaviour:
     blendRate: 0.05
     events:
     - start: 0
-      end: 90
+      end: 40
       variable: 1
-      script: 3
+      script: 9
       parameters: []
     attacks:
-    - start: 5
-      length: 5
+    - start: 3
+      length: 3
       hitStun: 10
       hitStop: 5
       hitAnim: {x: 0, y: -1}
@@ -343,8 +343,8 @@ MonoBehaviour:
       hitBoxPos: {x: 1, y: 1.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 10
-      length: 5
+    - start: 6
+      length: 3
       hitStun: 10
       hitStop: 5
       hitAnim: {x: 0, y: -1}
@@ -352,8 +352,8 @@ MonoBehaviour:
       hitBoxPos: {x: 1, y: -0.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 15
-      length: 5
+    - start: 9
+      length: 3
       hitStun: 10
       hitStop: 5
       hitAnim: {x: 0, y: -1}
@@ -361,8 +361,8 @@ MonoBehaviour:
       hitBoxPos: {x: 0, y: -1.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 20
-      length: 5
+    - start: 12
+      length: 3
       hitStun: 10
       hitStop: 5
       hitAnim: {x: 0, y: -1}
@@ -370,25 +370,25 @@ MonoBehaviour:
       hitBoxPos: {x: -2, y: -0.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 25
-      length: 5
-      hitStun: 20
+    - start: 15
+      length: 3
+      hitStun: 10
       hitStop: 5
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: -0.5, y: 2, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 30
-      length: 5
-      hitStun: 20
+    - start: 18
+      length: 3
+      hitStun: 10
       hitStop: 5
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0.5, y: 2, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 4
-    - start: 35
+    - start: 21
       length: 5
       hitStun: 20
       hitStop: 10
@@ -972,7 +972,7 @@ MonoBehaviour:
         width: 175
         height: 50
       activated: 1
-      priority: 5
+      priority: 6
     - idIndex: 6
       command:
         motionCommand: 4
