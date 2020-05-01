@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3484218172144174654}
   - component: {fileID: 3698723054794449082}
   - component: {fileID: 7513360881928160874}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2833465961454588525}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GroundDetect
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -111,7 +111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2833465961549340970}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 2833465961720813670}
   - component: {fileID: 2833465961720813671}
   - component: {fileID: 2833465961720813668}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2833465962183159127}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Draw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2833465962666126395}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 2833465963085331508}
   - component: {fileID: 2833465963085331512}
   - component: {fileID: 616907621}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,6 +358,7 @@ MonoBehaviour:
   controlType: 1
   hitbox: {fileID: 7513360881928160874}
   canCancel: 0
+  isHit: 0
   hitConfirm: 0
   animSpeed: 0
   hitActive: 0
@@ -371,7 +372,7 @@ MonoBehaviour:
   currentCommandState: 0
   currentCommandStep: 0
   shotPressure: 0
-  maxShotPressure: 12
+  maxShotPressure: 60
   chargeAttackIndex: 15
   firstCharge: 0
   secondCharge: 0

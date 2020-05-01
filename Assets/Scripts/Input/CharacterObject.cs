@@ -32,6 +32,7 @@ public class CharacterObject : MonoBehaviour
     [Header("HitCancel")]
     public Hitbox hitbox;
     public bool canCancel;
+    public bool isHit;
     public int hitConfirm;
 
     public InputBuffer inputBuffer = new InputBuffer();
@@ -207,6 +208,7 @@ public class CharacterObject : MonoBehaviour
         {
             if (currentStateTime == _atk.start)
             {
+                hitbox.RestoreGetHitBools();
                 hitActive = _atk.length;
                 hitbox.transform.localScale = _atk.hitBoxScale;
                 hitbox.transform.localPosition = _atk.hitBoxPos;
@@ -376,7 +378,7 @@ public class CharacterObject : MonoBehaviour
         //Attacks
         hitActive = 0;
         hitConfirm = 0;
-
+        
         SetAnimation(GameEngine.coreData.characterStates[currentState].stateName);
     }
     void SetAnimation(string animName)
@@ -653,7 +655,7 @@ public class CharacterObject : MonoBehaviour
     {
         AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
 
-        attacker.hitActive = 0;//careful cant hit 2 enemies
+        //attacker.hitActive = 0;//careful cant hit 2 enemies 
         //Vector3 targetOffset = transform.position;
         Vector3 nextKnockback = curAtk.knockback;
         //Vector3 knockOrientation = attacker.character.transform.forward;
