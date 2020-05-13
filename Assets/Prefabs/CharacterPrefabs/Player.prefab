@@ -378,15 +378,19 @@ MonoBehaviour:
   secondCharge: 0
   chargeIncrement: 1
   aerialFlag: 0
+  wallFlag: 0
   isOnGround: 0
+  isOnWall: 0
   aerialTimer: 0
-  groundDetectHeight: 1
+  groundDetectHeight: 0.1
+  wallDetectWidth: 0
   animAerialState: 0
   animFallSpeed: 0
+  animWallState: 0
   groundDetectPoint: {fileID: 2833465961454588525}
   whatCountsAsGround:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
   jumps: 0
   jumpMax: 1
   coyoteTimer: 1

@@ -24,6 +24,7 @@ public class CharacterState
     public int meterReq;
     public float dashCooldownReq;
     public bool groundedReq;
+    public bool wallReq;
 
     public bool ConditionsMet(CharacterObject character)
     {
@@ -31,6 +32,10 @@ public class CharacterState
         if (groundedReq)
         {
             if (character.aerialFlag) { return false; }
+        }
+        if (wallReq)
+        {
+            if (character.wallFlag) { return false; }
         }
 
         if (dashCooldownReq>0)
@@ -94,12 +99,25 @@ public class InputCommand
 
     public List<int> inputs;
 }
+
+[System.Serializable]
+public class MoveList
+{
+    public string name = "<NEW MOVE LIST>";
+    public List<CommandState> commandStates = new List<CommandState>();
+    public MoveList()
+    {
+        commandStates.Add(new CommandState());
+    }
+}
+    
 [System.Serializable]
 public class CommandState
 {
     public string stateName;
     //flags
     public bool aerial;
+    public bool wall;
     //explicit state
     public bool explicitState;
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
@@ -112,7 +130,7 @@ public class CommandState
     public CommandState()
     {
         commandSteps = new List<CommandStep>();
-        stateName = "NEW COMMAND STATE";
+        stateName = "<NEW COMMAND STATE>";
     }
     public CommandStep AddCommandStep()
     {

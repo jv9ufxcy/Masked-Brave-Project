@@ -73,7 +73,6 @@ public class CharacterObject : MonoBehaviour
         }
         UpdateTimers();
         UpdateAnimator();
-        UpdateIsOnGround();
     }
 
     void UpdateTimers()
@@ -99,6 +98,7 @@ public class CharacterObject : MonoBehaviour
         animFallSpeed = velocity.y /** 30f*/;
         characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
         characterAnim.SetFloat("aerialState", animAerialState);
+        characterAnim.SetFloat("wallState", animWallState);
         characterAnim.SetFloat("fallSpeed", animFallSpeed);
         characterAnim.SetFloat("hitAnimX", curHitAnim.x);
         characterAnim.SetFloat("hitAnimY", curHitAnim.y);
@@ -281,11 +281,15 @@ public class CharacterObject : MonoBehaviour
                 
         }
     }
+    void ToggleMoveList()
+    {
+        GameEngine.gameEngine.ToggleMovelist();
+    }
     void Jump(float _pow)
     {
         velocity.y = _pow;
         jumps--;
-        isOnGround = false;
+        //isOnGround = false;
         aerialTimer = coyoteTimer+1f;
         aerialFlag = true;
     }
@@ -395,10 +399,15 @@ public class CharacterObject : MonoBehaviour
     public void GetCommandState()
     {
         currentCommandState = 0;
-        for (int c = 0; c < GameEngine.coreData.commandStates.Count; c++)
+        for (int c = 0; c < GameEngine.gameEngine.CurrentMoveList().commandStates.Count; c++)
         {
-            CommandState s = GameEngine.coreData.commandStates[c];
+            CommandState s = GameEngine.gameEngine.CurrentMoveList().commandStates[c];
             if (s.aerial==aerialFlag)
+            {
+                currentCommandState = c;
+                return;
+            }
+            if (s.wall == wallFlag)
             {
                 currentCommandState = c;
                 return;
@@ -413,6 +422,11 @@ public class CharacterObject : MonoBehaviour
         JumpCut();
         DashCut();
         ChargeAttack();
+
+        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[4].name))
+        {
+            ToggleMoveList();
+        }
         leftStick = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 
         inputBuffer.Update();
@@ -420,7 +434,7 @@ public class CharacterObject : MonoBehaviour
         bool startState = false;
 
         GetCommandState();
-        CommandState comState = GameEngine.coreData.commandStates[currentCommandState];
+        CommandState comState = GameEngine.gameEngine.CurrentMoveList().commandStates[currentCommandState];
 
 
         if (currentCommandStep >= comState.commandSteps.Count) { currentCommandStep = 0; }
@@ -501,7 +515,7 @@ public class CharacterObject : MonoBehaviour
     {
         if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
         {
-            ShargeUp(chargeIncrement);
+            ChargeUp(chargeIncrement);
         }
         if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
         {
@@ -514,7 +528,8 @@ public class CharacterObject : MonoBehaviour
     }
     void JumpCut()
     {
-        if (currentState==1)//jump state
+        //if (currentState==1)//jump state
+        if (aerialFlag)//jump state
         {
             if (velocity.y > 0 && Input.GetButtonUp(GameEngine.coreData.rawInputs[0].name))
             {
@@ -533,15 +548,23 @@ public class CharacterObject : MonoBehaviour
                 dashCooldown = 0;
                 StartState(0);
             }
+            if (Mathf.Abs(Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==1)
+            {
+                if ((Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==0)
+                {
+                    dashCooldown = 0;
+                    StartState(0);
+                }
+            }
         }
     }
-    void ShargeUp(float _val)
+    void ChargeUp(float _val)
     {
         shotPressure += _val;
     }
     [Header("Grounded Check")]
-    public bool aerialFlag,isOnGround;
-    [SerializeField] private float aerialTimer,groundDetectHeight, animAerialState,animFallSpeed;
+    public bool aerialFlag,wallFlag,isOnGround,isOnWall;
+    [SerializeField] private float aerialTimer, groundDetectHeight,wallDetectWidth, animAerialState, animFallSpeed, animWallState;
     [SerializeField]
     private Transform groundDetectPoint;
     [SerializeField]
@@ -572,9 +595,15 @@ public class CharacterObject : MonoBehaviour
         if (IsGrounded())
         {
             aerialFlag = false;
+            wallFlag = false;
             aerialTimer = 0;
             animAerialState = 0f;
+            animWallState = 0f;
             jumps = jumpMax;
+        }
+        else if(IsOnWall())
+        {
+            wallFlag = true;
         }
         else
         {
@@ -595,6 +624,8 @@ public class CharacterObject : MonoBehaviour
                 }
             }
             velocity.y += gravity;
+
+            wallFlag = false;
         }
 
         Move(velocity);
@@ -620,15 +651,23 @@ public class CharacterObject : MonoBehaviour
 
         return rayCastHit.collider != null;
     }
-    private void UpdateIsOnGround()
+    public bool IsOnWall()
     {
-        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundDetectHeight, whatCountsAsGround);
-        isOnGround = groundObjects.Length > 0;
-        if (velocity.y < 0)
-        {
-            hasLanded = false;
-        }
+        RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.right, groundDetectHeight, whatCountsAsGround);
+        if (rayCastHit.collider != null)
+            Debug.Log("IsOnWall");
+
+        return rayCastHit.collider != null;
     }
+    //private void UpdateIsOnGround()
+    //{
+    //    Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundDetectHeight, whatCountsAsGround);
+    //    isOnGround = groundObjects.Length > 0;
+    //    if (velocity.y < 0)
+    //    {
+    //        hasLanded = false;
+    //    }
+    //}
     private bool hasLanded;
     private void GroundTouch()
     {

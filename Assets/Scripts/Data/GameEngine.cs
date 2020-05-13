@@ -16,6 +16,24 @@ public class GameEngine : MonoBehaviour
 
     public CharacterObject mainCharacter;
 
+    public int globalMovelistIndex;
+
+    public MoveList CurrentMoveList()
+    {
+        return coreData.moveLists[globalMovelistIndex];
+    }
+    public void ToggleMovelist()
+    {
+        globalMovelistIndex++;
+        if (globalMovelistIndex>coreData.moveLists.Count-1)
+        {
+            globalMovelistIndex = 0;
+        }
+        //if (globalMovelistIndex<0)
+        //{
+        //    globalMovelistIndex = coreData.moveLists.Count - 1;
+        //}
+    }
     // Use this for initialization
     void Start ()
     {
@@ -73,7 +91,6 @@ public class GameEngine : MonoBehaviour
         //GUI.Label(new Rect(10, 10, 100, 20), "Hello World!");
         for (int i = 0; i < playerInputBuffer.buttonCommandCheck.Count; i++)
         {
-            GUI.Label(new Rect(10f + (i * xSpace), 15f, 100, 20), playerInputBuffer.buttonCommandCheck[i].ToString());
         }
         for (int b = 0; b < playerInputBuffer.buffer.Count; b++)
         {
@@ -92,6 +109,7 @@ public class GameEngine : MonoBehaviour
             GUI.Label(new Rect(500f, m * ySpace, 100, 20), coreData.motionCommands[m].name);
 
         }
+        GUI.Label(new Rect(600f , 10f, 100, 20), CurrentMoveList().name.ToString());
 
     }
 }

@@ -10,6 +10,8 @@ public class AttackEvent
     public float hitStun;
     public float hitStop;
 
+    private int damage;
+
     public Vector2 hitAnim;
     public Vector3 knockback;
 
