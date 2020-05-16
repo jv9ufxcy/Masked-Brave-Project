@@ -7,8 +7,6 @@ public class BulletHit : MonoBehaviour
 {
     private Rigidbody2D bulletRB;
     private AudioManager audioManager;
-    private HurtEnemyOnHit hurtEnemy;
-    private HurtPlayerOnHit hurtPlayer;
 
     [SerializeField] private GameObject bulletHitEffect;
     [SerializeField] private string tagToHit = "Enemy";
@@ -17,19 +15,17 @@ public class BulletHit : MonoBehaviour
 
     [SerializeField] private string bulletCollisionSound;
     [SerializeField] private bool shouldScreenshakeOnHit=false, shouldStopOnHit = true, canReflect=true;
-
+    public CharacterObject character;
     // Use this for initialization
     void Start()
     {
         bulletRB = GetComponent<Rigidbody2D>();
-        hurtEnemy = GetComponent<HurtEnemyOnHit>();
-        hurtPlayer = GetComponent<HurtPlayerOnHit>();
 
-        audioManager = AudioManager.instance;
-        if (audioManager == null)
-        {
-            Debug.LogError("No Audio Manager in Scene");
-        }
+        //audioManager = AudioManager.instance;
+        //if (audioManager == null)
+        //{
+        //    Debug.LogError("No Audio Manager in Scene");
+        //}
     }
     private void Update()
     {
@@ -47,6 +43,10 @@ public class BulletHit : MonoBehaviour
     {
         if (other.CompareTag(tagToHit))
         {
+            //CharacterObject victim = other.transform.root.GetComponent<CharacterObject>();
+            //if (victim != null)
+            //    victim.GetHit(character);
+
             if (shouldScreenshakeOnHit)
                 Screenshake();
             if (shouldStopOnHit)
@@ -54,19 +54,13 @@ public class BulletHit : MonoBehaviour
                 RemoveForce();
                 Destroy(gameObject);
             }
-                Instantiate(bulletHitEffect, transform.position, transform.rotation);
+            Instantiate(bulletHitEffect, transform.position, transform.rotation);
         }
     }
     public void ReverseForce()
     {
         if (canReflect)
         {
-            tagToHit = "Enemy";
-            if (hurtPlayer != null)
-                hurtPlayer.enabled = false;
-
-            if (hurtEnemy != null)
-                hurtEnemy.enabled = true;
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             bulletRB.velocity = -bulletRB.velocity;
             gameObject.layer = LayerMask.NameToLayer("Projectile");

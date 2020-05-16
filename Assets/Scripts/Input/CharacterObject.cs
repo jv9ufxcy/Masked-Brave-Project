@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,9 +24,12 @@ public class CharacterObject : MonoBehaviour
     public float prevStateTime;
 
     [Header("CharacterModel")]
+    public CharacterObject characterObject;
     public GameObject character;
     public GameObject draw;
     public Animator characterAnim;
+    public RuntimeAnimatorController[] formAnims;
+    
     public enum ControlType { AI, PLAYER };
     public ControlType controlType;
 
@@ -188,14 +192,16 @@ public class CharacterObject : MonoBehaviour
 
     void UpdateStateEvents()
     {
+        int _curEv = 0;
         foreach(StateEvent _ev in GameEngine.coreData.characterStates[currentState].events)
         {
 
             //if (prevStateTime <= _ev.start && currentStateTime == _ev.start)
             if (currentStateTime >= _ev.start && currentStateTime <= _ev.end)
             {
-                DoEventScript(_ev.script, _ev.variable);
+                DoEventScript(_ev.script,currentState, _curEv, _ev.parameters);
             }
+            _curEv++;
         }
     }
     [Header("CurrentAttack")]
@@ -247,36 +253,41 @@ public class CharacterObject : MonoBehaviour
         if (currentStateTime == cWindow + whiffWindow)
             canCancel = true;
     }
-    void DoEventScript(int _index, float _var)
+    void DoEventScript(int _index, int _actIndex, int _evIndex, List<ScriptParameters> _params)
     {
+        if (_params==null){ return; }
+        if (_params.Count<=0){ return; }
         switch(_index)//index = element in characterscripts
         {
             case 0://Jump
-                VelocityY(_var);
+                VelocityY(_params[0].val);
                 break;
             case 1:
-                FrontVelocity(_var);
+                FrontVelocity(_params[0].val);
                 break;
             case 3:
-                StickMove(_var);
+                StickMove(_params[0].val);
                 break;
             case 4:
                 GettingHit();
                 break;
             case 5:
-                GlobalPrefab(_var);
+                GlobalPrefab(_params[10].val, _actIndex, _evIndex);
                 break;
             case 6:
-                CanCancel(_var);
+                CanCancel(_params[0].val);
                 break;
             case 7:
-                Jump(_var);
+                Jump(_params[0].val);
                 break;
             case 8:
                 FaceStick();
                 break;
             case 9:
-                AirMove(_var);
+                AirMove(_params[0].val);
+                break;
+            case 10:
+                FireBullet(_params[0].val);
                 break;
                 
         }
@@ -284,6 +295,7 @@ public class CharacterObject : MonoBehaviour
     void ToggleMoveList()
     {
         GameEngine.gameEngine.ToggleMovelist();
+        characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
     }
     void Jump(float _pow)
     {
@@ -407,11 +419,11 @@ public class CharacterObject : MonoBehaviour
                 currentCommandState = c;
                 return;
             }
-            if (s.wall == wallFlag)
-            {
-                currentCommandState = c;
-                return;
-            }
+            //if (s.wall == wallFlag)
+            //{
+            //    currentCommandState = c;
+            //    return;
+            //}
         }
     }
 
@@ -504,27 +516,184 @@ public class CharacterObject : MonoBehaviour
     [Header("Charged Slash")]
 
     [SerializeField] private float shotPressure;
-    [SerializeField] private float maxShotPressure = 60f;
+    [SerializeField] private float  minShotPressure=30f, maxShotPressure = 60f;
     private bool shouldChargeBuster;
-    public int chargeAttackIndex = 15;
+    public int chargeAttackIndex = 15, chargeShotIndex=21, critBusterIndex=22;
     [SerializeField] private bool firstCharge, secondCharge;
     private Color c;
 
     public float chargeIncrement = 1f;
     void ChargeAttack()
     {
-        if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
+        switch (GameEngine.gameEngine.globalMovelistIndex)
         {
-            ChargeUp(chargeIncrement);
+            case 0://Brave
+                if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
+                {
+                    ChargeUp(chargeIncrement);
+                }
+                if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
+                {
+                    if (shotPressure > maxShotPressure)
+                    {
+                        StartState(chargeAttackIndex);
+                    }
+                    shotPressure = 0;
+                }
+                break;
+            case 1://Bombadier
+                if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
+                {
+                    ColorCharge();
+                    ChargeUp(chargeIncrement);
+                    if (shotPressure < maxShotPressure)
+                    {
+                        hasShotChargingStarted = true;
+                    }
+                }
+                if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
+                {
+                    if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
+                    {
+                        BusterShooting();
+                        shotPressure = 0f;
+                        firstCharge = false; secondCharge = false;
+                    }
+                    else if (shotPressure >= maxShotPressure)
+                    {
+                        CriticalBusterShooting();
+                        shotPressure = 0f;
+                        firstCharge = false; secondCharge = false;
+                    }
+                    if (shotPressure != 0f)
+                    {
+                        hasReleasedShot = true;
+                        shotPressure = 0f;
+                        firstCharge = false; secondCharge = false;
+                    }
+                    if (!shouldChargeBuster)
+                    {
+                        foreach (ParticleSystem p in primaryGunParticles)
+                        {
+                            p.startColor = Color.clear;
+                            p.Stop();
+                        }
+                    }
+
+                    //shotPressure = 0;
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
-        if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
+
+
+        
+    }
+    [Space]
+    [Header("Charged Buster")]
+
+    private bool hasReleasedShot = false;
+    private bool hasShotChargingStarted = false;
+    private bool hasReachedMaxShotCharge = false;
+
+    [Header("ParticleGroups")]
+    public Transform gunChargeParticles;
+    public Transform jumpChargeParticles;
+    public Transform flashParticles;
+    public Color[] turboColors;
+    public List<ParticleSystem> primaryGunParticles = new List<ParticleSystem>();
+    public List<ParticleSystem> primaryJumpParticles = new List<ParticleSystem>();
+    public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
+
+    [Space]
+    [Header("Shooting Stats")]
+
+    public float shootAnim, shootAnimMax;
+    public Vector2 bulletVelocity = new Vector2(20f, 0), busterVelocity = new Vector2(30f, 0), critBusterVelocity = new Vector2(35f, 0);
+    public float fireRate = 10f;
+    private float timeToNextFire = 0f;
+    [SerializeField] private GameObject[] bullets;
+    [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.25f, 0.5f);
+    public void FireBullet(float bulletType)
+    {
+        //if (CurrentNumberOfBullets >= 1)
+        //{
+        //    shotPressure = 0;
+        //    BusterShooting();
+
+        //}
+        //else
+        //{
+            shootAnim = shootAnimMax;
+            GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position, Quaternion.identity);
+            newbullet.GetComponent<BulletHit>().character = characterObject;
+            newbullet.GetComponent<Hitbox>().character = characterObject;
+            newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletVelocity.x * direction, bulletVelocity.y);
+        //}
+
+    }
+    public void BusterShooting()
+    {
+        StartState(chargeShotIndex);
+    }
+    public void CriticalBusterShooting()
+    {
+        StartState(critBusterIndex);
+    }
+    public void ColorCharge()
+    {
+        if (!firstCharge)
+            c = Color.clear;
+
+        if ((shotPressure >= minShotPressure && shotPressure < maxShotPressure) && !firstCharge)
         {
-            if (shotPressure > maxShotPressure)
+            foreach (ParticleSystem p in primaryGunParticles)
             {
-                StartState(chargeAttackIndex);
+                p.startColor = Color.clear;
+                p.Play();
             }
-            shotPressure = 0;
+            firstCharge = true;
+            c = turboColors[0];
+
+            PlayFlashParticle(c);
         }
+
+        if (shotPressure >= maxShotPressure && !secondCharge)
+        {
+            secondCharge = true;
+            c = turboColors[1];
+
+            PlayFlashParticle(c);
+        }
+        foreach (ParticleSystem p in primaryGunParticles)
+        {
+            var pmain = p.main;
+            pmain.startColor = c;
+        }
+
+        foreach (ParticleSystem p in secondaryParticles)
+        {
+            var pmain = p.main;
+            pmain.startColor = c;
+        }
+    }
+    void PlayFlashParticle(Color c)
+    {
+        foreach (ParticleSystem p in secondaryParticles)
+        {
+            var pmain = p.main;
+            pmain.startColor = c;
+            p.Play();
+        }
+    }
+    private static void Screenshake()
+    {
+        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
     }
     void JumpCut()
     {
@@ -601,10 +770,6 @@ public class CharacterObject : MonoBehaviour
             animWallState = 0f;
             jumps = jumpMax;
         }
-        else if(IsOnWall())
-        {
-            wallFlag = true;
-        }
         else
         {
             if (!aerialFlag)
@@ -627,7 +792,10 @@ public class CharacterObject : MonoBehaviour
 
             wallFlag = false;
         }
-
+        if (IsOnWall())
+        {
+            wallFlag = true;
+        }
         Move(velocity);
 
         velocity.Scale(friction);
@@ -659,15 +827,6 @@ public class CharacterObject : MonoBehaviour
 
         return rayCastHit.collider != null;
     }
-    //private void UpdateIsOnGround()
-    //{
-    //    Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundDetectPoint.position, groundDetectHeight, whatCountsAsGround);
-    //    isOnGround = groundObjects.Length > 0;
-    //    if (velocity.y < 0)
-    //    {
-    //        hasLanded = false;
-    //    }
-    //}
     private bool hasLanded;
     private void GroundTouch()
     {
@@ -690,33 +849,56 @@ public class CharacterObject : MonoBehaviour
     public Vector2 curHitAnim;
     public Vector2 targetHitAnim;
 
-    public void GetHit(CharacterObject attacker)
+    public void GetHit(CharacterObject attacker, int projectileIndex)
     {
-        AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
+        if (projectileIndex==0)
+        {
+            AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
+            Vector3 nextKnockback = curAtk.knockback;
 
-        //attacker.hitActive = 0;//careful cant hit 2 enemies 
-        //Vector3 targetOffset = transform.position;
-        Vector3 nextKnockback = curAtk.knockback;
-        //Vector3 knockOrientation = attacker.character.transform.forward;
-        Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
-        knockOrientation.Normalize();
-        nextKnockback.x *= knockOrientation.x;
-        Debug.Log("Knockback is: " + nextKnockback);
-        //nextKnockback = knockOrientation*nextKnockback;
-        SetVelocity(nextKnockback*0.7f);//dampen a bit
-        targetHitAnim.x = curAtk.hitAnim.x;
-        targetHitAnim.y = curAtk.hitAnim.y;
+            Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
+            knockOrientation.Normalize();
+            nextKnockback.x *= knockOrientation.x;
 
-        Debug.Log("Combined Knockback is: " + nextKnockback + " Post Dampening is: " + nextKnockback * 0.7f);
-        
-        //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-        //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
 
-        curHitAnim = targetHitAnim * .25f;
+            SetVelocity(nextKnockback * 0.7f);//dampen a bit
+            targetHitAnim.x = curAtk.hitAnim.x;
+            targetHitAnim.y = curAtk.hitAnim.y;
 
-        GameEngine.SetHitPause(curAtk.hitStop);
-        hitStun = curAtk.hitStun;
-        attacker.hitConfirm += 1;
+            //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+            //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+
+            curHitAnim = targetHitAnim * .25f;
+
+            GameEngine.SetHitPause(curAtk.hitStop);
+            hitStun = curAtk.hitStun;
+            attacker.hitConfirm += 1;
+        }
+        else//projectiles
+        {
+            AttackEvent curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[0];
+            Vector3 nextKnockback = curAtk.knockback;
+
+            Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
+            knockOrientation.Normalize();
+            nextKnockback.x *= knockOrientation.x;
+
+
+            SetVelocity(nextKnockback * 0.7f);//dampen a bit
+            targetHitAnim.x = curAtk.hitAnim.x;
+            targetHitAnim.y = curAtk.hitAnim.y;
+
+            //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+            //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+
+            curHitAnim = targetHitAnim * .25f;
+
+            GameEngine.SetHitPause(curAtk.hitStop);
+            hitStun = curAtk.hitStun;
+            attacker.hitConfirm += 1;
+        }
+
+       
         attacker.BuildMeter(10f);
         StartState(hitStunStateIndex);
         GlobalPrefab(0);

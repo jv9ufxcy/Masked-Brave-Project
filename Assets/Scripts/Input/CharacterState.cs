@@ -33,10 +33,10 @@ public class CharacterState
         {
             if (character.aerialFlag) { return false; }
         }
-        if (wallReq)
-        {
-            if (character.wallFlag) { return false; }
-        }
+        //if (wallReq)
+        //{
+        //    if (character.wallFlag) { return false; }
+        //}
 
         if (dashCooldownReq>0)
         {
@@ -58,7 +58,7 @@ public class StateEvent
 {
     public float start;
     public float end;
-    public float variable;
+    //public float variable;
 
 
 

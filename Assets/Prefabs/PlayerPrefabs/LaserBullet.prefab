@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4596218175977772}
-  - component: {fileID: 212310986017103336}
+  - component: {fileID: 1484119595581363950}
   - component: {fileID: 114135425130313622}
-  - component: {fileID: 114241451822071140}
+  - component: {fileID: 212310986017103336}
   - component: {fileID: 95611479683623692}
   - component: {fileID: 50143070742357908}
   - component: {fileID: 61725261980514422}
@@ -37,6 +37,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1484119595581363950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946779624007576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e2bef508af07542ac0cc21ac4757a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileIndex: 20
+  character: {fileID: 0}
+  stateIndex: 0
+--- !u!114 &114135425130313622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946779624007576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
+    type: 3}
+  tagToHit: Enemy
+  lifeTime: 1
+  whatLayersToHit:
+    serializedVersion: 2
+    m_Bits: 1536
+  bulletCollisionSound: 
+  shouldScreenshakeOnHit: 0
+  shouldStopOnHit: 1
+  canReflect: 1
+  character: {fileID: 0}
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -85,49 +124,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &114135425130313622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946779624007576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
-    type: 3}
-  tagToHit: Enemy
-  lifeTime: 1
-  whatLayersToHit:
-    serializedVersion: 2
-    m_Bits: 1536
-  bulletCollisionSound: 
-  shouldScreenshakeOnHit: 0
-  shouldStopOnHit: 1
---- !u!114 &114241451822071140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946779624007576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4008ea7da11d3db4abb8cdfa5ecb9981, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _effect: 0
-  hitDistance: {x: 0, y: 0}
-  damageToGive: 1
-  meterToGive: 1
-  hitStopDuration: 0.1
-  knockbackDuration: 0.1
-  shouldScreenshakeOnHit: 0
-  shouldHitStop: 0
-  hitSpark: {fileID: 3110218635854431799}
 --- !u!95 &95611479683623692
 Animator:
   serializedVersion: 3
@@ -209,12 +205,12 @@ PrefabInstance:
     - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
         type: 3}
@@ -266,12 +262,6 @@ PrefabInstance:
 --- !u!4 &3018649200457461803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
-    type: 3}
-  m_PrefabInstance: {fileID: 7687621413009925311}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3110218635854431799 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4721564266111689352, guid: 141a30506b4d9374a94801f03e7669b4,
     type: 3}
   m_PrefabInstance: {fileID: 7687621413009925311}
   m_PrefabAsset: {fileID: 0}

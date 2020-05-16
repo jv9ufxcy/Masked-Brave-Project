@@ -13,6 +13,8 @@ public class CharacterStateEditorWindow : EditorWindow
     CoreData coreData;
     CharacterState currentCharacterState;
     int currentStateIndex;
+    bool eventFold;
+    Vector2 scrollView;
     private void OnGUI()
     {
         if (coreData == null)
@@ -22,13 +24,67 @@ public class CharacterStateEditorWindow : EditorWindow
                 coreData = AssetDatabase.LoadAssetAtPath<CoreData>(AssetDatabase.GUIDToAssetPath(guid));
             }
         }
+        scrollView = GUILayout.BeginScrollView(scrollView);
+
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label(currentStateIndex.ToString() + " | " + currentCharacterState.stateName);
         currentStateIndex = EditorGUILayout.Popup(currentStateIndex, coreData.GetStateNames());
         currentCharacterState = coreData.characterStates[currentStateIndex];
 
         EditorGUILayout.EndHorizontal();
+        //Animation
+        EditorGUILayout.BeginHorizontal();
+        currentCharacterState.length = EditorGUILayout.FloatField("Length : ", currentCharacterState.length);
+        currentCharacterState.blendRate = EditorGUILayout.FloatField("BlendRate : ", currentCharacterState.blendRate);
+        currentCharacterState.loop = GUILayout.Toggle(currentCharacterState.loop, "Loop? ", EditorStyles.miniButton);
+        EditorGUILayout.EndHorizontal();
+        //Flags
+        currentCharacterState.groundedReq = GUILayout.Toggle(currentCharacterState.groundedReq, "Grounded? ", EditorStyles.miniButton, GUILayout.Width(75));
 
+        //Events
+        GUILayout.Label("");
+        //GUILayout.Label("Events");
+        eventFold = EditorGUILayout.Foldout(eventFold, "Events");
+        if (eventFold)
+        {
+
+            for (int e = 0; e < currentCharacterState.events.Count; e++)
+            {
+                StateEvent currentEvent = currentCharacterState.events[e];
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(e.ToString()+" : ", GUILayout.Width(25));
+                EditorGUILayout.MinMaxSlider(ref currentEvent.start, ref currentEvent.end, 0f, currentCharacterState.length, GUILayout.Width(400));
+                GUILayout.Label(Mathf.Round(currentEvent.start).ToString() + " ~ " + Mathf.Round(currentEvent.end).ToString(), GUILayout.Width(75));
+                currentEvent.script = EditorGUILayout.Popup(currentEvent.script, coreData.GetScriptNames());
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                if (currentEvent.parameters.Count != coreData.characterScripts[currentEvent.script].parameters.Count)
+                {
+                    currentEvent.parameters = new List<ScriptParameters>();
+                    for (int i = 0; i < coreData.characterScripts[currentEvent.script].parameters.Count; i++)
+                    {
+                        currentEvent.parameters.Add(new ScriptParameters());
+                    }
+                }
+                for (int p = 0; p < currentEvent.parameters.Count; p++)
+                {
+                    if (p % 3 == 0) { GUILayout.EndHorizontal(); GUILayout.BeginHorizontal(); GUILayout.Label("", GUILayout.Width(250)); }
+                    
+                    GUILayout.Label(coreData.characterScripts[currentEvent.script].parameters[p].name + " : ", GUILayout.Width(85));
+                    currentEvent.parameters[p].val = EditorGUILayout.FloatField(currentEvent.parameters[p].val, GUILayout.Width(75));
+
+                }
+                EditorGUILayout.EndHorizontal();
+                GUILayout.Label("");
+            }
+        }
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.EndHorizontal();
+
+        GUILayout.EndScrollView();
         EditorUtility.SetDirty(coreData);
     }
 }
