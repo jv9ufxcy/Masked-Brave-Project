@@ -59,13 +59,18 @@ public class StateEvent
     public float start;
     public float end;
     //public float variable;
-
+    public bool active=true;
 
 
     [IndexedItem(IndexedItemAttribute.IndexedItemType.SCRIPTS)]
     public int script;
 
     public List<ScriptParameters> parameters;
+    public StateEvent()
+    {
+        active = true;
+        parameters = new List<ScriptParameters>();
+    }
 }
 [System.Serializable]
 public class ScriptParameters
@@ -79,9 +84,9 @@ public class CharacterScript
     [HideInInspector]
     public int index;
 
-    public string name;
+    public string name="<NEW CHARACTER SCRIPT>";
 
-    public List<ScriptParameters> parameters;
+    public List<ScriptParameters> parameters = new List<ScriptParameters>();
     //public float variable;
 }
 [System.Serializable]

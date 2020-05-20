@@ -197,9 +197,12 @@ public class CharacterObject : MonoBehaviour
         {
 
             //if (prevStateTime <= _ev.start && currentStateTime == _ev.start)
-            if (currentStateTime >= _ev.start && currentStateTime <= _ev.end)
+            if (_ev.active)
             {
-                DoEventScript(_ev.script,currentState, _curEv, _ev.parameters);
+                if (currentStateTime >= _ev.start && currentStateTime <= _ev.end)
+                {
+                    DoEventScript(_ev.script, currentState, _curEv, _ev.parameters);
+                }
             }
             _curEv++;
         }
@@ -619,21 +622,27 @@ public class CharacterObject : MonoBehaviour
     private float timeToNextFire = 0f;
     [SerializeField] private GameObject[] bullets;
     [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.25f, 0.5f);
+    
     public void FireBullet(float bulletType)
+    {
+        shootAnim = shootAnimMax;
+        GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position, Quaternion.identity);
+        newbullet.GetComponent<BulletHit>().character = characterObject;
+        newbullet.GetComponent<Hitbox>().character = characterObject;
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletVelocity.x * direction, bulletVelocity.y);
+        newbullet.transform.localScale = new Vector3(direction, 1, 1);
+    }
+    public void SpecialFireCheck(float bulletType)
     {
         //if (CurrentNumberOfBullets >= 1)
         //{
         //    shotPressure = 0;
-        //    BusterShooting();
+        //    FireBullet(2);
 
         //}
         //else
         //{
-            shootAnim = shootAnimMax;
-            GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position, Quaternion.identity);
-            newbullet.GetComponent<BulletHit>().character = characterObject;
-            newbullet.GetComponent<Hitbox>().character = characterObject;
-            newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletVelocity.x * direction, bulletVelocity.y);
+        FireBullet(bulletType);
         //}
 
     }

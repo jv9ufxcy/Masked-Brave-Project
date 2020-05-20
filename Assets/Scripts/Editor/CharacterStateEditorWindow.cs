@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 public class CharacterStateEditorWindow : EditorWindow
 {
@@ -25,13 +26,22 @@ public class CharacterStateEditorWindow : EditorWindow
             }
         }
         scrollView = GUILayout.BeginScrollView(scrollView);
-
+        //currentStateIndex = 0; //use in case of nre
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label(currentStateIndex.ToString() + " | " + currentCharacterState.stateName);
+        GUILayout.Label(currentStateIndex.ToString() + " | " + currentCharacterState.stateName, GUILayout.Width(200));
         currentStateIndex = EditorGUILayout.Popup(currentStateIndex, coreData.GetStateNames());
+        if (GUILayout.Button("New Character State"))
+        {
+            coreData.characterStates.Add(new CharacterState());
+            currentStateIndex = coreData.characterStates.Count - 1;
+        }
         currentCharacterState = coreData.characterStates[currentStateIndex];
 
+
+
         EditorGUILayout.EndHorizontal();
+
+        currentCharacterState.stateName = EditorGUILayout.TextField("State Name : ", currentCharacterState.stateName, GUILayout.Width(500));
         //Animation
         EditorGUILayout.BeginHorizontal();
         currentCharacterState.length = EditorGUILayout.FloatField("Length : ", currentCharacterState.length);
@@ -47,11 +57,16 @@ public class CharacterStateEditorWindow : EditorWindow
         eventFold = EditorGUILayout.Foldout(eventFold, "Events");
         if (eventFold)
         {
+            int deleteEvent = -1;
+
+            //if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.Width(35))){ currentCharacterState.events.Add(new StateEvent()); }
 
             for (int e = 0; e < currentCharacterState.events.Count; e++)
             {
                 StateEvent currentEvent = currentCharacterState.events[e];
                 GUILayout.BeginHorizontal();
+                if (GUILayout.Button("x", EditorStyles.miniButton,GUILayout.Width(25))) { deleteEvent = e; }
+                currentEvent.active = EditorGUILayout.Toggle(currentEvent.active, GUILayout.Width(20));
                 GUILayout.Label(e.ToString()+" : ", GUILayout.Width(25));
                 EditorGUILayout.MinMaxSlider(ref currentEvent.start, ref currentEvent.end, 0f, currentCharacterState.length, GUILayout.Width(400));
                 GUILayout.Label(Mathf.Round(currentEvent.start).ToString() + " ~ " + Mathf.Round(currentEvent.end).ToString(), GUILayout.Width(75));
@@ -79,6 +94,9 @@ public class CharacterStateEditorWindow : EditorWindow
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Label("");
             }
+            if (deleteEvent> -1) { currentCharacterState.events.RemoveAt(deleteEvent); }
+            if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.Width(35))) { currentCharacterState.events.Add(new StateEvent()); }
+            GUILayout.Label("");
         }
 
         EditorGUILayout.BeginHorizontal();
