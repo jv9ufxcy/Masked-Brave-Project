@@ -50,6 +50,7 @@ public class CharacterStateEditorWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
         //Flags
         currentCharacterState.groundedReq = GUILayout.Toggle(currentCharacterState.groundedReq, "Grounded? ", EditorStyles.miniButton, GUILayout.Width(75));
+        currentCharacterState.wallReq = GUILayout.Toggle(currentCharacterState.wallReq, "Wall? ", EditorStyles.miniButton, GUILayout.Width(75));
 
         //Events
         GUILayout.Label("");

@@ -33,10 +33,10 @@ public class CharacterState
         {
             if (character.aerialFlag) { return false; }
         }
-        //if (wallReq)
-        //{
-        //    if (character.wallFlag) { return false; }
-        //}
+        if (wallReq)
+        {
+            if (character.wallFlag) { return false; }
+        }
 
         if (dashCooldownReq>0)
         {

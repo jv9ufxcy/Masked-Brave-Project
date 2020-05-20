@@ -102,7 +102,7 @@ public class CharacterObject : MonoBehaviour
         animFallSpeed = velocity.y /** 30f*/;
         characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
         characterAnim.SetFloat("aerialState", animAerialState);
-        characterAnim.SetFloat("wallState", animWallState);
+        //characterAnim.SetBool("wallState", wallFlag);
         characterAnim.SetFloat("fallSpeed", animFallSpeed);
         characterAnim.SetFloat("hitAnimX", curHitAnim.x);
         characterAnim.SetFloat("hitAnimY", curHitAnim.y);
@@ -797,14 +797,18 @@ public class CharacterObject : MonoBehaviour
                     jumps--;
                 }
             }
-            velocity.y += gravity;
-
-            wallFlag = false;
+            if (IsOnWall() && leftStick.x == direction&&velocity.y<0)
+            {
+                velocity.y = -1.7f;
+                wallFlag = true;
+            }
+            else 
+            {
+                velocity.y += gravity;
+                wallFlag = false;
+            }
         }
-        if (IsOnWall())
-        {
-            wallFlag = true;
-        }
+        
         Move(velocity);
 
         velocity.Scale(friction);
