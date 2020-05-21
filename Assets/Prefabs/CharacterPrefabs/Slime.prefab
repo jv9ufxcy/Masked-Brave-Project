@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6476919978724093375}
   - component: {fileID: 6476919978724093374}
   - component: {fileID: 6476919978724093373}
+  - component: {fileID: 4995945185788520575}
   - component: {fileID: 6476919978724093372}
   m_Layer: 9
   m_Name: Slime
@@ -53,12 +54,15 @@ MonoBehaviour:
   direction: 1
   myRB: {fileID: 6476919978724093373}
   boxCollider2D: {fileID: 0}
+  controller: {fileID: 0}
   currentState: 0
   currentStateTime: 0
   prevStateTime: 0
+  characterObject: {fileID: 0}
   character: {fileID: 6476919979767440956}
   draw: {fileID: 6476919979401484989}
   characterAnim: {fileID: 6476919979961269262}
+  formAnims: []
   controlType: 0
   hitbox: {fileID: 6476919980345759422}
   canCancel: 0
@@ -76,17 +80,39 @@ MonoBehaviour:
   currentCommandState: 0
   currentCommandStep: 0
   shotPressure: 0
+  minShotPressure: 30
   maxShotPressure: 60
   chargeAttackIndex: 15
+  chargeShotIndex: 21
+  critBusterIndex: 22
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
+  gunChargeParticles: {fileID: 0}
+  jumpChargeParticles: {fileID: 0}
+  flashParticles: {fileID: 0}
+  turboColors: []
+  primaryGunParticles: []
+  primaryJumpParticles: []
+  secondaryParticles: []
+  shootAnim: 0
+  shootAnimMax: 0
+  bulletVelocity: {x: 20, y: 0}
+  busterVelocity: {x: 30, y: 0}
+  critBusterVelocity: {x: 35, y: 0}
+  fireRate: 10
+  bullets: []
+  bulletSpawnPos: {x: 0.25, y: 0.5}
   aerialFlag: 0
+  wallFlag: 0
   isOnGround: 0
+  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
+  wallDetectWidth: 0
   animAerialState: 0
   animFallSpeed: 0
+  animWallState: 0
   groundDetectPoint: {fileID: 6476919979580406228}
   whatCountsAsGround:
     serializedVersion: 2
@@ -123,6 +149,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &4995945185788520575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476919978724093363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66914df5cc564214c97d02b104fb968a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 256
+  horizontalRayCount: 6
+  verticalRayCount: 6
 --- !u!61 &6476919978724093372
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -443,5 +486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e2bef508af07542ac0cc21ac4757a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileIndex: 0
   character: {fileID: 0}
   stateIndex: 0

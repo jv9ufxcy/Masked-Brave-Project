@@ -17,6 +17,7 @@ public class CharacterObject : MonoBehaviour
 
     public Rigidbody2D myRB;
     public BoxCollider2D boxCollider2D;
+    public Controller2D controller;
 
     [Header("CurrentState")]
     public int currentState;
@@ -46,6 +47,7 @@ public class CharacterObject : MonoBehaviour
     {
         myRB = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        controller = GetComponent<Controller2D>();
     }
 
     // Update is called once per frame
@@ -403,8 +405,6 @@ public class CharacterObject : MonoBehaviour
     void SetAnimation(string animName)
     {
         characterAnim.CrossFadeInFixedTime(animName, GameEngine.coreData.characterStates[currentState].blendRate);
-
-        Debug.Log("Start " + animName);
         //characterAnim.Play(animName);
     }
 
@@ -417,7 +417,7 @@ public class CharacterObject : MonoBehaviour
         for (int c = 0; c < GameEngine.gameEngine.CurrentMoveList().commandStates.Count; c++)
         {
             CommandState s = GameEngine.gameEngine.CurrentMoveList().commandStates[c];
-            if (s.aerial==aerialFlag)
+            if (s.aerial == aerialFlag)
             {
                 currentCommandState = c;
                 return;
@@ -778,6 +778,7 @@ public class CharacterObject : MonoBehaviour
             animAerialState = 0f;
             animWallState = 0f;
             jumps = jumpMax;
+            GroundTouch();
         }
         else
         {
@@ -800,15 +801,22 @@ public class CharacterObject : MonoBehaviour
             if (IsOnWall() && leftStick.x == direction&&velocity.y<0)
             {
                 velocity.y = -1.7f;
+                animAerialState = -1f;
                 wallFlag = true;
             }
             else 
             {
-                velocity.y += gravity;
+                if (controller.collisions.above || controller.collisions.below)
+                    velocity.y = 0;
+                else
+                    velocity.y += gravity;
+
                 wallFlag = false;
             }
         }
         
+                
+
         Move(velocity);
 
         velocity.Scale(friction);
@@ -816,21 +824,28 @@ public class CharacterObject : MonoBehaviour
     }
     void Move(Vector3 velocity)
     {
-        myRB.velocity = velocity;
+        //myRB.velocity = velocity;
+        controller.Move(velocity*Time.fixedDeltaTime);
     }
+    public bool HitCeiling()
+    {
+        return controller.collisions.above;
+    }
+
     public bool IsGrounded()
     {
-        RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
-        Color rayColor;
-        if (rayCastHit.collider != null)
-            rayColor = Color.green;
-        else
-            rayColor = Color.red;
-        Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y+groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
+        //RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
+        //Color rayColor;
+        //if (rayCastHit.collider != null)
+        //    rayColor = Color.green;
+        //else
+        //    rayColor = Color.red;
+        //Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        //Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        //Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y+groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
 
-        return rayCastHit.collider != null;
+        //return rayCastHit.collider != null;
+        return controller.collisions.below;
     }
     public bool IsOnWall()
     {

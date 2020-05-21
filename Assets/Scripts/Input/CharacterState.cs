@@ -59,7 +59,7 @@ public class StateEvent
     public float start;
     public float end;
     //public float variable;
-    public bool active=true;
+    public bool active = true;
 
 
     [IndexedItem(IndexedItemAttribute.IndexedItemType.SCRIPTS)]

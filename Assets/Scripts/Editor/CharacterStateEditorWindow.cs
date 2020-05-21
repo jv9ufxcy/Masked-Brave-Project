@@ -67,7 +67,7 @@ public class CharacterStateEditorWindow : EditorWindow
                 StateEvent currentEvent = currentCharacterState.events[e];
                 GUILayout.BeginHorizontal();
                 if (GUILayout.Button("x", EditorStyles.miniButton,GUILayout.Width(25))) { deleteEvent = e; }
-                currentEvent.active = EditorGUILayout.Toggle(currentEvent.active, GUILayout.Width(20));
+                currentEvent.active = EditorGUILayout.Toggle(currentEvent.active=true, GUILayout.Width(20));
                 GUILayout.Label(e.ToString()+" : ", GUILayout.Width(25));
                 EditorGUILayout.MinMaxSlider(ref currentEvent.start, ref currentEvent.end, 0f, currentCharacterState.length, GUILayout.Width(400));
                 GUILayout.Label(Mathf.Round(currentEvent.start).ToString() + " ~ " + Mathf.Round(currentEvent.end).ToString(), GUILayout.Width(75));
