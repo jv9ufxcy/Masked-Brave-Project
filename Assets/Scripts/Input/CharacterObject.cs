@@ -292,7 +292,7 @@ public class CharacterObject : MonoBehaviour
                 AirMove(_params[0].val);
                 break;
             case 10:
-                FireBullet(_params[0].val);
+                FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val);
                 break;
                 
         }
@@ -533,6 +533,7 @@ public class CharacterObject : MonoBehaviour
             case 0://Brave
                 if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
                 {
+                    ColorCharge();
                     ChargeUp(chargeIncrement);
                 }
                 if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
@@ -540,6 +541,12 @@ public class CharacterObject : MonoBehaviour
                     if (shotPressure > maxShotPressure)
                     {
                         StartState(chargeAttackIndex);
+                    }
+                    firstCharge = false; secondCharge = false;
+                    foreach (ParticleSystem p in primaryGunParticles)
+                    {
+                        p.startColor = Color.clear;
+                        p.Stop();
                     }
                     shotPressure = 0;
                 }
@@ -574,15 +581,11 @@ public class CharacterObject : MonoBehaviour
                         shotPressure = 0f;
                         firstCharge = false; secondCharge = false;
                     }
-                    if (!shouldChargeBuster)
+                    foreach (ParticleSystem p in primaryGunParticles)
                     {
-                        foreach (ParticleSystem p in primaryGunParticles)
-                        {
-                            p.startColor = Color.clear;
-                            p.Stop();
-                        }
+                        p.startColor = Color.clear;
+                        p.Stop();
                     }
-
                     //shotPressure = 0;
                 }
                 break;
@@ -623,10 +626,12 @@ public class CharacterObject : MonoBehaviour
     [SerializeField] private GameObject[] bullets;
     [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.25f, 0.5f);
     
-    public void FireBullet(float bulletType)
+    public void FireBullet(float bulletType, float speed, float offsetX, float offsetY)
     {
         shootAnim = shootAnimMax;
-        GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position, Quaternion.identity);
+        var offset = new Vector3(offsetX, offsetY, 0);
+
+        GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position+offset, Quaternion.identity);
         newbullet.GetComponent<BulletHit>().character = characterObject;
         newbullet.GetComponent<Hitbox>().character = characterObject;
         newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletVelocity.x * direction, bulletVelocity.y);
@@ -642,7 +647,7 @@ public class CharacterObject : MonoBehaviour
         //}
         //else
         //{
-        FireBullet(bulletType);
+        FireBullet(bulletType, critBusterVelocity.x,0,0);
         //}
 
     }
