@@ -624,17 +624,17 @@ public class CharacterObject : MonoBehaviour
     public float fireRate = 10f;
     private float timeToNextFire = 0f;
     [SerializeField] private GameObject[] bullets;
-    [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.25f, 0.5f);
+    [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.5f, 1f);
     
-    public void FireBullet(float bulletType, float speed, float offsetX, float offsetY)
+    public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY)
     {
         shootAnim = shootAnimMax;
-        var offset = new Vector3(offsetX, offsetY, 0);
-
+        var offset = new Vector3(offsetX*direction, offsetY, 0);
+        Debug.Log(bulletType);
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position+offset, Quaternion.identity);
         newbullet.GetComponent<BulletHit>().character = characterObject;
         newbullet.GetComponent<Hitbox>().character = characterObject;
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletVelocity.x * direction, bulletVelocity.y);
+        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction, 0);
         newbullet.transform.localScale = new Vector3(direction, 1, 1);
     }
     public void SpecialFireCheck(float bulletType)
@@ -647,7 +647,7 @@ public class CharacterObject : MonoBehaviour
         //}
         //else
         //{
-        FireBullet(bulletType, critBusterVelocity.x,0,0);
+        FireBullet(bulletType, critBusterVelocity.x,bulletSpawnPos.x, bulletSpawnPos.y);
         //}
 
     }

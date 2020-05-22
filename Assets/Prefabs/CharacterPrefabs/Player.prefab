@@ -72,7 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileIndex: 0
   character: {fileID: 0}
-  stateIndex: 16
+  stateIndex: 24
 --- !u!1 &1522142900477769167
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +427,7 @@ MonoBehaviour:
     type: 3}
   jumpChargeParticles: {fileID: 1811056729361028696, guid: cd009f73d381dd94b9adf1742052d7ff,
     type: 3}
-  flashParticles: {fileID: 0}
+  flashParticles: {fileID: 6520462410906016509}
   turboColors:
   - {r: 0.7725491, g: 0.10196079, b: 0.9176471, a: 1}
   - {r: 0, g: 0.7254902, b: 1, a: 1}
@@ -448,7 +448,7 @@ MonoBehaviour:
   - {fileID: 1946779624007576, guid: 30c79b6ad12284d4faa7cc8d667ccdde, type: 3}
   - {fileID: 1946779624007576, guid: ee0b10108ca7053499f52939ba8cde73, type: 3}
   - {fileID: 4935215268734257200, guid: e25389b3fe2501047917673240896d2c, type: 3}
-  bulletSpawnPos: {x: 0.25, y: 0.5}
+  bulletSpawnPos: {x: 0.5, y: 1}
   aerialFlag: 0
   wallFlag: 0
   isOnGround: 0
@@ -489,8 +489,8 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
-  horizontalRayCount: 6
-  verticalRayCount: 6
+  horizontalRayCount: 4
+  verticalRayCount: 4
 --- !u!50 &2833465963085331512
 Rigidbody2D:
   serializedVersion: 4
