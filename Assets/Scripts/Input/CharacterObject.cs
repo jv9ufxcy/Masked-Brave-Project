@@ -3,11 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CharacterObject : MonoBehaviour
 {
     [Header("Movement")]
-    public Vector3 velocity;
+    public Vector2 velocity;
 
     public float gravity = -0.01f;
     public float aniMoveSpeed;
@@ -99,8 +100,8 @@ public class CharacterObject : MonoBehaviour
             animSpeed = 0;
         }
 
-        Vector3 latSpeed = new Vector3(velocity.x, 0, velocity.z);
-        aniMoveSpeed = Vector3.SqrMagnitude(latSpeed) * 30f;
+        Vector2 latSpeed = new Vector2(velocity.x, 0);
+        aniMoveSpeed = Vector3.SqrMagnitude(latSpeed);
         animFallSpeed = velocity.y /** 30f*/;
         characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
         characterAnim.SetFloat("aerialState", animAerialState);
@@ -234,7 +235,8 @@ public class CharacterObject : MonoBehaviour
             if (currentStateTime >= cWindow)
                 if (hitConfirm > 0)
                     canCancel = true;
-
+            
+            //Whiff Cancel
             if (currentStateTime >= cWindow + whiffWindow)
                 canCancel = true;
 
@@ -294,6 +296,9 @@ public class CharacterObject : MonoBehaviour
             case 10:
                 FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val);
                 break;
+            case 11:
+                Dash(_params[0].val);
+                    break;
                 
         }
     }
@@ -302,11 +307,50 @@ public class CharacterObject : MonoBehaviour
         GameEngine.gameEngine.ToggleMovelist();
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
     }
+    private void Dash(float dashSpeed)
+    {
+        //Screenshake();
+        //if (NumberOfDashes <= 0 && CurrentNumberOfBullets > 0)
+        //{
+        //    if (!isOnGround)
+        //        SpendAmmo(1);
+        //    if (CurrentNumberOfBullets <= 0)
+        //    {
+        //        hasAirDashed = true;
+        //    }
+        //}
+        //else
+        //    hasAirDashed = true;
+
+        velocity = Vector2.zero;
+        Vector2 dir = new Vector2(leftStick.x, leftStick.y);
+        if (dir==Vector2.zero)
+        {
+            dir.x = direction;
+        }
+        velocity += dir.normalized * dashSpeed;
+        characterAnim.SetFloat("dirAnimX", Mathf.Abs(dir.x));
+        characterAnim.SetFloat("dirAnimY", dir.y);
+        StartCoroutine(DashWait());
+    }
+    IEnumerator DashWait()
+    {
+        DOVirtual.Float(velocity.x, 0, .6f, HorizontalDrag);
+        DOVirtual.Float(velocity.y, 0, .6f, VerticalDrag);
+        //ShowAfterImage(bombTrailColor, bombTrailFadeColor, shortDashInterval);
+        bombDashParticle.Play();
+        yield return new WaitForSeconds(.6f);
+        bombDashParticle.Stop();
+        Debug.Log("Dash particle stopped");
+    }
+    void HorizontalDrag(float x){ velocity.x = x; }
+    void VerticalDrag(float y){ velocity.y = y; }
     void Jump(float _pow)
     {
         velocity.y = _pow;
         jumps--;
-        //isOnGround = false;
+        //hasLanded = false;
+        landingParticle.Play();
         aerialTimer = coyoteTimer+1f;
         aerialFlag = true;
     }
@@ -615,7 +659,7 @@ public class CharacterObject : MonoBehaviour
     public List<ParticleSystem> primaryGunParticles = new List<ParticleSystem>();
     public List<ParticleSystem> primaryJumpParticles = new List<ParticleSystem>();
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
-
+    public ParticleSystem bombDashParticle, landingParticle;
     [Space]
     [Header("Shooting Stats")]
 
@@ -747,7 +791,7 @@ public class CharacterObject : MonoBehaviour
     }
     [Header("Grounded Check")]
     public bool aerialFlag,wallFlag,isOnGround,isOnWall;
-    [SerializeField] private float aerialTimer, groundDetectHeight,wallDetectWidth, animAerialState, animFallSpeed, animWallState;
+    [SerializeField] private float aerialTimer, groundDetectHeight,wallDetectWidth, animAerialState, animFallSpeed;
     [SerializeField]
     private Transform groundDetectPoint;
     [SerializeField]
@@ -781,8 +825,8 @@ public class CharacterObject : MonoBehaviour
             wallFlag = false;
             aerialTimer = 0;
             animAerialState = 0f;
-            animWallState = 0f;
             jumps = jumpMax;
+            //velocity.y = 0;
             GroundTouch();
         }
         else
@@ -808,29 +852,30 @@ public class CharacterObject : MonoBehaviour
                 velocity.y = -1.7f;
                 animAerialState = -1f;
                 wallFlag = true;
+                Debug.Log("Wall Sliding Time: " + wallFlag);
             }
             else 
             {
                 if (controller.collisions.above || controller.collisions.below)
                     velocity.y = 0;
                 else
+                {
                     velocity.y += gravity;
+                    hasLanded = false;
+                    //Debug.Log("Gravity is happening: " + velocity.y);
+                }
 
                 wallFlag = false;
             }
         }
-        
-                
-
         Move(velocity);
-
         velocity.Scale(friction);
-
+        Debug.Log(IsGrounded());
     }
-    void Move(Vector3 velocity)
+    void Move(Vector2 velocity)
     {
         //myRB.velocity = velocity;
-        controller.Move(velocity*Time.fixedDeltaTime);
+        controller.Move(velocity*Time.fixedDeltaTime, leftStick);
     }
     public bool HitCeiling()
     {
@@ -839,26 +884,28 @@ public class CharacterObject : MonoBehaviour
 
     public bool IsGrounded()
     {
-        //RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
-        //Color rayColor;
-        //if (rayCastHit.collider != null)
-        //    rayColor = Color.green;
-        //else
-        //    rayColor = Color.red;
-        //Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        //Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        //Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y+groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
+        RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
+        Color rayColor;
+        if (rayCastHit.collider != null)
+            rayColor = Color.green;
+        else
+            rayColor = Color.red;
+        Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y + groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
 
-        //return rayCastHit.collider != null;
-        return controller.collisions.below;
+        return rayCastHit.collider != null;
+
+        //return controller.collisions.below;
     }
     public bool IsOnWall()
     {
-        RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.right, groundDetectHeight, whatCountsAsGround);
-        if (rayCastHit.collider != null)
-            Debug.Log("IsOnWall");
+        //RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.right, groundDetectHeight, whatCountsAsGround);
+        //if (rayCastHit.collider != null)
+        //    Debug.Log("IsOnWall");
 
-        return rayCastHit.collider != null;
+        //return rayCastHit.collider != null;
+        return controller.collisions.left || controller.collisions.right;
     }
     private bool hasLanded;
     private void GroundTouch()
@@ -866,12 +913,11 @@ public class CharacterObject : MonoBehaviour
         //DashReset();
         if (!hasLanded)
         {
-            Debug.Log("hasLanded");
-            velocity.y = 0f;
+            //velocity.y = 0f;
             animFallSpeed = 0f;
             //isDashing = false;
             hasLanded = true;
-            //landingParticles.Play();
+            landingParticle.Play();
         }
     }
     public void SetVelocity(Vector3 v)
