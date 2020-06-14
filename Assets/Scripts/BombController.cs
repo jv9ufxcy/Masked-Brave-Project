@@ -70,53 +70,57 @@ public class BombController : MonoBehaviour
         }
         
     }
+    public void Detonate()
+    {
+        _bombState = BombState.exploding;
+    }
     public void TakeDamage(int damageToTake)
     {
         if (!hasExploded)
             currentBombTimer -= damageToTake;
     }
-    public void DoHitFreeze()
-    {
-        if (!hasExploded)
-            StartCoroutine(DoHitStop(hitFreezeTime));
-    }
-    public void DoHitKnockback(float knockbackDur, Vector2 hitDistance)
-    {
-        if (!hasExploded)
-            StartCoroutine(DoKnockback(knockbackDur, hitDistance));
-    }
-    public void DoStopAndKnockback(float knockbackDuration, Vector2 distance, float hitStopDuration)
-    {
-        if (!hasExploded)
-            StartCoroutine(DoHitStopAndKnockback(knockbackDuration, distance, hitStopDuration));
-    }
-    IEnumerator DoHitStop(float hitStopDuration)
-    {
-        Vector2 savedVelocity = bombRB.velocity;//get current velocity and save it
-        bombRB.velocity = Vector2.zero;//set velocity to 0
-        bombAnim.speed = 0;//set animator speed to 0
-        //stop enemy from moving
-        yield return new WaitForSeconds(hitStopDuration);
+    //public void DoHitFreeze()
+    //{
+    //    if (!hasExploded)
+    //        StartCoroutine(DoHitStop(hitFreezeTime));
+    //}
+    //public void DoHitKnockback(float knockbackDur, Vector2 hitDistance)
+    //{
+    //    if (!hasExploded)
+    //        StartCoroutine(DoKnockback(knockbackDur, hitDistance));
+    //}
+    //public void DoStopAndKnockback(float knockbackDuration, Vector2 distance, float hitStopDuration)
+    //{
+    //    if (!hasExploded)
+    //        StartCoroutine(DoHitStopAndKnockback(knockbackDuration, distance, hitStopDuration));
+    //}
+    //IEnumerator DoHitStop(float hitStopDuration)
+    //{
+    //    Vector2 savedVelocity = bombRB.velocity;//get current velocity and save it
+    //    bombRB.velocity = Vector2.zero;//set velocity to 0
+    //    bombAnim.speed = 0;//set animator speed to 0
+    //    //stop enemy from moving
+    //    yield return new WaitForSeconds(hitStopDuration);
 
-        bombRB.velocity = savedVelocity;//restore saved velocity
-        bombAnim.speed = 1;//restore animator.speed to 1
-    }
-    IEnumerator DoHitStopAndKnockback(float knockbackDuration, Vector2 hitDistance, float hitStopDuration)
-    {
-        StartCoroutine(DoHitStop(hitStopDuration));
+    //    bombRB.velocity = savedVelocity;//restore saved velocity
+    //    bombAnim.speed = 1;//restore animator.speed to 1
+    //}
+    //IEnumerator DoHitStopAndKnockback(float knockbackDuration, Vector2 hitDistance, float hitStopDuration)
+    //{
+    //    StartCoroutine(DoHitStop(hitStopDuration));
 
-        yield return new WaitForSeconds(hitStopDuration);
-        //allow enemy to move again unless you have something else for knockback
-        //DoKnockback
-        StartCoroutine(DoKnockback(knockbackDuration, hitDistance));
-        yield return new WaitForSeconds(knockbackDuration);
-    }
-    private IEnumerator DoKnockback(float knockbackDur, Vector2 hitDistance)
-    {
-        bombRB.velocity = hitDistance;
-        yield return new WaitForSeconds(knockbackDur);
-    }
-    private IEnumerator Explosion()
+    //    yield return new WaitForSeconds(hitStopDuration);
+    //    //allow enemy to move again unless you have something else for knockback
+    //    //DoKnockback
+    //    StartCoroutine(DoKnockback(knockbackDuration, hitDistance));
+    //    yield return new WaitForSeconds(knockbackDuration);
+    //}
+    //private IEnumerator DoKnockback(float knockbackDur, Vector2 hitDistance)
+    //{
+    //    bombRB.velocity = hitDistance;
+    //    yield return new WaitForSeconds(knockbackDur);
+    //}
+    public IEnumerator Explosion()
     {
         hasExploded = true;
         bombAnim.Play(explosionAnim);

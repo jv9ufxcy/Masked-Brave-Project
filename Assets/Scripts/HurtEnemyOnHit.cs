@@ -61,7 +61,7 @@ public class HurtEnemyOnHit : MonoBehaviour
                 enemySideDistance.x *= 1;//is on ur left
 
             bombHP.TakeDamage(damageToGive);
-            bombHP.DoStopAndKnockback(knockbackDuration, enemySideDistance, hitStopDuration);
+            //bombHP.DoStopAndKnockback(knockbackDuration, enemySideDistance, hitStopDuration);
             if (shouldScreenshakeOnHit)
                 Screenshake();
         }

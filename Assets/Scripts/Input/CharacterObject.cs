@@ -662,19 +662,18 @@ public class CharacterObject : MonoBehaviour
     public ParticleSystem bombDashParticle, landingParticle;
     [Space]
     [Header("Shooting Stats")]
-
+    public GameObject blastBlightGO;
     public float shootAnim, shootAnimMax;
     public Vector2 bulletVelocity = new Vector2(20f, 0), busterVelocity = new Vector2(30f, 0), critBusterVelocity = new Vector2(35f, 0);
     public float fireRate = 10f;
     private float timeToNextFire = 0f;
-    [SerializeField] private GameObject[] bullets;
+    public GameObject[] bullets;
     [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.5f, 1f);
     
     public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY)
     {
         shootAnim = shootAnimMax;
         var offset = new Vector3(offsetX*direction, offsetY, 0);
-        Debug.Log(bulletType);
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position+offset, Quaternion.identity);
         newbullet.GetComponent<BulletHit>().character = characterObject;
         newbullet.GetComponent<Hitbox>().character = characterObject;
@@ -870,7 +869,6 @@ public class CharacterObject : MonoBehaviour
         }
         Move(velocity);
         velocity.Scale(friction);
-        Debug.Log(IsGrounded());
     }
     void Move(Vector2 velocity)
     {
@@ -946,6 +944,18 @@ public class CharacterObject : MonoBehaviour
 
             //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
             //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+            if (curAtk.blastBlight > 0)
+            {
+                if (GetComponentInChildren<Blastblight>() != null)
+                {
+                    GetComponentInChildren<Blastblight>().AddBlast(curAtk.blastBlight);
+                }
+                else
+                {
+                    GameObject newBlight = Instantiate(blastBlightGO, transform.parent);
+                    newBlight.GetComponent<Blastblight>().AddBlast(curAtk.blastBlight);
+                }
+            }
 
             curHitAnim = targetHitAnim * .25f;
 
@@ -969,6 +979,19 @@ public class CharacterObject : MonoBehaviour
 
             //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
             //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+            //if (curAtk.blastBlight>0)
+            //{
+            //    if (attacker.GetComponentInChildren<Blastblight>() != null)
+            //    {
+            //        attacker.GetComponentInChildren<Blastblight>().AddBlast(curAtk.blastBlight);
+            //    }
+            //    else
+            //    {
+            //        GameObject newBlight = Instantiate(bullets[4], attacker.transform);
+            //        newBlight.GetComponent<Blastblight>().AddBlast(curAtk.blastBlight);
+            //        newBlight.transform.parent = attacker.transform;
+            //    }
+            //}
 
             curHitAnim = targetHitAnim * .25f;
 

@@ -8,9 +8,10 @@ public class BulletHit : MonoBehaviour
     private Rigidbody2D bulletRB;
     private AudioManager audioManager;
 
-    [SerializeField] private GameObject bulletHitEffect;
+    [SerializeField] private GameObject bulletHitEffect, blastBlightGO;
     [SerializeField] private string tagToHit = "Enemy";
     [SerializeField] private float lifeTime = 2f;
+    [SerializeField] private int blastBlight = 0;
     [SerializeField] private LayerMask whatLayersToHit;
 
     [SerializeField] private string bulletCollisionSound;
@@ -54,7 +55,22 @@ public class BulletHit : MonoBehaviour
                 RemoveForce();
                 Destroy(gameObject);
             }
-            Instantiate(bulletHitEffect, transform.position, transform.rotation);
+            if (blastBlight>0)
+            {
+                if (other.GetComponentInChildren<Blastblight>() != null)
+                {
+                    Debug.Log("Tagged with more blast");
+                    other.GetComponentInChildren<Blastblight>().AddBlast(blastBlight);
+                }
+                else
+                {
+                    Debug.Log("New Blastblight");
+                    GameObject bomb = Instantiate(blastBlightGO, other.transform);
+                    bomb.GetComponent<Blastblight>().AddBlast(blastBlight);
+                    bomb.transform.parent = other.transform;
+                }
+            }
+            //Instantiate(bulletHitEffect, transform.position, transform.rotation);
         }
     }
     public void ReverseForce()

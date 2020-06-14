@@ -138,6 +138,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -175,6 +176,7 @@ MonoBehaviour:
       hitStun: 30
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -212,6 +214,7 @@ MonoBehaviour:
       hitStun: 30
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 15, y: 5, z: 0}
@@ -263,6 +266,7 @@ MonoBehaviour:
       hitStun: 30
       hitStop: 15
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 35, y: 45, z: 0}
@@ -317,6 +321,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 6, z: 0}
@@ -361,6 +366,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 6, z: 0}
@@ -398,6 +404,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 15, y: -10, z: 0}
@@ -428,6 +435,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -439,6 +447,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -450,6 +459,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -461,6 +471,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -472,6 +483,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -483,6 +495,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -494,6 +507,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 10
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 0, z: 0}
@@ -540,9 +554,10 @@ MonoBehaviour:
     attacks:
     - start: 5
       length: 15
-      hitStun: 30
+      hitStun: 40
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: 1}
       knockback: {x: 0, y: 40, z: 0}
@@ -587,6 +602,7 @@ MonoBehaviour:
       hitStun: 30
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 15, y: 15, z: 0}
@@ -624,6 +640,7 @@ MonoBehaviour:
       hitStun: 30
       hitStop: 5
       damage: 0
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 30, y: 30, z: 0}
@@ -651,9 +668,10 @@ MonoBehaviour:
     attacks:
     - start: 5
       length: 15
-      hitStun: 30
+      hitStun: 40
       hitStop: 10
-      damage: 0
+      damage: 30
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 1}
       knockback: {x: 40, y: 40, z: 0}
@@ -744,7 +762,19 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.05
     events: []
-    attacks: []
+    attacks:
+    - start: 5
+      length: 20
+      hitStun: 20
+      hitStop: 5
+      damage: 5
+      blastBlight: 0
+      atkType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     meterReq: 0
     dashCooldownReq: 0
@@ -779,9 +809,10 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 5
-      hitStun: 3
+      hitStun: 5
       hitStop: 0
       damage: 1
+      blastBlight: 10
       atkType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 0, y: 0, z: 0}
@@ -822,9 +853,10 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 5
-      hitStun: 5
+      hitStun: 10
       hitStop: 0
       damage: 3
+      blastBlight: 20
       atkType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -865,9 +897,10 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 5
-      hitStun: 15
+      hitStun: 25
       hitStop: 10
       damage: 10
+      blastBlight: 50
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -916,12 +949,13 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 30
-      hitStun: 5
+      hitStun: 20
       hitStop: 5
       damage: 3
+      blastBlight: 15
       atkType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 30, y: 30, z: 0}
+      knockback: {x: 40, y: 40, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 1, y: 1, z: 1}
       cancelWindow: 0
@@ -988,6 +1022,7 @@ MonoBehaviour:
       hitStun: 5
       hitStop: 1
       damage: 5
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -1064,6 +1099,7 @@ MonoBehaviour:
       hitStun: 5
       hitStop: 5
       damage: 10
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -1147,6 +1183,7 @@ MonoBehaviour:
       hitStun: 5
       hitStop: 5
       damage: 10
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -1223,6 +1260,7 @@ MonoBehaviour:
       hitStun: 5
       hitStop: 5
       damage: 10
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -1287,6 +1325,7 @@ MonoBehaviour:
       hitStun: 5
       hitStop: 5
       damage: 10
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -1349,9 +1388,10 @@ MonoBehaviour:
     attacks:
     - start: 10
       length: 25
-      hitStun: 10
+      hitStun: 25
       hitStop: 5
       damage: 5
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 40, y: 25, z: 0}
@@ -1363,6 +1403,7 @@ MonoBehaviour:
       hitStun: 15
       hitStop: 5
       damage: 5
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 35, y: 20, z: 0}
@@ -1374,6 +1415,7 @@ MonoBehaviour:
       hitStun: 15
       hitStop: 5
       damage: 5
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 35, y: 20, z: 0}
@@ -1385,6 +1427,7 @@ MonoBehaviour:
       hitStun: 15
       hitStop: 5
       damage: 5
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 35, y: 15, z: 0}
@@ -1393,9 +1436,10 @@ MonoBehaviour:
       cancelWindow: 4
     - start: 55
       length: 60
-      hitStun: 15
+      hitStun: 35
       hitStop: 5
       damage: 10
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 45, y: 10, z: 0}
@@ -1430,9 +1474,10 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 30
-      hitStun: 10
+      hitStun: 20
       hitStop: 5
       damage: 5
+      blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 30, z: 0}
@@ -1469,10 +1514,23 @@ MonoBehaviour:
       length: 20
       hitStun: 30
       hitStop: 5
-      damage: 5
+      damage: 3
+      blastBlight: 0
       atkType: 0
-      hitAnim: {x: 1, y: 0}
-      knockback: {x: -15, y: -10, z: 0}
+      hitAnim: {x: -1, y: 1}
+      knockback: {x: -15, y: 15, z: 0}
+      hitBoxPos: {x: 1.5, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 4
+    - start: 15
+      length: 25
+      hitStun: 30
+      hitStop: 5
+      damage: 3
+      blastBlight: 0
+      atkType: 0
+      hitAnim: {x: -1, y: 1}
+      knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 1.5, y: 0, z: 0}
       hitBoxScale: {x: 3, y: 3, z: 1}
       cancelWindow: 4
@@ -2491,7 +2549,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -2501,7 +2559,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0
