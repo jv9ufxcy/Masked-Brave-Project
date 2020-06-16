@@ -6,26 +6,24 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     GameManager GM;
+    public static PauseManager pauseManager;
     private Player player;
     public static bool IsGamePaused = false;
     [SerializeField] string sceneToLoad;
     [SerializeField] private GameObject pauseMenuUI;
     private void Start()
     {
+        pauseManager = this;
         GM = GameManager.instance;
-        player = Player.Instance;
     }
-    // Update is called once per frame
-    void Update()
+    public void PauseButtonPressed()
     {
-        if (Input.GetButtonDown(player.startButtonName))
-        {
-            if (IsGamePaused)
-                Resume();
-            else
-                Pause();
-        }
+        if (IsGamePaused)
+            Resume();
+        else
+            Pause();
     }
+
     public void Resume()
     {
         pauseMenuUI.SetActive(false);

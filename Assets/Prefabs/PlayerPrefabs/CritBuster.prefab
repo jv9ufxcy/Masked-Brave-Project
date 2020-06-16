@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4596218175977772}
-  - component: {fileID: 114135425130313622}
   - component: {fileID: 4202738237509158532}
+  - component: {fileID: 114135425130313622}
   - component: {fileID: 212310986017103336}
   - component: {fileID: 95611479683623692}
   - component: {fileID: 50143070742357908}
@@ -38,6 +38,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4202738237509158532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946779624007576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e2bef508af07542ac0cc21ac4757a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileIndex: 22
+  character: {fileID: 0}
+  stateIndex: 0
 --- !u!114 &114135425130313622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,27 +74,12 @@ MonoBehaviour:
   blastBlight: 50
   whatLayersToHit:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 9728
   bulletCollisionSound: 
-  shouldScreenshakeOnHit: 1
+  shouldScreenshakeOnHit: 0
   shouldStopOnHit: 0
   canReflect: 1
   character: {fileID: 0}
---- !u!114 &4202738237509158532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946779624007576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e2bef508af07542ac0cc21ac4757a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectileIndex: 22
-  character: {fileID: 0}
-  stateIndex: 0
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0

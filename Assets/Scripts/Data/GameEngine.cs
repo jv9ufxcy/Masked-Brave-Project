@@ -22,9 +22,9 @@ public class GameEngine : MonoBehaviour
     {
         return coreData.moveLists[globalMovelistIndex];
     }
-    public void ToggleMovelist()
+    public void ToggleMovelist(int index)
     {
-        globalMovelistIndex++;
+        globalMovelistIndex=index;
         if (globalMovelistIndex>coreData.moveLists.Count-1)
         {
             globalMovelistIndex = 0;

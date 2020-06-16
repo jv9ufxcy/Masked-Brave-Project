@@ -814,7 +814,7 @@ MonoBehaviour:
       damage: 1
       blastBlight: 10
       atkType: 0
-      hitAnim: {x: 0, y: 0}
+      hitAnim: {x: 1, y: 0}
       knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0.25, y: 0.5, z: 0}
       hitBoxScale: {x: 0.25, y: 0.25, z: 1}
@@ -858,7 +858,7 @@ MonoBehaviour:
       damage: 3
       blastBlight: 20
       atkType: 0
-      hitAnim: {x: 0, y: 0}
+      hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 0.25, y: 0.5, z: 0}
       hitBoxScale: {x: 0.25, y: 0.25, z: 1}
@@ -1490,6 +1490,56 @@ MonoBehaviour:
     groundedReq: 0
     wallReq: 0
   - stateName: GravityBomb
+    index: 0
+    length: 20
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 5
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 2
+    - start: 0
+      end: 20
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 2
+    attacks:
+    - start: 5
+      length: 20
+      hitStun: 30
+      hitStop: 5
+      damage: 3
+      blastBlight: 0
+      atkType: 0
+      hitAnim: {x: -1, y: 1}
+      knockback: {x: -15, y: 15, z: 0}
+      hitBoxPos: {x: 1.5, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 4
+    - start: 15
+      length: 25
+      hitStun: 30
+      hitStop: 5
+      damage: 3
+      blastBlight: 0
+      atkType: 0
+      hitAnim: {x: -1, y: 1}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 1.5, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 4
+    jumpReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+  - stateName: BlastBomb
     index: 0
     length: 20
     loop: 0
@@ -2367,7 +2417,7 @@ MonoBehaviour:
         priority: 1
       omitList: 
       nextFollowups: 0100000002000000
-  - name: PursuerMajin
+  - name: WindGod
     commandStates:
     - stateName: Grounded
       aerial: 0
@@ -2497,6 +2547,136 @@ MonoBehaviour:
         priority: 0
       omitList: 
       nextFollowups: 0100000002000000
+  - name: PursuerMajin
+    commandStates:
+    - stateName: Grounded
+      aerial: 0
+      wall: 0
+      explicitState: 0
+      state: 0
+      commandSteps:
+      - idIndex: 0
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 010000000200000003000000
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 200
+          height: 200
+        activated: 1
+        priority: 0
+      - idIndex: 1
+        command:
+          motionCommand: 0
+          input: 0
+          state: 1
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 58
+          y: 115
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      - idIndex: 2
+        command:
+          motionCommand: 0
+          input: 2
+          state: 2
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      - idIndex: 3
+        command:
+          motionCommand: 0
+          input: 1
+          state: 3
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 338
+          y: 53
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      omitList: 
+      nextFollowups: 010000000200000003000000
+    - stateName: Aerial
+      aerial: 1
+      wall: 0
+      explicitState: 0
+      state: 0
+      commandSteps:
+      - idIndex: 0
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 0100000002000000
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 200
+          height: 200
+        activated: 1
+        priority: 0
+      - idIndex: 1
+        command:
+          motionCommand: 0
+          input: 1
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 182
+          y: 54
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      - idIndex: 2
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 329
+          y: 79
+          width: 175
+          height: 50
+        activated: 0
+        priority: 0
+      omitList: 
+      nextFollowups: 0100000002000000
   globalPrefabs:
   - {fileID: 4847973911462044704, guid: 141a30506b4d9374a94801f03e7669b4, type: 3}
   rawInputs:
@@ -2549,7 +2729,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 2
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -2559,7 +2739,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 2
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -2583,4 +2763,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 1
+  currentMovelistIndex: 4

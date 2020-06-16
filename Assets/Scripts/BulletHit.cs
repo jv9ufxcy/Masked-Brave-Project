@@ -53,7 +53,7 @@ public class BulletHit : MonoBehaviour
             if (shouldStopOnHit)
             {
                 RemoveForce();
-                Destroy(gameObject);
+                Destroy(gameObject,.2f);
             }
             if (blastBlight>0)
             {

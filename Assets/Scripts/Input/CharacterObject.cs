@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Security.Cryptography;
 
 public class CharacterObject : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class CharacterObject : MonoBehaviour
     public Rigidbody2D myRB;
     public BoxCollider2D boxCollider2D;
     public Controller2D controller;
+    public RadialMenuController henshin;
 
     [Header("CurrentState")]
     public int currentState;
@@ -52,34 +54,58 @@ public class CharacterObject : MonoBehaviour
     }
 
     // Update is called once per frame
+    private void Update()
+    {
+        switch (controlType)
+        {
+            case ControlType.AI:
+                break;
+            case ControlType.PLAYER:
+                PauseMenu();
+                Henshin();
+                if (!PauseManager.IsGamePaused)
+                {
+                    JumpCut();
+                    DashCut();
+                    ChargeAttack();
+                }
+                leftStick = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
+                break;
+            default:
+                break;
+        }
+    }
     void FixedUpdate()
     {
-        if (GameEngine.hitStop<=0)
+        if (!PauseManager.IsGamePaused)
         {
-            //UpdateInputBuffer
-
-            //Update Input
-            //HitCancel();
-            switch (controlType)
+            if (GameEngine.hitStop <= 0)
             {
-                case ControlType.AI:
-                    UpdateAI();
-                    break;
-                case ControlType.PLAYER:
-                    UpdateInput();
-                    break;
-                default:
-                    break;
-            }
+                //UpdateInputBuffer
 
-            //Update State Machine
-            UpdateState();
-            //Update Physcis
-            UpdatePhysics();
-            //
+                //Update Input
+                //HitCancel();
+                switch (controlType)
+                {
+                    case ControlType.AI:
+                        UpdateAI();
+                        break;
+                    case ControlType.PLAYER:
+                        UpdateInput();
+                        break;
+                    default:
+                        break;
+                }
+
+                //Update State Machine
+                UpdateState();
+                //Update Physcis
+                UpdatePhysics();
+                //
+            }
+            UpdateTimers();
+            UpdateAnimator();
         }
-        UpdateTimers();
-        UpdateAnimator();
     }
 
     void UpdateTimers()
@@ -302,9 +328,11 @@ public class CharacterObject : MonoBehaviour
                 
         }
     }
-    void ToggleMoveList()
+    public void ToggleMoveList(int index)
     {
-        GameEngine.gameEngine.ToggleMovelist();
+        PlayFlashParticle(henshinColors[index]);
+        GameEngine.SetHitPause(10f);
+        GameEngine.gameEngine.ToggleMovelist(index);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
     }
     private void Dash(float dashSpeed)
@@ -478,15 +506,7 @@ public class CharacterObject : MonoBehaviour
 
     void UpdateInput()
     {
-        JumpCut();
-        DashCut();
-        ChargeAttack();
-
-        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[4].name))
-        {
-            ToggleMoveList();
-        }
-        leftStick = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
+        
 
         inputBuffer.Update();
 
@@ -545,6 +565,9 @@ public class CharacterObject : MonoBehaviour
             StartState(nextCommand.state);
         }
     }
+
+    
+
     public bool CheckInputCommand(InputCommand _in)
     {
         if (inputBuffer.buttonCommandCheck[_in.input] < 0) { return false; }
@@ -656,6 +679,7 @@ public class CharacterObject : MonoBehaviour
     public Transform jumpChargeParticles;
     public Transform flashParticles;
     public Color[] turboColors;
+    public Color[] henshinColors;
     public List<ParticleSystem> primaryGunParticles = new List<ParticleSystem>();
     public List<ParticleSystem> primaryJumpParticles = new List<ParticleSystem>();
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
@@ -747,6 +771,23 @@ public class CharacterObject : MonoBehaviour
             pmain.startColor = c;
             p.Play();
         }
+    }
+    private void Henshin()
+    {
+        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[4].name))//open radial menu
+        {
+            GameEngine.SetHitPause(10f);
+            henshin.ActivateMenu();
+        }
+        if (Input.GetButtonUp(GameEngine.coreData.rawInputs[4].name))//open radial menu
+        {
+            henshin.SelectForm();
+        }
+    }
+    private void PauseMenu()
+    {
+        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[8].name))
+            PauseManager.pauseManager.PauseButtonPressed();
     }
     private static void Screenshake()
     {
@@ -946,15 +987,7 @@ public class CharacterObject : MonoBehaviour
             //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
             if (curAtk.blastBlight > 0)
             {
-                if (GetComponentInChildren<Blastblight>() != null)
-                {
-                    GetComponentInChildren<Blastblight>().AddBlast(curAtk.blastBlight);
-                }
-                else
-                {
-                    GameObject newBlight = Instantiate(blastBlightGO, transform.parent);
-                    newBlight.GetComponent<Blastblight>().AddBlast(curAtk.blastBlight);
-                }
+                ActivateBlastblight(curAtk);
             }
 
             curHitAnim = targetHitAnim * .25f;
@@ -1005,6 +1038,21 @@ public class CharacterObject : MonoBehaviour
         StartState(hitStunStateIndex);
         GlobalPrefab(0);
     }
+
+    private void ActivateBlastblight(AttackEvent curAtk)
+    {
+        if (GetComponentInChildren<Blastblight>() != null)//if blastblight is already childed to you
+        {
+            GetComponentInChildren<Blastblight>().AddBlast(curAtk.blastBlight);
+        }
+        else
+        {
+            GameObject newBlight = Instantiate(blastBlightGO, transform);//if not create a new blastblight go and child it to you
+            newBlight.transform.parent = transform;
+            newBlight.GetComponent<Blastblight>().AddBlast(curAtk.blastBlight);
+        }
+    }
+
     [Tooltip("hitstun index in coreData")]
     public int hitStunStateIndex = 7;//hitstun state in coreData
     public float hitStun;
