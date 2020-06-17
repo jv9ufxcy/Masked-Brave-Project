@@ -122,7 +122,7 @@ public class CommandState
     public string stateName;
     //flags
     public bool aerial;
-    public bool wall;
+    //public bool wall;
     //explicit state
     public bool explicitState;
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]

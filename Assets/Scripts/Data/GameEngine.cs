@@ -16,23 +16,27 @@ public class GameEngine : MonoBehaviour
 
     public CharacterObject mainCharacter;
 
-    public int globalMovelistIndex;
+    public int globalMovelistIndex, maxIndex=2;
 
     public MoveList CurrentMoveList()
     {
         return coreData.moveLists[globalMovelistIndex];
     }
-    public void ToggleMovelist(int index)
+    public void ChangeMovelist(int index)
     {
         globalMovelistIndex=index;
         if (globalMovelistIndex>coreData.moveLists.Count-1)
         {
             globalMovelistIndex = 0;
         }
-        //if (globalMovelistIndex<0)
-        //{
-        //    globalMovelistIndex = coreData.moveLists.Count - 1;
-        //}
+    }
+    public void ToggleMovelist()
+    {
+        globalMovelistIndex++;
+        if (globalMovelistIndex>maxIndex)
+        {
+            globalMovelistIndex = 0;
+        }
     }
     // Use this for initialization
     void Start ()

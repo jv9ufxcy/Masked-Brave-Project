@@ -104,27 +104,27 @@ public class RadialMenuController : MonoBehaviour
     }
     public void SwitchBrave()
     {
-        player.ToggleMoveList(0);
+        player.DOChangeMovelist(0);
     }
 
     public void SwitchBomb()
     {
-        player.ToggleMoveList(1);
+        player.DOChangeMovelist(1);
     }
 
     public void SwitchPursuer()
     {
-        player.ToggleMoveList(2);
+        player.DOChangeMovelist(2);
     }
 
     public void SwitchWindGod()
     {
-        player.ToggleMoveList(3);
+        player.DOChangeMovelist(3);
     }
 
     public void SwitchYellow()
     {
-        player.ToggleMoveList(4);
+        player.DOChangeMovelist(4);
     }
 
 }

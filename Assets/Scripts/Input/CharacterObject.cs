@@ -328,11 +328,18 @@ public class CharacterObject : MonoBehaviour
                 
         }
     }
-    public void ToggleMoveList(int index)
+    public void DOChangeMovelist(int index)
     {
         PlayFlashParticle(henshinColors[index]);
         GameEngine.SetHitPause(10f);
-        GameEngine.gameEngine.ToggleMovelist(index);
+        GameEngine.gameEngine.ChangeMovelist(index);
+        characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
+    }
+    public void ToggleMovelist()
+    {
+        GameEngine.SetHitPause(10f);
+        GameEngine.gameEngine.ToggleMovelist();
+        PlayFlashParticle(henshinColors[GameEngine.gameEngine.globalMovelistIndex]);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
     }
     private void Dash(float dashSpeed)
@@ -772,16 +779,34 @@ public class CharacterObject : MonoBehaviour
             p.Play();
         }
     }
+    [SerializeField] private int menuTimer, menuDelay=12;
     private void Henshin()
     {
-        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[4].name))//open radial menu
+        if (Input.GetButton(GameEngine.coreData.rawInputs[4].name))//open radial menu
+        {
+            if (menuTimer<menuDelay)
+            {
+                menuTimer++;
+            }
+        }
+        if (menuTimer>=menuDelay)
         {
             GameEngine.SetHitPause(10f);
             henshin.ActivateMenu();
+            menuTimer++;
         }
         if (Input.GetButtonUp(GameEngine.coreData.rawInputs[4].name))//open radial menu
         {
-            henshin.SelectForm();
+            if (menuTimer<menuDelay)
+            {
+                ToggleMovelist();
+                menuTimer = 0;
+            }
+            else
+            {
+                henshin.SelectForm();
+                menuTimer = 0;
+            }
         }
     }
     private void PauseMenu()
@@ -969,7 +994,7 @@ public class CharacterObject : MonoBehaviour
 
     public void GetHit(CharacterObject attacker, int projectileIndex)
     {
-        if (projectileIndex==0)
+        if (projectileIndex==0)//not a projectile
         {
             AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
             Vector3 nextKnockback = curAtk.knockback;
