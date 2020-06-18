@@ -35,7 +35,7 @@ public class CharacterState
         }
         if (wallReq)
         {
-            if (character.wallFlag) { return false; }
+            if (!character.wallFlag) { return false; }
         }
 
         if (dashCooldownReq>0)

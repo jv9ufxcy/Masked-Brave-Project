@@ -79,7 +79,7 @@ public class RadialMenuController : MonoBehaviour
             switch (selectedOption)
             {
                 case 0:
-                    SwitchWindGod();
+                    //SwitchWindGod();
                     break;
                 case 1:
                     SwitchPursuer();

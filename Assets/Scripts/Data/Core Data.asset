@@ -723,13 +723,13 @@ MonoBehaviour:
     blendRate: 0.05
     events:
     - start: 0
-      end: 10.051282
+      end: 3
       active: 1
       script: 1
       parameters:
       - name: 
-        val: -10
-    - start: 10
+        val: -15
+    - start: 5
       end: 20
       active: 1
       script: 3
@@ -1679,7 +1679,6 @@ MonoBehaviour:
     commandStates:
     - stateName: Grounded
       aerial: 0
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -1847,7 +1846,6 @@ MonoBehaviour:
       nextFollowups: 01000000020000000300000004000000070000000800000009000000
     - stateName: Aerial
       aerial: 1
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2017,7 +2015,6 @@ MonoBehaviour:
     commandStates:
     - stateName: Grounded
       aerial: 0
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2121,7 +2118,6 @@ MonoBehaviour:
       nextFollowups: 0100000002000000030000000400000005000000
     - stateName: Aerial
       aerial: 1
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2131,7 +2127,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000
+        followUps: 01000000020000000300000004000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -2189,13 +2185,28 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 4
+        command:
+          motionCommand: 0
+          input: 0
+          state: 18
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 429
+          y: 122
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 010000000200000003000000
+      nextFollowups: 01000000020000000300000004000000
   - name: Pursuer
     commandStates:
     - stateName: Grounded
       aerial: 0
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2363,7 +2374,6 @@ MonoBehaviour:
       nextFollowups: 01000000020000000300000008000000
     - stateName: Aerial
       aerial: 1
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2373,7 +2383,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 0100000002000000
+        followUps: 010000000200000003000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -2415,13 +2425,28 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 1
+      - idIndex: 3
+        command:
+          motionCommand: 0
+          input: 0
+          state: 18
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 270
+          y: 65
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 0100000002000000
+      nextFollowups: 010000000200000003000000
   - name: WindGod
     commandStates:
     - stateName: Grounded
       aerial: 0
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2493,7 +2518,6 @@ MonoBehaviour:
       nextFollowups: 010000000200000003000000
     - stateName: Aerial
       aerial: 1
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2551,7 +2575,6 @@ MonoBehaviour:
     commandStates:
     - stateName: Grounded
       aerial: 0
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2623,7 +2646,6 @@ MonoBehaviour:
       nextFollowups: 010000000200000003000000
     - stateName: Aerial
       aerial: 1
-      wall: 0
       explicitState: 0
       state: 0
       commandSteps:
@@ -2763,4 +2785,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 0
+  currentMovelistIndex: 1

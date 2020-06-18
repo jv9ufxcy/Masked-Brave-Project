@@ -389,6 +389,7 @@ MonoBehaviour:
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
   henshin: {fileID: 0}
+  afterImage: []
   currentState: 0
   currentStateTime: 0
   prevStateTime: 0
@@ -402,6 +403,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: d44bb395f89a77147b990ae935deb318, type: 2}
   - {fileID: 9100000, guid: e700ae716bbfc4645a97d018efeecab4, type: 2}
   - {fileID: 9100000, guid: 7cc0cdd34c08b0d46880c0601057af65, type: 2}
+  spriteRend: {fileID: 0}
   controlType: 1
   hitbox: {fileID: 7513360881928160874}
   canCancel: 0
@@ -415,6 +417,7 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 10
+  airMod: 1
   jumpPow: 12
   currentCommandState: 0
   currentCommandStep: 0
@@ -466,6 +469,13 @@ MonoBehaviour:
   bulletSpawnPos: {x: 0.5, y: 1}
   menuTimer: 0
   menuDelay: 12
+  fadeTime: 0.5
+  shortDashInterval: 0.05
+  longDashInterval: 0.05
+  afterImageParent: {fileID: 0}
+  whatCountsAsGround:
+    serializedVersion: 2
+    m_Bits: 256
   aerialFlag: 0
   wallFlag: 0
   isOnGround: 0
@@ -475,10 +485,6 @@ MonoBehaviour:
   wallDetectWidth: 0
   animAerialState: 0
   animFallSpeed: 0
-  groundDetectPoint: {fileID: 2833465961454588525}
-  whatCountsAsGround:
-    serializedVersion: 2
-    m_Bits: 256
   jumps: 0
   jumpMax: 1
   coyoteTimer: 1

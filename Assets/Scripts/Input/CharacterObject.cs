@@ -1,10 +1,8 @@
 ﻿using Cinemachine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using System.Security.Cryptography;
 
 public class CharacterObject : MonoBehaviour
 {
@@ -21,6 +19,7 @@ public class CharacterObject : MonoBehaviour
     public BoxCollider2D boxCollider2D;
     public Controller2D controller;
     public RadialMenuController henshin;
+    public AfterImagePool[] afterImage;
 
     [Header("CurrentState")]
     public int currentState;
@@ -33,6 +32,7 @@ public class CharacterObject : MonoBehaviour
     public GameObject draw;
     public Animator characterAnim;
     public RuntimeAnimatorController[] formAnims;
+    public SpriteRenderer spriteRend;
     
     public enum ControlType { AI, PLAYER };
     public ControlType controlType;
@@ -51,6 +51,7 @@ public class CharacterObject : MonoBehaviour
         myRB = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
+        spriteRend = draw.GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -175,7 +176,10 @@ public class CharacterObject : MonoBehaviour
         {
             if (leftStick.x > 0) { direction = 1; transform.localScale = new Vector3(1f, 1f, 1f); }
             else if (leftStick.x < 0) { direction = -1; transform.localScale = new Vector3(-1f, 1f, 1f); }
-            
+            if (Mathf.Abs(airMod) == 2)
+            {
+                //ShowAfterImage();
+            }
         }
     }
     void UpdateState()
@@ -375,8 +379,8 @@ public class CharacterObject : MonoBehaviour
         //ShowAfterImage(bombTrailColor, bombTrailFadeColor, shortDashInterval);
         bombDashParticle.Play();
         yield return new WaitForSeconds(.6f);
-        bombDashParticle.Stop();
-        Debug.Log("Dash particle stopped");
+        //bombDashParticle.Stop();
+        //Debug.Log("Dash particle stopped");
     }
     void HorizontalDrag(float x){ velocity.x = x; }
     void VerticalDrag(float y){ velocity.y = y; }
@@ -386,8 +390,8 @@ public class CharacterObject : MonoBehaviour
         jumps--;
         //hasLanded = false;
         landingParticle.Play();
-        aerialTimer = coyoteTimer+1f;
-        aerialFlag = true;
+        //    aerialTimer = coyoteTimer+1f;
+        //    aerialFlag = true;
     }
     void CanCancel(float _val)
     {
@@ -426,7 +430,16 @@ public class CharacterObject : MonoBehaviour
             {
                 _mov = -1;
             }
-            velocity.x = _mov * moveSpeed * _pow;
+            if (aerialFlag)
+            {
+                velocity.x = (airMod * _mov) * moveSpeed * _pow;
+                if (Mathf.Abs(airMod)==2)
+                {
+                    //ShowAfterImage();
+                }
+            }
+            else
+                velocity.x = (_mov) * moveSpeed * _pow;
         }
         if (hitStun <= 0)
         {
@@ -448,7 +461,7 @@ public class CharacterObject : MonoBehaviour
                 {
                     _mov = -1;
                 }
-                velocity.x = _mov * moveSpeed * _pow;
+                velocity.x = (airMod * _mov) * moveSpeed * _pow;
             }
         }
         if (hitStun <= 0)
@@ -463,8 +476,9 @@ public class CharacterObject : MonoBehaviour
 
     public float deadzone = 0.2f;
 
-    public float moveSpeed = 0.01f;
-    public float jumpPow = 1;
+    public float moveSpeed = 10f;
+    public float airMod = 1f;
+    public float jumpPow = 12;
 
     void StartState(int _newState)
     {
@@ -833,34 +847,71 @@ public class CharacterObject : MonoBehaviour
     }
     void DashCut()
     {
-        if (currentState == 2||currentState==18)//dash and airdashState
+        if (currentState == 2 || currentState == 18)//dash and airdashState
         {
             if (Input.GetButtonUp(GameEngine.coreData.rawInputs[2].name))
             {
                 dashCooldown = 0;
                 StartState(0);
             }
-            if (Mathf.Abs(Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==1)
-            {
-                if ((Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==0)
-                {
-                    dashCooldown = 0;
-                    StartState(0);
-                }
-            }
+            //if (Mathf.Abs(Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==1)
+            //{
+            //    if ((Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==0)
+            //    {
+            //        dashCooldown = 0;
+            //        StartState(0);
+            //    }
+            //}
+            DashJump();
         }
+        
+    }
+
+    private void DashJump()
+    {
+        if (!aerialFlag || wallFlag)//on ground
+        {
+            if (Input.GetButton(GameEngine.coreData.rawInputs[2].name))
+                airMod = 2f;
+            if (Input.GetButtonUp(GameEngine.coreData.rawInputs[2].name))
+                airMod = 1f;
+            if (!Input.GetButton(GameEngine.coreData.rawInputs[2].name) && isOnWall)
+                airMod = 1f;
+        }
+    }
+    [SerializeField]
+    private float fadeTime = 0.5f, shortDashInterval = 0.05f, longDashInterval = 0.05f;
+    [SerializeField]
+    private Transform afterImageParent;
+    public void ShowAfterImage()
+    {
+        Sequence s = DOTween.Sequence();
+
+        for (int i = 0; i < afterImageParent.childCount; i++)
+        {
+            Transform currentGhost = afterImageParent.GetChild(i);
+            s.AppendCallback(() => currentGhost.position = draw.transform.position);
+            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = direction!=1);
+            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().sprite = spriteRend.sprite);
+            s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(henshinColors[GameEngine.gameEngine.globalMovelistIndex], 0));
+            s.AppendCallback(() => FadeSprite(currentGhost, henshinColors[6]));
+            s.AppendInterval(shortDashInterval);
+        }
+    }
+    public void FadeSprite(Transform current, Color fadeColor)
+    {
+        current.GetComponent<SpriteRenderer>().material.DOKill();
+        current.GetComponent<SpriteRenderer>().material.DOColor(fadeColor, fadeTime);
     }
     void ChargeUp(float _val)
     {
         shotPressure += _val;
     }
     [Header("Grounded Check")]
-    public bool aerialFlag,wallFlag,isOnGround,isOnWall;
-    [SerializeField] private float aerialTimer, groundDetectHeight,wallDetectWidth, animAerialState, animFallSpeed;
-    [SerializeField]
-    private Transform groundDetectPoint;
     [SerializeField]
     private LayerMask whatCountsAsGround;
+    public bool aerialFlag,wallFlag,isOnGround,isOnWall;
+    [SerializeField] private float aerialTimer, groundDetectHeight,wallDetectWidth, animAerialState, animFallSpeed;
 
     public int jumps, jumpMax = 1;
 
@@ -887,7 +938,7 @@ public class CharacterObject : MonoBehaviour
         if (IsGrounded())
         {
             aerialFlag = false;
-            wallFlag = false;
+            //wallFlag = false;
             aerialTimer = 0;
             animAerialState = 0f;
             jumps = jumpMax;
@@ -911,27 +962,27 @@ public class CharacterObject : MonoBehaviour
                 {
                     jumps--;
                 }
-            }
-            if (IsOnWall() && leftStick.x == direction&&velocity.y<0)
-            {
-                velocity.y = -1.7f;
-                animAerialState = -1f;
-                wallFlag = true;
-                Debug.Log("Wall Sliding Time: " + wallFlag);
-            }
-            else 
-            {
-                if (controller.collisions.above || controller.collisions.below)
-                    velocity.y = 0;
+                if (IsOnWall() && leftStick.x == direction && velocity.y < 0)//wall
+                {
+                    velocity.y = -1.7f;
+                    animAerialState = -1f;
+                    wallFlag = true;
+                    Debug.Log("Wall Sliding Time: " + wallFlag);
+                }
                 else
                 {
-                    velocity.y += gravity;
-                    hasLanded = false;
-                    //Debug.Log("Gravity is happening: " + velocity.y);
-                }
+                    if (controller.collisions.above || controller.collisions.below)
+                        velocity.y = 0;
+                    else
+                    {
+                        velocity.y += gravity;
+                        hasLanded = false;
+                    }
 
-                wallFlag = false;
+                    wallFlag = false;
+                }
             }
+            
         }
         Move(velocity);
         velocity.Scale(friction);
@@ -977,6 +1028,7 @@ public class CharacterObject : MonoBehaviour
         //DashReset();
         if (!hasLanded)
         {
+            airMod = 1f;
             //velocity.y = 0f;
             animFallSpeed = 0f;
             //isDashing = false;
