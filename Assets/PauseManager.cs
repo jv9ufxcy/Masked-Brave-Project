@@ -11,6 +11,7 @@ public class PauseManager : MonoBehaviour
     public static bool IsGamePaused = false;
     [SerializeField] string sceneToLoad;
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject[] skillList;
     private void Start()
     {
         pauseManager = this;
@@ -50,5 +51,40 @@ public class PauseManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void SkillListChange()
+    {
+        for (int i = 0; i < skillList.Length; i++)
+        {
+            if (i == GameEngine.gameEngine.globalMovelistIndex)
+            {
+                skillList[i].SetActive(true);
+            }
+            else
+            {
+                skillList[i].SetActive(false);
+            }
+        }
+        switch (GameEngine.gameEngine.globalMovelistIndex)
+        {
+            case 0://brave
+                
+                break;
+            case 1://bomb
+                
+                break;
+            case 2://pursuer
+                
+                break;
+            case 3://windgod
+                
+                break;
+            case 4://majin
+
+                break;
+            default:
+                break;
+        }
     }
 }

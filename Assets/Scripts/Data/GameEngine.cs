@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameEngine : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GameEngine : MonoBehaviour
     public CharacterObject mainCharacter;
 
     public int globalMovelistIndex, maxIndex=2;
+    public UnityEvent OnFormChange;
 
     public MoveList CurrentMoveList()
     {
@@ -29,6 +31,7 @@ public class GameEngine : MonoBehaviour
         {
             globalMovelistIndex = 0;
         }
+        OnFormChange.Invoke();
     }
     public void ToggleMovelist()
     {
@@ -37,6 +40,7 @@ public class GameEngine : MonoBehaviour
         {
             globalMovelistIndex = 0;
         }
+        OnFormChange.Invoke();
     }
     // Use this for initialization
     void Start ()
