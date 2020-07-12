@@ -14278,11 +14278,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5628300968279044801}
   - component: {fileID: 5628300968279044803}
+  - component: {fileID: 3370682605297422044}
+  - component: {fileID: 1818449918886540405}
+  - component: {fileID: 4117978204118455134}
   - component: {fileID: 5628300968279044862}
   - component: {fileID: 5628300968279044863}
-  - component: {fileID: 1818449918886540405}
-  - component: {fileID: 5628300968279044861}
-  - component: {fileID: 5628300968279044802}
   m_Layer: 12
   m_Name: Kinzecter
   m_TagString: Projectile
@@ -14338,6 +14338,74 @@ MonoBehaviour:
   eStock: 0
   ammoStock: 0
   _effect: 0
+  thrower: {fileID: 0}
+--- !u!114 &3370682605297422044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5628300968279044858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletHitEffect: {fileID: 0}
+  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
+    type: 3}
+  tagToHit: Enemy
+  lifeTime: 1000
+  blastBlight: 0
+  whatLayersToHit:
+    serializedVersion: 2
+    m_Bits: 8704
+  bulletCollisionSound: 
+  shouldScreenshakeOnHit: 0
+  shouldStopOnHit: 0
+  canReflect: 0
+  character: {fileID: 0}
+--- !u!61 &1818449918886540405
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5628300968279044858}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1.5}
+  m_EdgeRadius: 0
+--- !u!114 &4117978204118455134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5628300968279044858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e2bef508af07542ac0cc21ac4757a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileIndex: 12
+  character: {fileID: 0}
+  stateIndex: 0
 --- !u!212 &5628300968279044862
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14405,74 +14473,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1818449918886540405
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628300968279044858}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: fd6104433e19d8749af3801d183278e3, type: 2}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5}
-  m_EdgeRadius: 0
---- !u!50 &5628300968279044861
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628300968279044858}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 1.5
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!114 &5628300968279044802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628300968279044858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4008ea7da11d3db4abb8cdfa5ecb9981, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _effect: 0
-  hitDistance: {x: 2, y: 0}
-  damageToGive: 1
-  meterToGive: 1
-  hitStopDuration: 0.1
-  knockbackDuration: 0.25
-  shouldScreenshakeOnHit: 0
-  shouldHitStop: 0
-  hitSpark: {fileID: 2643569369221194852}
 --- !u!1 &5628300969770413707
 GameObject:
   m_ObjectHideFlags: 0
@@ -19243,12 +19243,6 @@ PrefabInstance:
 --- !u!4 &2765784663525397112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
-    type: 3}
-  m_PrefabInstance: {fileID: 7289504784527886060}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2643569369221194852 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4721564266111689352, guid: 141a30506b4d9374a94801f03e7669b4,
     type: 3}
   m_PrefabInstance: {fileID: 7289504784527886060}
   m_PrefabAsset: {fileID: 0}

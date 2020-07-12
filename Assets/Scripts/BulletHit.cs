@@ -59,12 +59,10 @@ public class BulletHit : MonoBehaviour
             {
                 if (other.GetComponentInChildren<Blastblight>() != null)
                 {
-                    Debug.Log("Tagged with more blast");
                     other.GetComponentInChildren<Blastblight>().AddBlast(blastBlight);
                 }
                 else
                 {
-                    Debug.Log("New Blastblight");
                     GameObject bomb = Instantiate(blastBlightGO, other.transform);
                     bomb.GetComponent<Blastblight>().AddBlast(blastBlight);
                     bomb.transform.parent = other.transform;

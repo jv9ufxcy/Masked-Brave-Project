@@ -328,7 +328,10 @@ public class CharacterObject : MonoBehaviour
                 break;
             case 11:
                 Dash(_params[0].val);
-                    break;
+                break;
+            case 12:
+                SpawnKinzecter(_params[0].val, _params[1].val, _params[2].val);
+                break;
                 
         }
     }
@@ -374,12 +377,12 @@ public class CharacterObject : MonoBehaviour
     }
     IEnumerator DashWait()
     {
-        DOVirtual.Float(velocity.x, 0, .6f, HorizontalDrag);
-        DOVirtual.Float(velocity.y, 0, .6f, VerticalDrag);
+        DOVirtual.Float(velocity.x, 0, dashLength, HorizontalDrag);
+        DOVirtual.Float(velocity.y, 0, dashLength, VerticalDrag);
         //ShowAfterImage(bombTrailColor, bombTrailFadeColor, shortDashInterval);
         bombDashParticle.Play();
         yield return new WaitForSeconds(.6f);
-        //bombDashParticle.Stop();
+        bombDashParticle.Stop();
         //Debug.Log("Dash particle stopped");
     }
     void HorizontalDrag(float x){ velocity.x = x; }
@@ -714,7 +717,20 @@ public class CharacterObject : MonoBehaviour
     private float timeToNextFire = 0f;
     public GameObject[] bullets;
     [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.5f, 1f);
-    
+    public bool isKinzecterOut;
+    public void SpawnKinzecter(float bulletType, float offsetX, float offsetY)
+    {
+        if (!isKinzecterOut)
+        {
+            var offset = new Vector3(offsetX * direction, offsetY, 0);
+            GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position + offset, Quaternion.identity);
+            newbullet.transform.localScale = new Vector3(direction, 1, 1);
+            newbullet.GetComponent<Kinzecter>().ThrowKinzecter(characterObject);
+            newbullet.GetComponent<BulletHit>().character = characterObject;
+            newbullet.GetComponent<Hitbox>().character = characterObject;
+            isKinzecterOut = true;
+        }
+    }
     public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY)
     {
         shootAnim = shootAnimMax;
@@ -880,7 +896,7 @@ public class CharacterObject : MonoBehaviour
         }
     }
     [SerializeField]
-    private float fadeTime = 0.5f, shortDashInterval = 0.05f, longDashInterval = 0.05f;
+    private float fadeTime = 0.5f, shortDashInterval = 0.05f, dashLength = 0.45f;
     [SerializeField]
     private Transform afterImageParent;
     public void ShowAfterImage()
@@ -967,7 +983,7 @@ public class CharacterObject : MonoBehaviour
                     velocity.y = -1.7f;
                     animAerialState = -1f;
                     wallFlag = true;
-                    Debug.Log("Wall Sliding Time: " + wallFlag);
+
                 }
                 else
                 {
