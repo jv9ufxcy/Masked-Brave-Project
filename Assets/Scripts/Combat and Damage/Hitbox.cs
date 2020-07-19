@@ -34,7 +34,6 @@ public class Hitbox : MonoBehaviour
                 {
                     enemies.Add(collision);
                     victim.GetHit(character, projectileIndex);
-                    Debug.Log("Standard Hit");
                 }
 
             }
@@ -48,7 +47,6 @@ public class Hitbox : MonoBehaviour
                 {
                     enemies.Add(collision);
                     victim.GetHit(character, projectileIndex);
-                    Debug.Log("Projectile Hit");
                 }
             }
         }

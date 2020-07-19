@@ -122,7 +122,7 @@ public class HealthManager : MonoBehaviour
 {
     public enum UIType { player, enemy }
     public UIType ui = UIType.player;
-    public float maxHealth = 100, minHealth = 100;
+    public float maxHealth = 100, minHealth = 0;
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
@@ -141,7 +141,7 @@ public class HealthManager : MonoBehaviour
     {
         character = GetComponentInParent<CharacterObject>();
         //respawner = GameObject.FindGameObjectWithTag("Respawner").GetComponent<PlayerRespawner>();
-        ResetHealthToMax();
+        SetDefaultMeter();
 
         switch (ui)
         {
@@ -258,11 +258,47 @@ public class HealthManager : MonoBehaviour
     }
 
 
-    void ResetHealthToMax()
+    void SetDefaultMeter()
     {
-        currentHealth = maxHealth;
+        currentHealth = 0;
+        UpdateFill();
+        UpdateFillForHeal();
     }
+    public void ChangeHealth(int _val)
+    {
+        currentHealth += _val;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        damageShowTimer = damageShowTime;//set the timer back to max when injured happens
+        if (_val>0)
+        {
 
+            isHealing = true;
+            switch (ui)
+            {
+                case UIType.player:
+                    UpdateFillForHeal();
+                    break;
+                case UIType.enemy:
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
+            switch (ui)
+            {
+                case UIType.player:
+                    UpdateFill();
+                    break;
+                case UIType.enemy:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     public void AddHealth(int amount)
     {
         currentHealth += amount;
@@ -292,15 +328,14 @@ public class HealthManager : MonoBehaviour
         damageShowTimer = damageShowTime;//set the timer back to max when injured happens
         healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
 
-        //reset attack combo
 
         currentHealth -= amount;
 
         if (currentHealth <= minHealth)
         {
             currentHealth = minHealth;
-            if (!deathCoroutineStarted)
-                StartCoroutine(DeathEvent(false));
+            //if (!deathCoroutineStarted)
+            //    StartCoroutine(DeathEvent(false));
         }
         switch (ui)
         {

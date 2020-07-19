@@ -20,6 +20,7 @@ public class CharacterObject : MonoBehaviour
     public Controller2D controller;
     public RadialMenuController henshin;
     public AfterImagePool[] afterImage;
+    public HealthManager healthManager;
 
     [Header("CurrentState")]
     public int currentState;
@@ -52,6 +53,7 @@ public class CharacterObject : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
         spriteRend = draw.GetComponentInChildren<SpriteRenderer>();
+        healthManager = GetComponent<HealthManager>();
     }
 
     // Update is called once per frame
@@ -273,7 +275,7 @@ public class CharacterObject : MonoBehaviour
             _cur++;
         }
     }
-    public static float whiffWindow = 8f;
+    public static float whiffWindow = 28f;
     void HitCancel()
     {
         //if (currentStateTime >= _ev.start && currentStateTime <= _ev.end)
@@ -497,6 +499,7 @@ public class CharacterObject : MonoBehaviour
         hitConfirm = 0;
         
         SetAnimation(GameEngine.coreData.characterStates[currentState].stateName);
+        Debug.Log("State Started: " + GameEngine.coreData.characterStates[currentState].stateName);
     }
     void SetAnimation(string animName)
     {
@@ -565,7 +568,6 @@ public class CharacterObject : MonoBehaviour
                     {
                         if (GameEngine.coreData.characterStates[nextCommand.state].ConditionsMet(this))
                         {
-
                             if (nextStep.priority > currentPriority)
                             {
                                 currentPriority = nextStep.priority;
@@ -939,6 +941,7 @@ public class CharacterObject : MonoBehaviour
     public void UseMeter(float _val)
     {
         ChangeMeter(-_val);
+        //Debug.Log("Meter Spent");
     }
     public void BuildMeter(float _val)
     {
@@ -948,6 +951,7 @@ public class CharacterObject : MonoBehaviour
     {
         specialMeter += _val;
         specialMeter = Mathf.Clamp(specialMeter, 0f, specialMeterMax);
+        healthManager.ChangeHealth((int)_val);
     }
     void UpdatePhysics()
     {
@@ -1088,6 +1092,17 @@ public class CharacterObject : MonoBehaviour
             GameEngine.SetHitPause(curAtk.hitStop);
             hitStun = curAtk.hitStun;
             attacker.hitConfirm += 1;
+            attacker.BuildMeter(curAtk.meterGain);
+            switch (controlType)//damage Calc
+            {
+                case ControlType.AI:
+                    break;
+                case ControlType.PLAYER:
+                    HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                    break;
+                default:
+                    break;
+            }
         }
         else//projectiles
         {
@@ -1105,32 +1120,27 @@ public class CharacterObject : MonoBehaviour
 
             //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
             //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-            //if (curAtk.blastBlight>0)
-            //{
-            //    if (attacker.GetComponentInChildren<Blastblight>() != null)
-            //    {
-            //        attacker.GetComponentInChildren<Blastblight>().AddBlast(curAtk.blastBlight);
-            //    }
-            //    else
-            //    {
-            //        GameObject newBlight = Instantiate(bullets[4], attacker.transform);
-            //        newBlight.GetComponent<Blastblight>().AddBlast(curAtk.blastBlight);
-            //        newBlight.transform.parent = attacker.transform;
-            //    }
-            //}
-
             curHitAnim = targetHitAnim * .25f;
 
             GameEngine.SetHitPause(curAtk.hitStop);
             hitStun = curAtk.hitStun;
             attacker.hitConfirm += 1;
+            attacker.BuildMeter(curAtk.meterGain);
+            switch (controlType)//damage calc
+            {
+                case ControlType.AI:
+                    break;
+                case ControlType.PLAYER:
+                    HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                    break;
+                default:
+                    break;
+            }
         }
 
        
-        attacker.BuildMeter(10f);
         StartState(hitStunStateIndex);
         GlobalPrefab(0);
-        Debug.Log("HIT");
     }
 
     private void ActivateBlastblight(AttackEvent curAtk)

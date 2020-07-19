@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class HealthVisualManager : MonoBehaviour
 {
+    public static HealthSystem healthSystemStatic;
+
     public int maxHealth=40;
     public float heartOffset = 4f, heartAnchor = -60f;
     [SerializeField] private Sprite healthSprite0;
@@ -24,6 +26,8 @@ public class HealthVisualManager : MonoBehaviour
     public void SetHealthSystem(HealthSystem healthSystem)
     {
         this.healthSystem = healthSystem;
+        healthSystemStatic = healthSystem;
+
         List<HealthSystem.Heart> heartList = healthSystem.GetHeartList();
         Vector2 heartAnchorPos = new Vector2(heartAnchor, 0);
         for (int i = 0; i < heartList.Count; i++)

@@ -11,6 +11,7 @@ public class AttackEvent
     public float hitStop;
 
     public int damage;
+    public int meterGain;
     public int blastBlight;
     public int atkType;
 

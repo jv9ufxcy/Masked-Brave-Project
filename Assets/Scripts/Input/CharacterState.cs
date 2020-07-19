@@ -46,7 +46,9 @@ public class CharacterState
         if (meterReq>0)
         {
             if (character.specialMeter < meterReq) { return false; }
-            else { character.UseMeter(meterReq); }
+            else { character.UseMeter(meterReq);
+                Debug.Log("Meter used: "+meterReq);
+            }
         }
         
         //else { character.jumps--; }
