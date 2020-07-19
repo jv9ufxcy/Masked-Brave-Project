@@ -25,30 +25,30 @@ public class Hitbox : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (projectileIndex>0)
+        if (projectileIndex == 0)
+        {
+            if (character.hitActive > 0 && !enemies.Contains(collision))
+            {
+                CharacterObject victim = collision.transform.root.GetComponent<CharacterObject>();
+                if (victim != null)
+                {
+                    enemies.Add(collision);
+                    victim.GetHit(character, projectileIndex);
+                    Debug.Log("Standard Hit");
+                }
+
+            }
+        }
+        else
         {
             if (!enemies.Contains(collision))
             {
                 CharacterObject victim = collision.transform.root.GetComponent<CharacterObject>();
                 if (victim != null)
                 {
-                    victim.GetHit(character, projectileIndex);
                     enemies.Add(collision);
-                }
-            }
-        }
-        else
-        {
-            if (character.hitActive > 0)
-            {
-                if (!enemies.Contains(collision))
-                {
-                    CharacterObject victim = collision.transform.root.GetComponent<CharacterObject>();
-                    if (victim != null)
-                    {
-                        victim.GetHit(character, projectileIndex);
-                        enemies.Add(collision);
-                    }
+                    victim.GetHit(character, projectileIndex);
+                    Debug.Log("Projectile Hit");
                 }
             }
         }

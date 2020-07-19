@@ -1130,6 +1130,7 @@ public class CharacterObject : MonoBehaviour
         attacker.BuildMeter(10f);
         StartState(hitStunStateIndex);
         GlobalPrefab(0);
+        Debug.Log("HIT");
     }
 
     private void ActivateBlastblight(AttackEvent curAtk)
