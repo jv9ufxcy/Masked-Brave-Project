@@ -43,14 +43,10 @@ public class CharacterState
             if (character.dashCooldown > 0) { return false; }
             else { character.dashCooldown = dashCooldownReq; }
         }
-        if (meterReq>0)
-        {
-            if (character.specialMeter < meterReq) { return false; }
-            else { character.UseMeter(meterReq);
-                Debug.Log("Meter used: "+meterReq);
-            }
-        }
-        
+
+        if (character.specialMeter < meterReq) { return false; }
+        else { character.nextSpecialMeterUse = meterReq; }
+
         //else { character.jumps--; }
         return true;
     }

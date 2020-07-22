@@ -120,9 +120,9 @@ public class HealthSystem
 }
 public class HealthManager : MonoBehaviour
 {
-    public enum UIType { player, enemy }
-    public UIType ui = UIType.player;
-    public float maxHealth = 100, minHealth = 0;
+    public enum UIType { AI, PLAYER }
+    public UIType UI = UIType.PLAYER;
+    public float maxMeter = 100, minMeter = 0;
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
@@ -141,14 +141,15 @@ public class HealthManager : MonoBehaviour
     {
         character = GetComponentInParent<CharacterObject>();
         //respawner = GameObject.FindGameObjectWithTag("Respawner").GetComponent<PlayerRespawner>();
-        SetDefaultMeter();
+        
 
-        switch (ui)
+        switch (UI)
         {
-            case UIType.player:
+            case UIType.PLAYER:
                 UpdateFill();
+                SetDefaultMeter();
                 break;
-            case UIType.enemy:
+            case UIType.AI:
                 break;
             default:
                 break;
@@ -183,9 +184,9 @@ public class HealthManager : MonoBehaviour
 
     private void Update()
     {
-        switch (ui)
+        switch (UI)
         {
-            case UIType.player:
+            case UIType.PLAYER:
                 if (damageShowTimer < 0)//if the timer is up
                 {
                     if (HealthFill.fillAmount < DamageFill.fillAmount && isHealing)//if the bars aren't equal and it's healing
@@ -211,7 +212,7 @@ public class HealthManager : MonoBehaviour
                         StartCoroutine(FadeHealth());
                 }
                 break;
-            case UIType.enemy:
+            case UIType.AI:
                 break;
             default:
                 break;
@@ -267,18 +268,18 @@ public class HealthManager : MonoBehaviour
     public void ChangeHealth(int _val)
     {
         currentHealth += _val;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxMeter);
         damageShowTimer = damageShowTime;//set the timer back to max when injured happens
         if (_val>0)
         {
 
             isHealing = true;
-            switch (ui)
+            switch (UI)
             {
-                case UIType.player:
+                case UIType.PLAYER:
                     UpdateFillForHeal();
                     break;
-                case UIType.enemy:
+                case UIType.AI:
                     break;
                 default:
                     break;
@@ -287,12 +288,12 @@ public class HealthManager : MonoBehaviour
         else
         {
             healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
-            switch (ui)
+            switch (UI)
             {
-                case UIType.player:
+                case UIType.PLAYER:
                     UpdateFill();
                     break;
-                case UIType.enemy:
+                case UIType.AI:
                     break;
                 default:
                     break;
@@ -303,19 +304,19 @@ public class HealthManager : MonoBehaviour
     {
         currentHealth += amount;
 
-        if (currentHealth > maxHealth)
-            currentHealth = maxHealth;
+        if (currentHealth > maxMeter)
+            currentHealth = maxMeter;
 
 
         damageShowTimer = damageShowTime;//set the timer back to max when injured happens
 
         isHealing = true;
-        switch (ui)
+        switch (UI)
         {
-            case UIType.player:
+            case UIType.PLAYER:
                 UpdateFillForHeal();
                 break;
-            case UIType.enemy:
+            case UIType.AI:
                 break;
             default:
                 break;
@@ -331,18 +332,18 @@ public class HealthManager : MonoBehaviour
 
         currentHealth -= amount;
 
-        if (currentHealth <= minHealth)
+        if (currentHealth <= minMeter)
         {
-            currentHealth = minHealth;
+            currentHealth = minMeter;
             //if (!deathCoroutineStarted)
             //    StartCoroutine(DeathEvent(false));
         }
-        switch (ui)
+        switch (UI)
         {
-            case UIType.player:
+            case UIType.PLAYER:
                 UpdateFill();
                 break;
-            case UIType.enemy:
+            case UIType.AI:
                 break;
             default:
                 break;

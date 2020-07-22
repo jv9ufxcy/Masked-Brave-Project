@@ -275,7 +275,7 @@ public class CharacterObject : MonoBehaviour
             _cur++;
         }
     }
-    public static float whiffWindow = 28f;
+    public static float whiffWindow = 8f;
     void HitCancel()
     {
         //if (currentStateTime >= _ev.start && currentStateTime <= _ev.end)
@@ -497,7 +497,10 @@ public class CharacterObject : MonoBehaviour
         //Attacks
         hitActive = 0;
         hitConfirm = 0;
-        
+
+        UseMeter(nextSpecialMeterUse);
+        nextSpecialMeterUse = 0;
+
         SetAnimation(GameEngine.coreData.characterStates[currentState].stateName);
         Debug.Log("State Started: " + GameEngine.coreData.characterStates[currentState].stateName);
     }
@@ -936,7 +939,7 @@ public class CharacterObject : MonoBehaviour
     [Header("Timers")]
     public float coyoteTimer = 3f;
     public float dashCooldown, dashCooldownRate = 1f;
-    public float specialMeter, specialMeterMax = 100f;
+    public float specialMeter, specialMeterMax = 100f, nextSpecialMeterUse;
 
     public void UseMeter(float _val)
     {
