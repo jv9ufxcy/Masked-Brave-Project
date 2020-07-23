@@ -9,6 +9,7 @@ public class HealthVisualManager : MonoBehaviour
 
     public int maxHealth=40;
     public float heartOffset = 4f, heartAnchor = -60f;
+    [SerializeField] private Vector2 sizeDelta = new Vector2(64,64);
     [SerializeField] private Sprite healthSprite0;
     [SerializeField] private Sprite healthSprite1;
     [SerializeField] private Sprite healthSprite2;
@@ -67,7 +68,7 @@ public class HealthVisualManager : MonoBehaviour
 
         //pos and size
         heartGO.GetComponent<RectTransform>().anchoredPosition = anchoredPos;
-        heartGO.GetComponent<RectTransform>().sizeDelta = new Vector2(32, 32);
+        heartGO.GetComponent<RectTransform>().sizeDelta = sizeDelta;
 
         //image sprite
         Image healthImageUI = heartGO.GetComponent<Image>();
