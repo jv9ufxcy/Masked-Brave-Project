@@ -21,6 +21,7 @@ public class CharacterObject : MonoBehaviour
     public RadialMenuController henshin;
     public AfterImagePool[] afterImage;
     public HealthManager healthManager;
+    public AudioManager audioManager;
 
     [Header("CurrentState")]
     public int currentState;
@@ -54,6 +55,12 @@ public class CharacterObject : MonoBehaviour
         controller = GetComponent<Controller2D>();
         spriteRend = draw.GetComponentInChildren<SpriteRenderer>();
         healthManager = GetComponent<HealthManager>();
+
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("No Audio Manager in Scene");
+        }
     }
 
     // Update is called once per frame
@@ -334,6 +341,12 @@ public class CharacterObject : MonoBehaviour
             case 12:
                 SpawnKinzecter(_params[0].val, _params[1].val, _params[2].val);
                 break;
+            case 13:
+                AirStill(_params[0].val);
+                break;
+            case 14:
+                PlayAudio(_params[0].name);
+                break;
                 
         }
     }
@@ -350,6 +363,22 @@ public class CharacterObject : MonoBehaviour
         GameEngine.gameEngine.ToggleMovelist();
         PlayFlashParticle(henshinColors[GameEngine.gameEngine.globalMovelistIndex]);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
+    }
+    private void PlayAudio(string audioName)
+    {
+        audioManager.PlaySound(audioName);
+    }
+    private void AirStill(float _pow)
+    {
+        if (IsGrounded())
+        {
+            if (_pow>0)
+            {
+                VelocityY(_pow);
+            }
+        }
+        else
+            VelocityY(2f);
     }
     private void Dash(float dashSpeed)
     {
@@ -1099,9 +1128,11 @@ public class CharacterObject : MonoBehaviour
             switch (controlType)//damage Calc
             {
                 case ControlType.AI:
+                    PlayAudio("TakeDamage");
                     break;
                 case ControlType.PLAYER:
                     HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                    PlayAudio("PlayerTakeDamage");
                     break;
                 default:
                     break;
@@ -1132,9 +1163,11 @@ public class CharacterObject : MonoBehaviour
             switch (controlType)//damage calc
             {
                 case ControlType.AI:
+                    PlayAudio("TakeDamage");
                     break;
                 case ControlType.PLAYER:
                     HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                    PlayAudio("PlayerTakeDamage");
                     break;
                 default:
                     break;
