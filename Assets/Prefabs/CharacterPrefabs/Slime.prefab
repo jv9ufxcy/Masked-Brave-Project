@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 4995945185788520575}
   - component: {fileID: 6476919978724093372}
   - component: {fileID: 3068852021944926165}
+  - component: {fileID: 4658252686572797528}
   m_Layer: 9
   m_Name: Slime
   m_TagString: Enemy
@@ -94,6 +95,7 @@ MonoBehaviour:
   henshin: {fileID: 0}
   afterImage: []
   healthManager: {fileID: 0}
+  audioManager: {fileID: 0}
   currentState: 0
   currentStateTime: 0
   prevStateTime: 0
@@ -264,6 +266,8 @@ MonoBehaviour:
   UI: 0
   maxMeter: 100
   minMeter: 0
+  maxHealth: 100
+  minHealth: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -277,6 +281,19 @@ MonoBehaviour:
   BackColor: {r: 0, g: 0, b: 0, a: 0}
   HealthPickupPrefab: {fileID: 0}
   DizzyMat: {fileID: 0}
+--- !u!114 &4658252686572797528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476919978724093363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHit: 0
 --- !u!1 &6476919979401484989
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,15 +626,15 @@ PrefabInstance:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2492d5c65fdcfbf468d84182a11af585, type: 3}
---- !u!4 &8516546573584472115 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7613128487068795676, guid: 2492d5c65fdcfbf468d84182a11af585,
-    type: 3}
-  m_PrefabInstance: {fileID: 2276461832429771567}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &8516546573584472113 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7613128487068795678, guid: 2492d5c65fdcfbf468d84182a11af585,
+    type: 3}
+  m_PrefabInstance: {fileID: 2276461832429771567}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8516546573584472115 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7613128487068795676, guid: 2492d5c65fdcfbf468d84182a11af585,
     type: 3}
   m_PrefabInstance: {fileID: 2276461832429771567}
   m_PrefabAsset: {fileID: 0}

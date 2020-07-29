@@ -4,12 +4,14 @@ using UnityEngine;
 using Cinemachine;
 using System;
 
+
 public class Kinzecter : MonoBehaviour
 {
     private Rigidbody2D kzRB;
     private SpriteRenderer kzSprite;
     private Collider2D kzColl;
-    [SerializeField] private Player player;
+    [SerializeField] private CharacterObject thrower;
+    private Hitbox hitbox;
 
     [Header("Kinzecter Stats")]
     [SerializeField] private int kzDamage = 2;
@@ -18,8 +20,7 @@ public class Kinzecter : MonoBehaviour
     [SerializeField] private bool shouldScreenshakeOnHit;
 
     private AudioManager audioManager;
-    private BossPatrolManager boss;
-    private EnemyHealthManager enemy;
+    private EnemySpawn enemy;
 
 [SerializeField] private ThrowingState kState;
     private bool shouldFly, essenceAdded=false;
@@ -48,13 +49,13 @@ public class Kinzecter : MonoBehaviour
     public float direction; //
     public int state;
     public Vector3 velocity;
-    public CharacterObject thrower;
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
     private void Awake()
     {
         kzSprite = GetComponent<SpriteRenderer>();
         kzRB = GetComponent<Rigidbody2D>();
         kzColl = GetComponent<Collider2D>();
+        thrower = GameEngine.gameEngine.mainCharacter;
         //player = GetComponent<Player>();
         //audioManager = GetComponent<AudioManager>();
         //audioManager = AudioManager.instance;
@@ -67,97 +68,98 @@ public class Kinzecter : MonoBehaviour
     }
     private void Start()
     {
+        hitbox = GetComponent<Hitbox>();
         startScale = transform.localScale.x;
     }
-    private void Update()
-    {
-        if (hasBeenThrown==false)
-        {
-            //reset vars
-            boomerangFlag = false;
-            boomerangTime = 10;
-            turnAmount = 0;
-            state = 0;
-            direction = 0;
-            doCollision = true;
-        }
-        else
-        {
-            if (boomerangFlag)
-            {
-                doCollision = false;
-                switch (state)
-                {
-                    case 0://spin state
-                        var rspd = 50;//rotation speed
-                        velocity += transform.right.normalized;
-                        transform.Translate(velocity);
-                        //scale
-                        direction += rspd * orient * Time.deltaTime;//gradually change direction to create path of boomerang
-                        if (turnAmount >= 190)//once boomerange rotates 190 degrees it goes to the returning state
-                        {
-                            state = 1;
-                        }
-                        else
-                            turnAmount += rspd * Time.deltaTime;//increment degrees we have rotated
-                        break;
-                    case 1://throw state
-                        var pdir = transform.position - (thrower.transform.position + Vector3.down * 16);//direction to face towards the thrower
-                        transform.forward = Vector3.RotateTowards(transform.forward, pdir, 3f * Time.deltaTime,0f); //smoothly shift current dir to previous dir
-                        velocity += transform.right.normalized;//move
-                        transform.Translate(velocity);
-                        //check to see if spin state is needed
-                        if (Vector2.Distance(transform.position, thrower.transform.position) <=8)//is boomerang within 8 units of thrower
-                            if (orient==1 && transform.position.x>thrower.transform.position.x+16|| orient == -1 && transform.position.x < thrower.transform.position.x - 16)//if 16 units past thrower
-                            {
-                                //set orient relative to current dir
-                                if (direction > 90 && direction < 270)
-                                    orient = -1;
-                                else
-                                    orient = 1;
+    //private void FailedUpdate()
+    //{
+    //    if (hasBeenThrown==false)
+    //    {
+    //        //reset vars
+    //        boomerangFlag = false;
+    //        boomerangTime = 10;
+    //        turnAmount = 0;
+    //        state = 0;
+    //        direction = 0;
+    //        doCollision = true;
+    //    }
+    //    else
+    //    {
+    //        if (boomerangFlag)
+    //        {
+    //            doCollision = false;
+    //            switch (state)
+    //            {
+    //                case 0://spin state
+    //                    var rspd = 50;//rotation speed
+    //                    velocity += transform.right.normalized;
+    //                    transform.Translate(velocity);
+    //                    //scale
+    //                    direction += rspd * orient * Time.deltaTime;//gradually change direction to create path of boomerang
+    //                    if (turnAmount >= 190)//once boomerange rotates 190 degrees it goes to the returning state
+    //                    {
+    //                        state = 1;
+    //                    }
+    //                    else
+    //                        turnAmount += rspd * Time.deltaTime;//increment degrees we have rotated
+    //                    break;
+    //                case 1://throw state
+    //                    var pdir = transform.position - (thrower.transform.position + Vector3.down * 16);//direction to face towards the thrower
+    //                    transform.forward = Vector3.RotateTowards(transform.forward, pdir, 3f * Time.deltaTime,0f); //smoothly shift current dir to previous dir
+    //                    velocity += transform.right.normalized;//move
+    //                    transform.Translate(velocity);
+    //                    //check to see if spin state is needed
+    //                    if (Vector2.Distance(transform.position, thrower.transform.position) <=8)//is boomerang within 8 units of thrower
+    //                        if (orient==1 && transform.position.x>thrower.transform.position.x+16|| orient == -1 && transform.position.x < thrower.transform.position.x - 16)//if 16 units past thrower
+    //                        {
+    //                            //set orient relative to current dir
+    //                            if (direction > 90 && direction < 270)
+    //                                orient = -1;
+    //                            else
+    //                                orient = 1;
 
-                                turnAmount = 0;//reset rot timer
-                                //set initial dir for spin based on orient
-                                if (orient==1)
-                                    direction=0;
-                                else
-                                    direction=180;
+    //                            turnAmount = 0;//reset rot timer
+    //                            //set initial dir for spin based on orient
+    //                            if (orient==1)
+    //                                direction=0;
+    //                            else
+    //                                direction=180;
 
-                                state = 0;
-                            }
-                        if (Vector2.Distance(transform.position, thrower.transform.position) <= returnDistance){ TryGrabKinzecter(); }
-                        break;
+    //                            state = 0;
+    //                        }
+    //                    if (Vector2.Distance(transform.position, thrower.transform.position) <= returnDistance){ TryGrabKinzecter(); }
+    //                    break;
 
-                }
-            }
-            else
-            {
-                if (boomerangTime>0)
-                {
-                    boomerangTime -= 4*Time.deltaTime;
-                    orient = Mathf.Sign(velocity.x);
-                }
-                else
-                {
-                    boomerangFlag = true;
-                    //set initial dir for spin based on orient
-                    if (orient == 1)
-                        direction = 0;
-                    else
-                        direction = 180;
-                }
-            }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (boomerangTime>0)
+    //            {
+    //                boomerangTime -= 4*Time.deltaTime;
+    //                orient = Mathf.Sign(velocity.x);
+    //            }
+    //            else
+    //            {
+    //                boomerangFlag = true;
+    //                //set initial dir for spin based on orient
+    //                if (orient == 1)
+    //                    direction = 0;
+    //                else
+    //                    direction = 180;
+    //            }
+    //        }
             
-        }
-    }
-    public void ThrowKinzecter(CharacterObject player)
+    //    }
+    //}
+    public void ThrowKinzecter(CharacterObject player, Vector3 throwDir)
     {
-        thrower = player;
-        hasBeenThrown = true;
-        //this.transform.position = player.transform.position + throwDir * returnDistance;
-        //kzRB.isKinematic = false;
-        //kzRB.AddForce(throwDir * kzSpeed, ForceMode2D.Impulse);
-        //kState = ThrowingState.Thrown;
+        //thrower = player;
+        //hasBeenThrown = true;
+        this.transform.position = player.transform.position + throwDir * returnDistance;
+        kzRB.isKinematic = false;
+        kzRB.AddForce(throwDir * kzSpeed, ForceMode2D.Impulse);
+        kState = ThrowingState.Thrown;
     }
     private void TryGrabKinzecter()
     {
@@ -165,22 +167,15 @@ public class Kinzecter : MonoBehaviour
         {
             kState = ThrowingState.WithPlayer;
             velocity = Vector2.zero;
-            //kzRB.isKinematic = true;
-            hasBeenThrown = false;
+            kzRB.isKinematic = true;
+            //hasBeenThrown = false;
             thrower.isKinzecterOut = false;
             Destroy(gameObject,.2f);
         }
     }
-    private void OLDUpdate()
+    private void Update()
     {
-        if (kzRB.velocity.x >= 0)
-        {
-            transform.localScale = new Vector2(startScale, transform.localScale.y);
-        }
-        else
-        {
-            transform.localScale = new Vector2(-startScale, transform.localScale.y);
-        }
+        
         flightSpeed = kzRB.velocity.magnitude;
 
         if (flightSpeed < minLethalSpeed)
@@ -199,7 +194,8 @@ public class Kinzecter : MonoBehaviour
 
                 if (!coroutineStarted)
                 {
-                    StartCoroutine(ReturnToPlayer());
+                    //TODO: count down in update
+                    //ReturnToPlayer();
                 }
                 break;
             case ThrowingState.Recalling:
@@ -211,7 +207,19 @@ public class Kinzecter : MonoBehaviour
         CheckParticles();
     }
 
-    private void OLDFixedUpdateStateMachine()
+    private void SpriteDirectionChange()
+    {
+        if (kzRB.velocity.x >= 0)
+        {
+            transform.localScale = new Vector2(startScale, transform.localScale.y);
+        }
+        else
+        {
+            transform.localScale = new Vector2(-startScale, transform.localScale.y);
+        }
+    }
+
+    private void FixedUpdate()
     {
         switch (kState)
         {
@@ -222,7 +230,7 @@ public class Kinzecter : MonoBehaviour
 
                 break;
             case ThrowingState.Recalling:
-                Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
+                Vector3 dirToPlayer = (thrower.transform.position - transform.position).normalized;
                 kzRB.velocity = dirToPlayer * kzRecallSpeed;
 
 
@@ -230,19 +238,19 @@ public class Kinzecter : MonoBehaviour
         }
     }
 
-    private void OLDLateUpdateStateMachine()
+    private void LateUpdate()
     {
         switch (kState)
         {
             case ThrowingState.WithPlayer:
-                kinzecterParticles.Stop();
-                hpPS.Stop();
-                ammoPS.Stop();
-                energyPS.Stop();
+                //kinzecterParticles.Stop();
+                //hpPS.Stop();
+                //ammoPS.Stop();
+                //energyPS.Stop();
                 shouldFly = true;
                 kzColl.enabled = false;
                 kzSprite.enabled = false;
-                transform.position = player.transform.position;
+                transform.position = thrower.transform.position;
                 break;
             case ThrowingState.Thrown:
                 kinzecterParticles.Play();
@@ -273,17 +281,17 @@ public class Kinzecter : MonoBehaviour
     {
         if (ammoStock>0)
         {
-            player.AddAmmo(ammoStock);
+            //player.AddAmmo(ammoStock);
             ammoStock = 0;
         }
         if (eStock>0)
         {
-            player.AddMeter(eStock);
+            //player.AddMeter(eStock);
             eStock = 0;
         }
         if (hpStock>0)
         {
-            player.AddRecovery(hpStock);
+            //player.AddRecovery(hpStock);
             hpStock = 0;
         }
     }
@@ -306,61 +314,54 @@ public class Kinzecter : MonoBehaviour
     {
         return kState == ThrowingState.WithPlayer;
     }
-    //private void OnTriggerEnter2D(Collider2D enemyColl)
-    //{
-    //    boss = enemyColl.GetComponentInParent<BossPatrolManager>();
-    //    enemy = enemyColl.gameObject.GetComponentInParent<EnemyHealthManager>();
-    //    if (enemy !=null)
-    //    {
-    //        if (flightSpeed>minLethalSpeed)
-    //        {
-    //            if (!enemy.IsInvul)
-    //            {
-    //                if (!essenceAdded)
-    //                {
-    //                    StartCoroutine(AddEssecnce());
-    //                }
-    //                if (shouldScreenshakeOnHit)
-    //                    Screenshake();
-    //            }
-    //            if (!isTooSlow)
-    //            {
-    //                EnemyHealthManager nextClosestEnemy = EnemyHealthManager.GetClosestEnemy(transform.position, targetNextEnemyDistance);
-    //                if (nextClosestEnemy != null)
-    //                {
-    //                    nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
-    //                    if (!newEnemyTargeted)
-    //                        StartCoroutine(TargetNextEnemy());
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D enemyColl)
+    {
+        enemy = enemyColl.gameObject.GetComponentInParent<EnemySpawn>();
+        if (enemy != null)
+        {
+            if (flightSpeed > minLethalSpeed)
+            {
+                if (!essenceAdded)
+                {
+                    StartCoroutine(AddEssecnce());
+                }
+            }
+        }
+    }
+
+    public void AttackClosestEnemy()
+    {
+        hitbox.RestoreGetHitBools();
+
+        EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetNextEnemyDistance);
+        if (nextClosestEnemy != null)
+        {
+            nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
+            TargetNextEnemy();
+        }
+    }
+
     IEnumerator AddEssecnce()
     {
         essenceAdded = true;
-        ammoStock += enemy.ammoStock;
-        eStock += enemy.eStock;
-        hpStock += enemy.hpStock;
+        //ammoStock += enemy.ammoStock;
+        //eStock += enemy.eStock;
+        //hpStock += enemy.hpStock;
         yield return new WaitForSeconds(.1f);
         essenceAdded = false;
     }
-    IEnumerator TargetNextEnemy()
+    private void TargetNextEnemy()
     {
-        essenceAdded = true;
-        kzRB.velocity = nextTargetDir * flightSpeed;
-        yield return new WaitForSeconds(.5f);
-        essenceAdded = false;
+        kzRB.velocity = nextTargetDir * kzSpeed;
+        SpriteDirectionChange();
     }
-    IEnumerator ReturnToPlayer()
+    public void ReturnToPlayer()
     {
-        coroutineStarted = true;
-        while (kState==ThrowingState.Thrown)
+        hitbox.RestoreGetHitBools();
+        if (kState == ThrowingState.Thrown)
         {
-            yield return new WaitForSeconds(10f);
             kState = ThrowingState.Recalling;
         }
-        coroutineStarted = false;
     }
     private static void Screenshake()
     {

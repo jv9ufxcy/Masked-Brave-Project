@@ -35,7 +35,7 @@ public class CharacterObject : MonoBehaviour
     public Animator characterAnim;
     public RuntimeAnimatorController[] formAnims;
     public SpriteRenderer spriteRend;
-    
+    public GameObject kinzecter;
     public enum ControlType { AI, PLAYER };
     public ControlType controlType;
 
@@ -339,7 +339,7 @@ public class CharacterObject : MonoBehaviour
                 Dash(_params[0].val);
                 break;
             case 12:
-                SpawnKinzecter(_params[0].val, _params[1].val, _params[2].val);
+                KinzectorActions(_params[0].val, _params[1].val, _params[2].val);
                 break;
             case 13:
                 AirStill(_params[0].val);
@@ -531,7 +531,7 @@ public class CharacterObject : MonoBehaviour
         nextSpecialMeterUse = 0;
 
         SetAnimation(GameEngine.coreData.characterStates[currentState].stateName);
-        Debug.Log("State Started: " + GameEngine.coreData.characterStates[currentState].stateName);
+        //Debug.Log("State Started: " + GameEngine.coreData.characterStates[currentState].stateName);
     }
     void SetAnimation(string animName)
     {
@@ -752,19 +752,49 @@ public class CharacterObject : MonoBehaviour
     public GameObject[] bullets;
     [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.5f, 1f);
     public bool isKinzecterOut;
-    public void SpawnKinzecter(float bulletType, float offsetX, float offsetY)
+    public void KinzectorActions(float action, float offsetX, float offsetY)
+    {
+        switch (action)
+        {
+            case 0://TryThrow
+                TryKinzectorThrow(offsetX, offsetY);
+                break;
+            case 1://TryRecall
+                TryKinzectorRecall();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+       
+    }
+
+    private void TryKinzectorThrow(float offsetX, float offsetY)
     {
         if (!isKinzecterOut)
         {
             var offset = new Vector3(offsetX * direction, offsetY, 0);
-            GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position + offset, Quaternion.identity);
-            newbullet.transform.localScale = new Vector3(direction, 1, 1);
-            newbullet.GetComponent<Kinzecter>().ThrowKinzecter(characterObject);
-            newbullet.GetComponent<BulletHit>().character = characterObject;
-            newbullet.GetComponent<Hitbox>().character = characterObject;
+            GameObject newbullet = Instantiate(bullets[5], transform.position + offset, Quaternion.identity);
+            kinzecter = newbullet;
+            kinzecter.transform.localScale = new Vector3(direction, 1, 1);
+            kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction, 0, 0));
+            kinzecter.GetComponent<BulletHit>().character = characterObject;
+            kinzecter.GetComponent<Hitbox>().character = characterObject;
             isKinzecterOut = true;
         }
+        else
+        {
+            kinzecter.GetComponent<Kinzecter>().AttackClosestEnemy();
+        }
     }
+    private void TryKinzectorRecall()
+    {
+        kinzecter.GetComponent<Kinzecter>().ReturnToPlayer();
+    }
+
     public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY)
     {
         shootAnim = shootAnimMax;

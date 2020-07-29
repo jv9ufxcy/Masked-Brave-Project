@@ -123,6 +123,7 @@ public class HealthManager : MonoBehaviour
     public enum UIType { AI, PLAYER }
     public UIType UI = UIType.PLAYER;
     public float maxMeter = 100, minMeter = 0;
+    public float maxHealth = 100, minHealth = 0;
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
@@ -131,7 +132,7 @@ public class HealthManager : MonoBehaviour
     private Color invisible = new Color(0, 0, 0, 0);
     public GameObject HealthPickupPrefab;
 
-    private float currentHealth = 100, damageShowTimer, healthBarFadeTimer;
+    private float currentMeter = 100, damageShowTimer, healthBarFadeTimer;
     private bool isHealing = false, coroutineStarted = false, healthIsVisible = false, deathCoroutineStarted = false;
     private CharacterObject character;
     public Material DizzyMat;
@@ -174,12 +175,12 @@ public class HealthManager : MonoBehaviour
 
     private void UpdateFill()
     {
-        HealthFill.fillAmount = currentHealth / 100;
+        HealthFill.fillAmount = currentMeter / 100;
     }
 
     private void UpdateFillForHeal()
     {
-        DamageFill.fillAmount = currentHealth / 100f;
+        DamageFill.fillAmount = currentMeter / 100f;
     }
 
     private void Update()
@@ -261,14 +262,14 @@ public class HealthManager : MonoBehaviour
 
     void SetDefaultMeter()
     {
-        currentHealth = 0;
+        currentMeter = 0;
         UpdateFill();
         UpdateFillForHeal();
     }
     public void ChangeHealth(int _val)
     {
-        currentHealth += _val;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxMeter);
+        currentMeter += _val;
+        currentMeter = Mathf.Clamp(currentMeter, 0f, maxMeter);
         damageShowTimer = damageShowTime;//set the timer back to max when injured happens
         if (_val>0)
         {
@@ -302,10 +303,10 @@ public class HealthManager : MonoBehaviour
     }
     public void AddHealth(int amount)
     {
-        currentHealth += amount;
+        currentMeter += amount;
 
-        if (currentHealth > maxMeter)
-            currentHealth = maxMeter;
+        if (currentMeter > maxMeter)
+            currentMeter = maxMeter;
 
 
         damageShowTimer = damageShowTime;//set the timer back to max when injured happens
@@ -330,11 +331,11 @@ public class HealthManager : MonoBehaviour
         healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
 
 
-        currentHealth -= amount;
+        currentMeter -= amount;
 
-        if (currentHealth <= minMeter)
+        if (currentMeter <= minMeter)
         {
-            currentHealth = minMeter;
+            currentMeter = minMeter;
             //if (!deathCoroutineStarted)
             //    StartCoroutine(DeathEvent(false));
         }
