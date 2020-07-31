@@ -757,10 +757,10 @@ public class CharacterObject : MonoBehaviour
         switch (action)
         {
             case 0://TryThrow
-                TryKinzectorThrow(offsetX, offsetY);
+                TryKinzecterThrow(offsetX, offsetY);
                 break;
             case 1://TryRecall
-                TryKinzectorRecall();
+                TryKinzecterRecall();
                 break;
             case 2:
                 break;
@@ -772,27 +772,50 @@ public class CharacterObject : MonoBehaviour
        
     }
 
-    private void TryKinzectorThrow(float offsetX, float offsetY)
+    private void TryKinzecterThrow(float offsetX, float offsetY)
     {
         if (!isKinzecterOut)
         {
-            var offset = new Vector3(offsetX * direction, offsetY, 0);
-            GameObject newbullet = Instantiate(bullets[5], transform.position + offset, Quaternion.identity);
-            kinzecter = newbullet;
-            kinzecter.transform.localScale = new Vector3(direction, 1, 1);
-            kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction, 0, 0));
-            kinzecter.GetComponent<BulletHit>().character = characterObject;
-            kinzecter.GetComponent<Hitbox>().character = characterObject;
-            isKinzecterOut = true;
+            SpawnKinzecter(offsetX, offsetY);
         }
         else
         {
             kinzecter.GetComponent<Kinzecter>().AttackClosestEnemy();
         }
     }
-    private void TryKinzectorRecall()
+
+    private void SpawnKinzecter(float offsetX, float offsetY)
     {
-        kinzecter.GetComponent<Kinzecter>().ReturnToPlayer();
+        var offset = new Vector3(offsetX * direction, offsetY, 0);
+        GameObject newbullet = Instantiate(bullets[5], transform.position + offset, Quaternion.identity);
+        kinzecter = newbullet;
+        //kinzecter.transform.localScale = new Vector3(direction, 1, 1);
+        kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction, 0, 0));
+        kinzecter.GetComponent<BulletHit>().character = characterObject;
+        kinzecter.GetComponent<Hitbox>().character = characterObject;
+        isKinzecterOut = true;
+    }
+
+    private void TryKinzecterRecall()
+    {
+        if (!isKinzecterOut)
+        {
+            if (specialMeter>=100)
+            {
+                SpawnKinzecter(1, 0);
+                kinzecter.GetComponent<Kinzecter>().KinzecterInstall();
+                UseMeter(100f);
+            }
+            else
+            {
+                SpawnKinzecter(1, 0);
+            }
+            
+        }
+        else
+        {
+            kinzecter.GetComponent<Kinzecter>().ReturnToPlayer();
+        }
     }
 
     public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY)
@@ -1013,7 +1036,7 @@ public class CharacterObject : MonoBehaviour
     {
         specialMeter += _val;
         specialMeter = Mathf.Clamp(specialMeter, 0f, specialMeterMax);
-        healthManager.ChangeHealth((int)_val);
+        healthManager.ChangeMeter((int)_val);
     }
     void UpdatePhysics()
     {

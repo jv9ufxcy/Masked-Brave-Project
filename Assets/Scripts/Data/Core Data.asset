@@ -610,23 +610,37 @@ MonoBehaviour:
     blendRate: 0.05
     events:
     - start: 0
-      end: 5
+      end: 0
       active: 1
       script: 12
       parameters:
       - name: 
-        val: 5
+        val: 0
       - name: 
         val: 1
       - name: 
         val: 1
+    - start: 0
+      end: 30
+      active: 1
+      script: 3
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 20
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 0
       length: 10
       hitStun: 10
-      hitStop: 5
-      damage: 3
-      meterGain: 0
+      hitStop: 1
+      damage: 1
+      meterGain: 1
       blastBlight: 0
       atkType: 0
       hitAnim: {x: 1, y: 0}
@@ -1887,13 +1901,37 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: NEW STATE
+  - stateName: BraveRecall
     index: 0
-    length: 60
+    length: 30
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 12
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 3
+      damage: 3
+      meterGain: 2
+      blastBlight: 0
+      atkType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 15, y: 25, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     meterReq: 0
     dashCooldownReq: 0
@@ -2018,7 +2056,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Vroom
+      - name: Vroom2
         val: 0
     attacks:
     - start: 10
@@ -2405,7 +2443,7 @@ MonoBehaviour:
     - name: Bullet Speed
       val: 40
   - index: 0
-    name: KinzecterSpawn
+    name: KinzecterActions
     parameters:
     - name: BulletName
       val: 5
@@ -2437,7 +2475,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000020000000300000004000000070000000800000009000000
+        followUps: 010000000200000003000000040000000700000008000000090000000a000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -2591,8 +2629,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 2
+      - idIndex: 10
+        command:
+          motionCommand: 4
+          input: 3
+          state: 33
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 448
+          y: 270
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
       omitList: 0500000006000000
-      nextFollowups: 01000000020000000300000004000000070000000800000009000000
+      nextFollowups: 010000000200000003000000040000000700000008000000090000000a000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -2604,7 +2658,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000040000000500000006000000070000000800000009000000
+        followUps: 010000000400000005000000060000000700000008000000090000000a0000000b000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -2758,8 +2812,40 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 10
+        command:
+          motionCommand: 0
+          input: 3
+          state: 12
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 444
+          y: 216
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      - idIndex: 11
+        command:
+          motionCommand: 4
+          input: 3
+          state: 33
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 649
+          y: 219
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 0200000003000000
-      nextFollowups: 01000000040000000500000006000000070000000800000009000000
+      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000b000000
   - name: Bombadier
     commandStates:
     - stateName: Grounded
@@ -3598,4 +3684,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 2
+  currentMovelistIndex: 0

@@ -14,9 +14,9 @@ public class Kinzecter : MonoBehaviour
     private Hitbox hitbox;
 
     [Header("Kinzecter Stats")]
-    [SerializeField] private int kzDamage = 2;
     [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f;
-    [SerializeField] private ParticleSystem kinzecterParticles, hpPS, ammoPS, energyPS;
+    [SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
+    [SerializeField] private ParticleSystem kinzecterParticles, hpPS, buffedZecterPS, energyPS;
     [SerializeField] private bool shouldScreenshakeOnHit;
 
     private AudioManager audioManager;
@@ -39,30 +39,29 @@ public class Kinzecter : MonoBehaviour
     {
         WithPlayer, Thrown, Recalling,
     }
-    [Header("Boomerang")]
-    public bool hasBeenThrown = false;//collision
-    public bool doCollision = false;//collision
-    public bool boomerangFlag = false;//ai on
-    public float boomerangTime = 20;//time spent turning back to the player
-    public float orient = 0; //direction boomerang turns  in the boomerang state
-    public float turnAmount = 0; //how much boomerang has turned, used to end the state
-    public float direction; //
-    public int state;
-    public Vector3 velocity;
-    public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
+    //[Header("Boomerang")]
+    //public bool hasBeenThrown = false;//collision
+    //public bool doCollision = false;//collision
+    //public bool boomerangFlag = false;//ai on
+    //public float boomerangTime = 20;//time spent turning back to the player
+    //public float orient = 0; //direction boomerang turns  in the boomerang state
+    //public float turnAmount = 0; //how much boomerang has turned, used to end the state
+    //public float direction; //
+    //public int state;
+    //public Vector3 velocity;
+    //public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
     private void Awake()
     {
         kzSprite = GetComponent<SpriteRenderer>();
         kzRB = GetComponent<Rigidbody2D>();
         kzColl = GetComponent<Collider2D>();
         thrower = GameEngine.gameEngine.mainCharacter;
-        //player = GetComponent<Player>();
-        //audioManager = GetComponent<AudioManager>();
-        //audioManager = AudioManager.instance;
-        //if (audioManager == null)
-        //{
-        //    Debug.LogError("No Audio Manager in Scene");
-        //}
+        hitbox = GetComponent<Hitbox>();
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("No Audio Manager in Scene");
+        }
 
         kState = ThrowingState.Recalling;
     }
@@ -159,6 +158,7 @@ public class Kinzecter : MonoBehaviour
         this.transform.position = player.transform.position + throwDir * returnDistance;
         kzRB.isKinematic = false;
         kzRB.AddForce(throwDir * kzSpeed, ForceMode2D.Impulse);
+        audioManager.PlaySound(flightSound);
         kState = ThrowingState.Thrown;
     }
     private void TryGrabKinzecter()
@@ -166,7 +166,7 @@ public class Kinzecter : MonoBehaviour
         if (Vector3.Distance(transform.position, thrower.transform.position) <= returnDistance)
         {
             kState = ThrowingState.WithPlayer;
-            velocity = Vector2.zero;
+            //velocity = Vector2.zero;
             kzRB.isKinematic = true;
             //hasBeenThrown = false;
             thrower.isKinzecterOut = false;
@@ -189,13 +189,17 @@ public class Kinzecter : MonoBehaviour
                 CollectEssence();
                 break;
             case ThrowingState.Thrown:
-                if (isTooSlow)
-                    TryGrabKinzecter();
+                //if (isTooSlow)
+                //    TryGrabKinzecter();
 
-                if (!coroutineStarted)
+                if (currentStamina<=0f)
                 {
                     //TODO: count down in update
-                    //ReturnToPlayer();
+                    ReturnToPlayer();
+                }
+                else
+                {
+                    SpendStamina(0.01f);
                 }
                 break;
             case ThrowingState.Recalling:
@@ -204,7 +208,7 @@ public class Kinzecter : MonoBehaviour
             default:
                 break;
         }
-        CheckParticles();
+        //CheckParticles();
     }
 
     private void SpriteDirectionChange()
@@ -271,12 +275,6 @@ public class Kinzecter : MonoBehaviour
                 break;
         }
     }
-
-    
-    public void Recall()
-    {
-        kState = ThrowingState.Recalling;
-    }
     private void CollectEssence()
     {
         if (ammoStock>0)
@@ -295,21 +293,6 @@ public class Kinzecter : MonoBehaviour
             hpStock = 0;
         }
     }
-    private void CheckParticles()
-    {
-        if (ammoStock>0)
-            ammoPS.Play();
-        else
-            ammoPS.Stop();
-        if (eStock>0)
-            energyPS.Play();
-        else
-            energyPS.Stop();
-        if (hpStock > 0)
-            hpPS.Play();
-        else
-            hpPS.Stop();
-    }
     public bool isWithPlayer()
     {
         return kState == ThrowingState.WithPlayer;
@@ -323,7 +306,7 @@ public class Kinzecter : MonoBehaviour
             {
                 if (!essenceAdded)
                 {
-                    StartCoroutine(AddEssecnce());
+                    StartCoroutine(AddEssence());
                 }
             }
         }
@@ -332,7 +315,6 @@ public class Kinzecter : MonoBehaviour
     public void AttackClosestEnemy()
     {
         hitbox.RestoreGetHitBools();
-
         EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetNextEnemyDistance);
         if (nextClosestEnemy != null)
         {
@@ -341,7 +323,7 @@ public class Kinzecter : MonoBehaviour
         }
     }
 
-    IEnumerator AddEssecnce()
+    IEnumerator AddEssence()
     {
         essenceAdded = true;
         //ammoStock += enemy.ammoStock;
@@ -350,9 +332,12 @@ public class Kinzecter : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         essenceAdded = false;
     }
+    [SerializeField] private string flightSound = "Fly";
     private void TargetNextEnemy()
     {
         kzRB.velocity = nextTargetDir * kzSpeed;
+        audioManager.PlaySound(flightSound);
+        SpendStamina(staminaCost);
         SpriteDirectionChange();
     }
     public void ReturnToPlayer()
@@ -366,5 +351,19 @@ public class Kinzecter : MonoBehaviour
     private static void Screenshake()
     {
         Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+    }
+
+    private void SpendStamina(float _val)
+    {
+        currentStamina -= _val;
+        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+    }
+    public void KinzecterInstall()
+    {
+        hitbox.projectileIndex = 33;
+        buffedZecterPS.Play();
+        maxStamina = installStamina;
+        currentStamina = installStamina;
+        kzSpeed *= 1.5f;
     }
 }

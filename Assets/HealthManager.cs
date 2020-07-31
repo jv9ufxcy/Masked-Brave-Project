@@ -266,7 +266,7 @@ public class HealthManager : MonoBehaviour
         UpdateFill();
         UpdateFillForHeal();
     }
-    public void ChangeHealth(int _val)
+    public void ChangeMeter(int _val)
     {
         currentMeter += _val;
         currentMeter = Mathf.Clamp(currentMeter, 0f, maxMeter);

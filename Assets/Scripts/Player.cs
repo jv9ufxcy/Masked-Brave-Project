@@ -1570,10 +1570,10 @@ public class Player : MonoBehaviour
     //    else
     //        KinzecterRecall();
     //}
-    private void KinzecterRecall()
-    {
-        kinzecter.Recall();
-    }
+    //private void KinzecterRecall()
+    //{
+    //    kinzecter.Recall();
+    //}
     private void BraveBurst()
     {
         StartCoroutine(BraveBurstTimer());
