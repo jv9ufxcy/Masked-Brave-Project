@@ -1181,6 +1181,7 @@ public class CharacterObject : MonoBehaviour
             switch (controlType)//damage Calc
             {
                 case ControlType.AI:
+                    healthManager.RemoveHealth(curAtk.damage);
                     PlayAudio("TakeDamage");
                     break;
                 case ControlType.PLAYER:
@@ -1216,6 +1217,7 @@ public class CharacterObject : MonoBehaviour
             switch (controlType)//damage calc
             {
                 case ControlType.AI:
+                    healthManager.RemoveHealth(curAtk.damage);
                     PlayAudio("TakeDamage");
                     break;
                 case ControlType.PLAYER:
@@ -1226,8 +1228,6 @@ public class CharacterObject : MonoBehaviour
                     break;
             }
         }
-
-       
         StartState(hitStunStateIndex);
         GlobalPrefab(0);
     }

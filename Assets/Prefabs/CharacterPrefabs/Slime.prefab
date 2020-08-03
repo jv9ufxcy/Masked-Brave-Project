@@ -105,6 +105,7 @@ MonoBehaviour:
   characterAnim: {fileID: 6476919979961269262}
   formAnims: []
   spriteRend: {fileID: 0}
+  kinzecter: {fileID: 0}
   controlType: 0
   hitbox: {fileID: 6476919980345759422}
   canCancel: 0
@@ -266,8 +267,9 @@ MonoBehaviour:
   UI: 0
   maxMeter: 100
   minMeter: 0
-  maxHealth: 100
+  maxHealth: 15
   minHealth: 0
+  currentHealth: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -276,10 +278,13 @@ MonoBehaviour:
   damageShowTime: 1
   damageShowSpeed: 1
   IsDead: 0
+  shouldSpawnHealth: 1
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
-  HealthPickupPrefab: {fileID: 0}
+  numOfPickups: 6
+  HealthPickupPrefab: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
+    type: 3}
   DizzyMat: {fileID: 0}
 --- !u!114 &4658252686572797528
 MonoBehaviour:
@@ -293,7 +298,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHit: 0
 --- !u!1 &6476919979401484989
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class PickupRecoveryItem : MonoBehaviour
 {
-    //recovery values
+    [Header("Recovery Val")]
     [SerializeField] private int healthToGive = 1;
     //[SerializeField] private int ammoToGive = 0;
     [SerializeField] private int meterToGive = 0;
-    //magnet values
+    [Header("Magnet Val")]
     [SerializeField] private bool shouldAttract = false;
     [SerializeField] private float attractionSpeed = 50f;
     [SerializeField] private float attractionRange = 10f;
     [SerializeField] private LayerMask whatCountsAsPlayer;
-    [SerializeField] private Player thePlayer;
+    [SerializeField] private string pickupSound="PickupRecovery";
+    [SerializeField] private GameObject pickupEffect;
+    private CharacterObject thePlayer;
     private bool isPlayerInRange;
 
-    private Player player;
+    private HealthManager player;
     private AudioManager audioManager;
     // Use this for initialization
     void Start()
     {
         if (shouldAttract)
-            thePlayer = FindObjectOfType<Player>();
+            thePlayer = GameEngine.gameEngine.mainCharacter;
+
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
@@ -31,24 +34,26 @@ public class PickupRecoveryItem : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (shouldAttract)
             MoveTowardsPlayer();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        player = collision.gameObject.GetComponentInParent<Player>();
+        player = collision.gameObject.GetComponent<HealthManager>();
         if (collision.CompareTag("Player"))
         {
             if (healthToGive > 0)
             {
-                player.AddRecovery(healthToGive);
+                player.AddHealth(healthToGive);
             }
             if (meterToGive > 0)
             {
-                player.AddMeter(meterToGive);
+                player.ChangeMeter(meterToGive);
             }
+            GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
+            audioManager.PlaySound(pickupSound);
             Destroy(gameObject);
         }
     }

@@ -123,23 +123,30 @@ public class HealthManager : MonoBehaviour
     public enum UIType { AI, PLAYER }
     public UIType UI = UIType.PLAYER;
     public float maxMeter = 100, minMeter = 0;
-    public float maxHealth = 100, minHealth = 0;
+    public float maxHealth = 100, minHealth = 0, currentHealth;
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
-    public bool IsDead = false;
+    public bool IsDead = false, shouldSpawnHealth=true;
     public Color HealthColor, DamageColor, BackColor;
     private Color invisible = new Color(0, 0, 0, 0);
+    public int numOfPickups = 3;
     public GameObject HealthPickupPrefab;
 
     private float currentMeter = 100, damageShowTimer, healthBarFadeTimer;
     private bool isHealing = false, coroutineStarted = false, healthIsVisible = false, deathCoroutineStarted = false;
     private CharacterObject character;
     public Material DizzyMat;
+    private AudioManager audioManager;
     //private PlayerRespawner respawner;
 
     private void Start()
     {
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("No Audio Manager in Scene");
+        }
         character = GetComponentInParent<CharacterObject>();
         //respawner = GameObject.FindGameObjectWithTag("Respawner").GetComponent<PlayerRespawner>();
         
@@ -151,6 +158,7 @@ public class HealthManager : MonoBehaviour
                 SetDefaultMeter();
                 break;
             case UIType.AI:
+                currentHealth = maxHealth;
                 break;
             default:
                 break;
@@ -303,21 +311,23 @@ public class HealthManager : MonoBehaviour
     }
     public void AddHealth(int amount)
     {
-        currentMeter += amount;
-
-        if (currentMeter > maxMeter)
-            currentMeter = maxMeter;
-
-
-        damageShowTimer = damageShowTime;//set the timer back to max when injured happens
-
-        isHealing = true;
+        
         switch (UI)
         {
             case UIType.PLAYER:
-                UpdateFillForHeal();
+                HealthVisualManager.healthSystemStatic.Heal(amount);
+                //UpdateFillForHeal();
                 break;
             case UIType.AI:
+                currentHealth += amount;
+
+                if (currentHealth > maxHealth)
+                    currentHealth = maxHealth;
+
+
+                damageShowTimer = damageShowTime;//set the timer back to max when injured happens
+
+                isHealing = true;
                 break;
             default:
                 break;
@@ -327,24 +337,26 @@ public class HealthManager : MonoBehaviour
 
     public void RemoveHealth(int amount)
     {
-        damageShowTimer = damageShowTime;//set the timer back to max when injured happens
-        healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
-
-
-        currentMeter -= amount;
-
-        if (currentMeter <= minMeter)
-        {
-            currentMeter = minMeter;
-            //if (!deathCoroutineStarted)
-            //    StartCoroutine(DeathEvent(false));
-        }
+        
         switch (UI)
         {
             case UIType.PLAYER:
-                UpdateFill();
+                HealthVisualManager.healthSystemStatic.Damage(amount);
+                //UpdateFill();
                 break;
             case UIType.AI:
+                damageShowTimer = damageShowTime;//set the timer back to max when injured happens
+                healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
+
+
+                currentHealth -= amount;
+
+                if (currentHealth <= minHealth)
+                {
+                    currentHealth = minHealth;
+                    if (!IsDead)
+                        StartCoroutine(DeathEvent(shouldSpawnHealth));
+                }
                 break;
             default:
                 break;
@@ -364,7 +376,7 @@ public class HealthManager : MonoBehaviour
     public void FinisherDeath()
     {
         if (!deathCoroutineStarted)
-            StartCoroutine(DeathEvent(true));
+            StartCoroutine(DeathEvent(shouldSpawnHealth));
         //GameEngine.gameEngine.Screenshake();
     }
 
@@ -378,9 +390,15 @@ public class HealthManager : MonoBehaviour
         IsDead = true;
 
         if (spawnHealth)
-            Instantiate(HealthPickupPrefab, transform.position, transform.rotation);
+        {
+            for (int i = 0; i < numOfPickups; i++)
+            {
+                SpawnPickup();
+            }
+        }
+        audioManager.PlaySound("Death");
 
-        yield return new WaitForSeconds(6);//get length of death animation        
+        yield return new WaitForSeconds(.1f);//get length of death animation        
 
         switch (character.controlType)
         {
@@ -395,5 +413,14 @@ public class HealthManager : MonoBehaviour
                 break;
         }
 
+    }
+
+    private void SpawnPickup()
+    {
+        int randNumX = UnityEngine.Random.Range(-2, 2);
+        int randNumY = UnityEngine.Random.Range(1, 4);
+        Vector2 offsetDir = new Vector2(randNumX, randNumY);
+        GameObject effect = Instantiate(HealthPickupPrefab, transform.position, transform.rotation);
+        effect.GetComponentInChildren<Rigidbody2D>().AddForce(offsetDir,ForceMode2D.Impulse);
     }
 }
