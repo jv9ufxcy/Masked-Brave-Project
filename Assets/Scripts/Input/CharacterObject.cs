@@ -440,7 +440,7 @@ public class CharacterObject : MonoBehaviour
     {
         GameEngine.GlobalPrefab((int)_index, character,_act,_ev);
     }
-    void GlobalPrefab(float _prefab)
+    public void GlobalPrefab(float _prefab)
     {
         GlobalPrefab(_prefab, -1, -1);
     }

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class GameEngine : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class GameEngine : MonoBehaviour
     public static GameEngine gameEngine;
 
     public float deadZone = 0.2f;
+
+    public int currency;
+    public TextMeshProUGUI currencyText;
 
     public CharacterObject mainCharacter;
 
@@ -42,6 +47,13 @@ public class GameEngine : MonoBehaviour
         }
         OnFormChange.Invoke();
     }
+    public void ChangeCurrency(int val)
+    {
+        currency += val;
+        currencyText.text = "x " + currency.ToString();
+        currencyText.rectTransform.DOScale(1.5f, .2f);
+        currencyText.rectTransform.DOScale(1f, .2f).SetDelay(.4f);
+    }
     // Use this for initialization
     void Start ()
     {
@@ -66,6 +78,7 @@ public class GameEngine : MonoBehaviour
     public static void GlobalPrefab(int _index, GameObject _parentObj, int _state, int _ev)
     {
         GameObject nextPrefab = Instantiate(coreData.globalPrefabs[_index], _parentObj.transform.position, _parentObj.transform.rotation, _parentObj.transform);
+        nextPrefab.transform.localScale = _parentObj.transform.localScale;
         if (_state!=-1)
         {
             StateEvent thisEvent = coreData.characterStates[_state].events[_ev];

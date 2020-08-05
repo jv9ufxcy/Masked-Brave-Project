@@ -9,7 +9,8 @@ public class DestroyFinishedParticle : MonoBehaviour
 	void Start ()
     {
         thisParticleSystem = GetComponent<ParticleSystem>();
-	}
+        transform.SetParent(null);
+    }
 	
 	// Update is called once per frame
 	void Update ()

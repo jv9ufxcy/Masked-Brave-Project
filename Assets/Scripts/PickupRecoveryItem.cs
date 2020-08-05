@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PickupRecoveryItem : MonoBehaviour
 {
     [Header("Recovery Val")]
-    [SerializeField] private int healthToGive = 1;
-    //[SerializeField] private int ammoToGive = 0;
-    [SerializeField] private int meterToGive = 0;
+    [SerializeField] private int healthToGive = 1,currencyToGive = 0,meterToGive = 0;
     [Header("Magnet Val")]
     [SerializeField] private bool shouldAttract = false;
     [SerializeField] private float attractionSpeed = 50f;
@@ -52,9 +48,13 @@ public class PickupRecoveryItem : MonoBehaviour
             {
                 player.ChangeMeter(meterToGive);
             }
+            if (currencyToGive>0)
+            {
+                GameEngine.gameEngine.ChangeCurrency(currencyToGive);
+            }
             GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
             audioManager.PlaySound(pickupSound);
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
     private void MoveTowardsPlayer()

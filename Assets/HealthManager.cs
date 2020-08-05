@@ -147,7 +147,7 @@ public class HealthManager : MonoBehaviour
         {
             Debug.LogError("No Audio Manager in Scene");
         }
-        character = GetComponentInParent<CharacterObject>();
+        character = GetComponent<CharacterObject>();
         //respawner = GameObject.FindGameObjectWithTag("Respawner").GetComponent<PlayerRespawner>();
         
 
@@ -397,12 +397,13 @@ public class HealthManager : MonoBehaviour
             }
         }
         audioManager.PlaySound("Death");
-
-        yield return new WaitForSeconds(.1f);//get length of death animation        
+        character.GlobalPrefab(1);
+        yield return new WaitForSeconds(0f);//get length of death animation        
 
         switch (character.controlType)
         {
             case CharacterObject.ControlType.AI:
+                
                 gameObject.SetActive(false);
                 break;
             case CharacterObject.ControlType.PLAYER:
@@ -417,8 +418,8 @@ public class HealthManager : MonoBehaviour
 
     private void SpawnPickup()
     {
-        int randNumX = UnityEngine.Random.Range(-2, 2);
-        int randNumY = UnityEngine.Random.Range(1, 4);
+        int randNumX = UnityEngine.Random.Range(-20, 20);
+        int randNumY = UnityEngine.Random.Range(15, 35);
         Vector2 offsetDir = new Vector2(randNumX, randNumY);
         GameObject effect = Instantiate(HealthPickupPrefab, transform.position, transform.rotation);
         effect.GetComponentInChildren<Rigidbody2D>().AddForce(offsetDir,ForceMode2D.Impulse);
