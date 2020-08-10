@@ -16,12 +16,12 @@ public class CharacterObject : MonoBehaviour
     [SerializeField]private float direction=1;
 
     public Rigidbody2D myRB;
-    public BoxCollider2D boxCollider2D;
-    public Controller2D controller;
+    [HideInInspector]public BoxCollider2D boxCollider2D;
+    [HideInInspector] public Controller2D controller;
     public RadialMenuController henshin;
     public AfterImagePool[] afterImage;
-    public HealthManager healthManager;
-    public AudioManager audioManager;
+    [HideInInspector] public HealthManager healthManager;
+    [HideInInspector] public AudioManager audioManager;
 
     [Header("CurrentState")]
     public int currentState;
@@ -34,7 +34,7 @@ public class CharacterObject : MonoBehaviour
     public GameObject draw;
     public Animator characterAnim;
     public RuntimeAnimatorController[] formAnims;
-    public SpriteRenderer spriteRend;
+    [HideInInspector] public SpriteRenderer spriteRend;
     public GameObject kinzecter;
     public enum ControlType { AI, PLAYER };
     public ControlType controlType;
@@ -61,6 +61,7 @@ public class CharacterObject : MonoBehaviour
         {
             Debug.LogError("No Audio Manager in Scene");
         }
+        
     }
 
     // Update is called once per frame
@@ -69,6 +70,8 @@ public class CharacterObject : MonoBehaviour
         switch (controlType)
         {
             case ControlType.AI:
+                isNearPlayer = (Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroRange);
+                isPlayerInRange = (Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= attackRange);
                 break;
             case ControlType.PLAYER:
                 PauseMenu();
@@ -123,11 +126,7 @@ public class CharacterObject : MonoBehaviour
         if (dashCooldown > 0) { dashCooldown -= dashCooldownRate; }
     }
 
-    private void UpdateAI()
-    {
-
-    }
-    public float animSpeed;
+    [HideInInspector] public float animSpeed;
     void UpdateAnimator()
     {
         animSpeed = 1;
@@ -643,7 +642,7 @@ public class CharacterObject : MonoBehaviour
     [Space]
     [Header("Charged Slash")]
 
-    [SerializeField] private float shotPressure;
+    private float shotPressure;
     [SerializeField] private float  minShotPressure=30f, maxShotPressure = 60f;
     private bool shouldChargeBuster;
     public int chargeAttackIndex = 15, chargeShotIndex=21, critBusterIndex=22;
@@ -751,7 +750,7 @@ public class CharacterObject : MonoBehaviour
     private float timeToNextFire = 0f;
     public GameObject[] bullets;
     [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.5f, 1f);
-    public bool isKinzecterOut;
+    [HideInInspector] public bool isKinzecterOut;
     public void KinzectorActions(float action, float offsetX, float offsetY)
     {
         switch (action)
@@ -1254,5 +1253,45 @@ public class CharacterObject : MonoBehaviour
         hitStun--;
         if (hitStun <= 0){ EndState(); }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
+    }
+    [Header("EnemyLogic")]
+    public CharacterObject target;
+    public float aggroRange = 30f, attackRange=3f, attackCooldown=180f;
+    private bool isNearPlayer, isPlayerInRange;
+    public int attackState1 = 54, attackState2 = 55, attackState3 = 56;
+    private void UpdateAI()
+    {
+        FindTarget();
+        if (currentState == 0)//Neutral
+        {
+            if (isNearPlayer&&!isPlayerInRange&&dashCooldown<=0)
+            {
+                FaceTarget(target.transform.position);
+                FrontVelocity(moveSpeed);
+            }
+            if (isPlayerInRange && dashCooldown <= 0)
+            {
+                FaceTarget(target.transform.position);
+                StartState(attackState1);
+            }
+        }
+        if (currentState == attackState1)//Attack
+        {
+            dashCooldown = attackCooldown;
+        }
+        if (currentState == attackState2)//Neutral
+            dashCooldown = attackCooldown;
+        if (currentState == attackState3)//Neutral
+            dashCooldown = attackCooldown;
+    }
+    void FindTarget()
+    {
+        target = GameEngine.gameEngine.mainCharacter;
+    }
+    void FaceTarget(Vector3 tarPos)
+    {
+        Vector3 tarOffset = (tarPos - transform.position);
+        direction = Mathf.Sign(tarOffset.x);
+        transform.localScale = new Vector3(direction, 1f, 1f);
     }
 }

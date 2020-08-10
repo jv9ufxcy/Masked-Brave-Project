@@ -238,7 +238,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1411348221
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7fd5f457c6a47034599e0e69b61f10a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -391,6 +391,8 @@ MonoBehaviour:
   controller: {fileID: 0}
   henshin: {fileID: 0}
   afterImage: []
+  healthManager: {fileID: 0}
+  audioManager: {fileID: 0}
   currentState: 0
   currentStateTime: 0
   prevStateTime: 0
@@ -405,6 +407,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: e700ae716bbfc4645a97d018efeecab4, type: 2}
   - {fileID: 9100000, guid: 7cc0cdd34c08b0d46880c0601057af65, type: 2}
   spriteRend: {fileID: 0}
+  kinzecter: {fileID: 0}
   controlType: 1
   hitbox: {fileID: 7513360881928160874}
   canCancel: 0
@@ -495,10 +498,18 @@ MonoBehaviour:
   dashCooldownRate: 1
   specialMeter: 0
   specialMeterMax: 100
+  nextSpecialMeterUse: 0
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
   hitStunStateIndex: 7
   hitStun: 0
+  target: {fileID: 0}
+  aggroRange: 30
+  attackRange: 0
+  attackCooldown: 180
+  attackState1: 50
+  attackState2: 51
+  attackState3: 52
 --- !u!114 &6942301879946958580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,10 +591,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1d0110c1b7eb84fbbf9788fbcc853a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui: 1
+  UI: 1
+  maxMeter: 100
+  minMeter: 0
   maxHealth: 100
-  minHealth: 100
-  intValue: 0
+  minHealth: 0
+  currentHealth: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -592,9 +605,11 @@ MonoBehaviour:
   damageShowTime: 1
   damageShowSpeed: 1
   IsDead: 0
-  HealthColor: {r: 0, g: 0, b: 0, a: 0}
-  DamageColor: {r: 0, g: 0, b: 0, a: 0}
-  BackColor: {r: 0, g: 0, b: 0, a: 0}
+  shouldSpawnHealth: 1
+  HealthColor: {r: 1, g: 1, b: 1, a: 1}
+  DamageColor: {r: 1, g: 1, b: 1, a: 1}
+  BackColor: {r: 1, g: 1, b: 1, a: 1}
+  numOfPickups: 3
   HealthPickupPrefab: {fileID: 0}
   DizzyMat: {fileID: 0}
 --- !u!1001 &2079165394299010438

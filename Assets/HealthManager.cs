@@ -131,7 +131,7 @@ public class HealthManager : MonoBehaviour
     public Color HealthColor, DamageColor, BackColor;
     private Color invisible = new Color(0, 0, 0, 0);
     public int numOfPickups = 3;
-    public GameObject HealthPickupPrefab;
+    public GameObject currencyPickup, healthPickup;
 
     private float currentMeter = 100, damageShowTimer, healthBarFadeTimer;
     private bool isHealing = false, coroutineStarted = false, healthIsVisible = false, deathCoroutineStarted = false;
@@ -384,16 +384,21 @@ public class HealthManager : MonoBehaviour
     /// waits until the death animation is done and then destroys the character
     /// </summary>
     /// <returns></returns>
-    IEnumerator DeathEvent(bool spawnHealth)
+    IEnumerator DeathEvent(bool spawnPickup)
     {
         deathCoroutineStarted = true;
         IsDead = true;
 
-        if (spawnHealth)
+        if (spawnPickup)
         {
             for (int i = 0; i < numOfPickups; i++)
             {
-                SpawnPickup();
+                SpawnPickup(currencyPickup);
+            }
+            int randNum = UnityEngine.Random.Range(0, 10);
+            if (randNum>=8)
+            {
+                SpawnPickup(healthPickup);
             }
         }
         audioManager.PlaySound("Death");
@@ -416,12 +421,12 @@ public class HealthManager : MonoBehaviour
 
     }
 
-    private void SpawnPickup()
+    private void SpawnPickup(GameObject pickup)
     {
         int randNumX = UnityEngine.Random.Range(-20, 20);
         int randNumY = UnityEngine.Random.Range(15, 35);
         Vector2 offsetDir = new Vector2(randNumX, randNumY);
-        GameObject effect = Instantiate(HealthPickupPrefab, transform.position, transform.rotation);
+        GameObject effect = Instantiate(pickup, transform.position, transform.rotation);
         effect.GetComponentInChildren<Rigidbody2D>().AddForce(offsetDir,ForceMode2D.Impulse);
     }
 }
