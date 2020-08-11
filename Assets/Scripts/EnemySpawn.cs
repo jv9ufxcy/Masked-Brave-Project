@@ -39,12 +39,14 @@ public class EnemySpawn : MonoBehaviour
     void Start()
     {
         enemyHealth = GetComponent<HealthManager>();
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void Spawn()
     {
         gameObject.SetActive(true);
+        enemyHealth.SetMaxHealth();
+        enemyHealth.IsDead=false;
         transform.SetParent(null);
     }
     public bool IsAlive()

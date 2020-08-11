@@ -2287,30 +2287,30 @@ MonoBehaviour:
     wallReq: 0
   - stateName: Enemy/JumpAttack
     index: 0
-    length: 60
+    length: 105
     loop: 0
     blendRate: 0.1
     events:
-    - start: 15
-      end: 25
+    - start: 50
+      end: 60
       active: 1
       script: 1
       parameters:
       - name: 
         val: 10
-    - start: 30
-      end: 30
+    - start: 70
+      end: 70
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
     attacks:
-    - start: 10
+    - start: 55
       length: 5
       hitStun: 15
       hitStop: 10
-      damage: 5
+      damage: 4
       meterGain: 0
       blastBlight: 0
       atkType: 0

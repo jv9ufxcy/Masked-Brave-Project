@@ -14,7 +14,10 @@ public class Hitbox : MonoBehaviour
     void Start()
     {
         if (character==null)
-            character = transform.root.GetComponent<CharacterObject>();
+        {
+            character = GetComponentInParent<CharacterObject>();
+            //character = transform.root.GetComponent<CharacterObject>();
+        }
     }
 
     // Update is called once per frame

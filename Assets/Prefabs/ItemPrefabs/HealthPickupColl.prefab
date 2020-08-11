@@ -116,7 +116,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e001547a087ed743bbfa4ba5e92d0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthToGive: 1
+  healthToGive: 3
+  currencyToGive: 0
   meterToGive: 0
   shouldAttract: 0
   attractionSpeed: 10
@@ -124,7 +125,7 @@ MonoBehaviour:
   whatCountsAsPlayer:
     serializedVersion: 2
     m_Bits: 2048
-  pickupSound: PickupRecovery
+  pickupSound: PickupEnergy
   pickupEffect: {fileID: 7459617967329291029, guid: 1e86d6f6e9175084e96e6c3ff2b6e091,
     type: 3}
 --- !u!212 &6542115900243436180
@@ -162,7 +163,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1964297353
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 27619d4265256ec429f2f33a9c37820e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

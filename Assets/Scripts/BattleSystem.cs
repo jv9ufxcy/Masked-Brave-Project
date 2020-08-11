@@ -16,7 +16,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private RectTransform enemyCounter;
     [SerializeField] private Vector2 restingLocation, startingLocation, midScreen;
     private Image enemyIcon;
-    private string battleStartText="TATAKAE!", battleEndText="FINISH!";
+    [SerializeField] private string battleStartText="TATAKAE!", battleEndText="FINISH!";
 
     public int activeWaveCount;
     private enum State { Idle, Active, Conclusion}
@@ -82,34 +82,36 @@ public class BattleSystem : MonoBehaviour
     private void StartBattleUI()
     {
         battleFightText.text = battleStartText;
+        battleFightText.transform.DOScale(8, 0f);
+        battleFightText.DOColor(Color.white, 0.25f);
+        battleFightText.transform.DOScale(1, .5f);
 
-        enemyCounter.DOAnchorPos(midScreen, 1);
-        numOfEnemies.transform.DOScale(2, .25f);
+        enemyCounter.DOAnchorPos(midScreen, 1).SetDelay(2f);
+        numOfEnemies.transform.DOScale(2, .25f).SetDelay(2f);
 
-        enemyIcon.DOColor(Color.white, 0f);
-        numOfEnemies.DOColor(Color.white, 0f);
+        enemyIcon.DOColor(Color.white, 0f).SetDelay(2f);
+        numOfEnemies.DOColor(Color.white, 0f).SetDelay(2f);
 
-        enemyCounter.DOAnchorPos(restingLocation, .5f).SetDelay(2f);
-        numOfEnemies.transform.DOScale(1, .5f).SetDelay(2f);
+        enemyCounter.DOAnchorPos(restingLocation, .5f).SetDelay(4f);
+        numOfEnemies.transform.DOScale(1, .5f).SetDelay(4f);
 
-        battleFightText.DOColor(Color.white, 0.1f).SetDelay(2f);
 
-        battleFightText.transform.DOScale(2,.25f).SetDelay(4f);
-        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(4f);
-        battleFightText.transform.DOScale(1, 0).SetDelay(5f);
+        battleFightText.transform.DOScale(8, .25f).SetDelay(5f);
+        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(5f);
     }
     private void EndBattleUI()
     {
         battleFightText.text = battleEndText;
-        
-        battleFightText.DOColor(Color.white, 0.1f);
+
+        battleFightText.DOColor(Color.white, 0.5f);
+        battleFightText.transform.DOScale(1, 0.5f);
 
         numOfEnemies.transform.DOScale(2f, 2f);
 
-        numOfEnemies.DOColor(Color.clear,2f);
-        enemyIcon.DOColor(Color.clear,2f);
+        numOfEnemies.DOColor(Color.clear, 2f);
+        enemyIcon.DOColor(Color.clear, 2f);
 
-        battleFightText.transform.DOScale(2, .25f).SetDelay(2f);
+        battleFightText.transform.DOScale(8, .25f).SetDelay(2f);
         battleFightText.DOColor(Color.clear, 0.25f).SetDelay(2f);
 
         enemyCounter.DOAnchorPos(startingLocation, 0).SetDelay(2f);

@@ -158,7 +158,7 @@ public class HealthManager : MonoBehaviour
                 SetDefaultMeter();
                 break;
             case UIType.AI:
-                currentHealth = maxHealth;
+                SetMaxHealth();
                 break;
             default:
                 break;
@@ -169,6 +169,11 @@ public class HealthManager : MonoBehaviour
         //{
         //    HideHealth();
         //}
+    }
+
+    public void SetMaxHealth()
+    {
+        currentHealth = maxHealth;
     }
 
     private void HideHealth()
