@@ -38,7 +38,12 @@ public class Hitbox : MonoBehaviour
                     enemies.Add(collision);
                     victim.GetHit(character, projectileIndex);
                 }
-
+                if (collision.gameObject.CompareTag("Shootable"))
+                {
+                    HealthManager destructible = collision.transform.root.GetComponent<HealthManager>();
+                    enemies.Add(collision);
+                    destructible.RemoveHealth(1);
+                }
             }
         }
         else
@@ -50,6 +55,12 @@ public class Hitbox : MonoBehaviour
                 {
                     enemies.Add(collision);
                     victim.GetHit(character, projectileIndex);
+                }
+                if (collision.gameObject.CompareTag("Shootable"))
+                {
+                    HealthManager destructible = collision.transform.root.GetComponent<HealthManager>();
+                    enemies.Add(collision);
+                    destructible.RemoveHealth(1);
                 }
             }
         }

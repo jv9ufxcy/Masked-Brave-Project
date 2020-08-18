@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4596218175977772}
-  - component: {fileID: 4202738237509158532}
   - component: {fileID: 114135425130313622}
   - component: {fileID: 212310986017103336}
   - component: {fileID: 95611479683623692}
@@ -38,21 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4202738237509158532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946779624007576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e2bef508af07542ac0cc21ac4757a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectileIndex: 22
-  character: {fileID: 0}
-  stateIndex: 0
 --- !u!114 &114135425130313622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,12 +49,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletType: 0
+  target: {fileID: 0}
+  closestEnemy: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  moveDirection: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
     type: 3}
   blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
     type: 3}
   tagToHit: Enemy
+  tagToCollide: Ground
   lifeTime: 1
+  speed: 0
+  targetRange: 10
   blastBlight: 50
   whatLayersToHit:
     serializedVersion: 2
@@ -80,6 +72,7 @@ MonoBehaviour:
   shouldStopOnHit: 0
   canReflect: 1
   character: {fileID: 0}
+  projectileIndex: 22
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -115,7 +108,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1964297353
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3324b74fe63028f43abaa6d2329cf324, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4951,7 +4944,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1480257295
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 3

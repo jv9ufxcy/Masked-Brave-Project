@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Experimental.XR;
 
 public class CharacterObject : MonoBehaviour
 {
@@ -345,6 +346,9 @@ public class CharacterObject : MonoBehaviour
                 break;
             case 14:
                 PlayAudio(_params[0].name);
+                break;
+            case 15:
+                SpawnTurret(_params[0].val);
                 break;
                 
         }
@@ -783,6 +787,21 @@ public class CharacterObject : MonoBehaviour
         }
     }
 
+    private void SpawnTurret(float index)
+    {
+        if (isKinzecterOut)
+        {
+            turret.FireBullet();
+        }
+        else
+        {
+            var offset = new Vector3(1.5f * direction, 1.5f, 0);
+            GameObject newTurret = Instantiate(bullets[(int)index], transform.position + offset, Quaternion.identity);
+            turret = newTurret.GetComponent<Turret>();
+            turret.characterObject = characterObject;
+            isKinzecterOut = true;
+        }
+    }
     private void SpawnKinzecter(float offsetX, float offsetY)
     {
         var offset = new Vector3(offsetX * direction, offsetY, 0);
@@ -823,7 +842,7 @@ public class CharacterObject : MonoBehaviour
         var offset = new Vector3(offsetX*direction, offsetY, 0);
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position+offset, Quaternion.identity);
         newbullet.GetComponent<BulletHit>().character = characterObject;
-        newbullet.GetComponent<Hitbox>().character = characterObject;
+        //newbullet.GetComponent<Hitbox>().character = characterObject;
         newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction, 0);
         newbullet.transform.localScale = new Vector3(direction, 1, 1);
     }
@@ -1152,83 +1171,100 @@ public class CharacterObject : MonoBehaviour
     {
         if (projectileIndex==0)//not a projectile
         {
-            AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
-            Vector3 nextKnockback = curAtk.knockback;
-
-            Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
-            knockOrientation.Normalize();
-            nextKnockback.x *= knockOrientation.x;
-
-
-            SetVelocity(nextKnockback * 0.7f);//dampen a bit
-            targetHitAnim.x = curAtk.hitAnim.x;
-            targetHitAnim.y = curAtk.hitAnim.y;
-
-            //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-            //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-            if (curAtk.blastBlight > 0)
+                AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
+            if (healthManager.HasShield())
             {
-                ActivateBlastblight(curAtk);
+                healthManager.ShieldDamage(curAtk.poiseDamage);
             }
-
-            curHitAnim = targetHitAnim * .25f;
-
-            GameEngine.SetHitPause(curAtk.hitStop);
-            hitStun = curAtk.hitStun;
-            attacker.hitConfirm += 1;
-            attacker.BuildMeter(curAtk.meterGain);
-            switch (controlType)//damage Calc
+            else
             {
-                case ControlType.AI:
-                    healthManager.RemoveHealth(curAtk.damage);
-                    PlayAudio("TakeDamage");
-                    break;
-                case ControlType.PLAYER:
-                    HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
-                    PlayAudio("PlayerTakeDamage");
-                    break;
-                default:
-                    break;
+                Vector3 nextKnockback = curAtk.knockback;
+
+                Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
+                knockOrientation.Normalize();
+                nextKnockback.x *= knockOrientation.x;
+
+
+                SetVelocity(nextKnockback * 0.7f);//dampen a bit
+                targetHitAnim.x = curAtk.hitAnim.x;
+                targetHitAnim.y = curAtk.hitAnim.y;
+
+                //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+                //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+                if (curAtk.blastBlight > 0)
+                {
+                    ActivateBlastblight(curAtk);
+                }
+
+                curHitAnim = targetHitAnim * .25f;
+
+                GameEngine.SetHitPause(curAtk.hitStop);
+                hitStun = curAtk.hitStun;
+                attacker.hitConfirm += 1;
+                attacker.BuildMeter(curAtk.meterGain);
+                switch (controlType)//damage Calc
+                {
+                    case ControlType.AI:
+                        healthManager.RemoveHealth(curAtk.damage);
+                        PlayAudio("TakeDamage");
+                        break;
+                    case ControlType.PLAYER:
+                        HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                        PlayAudio("PlayerTakeDamage");
+                        break;
+                    default:
+                        break;
+                }
+                StartState(hitStunStateIndex);
+                GlobalPrefab(0);
             }
         }
         else//projectiles
         {
             AttackEvent curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[0];
-            Vector3 nextKnockback = curAtk.knockback;
-
-            Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
-            knockOrientation.Normalize();
-            nextKnockback.x *= knockOrientation.x;
-
-
-            SetVelocity(nextKnockback * 0.7f);//dampen a bit
-            targetHitAnim.x = curAtk.hitAnim.x;
-            targetHitAnim.y = curAtk.hitAnim.y;
-
-            //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-            //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-            curHitAnim = targetHitAnim * .25f;
-
-            GameEngine.SetHitPause(curAtk.hitStop);
-            hitStun = curAtk.hitStun;
-            attacker.hitConfirm += 1;
-            attacker.BuildMeter(curAtk.meterGain);
-            switch (controlType)//damage calc
+            if (healthManager.HasShield())
             {
-                case ControlType.AI:
-                    healthManager.RemoveHealth(curAtk.damage);
-                    PlayAudio("TakeDamage");
-                    break;
-                case ControlType.PLAYER:
-                    HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
-                    PlayAudio("PlayerTakeDamage");
-                    break;
-                default:
-                    break;
+                healthManager.ShieldDamage(curAtk.poiseDamage);
+            }
+            else
+            {
+                Vector3 nextKnockback = curAtk.knockback;
+
+                Vector3 knockOrientation = transform.position - attacker.transform.position;
+                knockOrientation.Normalize();
+                nextKnockback.x *= knockOrientation.x;
+
+
+                SetVelocity(nextKnockback * 0.7f);//dampen a bit
+                targetHitAnim.x = curAtk.hitAnim.x;
+                targetHitAnim.y = curAtk.hitAnim.y;
+
+                //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+                //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+                curHitAnim = targetHitAnim * .25f;
+
+                GameEngine.SetHitPause(curAtk.hitStop);
+                hitStun = curAtk.hitStun;
+                attacker.hitConfirm += 1;
+                attacker.BuildMeter(curAtk.meterGain);
+                switch (controlType)//damage calc
+                {
+                    case ControlType.AI:
+                        healthManager.RemoveHealth(curAtk.damage);
+                        PlayAudio("TakeDamage");
+                        break;
+                    case ControlType.PLAYER:
+                        HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                        PlayAudio("PlayerTakeDamage");
+                        break;
+                    default:
+                        break;
+                }
+                StartState(hitStunStateIndex);
+                GlobalPrefab(0);
             }
         }
-        StartState(hitStunStateIndex);
-        GlobalPrefab(0);
+        
     }
 
     private void ActivateBlastblight(AttackEvent curAtk)
@@ -1256,9 +1292,10 @@ public class CharacterObject : MonoBehaviour
     }
     [Header("EnemyLogic")]
     public CharacterObject target;
+    public Turret turret;
     public float aggroRange = 30f, attackRange=3f, attackCooldown=180f;
     private bool isNearPlayer, isPlayerInRange;
-    public int attackState1 = 54, attackState2 = 55, attackState3 = 56;
+    public int[] attackState;
     private void UpdateAI()
     {
         FindTarget();
@@ -1267,22 +1304,25 @@ public class CharacterObject : MonoBehaviour
             if (isNearPlayer&&!isPlayerInRange&&dashCooldown<=0)
             {
                 FaceTarget(target.transform.position);
-                FrontVelocity(moveSpeed);
+                if (moveSpeed > 0)
+                {
+                    FrontVelocity(moveSpeed);
+                }
+                else
+                    velocity = Vector2.MoveTowards(transform.position,target.transform.position, 1);
             }
             if (isPlayerInRange && dashCooldown <= 0)
             {
                 FaceTarget(target.transform.position);
-                StartState(attackState1);
+                int randNum = Random.Range(0,attackState.Length);
+                velocity = Vector2.zero;
+                StartState(attackState[randNum]);
             }
         }
-        if (currentState == attackState1)//Attack
+        if (currentState != 0)//Attack
         {
             dashCooldown = attackCooldown;
         }
-        if (currentState == attackState2)//Neutral
-            dashCooldown = attackCooldown;
-        if (currentState == attackState3)//Neutral
-            dashCooldown = attackCooldown;
     }
     void FindTarget()
     {

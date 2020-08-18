@@ -279,6 +279,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2833465962183159127}
+  - component: {fileID: 3940268750546302645}
   m_Layer: 11
   m_Name: Draw
   m_TagString: Untagged
@@ -302,6 +303,25 @@ Transform:
   m_Father: {fileID: 2833465962666126395}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3940268750546302645
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833465962183159126}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9b2ea27df6cc254bb3757cb6444c642, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2833465962666126394
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +445,6 @@ MonoBehaviour:
   jumpPow: 12
   currentCommandState: 0
   currentCommandStep: 0
-  shotPressure: 0
   minShotPressure: 30
   maxShotPressure: 60
   chargeAttackIndex: 15
@@ -595,7 +614,7 @@ MonoBehaviour:
   maxMeter: 100
   minMeter: 0
   maxHealth: 100
-  minHealth: 0
+  currentShieldHealth: 0
   currentHealth: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
@@ -610,7 +629,9 @@ MonoBehaviour:
   DamageColor: {r: 1, g: 1, b: 1, a: 1}
   BackColor: {r: 1, g: 1, b: 1, a: 1}
   numOfPickups: 3
-  HealthPickupPrefab: {fileID: 0}
+  currencyPickup: {fileID: 0}
+  healthPickup: {fileID: 0}
+  effectsAnim: {fileID: 3940268750546302645}
   DizzyMat: {fileID: 0}
 --- !u!1001 &2079165394299010438
 PrefabInstance:

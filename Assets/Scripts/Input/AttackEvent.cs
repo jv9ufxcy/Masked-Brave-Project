@@ -13,7 +13,7 @@ public class AttackEvent
     public int damage;
     public int meterGain;
     public int blastBlight;
-    public int atkType;
+    public int poiseDamage=1;
 
     public Vector2 hitAnim;
     public Vector3 knockback;

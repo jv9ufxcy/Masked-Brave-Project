@@ -123,7 +123,7 @@ public class HealthManager : MonoBehaviour
     public enum UIType { AI, PLAYER }
     public UIType UI = UIType.PLAYER;
     public float maxMeter = 100, minMeter = 0;
-    public float maxHealth = 100, minHealth = 0, currentHealth;
+    public float maxHealth = 100, currentShieldHealth = 0, currentHealth;
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
@@ -132,14 +132,18 @@ public class HealthManager : MonoBehaviour
     private Color invisible = new Color(0, 0, 0, 0);
     public int numOfPickups = 3;
     public GameObject currencyPickup, healthPickup;
-
+    
+    public Animator effectsAnim;
     private float currentMeter = 100, damageShowTimer, healthBarFadeTimer;
     private bool isHealing = false, coroutineStarted = false, healthIsVisible = false, deathCoroutineStarted = false;
     private CharacterObject character;
     public Material DizzyMat;
     private AudioManager audioManager;
     //private PlayerRespawner respawner;
-
+    public bool HasShield()
+    {
+        return currentShieldHealth > 0;
+    }
     private void Start()
     {
         audioManager = AudioManager.instance;
@@ -342,23 +346,35 @@ public class HealthManager : MonoBehaviour
 
     public void RemoveHealth(int amount)
     {
-        
+
         switch (UI)
         {
             case UIType.PLAYER:
-                HealthVisualManager.healthSystemStatic.Damage(amount);
+                if (currentShieldHealth > 0)
+                {
+                    ShieldDamage(amount);
+                }
+                else
+                {
+                    HealthVisualManager.healthSystemStatic.Damage(amount);
+                }
+                
                 //UpdateFill();
                 break;
             case UIType.AI:
-                damageShowTimer = damageShowTime;//set the timer back to max when injured happens
-                healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
-
-
-                currentHealth -= amount;
-
-                if (currentHealth <= minHealth)
+                if (currentShieldHealth > 0)
                 {
-                    currentHealth = minHealth;
+                    ShieldDamage(amount);
+                }
+                else
+                {
+                    damageShowTimer = damageShowTime;//set the timer back to max when injured happens
+                    healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
+                    currentHealth -= amount;
+                }
+                if (currentHealth <= 0)
+                {
+                    currentHealth = 0;
                     if (!IsDead)
                         StartCoroutine(DeathEvent(shouldSpawnHealth));
                 }
@@ -368,7 +384,22 @@ public class HealthManager : MonoBehaviour
         }
         
     }
-
+    public void AddShield(float amount)
+    {
+        effectsAnim.Play("shieldIntro");
+        currentShieldHealth = amount;
+        effectsAnim.SetFloat("State", 1);
+    }
+    public void ShieldDamage(float amount)
+    {
+        currentShieldHealth -= amount;
+        effectsAnim.Play("shieldDamage");
+        if (currentShieldHealth<=0)
+        {
+            effectsAnim.SetFloat("State", 0);
+            currentShieldHealth = 0;
+        }
+    }
     private void ShowHealth()
     {
         BarImage.color = BackColor;
