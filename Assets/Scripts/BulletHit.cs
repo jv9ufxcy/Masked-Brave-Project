@@ -51,7 +51,8 @@ public class BulletHit : MonoBehaviour
                 break;
             case 3://home in on closest enemy
                 closestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetRange);
-                transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
+                if (closestEnemy!=null)
+                    transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
                 break;
         }
         //Countdown to lifetime
@@ -118,8 +119,7 @@ public class BulletHit : MonoBehaviour
         if (canReflect)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-            bulletRB.velocity = -bulletRB.velocity;
-            speed = -speed;
+            
             gameObject.layer = LayerMask.NameToLayer("Projectile");
         }
         else

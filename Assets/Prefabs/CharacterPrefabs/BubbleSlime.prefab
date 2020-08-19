@@ -4750,7 +4750,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   gravity: 0
   aniMoveSpeed: 0
-  friction: {x: 0.95, y: 0.99, z: 0}
+  friction: {x: 0.5, y: 0.5, z: 0}
   direction: 1
   myRB: {fileID: 6461934158015889093}
   boxCollider2D: {fileID: 0}
@@ -4781,7 +4781,7 @@ MonoBehaviour:
   horizontalAxis: altPs4Horizontal
   verticalAxis: altPs4Vertical
   deadzone: 0.2
-  moveSpeed: 0
+  moveSpeed: 0.1
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -4808,9 +4808,6 @@ MonoBehaviour:
     type: 3}
   shootAnim: 0
   shootAnimMax: 0
-  bulletVelocity: {x: 20, y: 0}
-  busterVelocity: {x: 30, y: 0}
-  critBusterVelocity: {x: 35, y: 0}
   fireRate: 10
   bullets:
   - {fileID: 1946779624007576, guid: 4d44dc666ad645a46a539a483990aaf9, type: 3}
@@ -4851,10 +4848,13 @@ MonoBehaviour:
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}
-  aggroRange: 15
-  attackRange: 8
+  aggroRange: 25
+  attackRange: 7
   attackCooldown: 60
-  attackState: 370000003800000038000000390000003a000000
+  isNearPlayer: 0
+  isPlayerInRange: 0
+  attackState: 37000000370000003800000038000000390000003a000000
+  enemyType: 1
 --- !u!50 &6461934158015889093
 Rigidbody2D:
   serializedVersion: 4
@@ -4939,7 +4939,7 @@ MonoBehaviour:
   UI: 0
   maxMeter: 100
   minMeter: 0
-  maxHealth: 6
+  maxHealth: 15
   currentShieldHealth: 0
   currentHealth: 0
   HealthFill: {fileID: 0}

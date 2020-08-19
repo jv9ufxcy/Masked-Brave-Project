@@ -350,6 +350,9 @@ public class CharacterObject : MonoBehaviour
             case 15:
                 SpawnTurret(_params[0].val);
                 break;
+            case 16:
+                TargetAttack(_params[0].val, _params[1].val);
+                break;
                 
         }
     }
@@ -370,6 +373,31 @@ public class CharacterObject : MonoBehaviour
     private void PlayAudio(string audioName)
     {
         audioManager.PlaySound(audioName);
+    }
+    private void TargetAttack(float speed, float range)
+    {
+        switch (controlType)
+        {
+            case ControlType.AI:
+                
+                break;
+            case ControlType.PLAYER:
+                EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, range);
+                if (nextClosestEnemy != null && Vector2.Distance(transform.position, nextClosestEnemy.transform.position)>2f)
+                {
+                    Vector2 nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
+                    velocity = (nextTargetDir * speed);
+                    //transform.position = Vector2.MoveTowards(transform.position, nextClosestEnemy.transform.position, speed);
+                    Debug.Log("enemy at " + nextClosestEnemy.transform.position);
+                }
+                else
+                {
+                    Debug.Log("no one nearby");
+                }
+                break;
+            default:
+                break;
+        }
     }
     private void AirStill(float _pow)
     {
@@ -749,7 +777,6 @@ public class CharacterObject : MonoBehaviour
     [Header("Shooting Stats")]
     public GameObject blastBlightGO;
     public float shootAnim, shootAnimMax;
-    public Vector2 bulletVelocity = new Vector2(20f, 0), busterVelocity = new Vector2(30f, 0), critBusterVelocity = new Vector2(35f, 0);
     public float fireRate = 10f;
     private float timeToNextFire = 0f;
     public GameObject[] bullets;
@@ -856,7 +883,7 @@ public class CharacterObject : MonoBehaviour
         //}
         //else
         //{
-        FireBullet(bulletType, critBusterVelocity.x,bulletSpawnPos.x, bulletSpawnPos.y);
+        //FireBullet(bulletType, critBusterVelocity.x,bulletSpawnPos.x, bulletSpawnPos.y);
         //}
 
     }
@@ -1294,22 +1321,29 @@ public class CharacterObject : MonoBehaviour
     public CharacterObject target;
     public Turret turret;
     public float aggroRange = 30f, attackRange=3f, attackCooldown=180f;
-    private bool isNearPlayer, isPlayerInRange;
+    [SerializeField] private bool isNearPlayer, isPlayerInRange;
     public int[] attackState;
+    public int enemyType;
     private void UpdateAI()
     {
-        FindTarget();
+        if (target==null)
+        {
+            FindTarget();
+        }
         if (currentState == 0)//Neutral
         {
             if (isNearPlayer&&!isPlayerInRange&&dashCooldown<=0)
             {
                 FaceTarget(target.transform.position);
-                if (moveSpeed > 0)
+                switch (enemyType)
                 {
-                    FrontVelocity(moveSpeed);
+                    case 0:
+                        FrontVelocity(moveSpeed);
+                        break;
+                    case 1:
+                        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, moveSpeed);
+                        break;
                 }
-                else
-                    velocity = Vector2.MoveTowards(transform.position,target.transform.position, 1);
             }
             if (isPlayerInRange && dashCooldown <= 0)
             {

@@ -7,10 +7,12 @@ public class Blastblight : MonoBehaviour
     [SerializeField] private int blastBuildup, blastThreshold = 100, blastIncrease=45, blastLimit=1000;
     public CharacterObject player;
     [SerializeField] private GameObject bombObject;
+    public HealthManager enemyHealth;
     // Start is called before the first frame update
     void Start()
     {
         player = GameEngine.gameEngine.mainCharacter;
+        enemyHealth = GetComponentInParent<HealthManager>();
     }
 
     // Update is called once per frame
@@ -19,6 +21,11 @@ public class Blastblight : MonoBehaviour
         if (blastBuildup>=blastThreshold)
         {
             Explosion();
+        }
+        if (enemyHealth.IsDead)
+        {
+            InstantiateExplosion();
+            Destroy(gameObject, .1f);
         }
     }
     public void AddBlast(int blightDamage)
@@ -39,5 +46,9 @@ public class Blastblight : MonoBehaviour
         bomb.transform.parent = transform;
         bomb.GetComponentInChildren<Hitbox>().character = GameEngine.gameEngine.mainCharacter;
         bomb.GetComponent<BombController>().Detonate();
+    }
+    private void DeathExplosion()
+    {
+
     }
 }

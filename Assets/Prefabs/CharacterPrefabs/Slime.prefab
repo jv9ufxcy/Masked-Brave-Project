@@ -145,9 +145,6 @@ MonoBehaviour:
     type: 3}
   shootAnim: 0
   shootAnimMax: 0
-  bulletVelocity: {x: 20, y: 0}
-  busterVelocity: {x: 30, y: 0}
-  critBusterVelocity: {x: 35, y: 0}
   fireRate: 10
   bullets: []
   bulletSpawnPos: {x: 0.25, y: 0.5}
@@ -183,10 +180,14 @@ MonoBehaviour:
   hitStunStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
+  turret: {fileID: 0}
   aggroRange: 10
   attackRange: 4
   attackCooldown: 90
+  isNearPlayer: 0
+  isPlayerInRange: 0
   attackState: 36000000
+  enemyType: 0
 --- !u!50 &6476919978724093373
 Rigidbody2D:
   serializedVersion: 4

@@ -592,7 +592,7 @@ MonoBehaviour:
       damage: 4
       meterGain: 4
       blastBlight: 0
-      poiseDamage: 1
+      poiseDamage: 2
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 0.5, z: 0}
@@ -1937,13 +1937,131 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: NEW STATE
+  - stateName: BraveTarget
     index: 0
-    length: 60
+    length: 35
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 0
+      end: 10
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 10
+    - start: 3.448718
+      end: 35
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 22
+      - name: 
+        val: 12
+    - start: 0
+      end: 0
+      active: 1
+      script: 12
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+    attacks:
+    - start: 3
+      length: 3
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 1
+      blastBlight: 0
+      poiseDamage: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 3, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 2.5, y: 2.5, z: 0}
+      cancelWindow: 0
+    - start: 6
+      length: 3
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 1
+      blastBlight: 0
+      poiseDamage: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 3, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 2.5, y: 2.5, z: 0}
+      cancelWindow: 0
+    - start: 9
+      length: 3
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 1
+      blastBlight: 0
+      poiseDamage: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 3, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 2.5, y: 2.5, z: 0}
+      cancelWindow: 0
+    - start: 12
+      length: 3
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 1
+      blastBlight: 0
+      poiseDamage: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 3, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 2.5, y: 2.5, z: 0}
+      cancelWindow: 0
+    - start: 15
+      length: 3
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 1
+      blastBlight: 0
+      poiseDamage: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 3, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 2.5, y: 2.5, z: 0}
+      cancelWindow: 0
+    - start: 18
+      length: 3
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 1
+      blastBlight: 0
+      poiseDamage: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 3, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 2.5, y: 2.5, z: 0}
+      cancelWindow: 0
+    - start: 21
+      length: 5
+      hitStun: 20
+      hitStop: 5
+      damage: 4
+      meterGain: 4
+      blastBlight: 0
+      poiseDamage: 2
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 3, z: 0}
+      hitBoxPos: {x: 1, y: 0.5, z: 0}
+      hitBoxScale: {x: 2.5, y: 4, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     meterReq: 0
     dashCooldownReq: 0
@@ -2330,13 +2448,13 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 10
-      end: 10
+    - start: 4.769231
+      end: 25
       active: 1
       script: 1
       parameters:
       - name: Speed
-        val: -1
+        val: -10
     attacks: []
     jumpReq: 0
     meterReq: 0
@@ -2575,8 +2693,8 @@ MonoBehaviour:
   - index: 0
     name: KinzecterActions
     parameters:
-    - name: BulletName
-      val: 5
+    - name: Action
+      val: 0
     - name: OffsetX
       val: 1
     - name: OffsetY
@@ -2596,6 +2714,13 @@ MonoBehaviour:
     parameters:
     - name: turretIndex
       val: 3
+  - index: 0
+    name: TargetAttack
+    parameters:
+    - name: Speed
+      val: 5
+    - name: Range
+      val: 10
   moveLists:
   - name: Brave
     commandStates:
@@ -2706,7 +2831,7 @@ MonoBehaviour:
           input: 1
           state: 5
           inputs: 
-        followUps: 
+        followUps: 0b000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -2780,7 +2905,23 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 1
-      omitList: 0500000006000000
+      - idIndex: 11
+        command:
+          motionCommand: 0
+          input: 3
+          state: 34
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 767
+          y: 120
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      omitList: 05000000060000000b000000
       nextFollowups: 010000000200000003000000040000000700000008000000090000000a000000
     - stateName: Aerial
       aerial: 1
@@ -2841,7 +2982,7 @@ MonoBehaviour:
           input: 1
           state: 10
           inputs: 
-        followUps: 
+        followUps: 0c000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -2979,7 +3120,23 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
-      omitList: 0200000003000000
+      - idIndex: 12
+        command:
+          motionCommand: 0
+          input: 3
+          state: 34
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 695
+          y: 132
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      omitList: 02000000030000000c000000
       nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000b000000
   - name: Bombadier
     commandStates:

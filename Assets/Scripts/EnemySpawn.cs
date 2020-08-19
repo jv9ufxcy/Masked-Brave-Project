@@ -5,12 +5,13 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     private HealthManager enemyHealth;
+    public bool IsSpawned;
     public static EnemySpawn GetClosestEnemy(Vector3 position, float maxRange)
     {
         EnemySpawn closest = null;
         foreach (EnemySpawn enemy in enemyList)
         {
-            if (enemy != null)
+            if (enemy != null&&enemy.IsAlive()&&enemy.IsSpawned)
             {
                 if (Vector3.Distance(position, enemy.transform.position) <= maxRange)
                 {
@@ -47,6 +48,7 @@ public class EnemySpawn : MonoBehaviour
         gameObject.SetActive(true);
         enemyHealth.SetMaxHealth();
         enemyHealth.IsDead=false;
+        IsSpawned = true;
         transform.SetParent(null);
     }
     public bool IsAlive()

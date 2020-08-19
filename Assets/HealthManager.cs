@@ -127,7 +127,7 @@ public class HealthManager : MonoBehaviour
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
-    public bool IsDead = false, shouldSpawnHealth=true;
+    public bool IsDead = true, shouldSpawnHealth=true;
     public Color HealthColor, DamageColor, BackColor;
     private Color invisible = new Color(0, 0, 0, 0);
     public int numOfPickups = 3;
