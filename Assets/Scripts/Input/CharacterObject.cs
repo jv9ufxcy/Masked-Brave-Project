@@ -1197,106 +1197,60 @@ public class CharacterObject : MonoBehaviour
 
     public void GetHit(CharacterObject attacker, int projectileIndex)
     {
-        if (projectileIndex==0)//not a projectile
+        AttackEvent curAtk;
+        if (projectileIndex == 0)//not a projectile
         {
-                AttackEvent curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
-            if (healthManager.HasShield())
-            {
-                healthManager.ShieldDamage(curAtk.poiseDamage);
-            }
-            else
-            {
-                Vector3 nextKnockback = curAtk.knockback;
-
-                Vector3 knockOrientation = character.transform.position - attacker.character.transform.position;
-                knockOrientation.Normalize();
-                nextKnockback.x *= knockOrientation.x;
-
-
-                SetVelocity(nextKnockback * 0.7f);//dampen a bit
-                targetHitAnim.x = curAtk.hitAnim.x;
-                targetHitAnim.y = curAtk.hitAnim.y;
-
-                //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-                //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-                if (curAtk.blastBlight > 0)
-                {
-                    ActivateBlastblight(curAtk);
-                }
-
-                curHitAnim = targetHitAnim * .25f;
-
-                GameEngine.SetHitPause(curAtk.hitStop);
-                hitStun = curAtk.hitStun;
-                attacker.hitConfirm += 1;
-                attacker.BuildMeter(curAtk.meterGain);
-                switch (controlType)//damage Calc
-                {
-                    case ControlType.AI:
-                        healthManager.RemoveHealth(curAtk.damage);
-                        PlayAudio(attackStrings[curAtk.attackType]);
-                        GlobalPrefab(0);
-                        break;
-                    case ControlType.PLAYER:
-                        HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
-                        PlayAudio("PlayerTakeDamage");
-                        GlobalPrefab(3);
-                        break;
-                    default:
-                        break;
-                }
-                StartState(hitStunStateIndex);
-                
-            }
+            curAtk = GameEngine.coreData.characterStates[attacker.currentState].attacks[attacker.currentAttackIndex];
         }
         else//projectiles
         {
-            AttackEvent curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[0];
-            if (healthManager.HasShield())
+            curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[0];
+        }
+
+        if (healthManager.HasShield())
+        {
+            healthManager.ShieldDamage(curAtk.poiseDamage);
+            GameEngine.SetHitPause(curAtk.hitStop);
+            attacker.hitConfirm += 1;
+        }
+        else
+        {
+            Vector3 nextKnockback = curAtk.knockback;
+
+            Vector3 knockOrientation = transform.position - attacker.transform.position;
+            knockOrientation.Normalize();
+            nextKnockback.x *= knockOrientation.x;
+
+            SetVelocity(nextKnockback * 0.7f);//dampen a bit
+            targetHitAnim.x = curAtk.hitAnim.x;
+            targetHitAnim.y = curAtk.hitAnim.y;
+
+            //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+            //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+            curHitAnim = targetHitAnim * .25f;
+
+            GameEngine.SetHitPause(curAtk.hitStop);
+            hitStun = curAtk.hitStun;
+            StartState(hitStunStateIndex);
+
+            attacker.hitConfirm += 1;
+            attacker.BuildMeter(curAtk.meterGain);
+            switch (controlType)//damage calc
             {
-                healthManager.ShieldDamage(curAtk.poiseDamage);
-            }
-            else
-            {
-                Vector3 nextKnockback = curAtk.knockback;
-
-                Vector3 knockOrientation = transform.position - attacker.transform.position;
-                knockOrientation.Normalize();
-                nextKnockback.x *= knockOrientation.x;
-
-
-                SetVelocity(nextKnockback * 0.7f);//dampen a bit
-                targetHitAnim.x = curAtk.hitAnim.x;
-                targetHitAnim.y = curAtk.hitAnim.y;
-
-                //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-                //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-                curHitAnim = targetHitAnim * .25f;
-
-                GameEngine.SetHitPause(curAtk.hitStop);
-                hitStun = curAtk.hitStun;
-                attacker.hitConfirm += 1;
-                attacker.BuildMeter(curAtk.meterGain);
-                switch (controlType)//damage calc
-                {
-                    case ControlType.AI:
-                        healthManager.RemoveHealth(curAtk.damage);
-                        PlayAudio(attackStrings[curAtk.attackType]);
-                        GlobalPrefab(3);
-                        break;
-                    case ControlType.PLAYER:
-                        HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
-                        PlayAudio("PlayerTakeDamage");
-                        GlobalPrefab(3);
-                        break;
-                    default:
-                        break;
-                }
-                StartState(hitStunStateIndex);
-                
+                case ControlType.AI:
+                    healthManager.RemoveHealth(curAtk.damage);
+                    PlayAudio(attackStrings[curAtk.attackType]);
+                    GlobalPrefab(0);
+                    break;
+                case ControlType.PLAYER:
+                    HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                    PlayAudio("PlayerTakeDamage");
+                    GlobalPrefab(3);
+                    break;
+                default:
+                    break;
             }
         }
-        
     }
     [SerializeField] string[] attackStrings;
 
