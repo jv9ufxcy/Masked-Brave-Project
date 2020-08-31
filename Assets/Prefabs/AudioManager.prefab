@@ -45,13 +45,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: SwordSlash
-    clip: {fileID: 8300000, guid: 2686b4c74404bb24c9532a563f1abe5b, type: 3}
+    clip: {fileID: 8300000, guid: 450d878556493824284619721ecf7c28, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0
   - name: TakeDamage
     clip: {fileID: 8300000, guid: 80cb1d86813e31b498cada417a3608ba, type: 3}
     volume: 0.5
+    pitch: 1
+    loop: 0
+  - name: SwordHit
+    clip: {fileID: 8300000, guid: 2686b4c74404bb24c9532a563f1abe5b, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+  - name: BulletHit
+    clip: {fileID: 8300000, guid: 55f92de505b1b404f8842cf097c50907, type: 3}
+    volume: 1
     pitch: 1
     loop: 0
   - name: Henshin
@@ -165,8 +175,8 @@ MonoBehaviour:
     pitch: 1
     loop: 0
   - name: Signal
-    clip: {fileID: 8300000, guid: 491af81c302d5e2498063ff3795a50ff, type: 3}
-    volume: 0.5
+    clip: {fileID: 8300000, guid: 48433c7ca4db0d94c9e180525e748c35, type: 3}
+    volume: 1
     pitch: 1
     loop: 0
   - name: SuperAttack
@@ -175,12 +185,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
   - name: Vroom
-    clip: {fileID: 8300000, guid: 9fab8c3340a33ab489e0d185dbf6ccb1, type: 3}
+    clip: {fileID: 8300000, guid: 472d5b2160399ab48a8c57f865a5ec68, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0
   - name: Vroom2
-    clip: {fileID: 8300000, guid: 9fab8c3340a33ab489e0d185dbf6ccb1, type: 3}
+    clip: {fileID: 8300000, guid: 472d5b2160399ab48a8c57f865a5ec68, type: 3}
     volume: 0.5
     pitch: 1.12
     loop: 0

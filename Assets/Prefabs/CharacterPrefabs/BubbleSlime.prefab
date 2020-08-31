@@ -4844,6 +4844,11 @@ MonoBehaviour:
   nextSpecialMeterUse: 0
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
+  attackStrings:
+  - SwordHit
+  - BulletHit
+  - TakeDamage
+  - TakeDamage
   hitStunStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
@@ -4973,6 +4978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsSpawned: 0
 --- !u!1 &1355851515655560986
 GameObject:
   m_ObjectHideFlags: 0

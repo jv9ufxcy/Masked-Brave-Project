@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 50143070742357908}
   - component: {fileID: 61725261980514422}
   - component: {fileID: 7564986551262350310}
+  - component: {fileID: 1958575143211615796}
   m_Layer: 12
   m_Name: BubbleBall
   m_TagString: Shootable
@@ -50,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 3
+  direction: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
@@ -62,6 +64,7 @@ MonoBehaviour:
   tagToCollide: Ground
   lifeTime: 12
   speed: 1
+  gravity: -2
   targetRange: 10
   blastBlight: 0
   whatLayersToHit:
@@ -221,7 +224,26 @@ MonoBehaviour:
   currencyPickup: {fileID: 0}
   healthPickup: {fileID: 0}
   effectsAnim: {fileID: 0}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   DizzyMat: {fileID: 0}
+--- !u!114 &1958575143211615796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946779624007576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fda996847e64d444be03602f9f39f29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagToCollide: Enemy
+  barrierHealth: 2
 --- !u!1 &61445353783769308
 GameObject:
   m_ObjectHideFlags: 0

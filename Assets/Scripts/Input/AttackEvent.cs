@@ -14,6 +14,7 @@ public class AttackEvent
     public int meterGain;
     public int blastBlight;
     public int poiseDamage=1;
+    public int attackType;
 
     public Vector2 hitAnim;
     public Vector3 knockback;

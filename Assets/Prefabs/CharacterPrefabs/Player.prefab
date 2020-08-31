@@ -479,9 +479,6 @@ MonoBehaviour:
     type: 3}
   shootAnim: 0
   shootAnimMax: 0
-  bulletVelocity: {x: 20, y: 0}
-  busterVelocity: {x: 30, y: 0}
-  critBusterVelocity: {x: 35, y: 0}
   fireRate: 10
   bullets:
   - {fileID: 1946779624007576, guid: f4bb3a4efed6e44479068d0733d655e3, type: 3}
@@ -520,15 +517,22 @@ MonoBehaviour:
   nextSpecialMeterUse: 0
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
+  attackStrings:
+  - SwordHit
+  - BulletHit
+  - TakeDamage
+  - TakeDamage
   hitStunStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
+  turret: {fileID: 0}
   aggroRange: 30
   attackRange: 0
   attackCooldown: 180
-  attackState1: 50
-  attackState2: 51
-  attackState3: 52
+  isNearPlayer: 0
+  isPlayerInRange: 0
+  attackState: 
+  enemyType: 0
 --- !u!114 &6942301879946958580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,6 +636,11 @@ MonoBehaviour:
   currencyPickup: {fileID: 0}
   healthPickup: {fileID: 0}
   effectsAnim: {fileID: 3940268750546302645}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   DizzyMat: {fileID: 0}
 --- !u!1001 &2079165394299010438
 PrefabInstance:

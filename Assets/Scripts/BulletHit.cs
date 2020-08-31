@@ -6,15 +6,17 @@ using Cinemachine;
 public class BulletHit : MonoBehaviour
 {
     private Rigidbody2D bulletRB;
+    private Controller2D controller;
     private AudioManager audioManager;
     [Tooltip("0 - straight, 1 - homing, 2 - target")]
     public int bulletType;
+    public Vector2 direction;
     public CharacterObject target;
     public EnemySpawn closestEnemy;
     public Vector3 targetPos, moveDirection;
     [SerializeField] private GameObject bulletHitEffect, blastBlightGO;
     [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
-    [SerializeField] private float lifeTime = 2f, speed, targetRange=10f;
+    [SerializeField] private float lifeTime = 2f, speed, gravity=-2f, targetRange=10f;
     [SerializeField] private int blastBlight = 0;
     [SerializeField] private LayerMask whatLayersToHit;
 
@@ -25,6 +27,7 @@ public class BulletHit : MonoBehaviour
     void Start()
     {
         bulletRB = GetComponent<Rigidbody2D>();
+        controller = GetComponent<Controller2D>();
         if (bulletType!=0)
         {
             target = GameEngine.gameEngine.mainCharacter;
@@ -54,6 +57,11 @@ public class BulletHit : MonoBehaviour
                 if (closestEnemy!=null)
                     transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
                 break;
+            case 4: //follow ground
+                Vector2 velocity = new Vector2(speed,-2);
+                velocity.y += gravity;
+                controller.Move(velocity*Time.deltaTime, direction);
+                break;
         }
         //Countdown to lifetime
         if (lifeTime > 0)
@@ -67,7 +75,7 @@ public class BulletHit : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(tagToCollide) || collision.gameObject.CompareTag("Default"))
+        if (collision.gameObject.CompareTag(tagToCollide))
         {
             if (shouldStopOnHit)
             {

@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 6476919978724093372}
   - component: {fileID: 3068852021944926165}
   - component: {fileID: 4658252686572797528}
+  - component: {fileID: 9087814827066060597}
   m_Layer: 9
   m_Name: Slime
   m_TagString: Enemy
@@ -177,6 +178,11 @@ MonoBehaviour:
   nextSpecialMeterUse: 0
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
+  attackStrings:
+  - SwordHit
+  - BulletHit
+  - TakeDamage
+  - TakeDamage
   hitStunStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
@@ -287,12 +293,28 @@ MonoBehaviour:
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
-  numOfPickups: 8
+  numOfPickups: 3
   currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
     type: 3}
   healthPickup: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
     type: 3}
   effectsAnim: {fileID: 6501142284169485804}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9087814827066060597}
+        m_MethodName: SpawnEnemiesInArray
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   DizzyMat: {fileID: 0}
 --- !u!114 &4658252686572797528
 MonoBehaviour:
@@ -306,6 +328,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsSpawned: 0
+--- !u!114 &9087814827066060597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476919978724093363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1652d60573da83c469679c054e4dd823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 6645088818452296722, guid: e2ca6fee434784844bcae4b21edbe009, type: 3}
+  - {fileID: 6645088818452296722, guid: e2ca6fee434784844bcae4b21edbe009, type: 3}
+  rand: {x: 1, y: 2}
 --- !u!1 &6476919979401484989
 GameObject:
   m_ObjectHideFlags: 0

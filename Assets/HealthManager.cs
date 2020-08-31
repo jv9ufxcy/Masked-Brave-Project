@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HealthSystem
@@ -137,6 +138,7 @@ public class HealthManager : MonoBehaviour
     private float currentMeter = 100, damageShowTimer, healthBarFadeTimer;
     private bool isHealing = false, coroutineStarted = false, healthIsVisible = false, deathCoroutineStarted = false;
     private CharacterObject character;
+    public UnityEvent OnDeath;
     public Material DizzyMat;
     private AudioManager audioManager;
     //private PlayerRespawner respawner;
@@ -384,13 +386,13 @@ public class HealthManager : MonoBehaviour
         }
         
     }
-    public void AddShield(float amount)
+    public void AddShield(int amount)
     {
         effectsAnim.Play("shieldIntro");
         currentShieldHealth = amount;
         effectsAnim.SetFloat("State", 1);
     }
-    public void ShieldDamage(float amount)
+    public void ShieldDamage(int amount)
     {
         currentShieldHealth -= amount;
         effectsAnim.Play("shieldDamage");
@@ -444,7 +446,7 @@ public class HealthManager : MonoBehaviour
         switch (character.controlType)
         {
             case CharacterObject.ControlType.AI:
-                
+                OnDeath.Invoke();
                 gameObject.SetActive(false);
                 break;
             case CharacterObject.ControlType.PLAYER:

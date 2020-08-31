@@ -869,6 +869,7 @@ public class CharacterObject : MonoBehaviour
         var offset = new Vector3(offsetX*direction, offsetY, 0);
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position+offset, Quaternion.identity);
         newbullet.GetComponent<BulletHit>().character = characterObject;
+        newbullet.GetComponent<BulletHit>().direction.x = direction;
         //newbullet.GetComponent<Hitbox>().character = characterObject;
         newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction, 0);
         newbullet.transform.localScale = new Vector3(direction, 1, 1);
@@ -1233,17 +1234,19 @@ public class CharacterObject : MonoBehaviour
                 {
                     case ControlType.AI:
                         healthManager.RemoveHealth(curAtk.damage);
-                        PlayAudio("TakeDamage");
+                        PlayAudio(attackStrings[curAtk.attackType]);
+                        GlobalPrefab(0);
                         break;
                     case ControlType.PLAYER:
                         HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
                         PlayAudio("PlayerTakeDamage");
+                        GlobalPrefab(3);
                         break;
                     default:
                         break;
                 }
                 StartState(hitStunStateIndex);
-                GlobalPrefab(0);
+                
             }
         }
         else//projectiles
@@ -1278,21 +1281,24 @@ public class CharacterObject : MonoBehaviour
                 {
                     case ControlType.AI:
                         healthManager.RemoveHealth(curAtk.damage);
-                        PlayAudio("TakeDamage");
+                        PlayAudio(attackStrings[curAtk.attackType]);
+                        GlobalPrefab(3);
                         break;
                     case ControlType.PLAYER:
                         HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
                         PlayAudio("PlayerTakeDamage");
+                        GlobalPrefab(3);
                         break;
                     default:
                         break;
                 }
                 StartState(hitStunStateIndex);
-                GlobalPrefab(0);
+                
             }
         }
         
     }
+    [SerializeField] string[] attackStrings;
 
     private void ActivateBlastblight(AttackEvent curAtk)
     {
@@ -1342,6 +1348,9 @@ public class CharacterObject : MonoBehaviour
                         break;
                     case 1:
                         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, moveSpeed);
+                        break;
+                    case 2:
+                        StartState(attackState[0]);
                         break;
                 }
             }

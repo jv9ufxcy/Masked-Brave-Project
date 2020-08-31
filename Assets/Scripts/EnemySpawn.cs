@@ -6,6 +6,7 @@ public class EnemySpawn : MonoBehaviour
 {
     private HealthManager enemyHealth;
     public bool IsSpawned;
+    private Vector3 spawnPos;
     public static EnemySpawn GetClosestEnemy(Vector3 position, float maxRange)
     {
         EnemySpawn closest = null;
@@ -40,16 +41,33 @@ public class EnemySpawn : MonoBehaviour
     void Start()
     {
         enemyHealth = GetComponent<HealthManager>();
-        gameObject.SetActive(false);
+        if (!IsSpawned)
+        {
+            gameObject.SetActive(false);
+        }
+        
+        spawnPos = transform.position;
     }
-
+    private void Update()
+    {
+        if (!IsAlive()&&IsSpawned==true)
+        {
+            IsSpawned = false;
+        }
+    }
     public void Spawn()
     {
         gameObject.SetActive(true);
+        if (enemyHealth==null)
+        {
+            enemyHealth = GetComponent<HealthManager>();
+        }
         enemyHealth.SetMaxHealth();
         enemyHealth.IsDead=false;
         IsSpawned = true;
         transform.SetParent(null);
+        transform.position = spawnPos;
+        Debug.LogFormat("Spawned {0} in: {1}", gameObject.name, gameObject.activeInHierarchy);
     }
     public bool IsAlive()
     {
