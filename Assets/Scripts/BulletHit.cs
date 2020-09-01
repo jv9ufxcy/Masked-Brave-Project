@@ -58,7 +58,7 @@ public class BulletHit : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
                 break;
             case 4: //follow ground
-                Vector2 velocity = new Vector2(speed,-2);
+                Vector2 velocity = new Vector2(transform.localScale.x*speed,-2);
                 velocity.y += gravity;
                 controller.Move(velocity*Time.deltaTime, direction);
                 break;

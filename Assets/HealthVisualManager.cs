@@ -39,13 +39,17 @@ public class HealthVisualManager : MonoBehaviour
         }
         healthSystem.OnDamaged += HealthSystem_OnDamaged;
         healthSystem.OnHealed += HealthSystem_OnHealed;
-        //healthSystem.OnDead += HealthSystem_OnDead;
+        healthSystem.OnDead += HealthSystem_OnDead;
     }
     private void HealthSystem_OnDamaged(object sender, System.EventArgs e)
     {
         RefereshAllHearts();
     }
     private void HealthSystem_OnHealed(object sender, System.EventArgs e)
+    {
+        RefereshAllHearts();
+    }
+    private void HealthSystem_OnDead(object sender, System.EventArgs e)
     {
         RefereshAllHearts();
     }

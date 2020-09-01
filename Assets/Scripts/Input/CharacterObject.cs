@@ -14,10 +14,10 @@ public class CharacterObject : MonoBehaviour
     public float aniMoveSpeed;
 
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
-    [SerializeField]private float direction=1;
+    [SerializeField] private float direction = 1;
 
     public Rigidbody2D myRB;
-    [HideInInspector]public BoxCollider2D boxCollider2D;
+    [HideInInspector] public BoxCollider2D boxCollider2D;
     [HideInInspector] public Controller2D controller;
     public RadialMenuController henshin;
     public AfterImagePool[] afterImage;
@@ -37,7 +37,7 @@ public class CharacterObject : MonoBehaviour
     public RuntimeAnimatorController[] formAnims;
     [HideInInspector] public SpriteRenderer spriteRend;
     public GameObject kinzecter;
-    public enum ControlType { AI, PLAYER };
+    public enum ControlType { AI, PLAYER, DEAD };
     public ControlType controlType;
 
     [Header("HitCancel")]
@@ -62,7 +62,7 @@ public class CharacterObject : MonoBehaviour
         {
             Debug.LogError("No Audio Manager in Scene");
         }
-        
+
     }
 
     // Update is called once per frame
@@ -131,7 +131,7 @@ public class CharacterObject : MonoBehaviour
     void UpdateAnimator()
     {
         animSpeed = 1;
-        if (GameEngine.hitStop>0)
+        if (GameEngine.hitStop > 0)
         {
             animSpeed = 0;
         }
@@ -235,7 +235,7 @@ public class CharacterObject : MonoBehaviour
     void UpdateStateEvents()
     {
         int _curEv = 0;
-        foreach(StateEvent _ev in GameEngine.coreData.characterStates[currentState].events)
+        foreach (StateEvent _ev in GameEngine.coreData.characterStates[currentState].events)
         {
 
             //if (prevStateTime <= _ev.start && currentStateTime == _ev.start)
@@ -265,7 +265,7 @@ public class CharacterObject : MonoBehaviour
                 hitbox.transform.localPosition = _atk.hitBoxPos;
                 currentAttackIndex = _cur;
             }
-            if (currentStateTime==_atk.start+_atk.length)
+            if (currentStateTime == _atk.start + _atk.length)
             {
                 hitActive = 0;
             }
@@ -274,7 +274,7 @@ public class CharacterObject : MonoBehaviour
             if (currentStateTime >= cWindow)
                 if (hitConfirm > 0)
                     canCancel = true;
-            
+
             //Whiff Cancel
             if (currentStateTime >= cWindow + whiffWindow)
                 canCancel = true;
@@ -289,7 +289,7 @@ public class CharacterObject : MonoBehaviour
         //{
         //foreach (AttackEvent _atk in GameEngine.coreData.characterStates[currentState].attacks)
         //{
-        float cWindow = GameEngine.coreData.characterStates[currentState].attacks[currentAttackIndex].start + 
+        float cWindow = GameEngine.coreData.characterStates[currentState].attacks[currentAttackIndex].start +
             GameEngine.coreData.characterStates[currentState].attacks[currentAttackIndex].cancelWindow;
 
         if (currentStateTime == cWindow)
@@ -301,9 +301,9 @@ public class CharacterObject : MonoBehaviour
     }
     void DoEventScript(int _index, int _actIndex, int _evIndex, List<ScriptParameters> _params)
     {
-        if (_params==null){ return; }
-        if (_params.Count<=0){ return; }
-        switch(_index)//index = element in characterscripts
+        if (_params == null) { return; }
+        if (_params.Count <= 0) { return; }
+        switch (_index)//index = element in characterscripts
         {
             case 0://Jump
                 VelocityY(_params[0].val);
@@ -353,7 +353,7 @@ public class CharacterObject : MonoBehaviour
             case 16:
                 TargetAttack(_params[0].val, _params[1].val);
                 break;
-                
+
         }
     }
     public void DOChangeMovelist(int index)
@@ -379,11 +379,11 @@ public class CharacterObject : MonoBehaviour
         switch (controlType)
         {
             case ControlType.AI:
-                
+
                 break;
             case ControlType.PLAYER:
                 EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, range);
-                if (nextClosestEnemy != null && Vector2.Distance(transform.position, nextClosestEnemy.transform.position)>2f)
+                if (nextClosestEnemy != null && Vector2.Distance(transform.position, nextClosestEnemy.transform.position) > 2f)
                 {
                     Vector2 nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
                     velocity = (nextTargetDir * speed);
@@ -403,7 +403,7 @@ public class CharacterObject : MonoBehaviour
     {
         if (IsGrounded())
         {
-            if (_pow>0)
+            if (_pow > 0)
             {
                 VelocityY(_pow);
             }
@@ -428,7 +428,7 @@ public class CharacterObject : MonoBehaviour
 
         velocity = Vector2.zero;
         Vector2 dir = new Vector2(leftStick.x, leftStick.y);
-        if (dir==Vector2.zero)
+        if (dir == Vector2.zero)
         {
             dir.x = direction;
         }
@@ -447,11 +447,11 @@ public class CharacterObject : MonoBehaviour
         bombDashParticle.Stop();
         //Debug.Log("Dash particle stopped");
     }
-    void HorizontalDrag(float x){ velocity.x = x; }
-    void VerticalDrag(float y){ velocity.y = y; }
+    void HorizontalDrag(float x) { velocity.x = x; }
+    void VerticalDrag(float y) { velocity.y = y; }
     void Jump(float _pow)
     {
-        velocity.y = _pow;
+        velocity.y = _pow*jumpPow;
         jumps--;
         //hasLanded = false;
         landingParticle.Play();
@@ -469,7 +469,7 @@ public class CharacterObject : MonoBehaviour
     }
     void GlobalPrefab(float _index, int _act, int _ev)
     {
-        GameEngine.GlobalPrefab((int)_index, character,_act,_ev);
+        GameEngine.GlobalPrefab((int)_index, character, _act, _ev);
     }
     public void GlobalPrefab(float _prefab)
     {
@@ -477,7 +477,7 @@ public class CharacterObject : MonoBehaviour
     }
     private void FrontVelocity(float _pow)
     {
-        velocity.x = _pow*direction;
+        velocity.x = _pow * direction;
     }
     [Header("MovementVectors")]
     public Vector2 leftStick;
@@ -498,7 +498,7 @@ public class CharacterObject : MonoBehaviour
             if (aerialFlag)
             {
                 velocity.x = (airMod * _mov) * moveSpeed * _pow;
-                if (Mathf.Abs(airMod)==2)
+                if (Mathf.Abs(airMod) == 2)
                 {
                     //ShowAfterImage();
                 }
@@ -596,7 +596,7 @@ public class CharacterObject : MonoBehaviour
 
     void UpdateInput()
     {
-        
+
 
         inputBuffer.Update();
 
@@ -655,7 +655,7 @@ public class CharacterObject : MonoBehaviour
         }
     }
 
-    
+
 
     public bool CheckInputCommand(InputCommand _in)
     {
@@ -675,9 +675,9 @@ public class CharacterObject : MonoBehaviour
     [Header("Charged Slash")]
 
     private float shotPressure;
-    [SerializeField] private float  minShotPressure=30f, maxShotPressure = 60f;
+    [SerializeField] private float minShotPressure = 30f, maxShotPressure = 60f;
     private bool shouldChargeBuster;
-    public int chargeAttackIndex = 15, chargeShotIndex=21, critBusterIndex=22;
+    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22;
     [SerializeField] private bool firstCharge, secondCharge;
     private Color c;
 
@@ -754,7 +754,7 @@ public class CharacterObject : MonoBehaviour
         }
 
 
-        
+
     }
     [Space]
     [Header("Charged Buster")]
@@ -799,7 +799,7 @@ public class CharacterObject : MonoBehaviour
             case 4:
                 break;
         }
-       
+
     }
 
     private void TryKinzecterThrow(float offsetX, float offsetY)
@@ -845,7 +845,7 @@ public class CharacterObject : MonoBehaviour
     {
         if (!isKinzecterOut)
         {
-            if (specialMeter>=100)
+            if (specialMeter >= 100)
             {
                 SpawnKinzecter(1, 0);
                 kinzecter.GetComponent<Kinzecter>().KinzecterInstall();
@@ -855,7 +855,7 @@ public class CharacterObject : MonoBehaviour
             {
                 SpawnKinzecter(1, 0);
             }
-            
+
         }
         else
         {
@@ -866,8 +866,8 @@ public class CharacterObject : MonoBehaviour
     public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY)
     {
         shootAnim = shootAnimMax;
-        var offset = new Vector3(offsetX*direction, offsetY, 0);
-        GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position+offset, Quaternion.identity);
+        var offset = new Vector3(offsetX * direction, offsetY, 0);
+        GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position + offset, Quaternion.identity);
         newbullet.GetComponent<BulletHit>().character = characterObject;
         newbullet.GetComponent<BulletHit>().direction.x = direction;
         //newbullet.GetComponent<Hitbox>().character = characterObject;
@@ -942,17 +942,17 @@ public class CharacterObject : MonoBehaviour
             p.Play();
         }
     }
-    [SerializeField] private int menuTimer, menuDelay=12;
+    [SerializeField] private int menuTimer, menuDelay = 12;
     private void Henshin()
     {
         if (Input.GetButton(GameEngine.coreData.rawInputs[4].name))//open radial menu
         {
-            if (menuTimer<menuDelay)
+            if (menuTimer < menuDelay)
             {
                 menuTimer++;
             }
         }
-        if (menuTimer>=menuDelay)
+        if (menuTimer >= menuDelay)
         {
             GameEngine.SetHitPause(10f);
             henshin.ActivateMenu();
@@ -960,7 +960,7 @@ public class CharacterObject : MonoBehaviour
         }
         if (Input.GetButtonUp(GameEngine.coreData.rawInputs[4].name))//open radial menu
         {
-            if (menuTimer<menuDelay)
+            if (menuTimer < menuDelay)
             {
                 ToggleMovelist();
                 menuTimer = 0;
@@ -989,8 +989,8 @@ public class CharacterObject : MonoBehaviour
             if (velocity.y > 0 && Input.GetButtonUp(GameEngine.coreData.rawInputs[0].name))
             {
                 VelocityY(-2);
-            if (IsGrounded())
-                StartState(0);
+                if (IsGrounded())
+                    StartState(0);
             }
         }
     }
@@ -1013,7 +1013,7 @@ public class CharacterObject : MonoBehaviour
             //}
             DashJump();
         }
-        
+
     }
 
     private void DashJump()
@@ -1040,7 +1040,7 @@ public class CharacterObject : MonoBehaviour
         {
             Transform currentGhost = afterImageParent.GetChild(i);
             s.AppendCallback(() => currentGhost.position = draw.transform.position);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = direction!=1);
+            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = direction != 1);
             s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().sprite = spriteRend.sprite);
             s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(henshinColors[GameEngine.gameEngine.globalMovelistIndex], 0));
             s.AppendCallback(() => FadeSprite(currentGhost, henshinColors[6]));
@@ -1059,8 +1059,8 @@ public class CharacterObject : MonoBehaviour
     [Header("Grounded Check")]
     [SerializeField]
     private LayerMask whatCountsAsGround;
-    public bool aerialFlag,wallFlag,isOnGround,isOnWall;
-    [SerializeField] private float aerialTimer, groundDetectHeight,wallDetectWidth, animAerialState, animFallSpeed;
+    public bool aerialFlag, wallFlag, isOnGround, isOnWall;
+    [SerializeField] private float aerialTimer, groundDetectHeight, wallDetectWidth, animAerialState, animFallSpeed;
 
     public int jumps, jumpMax = 1;
 
@@ -1102,14 +1102,14 @@ public class CharacterObject : MonoBehaviour
             {
                 aerialTimer++;
             }
-            if (aerialTimer >= coyoteTimer )//coyote time
+            if (aerialTimer >= coyoteTimer)//coyote time
             {
                 aerialFlag = true;
-                if (animAerialState<=1f)
+                if (animAerialState <= 1f)
                 {
                     animAerialState += 0.1f;
                 }
-                if (jumps==jumpMax)
+                if (jumps == jumpMax)
                 {
                     jumps--;
                 }
@@ -1133,7 +1133,7 @@ public class CharacterObject : MonoBehaviour
                     wallFlag = false;
                 }
             }
-            
+
         }
         Move(velocity);
         velocity.Scale(friction);
@@ -1141,7 +1141,7 @@ public class CharacterObject : MonoBehaviour
     void Move(Vector2 velocity)
     {
         //myRB.velocity = velocity;
-        controller.Move(velocity*Time.fixedDeltaTime, leftStick);
+        controller.Move(velocity * Time.fixedDeltaTime, leftStick);
     }
     public bool HitCeiling()
     {
@@ -1243,7 +1243,7 @@ public class CharacterObject : MonoBehaviour
                     GlobalPrefab(0);
                     break;
                 case ControlType.PLAYER:
-                    HealthVisualManager.healthSystemStatic.Damage(curAtk.damage);
+                    healthManager.RemoveHealth(curAtk.damage);
                     PlayAudio("PlayerTakeDamage");
                     GlobalPrefab(3);
                     break;
@@ -1274,25 +1274,25 @@ public class CharacterObject : MonoBehaviour
     public void GettingHit()
     {
         hitStun--;
-        if (hitStun <= 0){ EndState(); }
+        if (hitStun <= 0) { EndState(); }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
     }
     [Header("EnemyLogic")]
     public CharacterObject target;
     public Turret turret;
-    public float aggroRange = 30f, attackRange=3f, attackCooldown=180f;
+    public float aggroRange = 30f, attackRange = 3f, attackCooldown = 180f;
     [SerializeField] private bool isNearPlayer, isPlayerInRange;
-    public int[] attackState;
-    public int enemyType;
+    public int[] attackState, desperationAttackState;
+    public int enemyType, desperationTransitionState;
     private void UpdateAI()
     {
-        if (target==null)
+        if (target == null)
         {
             FindTarget();
         }
         if (currentState == 0)//Neutral
         {
-            if (isNearPlayer&&!isPlayerInRange&&dashCooldown<=0)
+            if (isNearPlayer && !isPlayerInRange && dashCooldown <= 0)
             {
                 FaceTarget(target.transform.position);
                 switch (enemyType)
@@ -1311,7 +1311,7 @@ public class CharacterObject : MonoBehaviour
             if (isPlayerInRange && dashCooldown <= 0)
             {
                 FaceTarget(target.transform.position);
-                int randNum = Random.Range(0,attackState.Length);
+                int randNum = Random.Range(0, attackState.Length);
                 velocity = Vector2.zero;
                 StartState(attackState[randNum]);
             }
@@ -1320,6 +1320,21 @@ public class CharacterObject : MonoBehaviour
         {
             dashCooldown = attackCooldown;
         }
+    }
+    public void OnDesperation()
+    {
+        attackState = desperationAttackState;
+        StartState(desperationTransitionState);
+        dashCooldown += 100;
+        attackCooldown *= 0.5f;
+    }
+    public void OnDeath()
+    {
+        controlType = ControlType.DEAD;
+    }
+    public void OnSpawn()
+    {
+        controlType = ControlType.AI;
     }
     void FindTarget()
     {

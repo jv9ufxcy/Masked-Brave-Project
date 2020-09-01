@@ -15,11 +15,11 @@ public class EnemySpawner : MonoBehaviour
     {
         foreach (EnemySpawn e in enemies)
         {
-            float x = Random.Range(-rand.y, rand.y);
-            float y = Random.Range(rand.x, rand.y);
-            Vector3 offset = new Vector3(x, y, 0);
-            EnemySpawn newEnemy = Instantiate(e,transform.position+offset,Quaternion.identity);
-            newEnemy.Spawn();
+            //float x = Random.Range(-rand.y, rand.y);
+            //float y = Random.Range(rand.x, rand.y);
+            //Vector3 offset = new Vector3(x, y, 0);
+            //EnemySpawn newEnemy = Instantiate(e,transform.position+offset,Quaternion.identity);
+            e.Spawn();
         }
     }
 }

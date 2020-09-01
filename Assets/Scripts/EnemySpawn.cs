@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     private HealthManager enemyHealth;
+    private CharacterObject character;
     public bool IsSpawned;
     private Vector3 spawnPos;
     public static EnemySpawn GetClosestEnemy(Vector3 position, float maxRange)
@@ -40,6 +41,7 @@ public class EnemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        character = GetComponent<CharacterObject>();
         enemyHealth = GetComponent<HealthManager>();
         if (!IsSpawned)
         {
@@ -58,16 +60,17 @@ public class EnemySpawn : MonoBehaviour
     public void Spawn()
     {
         gameObject.SetActive(true);
+
         if (enemyHealth==null)
-        {
             enemyHealth = GetComponent<HealthManager>();
-        }
+        if (character==null)
+            character = GetComponent<CharacterObject>();
+        character.OnSpawn();
         enemyHealth.SetMaxHealth();
         enemyHealth.IsDead=false;
         IsSpawned = true;
         transform.SetParent(null);
         transform.position = spawnPos;
-        Debug.LogFormat("Spawned {0} in: {1}", gameObject.name, gameObject.activeInHierarchy);
     }
     public bool IsAlive()
     {

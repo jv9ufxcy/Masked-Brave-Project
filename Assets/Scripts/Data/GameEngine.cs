@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameEngine : MonoBehaviour
 {
@@ -59,6 +60,11 @@ public class GameEngine : MonoBehaviour
     {
         coreData = coreDataObject;
         gameEngine = this;
+        if (mainCharacter==null)
+        {
+            mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterObject>();
+        }
+
 	}
     public static void SetHitPause(float _pow)
     {
@@ -75,6 +81,16 @@ public class GameEngine : MonoBehaviour
             hitStop--;
         }
 	}
+    public void EndLevel()
+    {
+        StartCoroutine(LevelChange());
+        GameManager.instance.RestoreCheckpointStart();
+    }
+    private IEnumerator LevelChange()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(0);
+    }
     public static void GlobalPrefab(int _index, GameObject _parentObj, int _state, int _ev)
     {
         GameObject nextPrefab = Instantiate(coreData.globalPrefabs[_index], _parentObj.transform.position, _parentObj.transform.rotation, _parentObj.transform);

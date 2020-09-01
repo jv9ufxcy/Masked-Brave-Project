@@ -124,27 +124,32 @@ public class HealthManager : MonoBehaviour
     public enum UIType { AI, PLAYER }
     public UIType UI = UIType.PLAYER;
     public float maxMeter = 100, minMeter = 0;
-    public float maxHealth = 100, currentShieldHealth = 0, currentHealth;
+    public float maxHealth = 100, currentShieldHealth = 0, currentHealth, desperationHealth;
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
-    public bool IsDead = true, shouldSpawnHealth=true;
+    public bool IsDead = true, shouldSpawnHealth = true, isDesperation;
     public Color HealthColor, DamageColor, BackColor;
     private Color invisible = new Color(0, 0, 0, 0);
     public int numOfPickups = 3;
     public GameObject currencyPickup, healthPickup;
     
-    public Animator effectsAnim;
+    public Animator effectsAnim, charAnim;
     private float currentMeter = 100, damageShowTimer, healthBarFadeTimer;
     private bool isHealing = false, coroutineStarted = false, healthIsVisible = false, deathCoroutineStarted = false;
     private CharacterObject character;
     public UnityEvent OnDeath;
-    public Material DizzyMat;
+    public Material dizzyMat;
+    public SpriteRenderer rend;
     private AudioManager audioManager;
     //private PlayerRespawner respawner;
     public bool HasShield()
     {
         return currentShieldHealth > 0;
+    }
+    public bool Dead()
+    {
+        return HealthVisualManager.healthSystemStatic.IsDead();
     }
     private void Start()
     {
@@ -359,6 +364,10 @@ public class HealthManager : MonoBehaviour
                 else
                 {
                     HealthVisualManager.healthSystemStatic.Damage(amount);
+                    if (Dead())
+                    {
+                        FinisherDeath();
+                    } 
                 }
                 
                 //UpdateFill();
@@ -374,6 +383,10 @@ public class HealthManager : MonoBehaviour
                     healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
                     currentHealth -= amount;
                 }
+                if (currentHealth <= desperationHealth&&!isDesperation)
+                {
+                    DesperationTrigger();
+                }
                 if (currentHealth <= 0)
                 {
                     currentHealth = 0;
@@ -386,6 +399,14 @@ public class HealthManager : MonoBehaviour
         }
         
     }
+
+    private void DesperationTrigger()
+    {
+        charAnim.SetFloat("aniHealthState", 1);
+        isDesperation = true;
+        character.OnDesperation();
+    }
+
     public void AddShield(int amount)
     {
         effectsAnim.Play("shieldIntro");
@@ -417,7 +438,7 @@ public class HealthManager : MonoBehaviour
             StartCoroutine(DeathEvent(shouldSpawnHealth));
         //GameEngine.gameEngine.Screenshake();
     }
-
+    public int healthDropRate = 2;
     /// <summary>
     /// waits until the death animation is done and then destroys the character
     /// </summary>
@@ -426,7 +447,8 @@ public class HealthManager : MonoBehaviour
     {
         deathCoroutineStarted = true;
         IsDead = true;
-
+        charAnim.SetFloat("aniHealthState", 0);
+        isDesperation = false;
         if (spawnPickup)
         {
             for (int i = 0; i < numOfPickups; i++)
@@ -434,24 +456,30 @@ public class HealthManager : MonoBehaviour
                 SpawnPickup(currencyPickup);
             }
             int randNum = UnityEngine.Random.Range(0, 10);
-            if (randNum>=8)
+            if (randNum<=healthDropRate)
             {
                 SpawnPickup(healthPickup);
             }
         }
+        
         audioManager.PlaySound("Death");
-        character.GlobalPrefab(1);
+
+        rend.color = new Color(0, 0, 0, 0);
         yield return new WaitForSeconds(0f);//get length of death animation        
 
         switch (character.controlType)
         {
             case CharacterObject.ControlType.AI:
                 OnDeath.Invoke();
+                character.GlobalPrefab(1);
                 gameObject.SetActive(false);
+                character.OnDeath();
                 break;
             case CharacterObject.ControlType.PLAYER:
                 //RESPAWN HERE
-                //respawner.RespawnPlayer();
+                OnDeath.Invoke();
+                character.GlobalPrefab(4);
+                character.OnDeath();
                 break;
             default:
                 break;

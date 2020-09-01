@@ -4979,7 +4979,9 @@ MonoBehaviour:
   isNearPlayer: 0
   isPlayerInRange: 0
   attackState: 35000000
+  desperationAttackState: 
   enemyType: 0
+  desperationTransitionState: 0
 --- !u!50 &4192995062992537801
 Rigidbody2D:
   serializedVersion: 4
@@ -5067,6 +5069,7 @@ MonoBehaviour:
   maxHealth: 2
   currentShieldHealth: 0
   currentHealth: 0
+  desperationHealth: -10
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -5076,6 +5079,7 @@ MonoBehaviour:
   damageShowSpeed: 1
   IsDead: 0
   shouldSpawnHealth: 1
+  isDesperation: 0
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
@@ -5085,12 +5089,15 @@ MonoBehaviour:
   healthPickup: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
     type: 3}
   effectsAnim: {fileID: 1768886286679654737}
+  charAnim: {fileID: 8039970129902997670}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  DizzyMat: {fileID: 0}
+  dizzyMat: {fileID: 2100000, guid: 469afaba61093c04b87c4450611b6312, type: 2}
+  rend: {fileID: 8883686759823212184}
+  healthDropRate: 2
 --- !u!114 &6645088818452296722
 MonoBehaviour:
   m_ObjectHideFlags: 0

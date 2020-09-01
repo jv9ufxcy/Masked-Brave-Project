@@ -367,6 +367,7 @@ GameObject:
   - component: {fileID: 2833465963085331512}
   - component: {fileID: 616907621}
   - component: {fileID: 1292357168}
+  - component: {fileID: 83875697}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -442,7 +443,7 @@ MonoBehaviour:
   deadzone: 0.2
   moveSpeed: 10
   airMod: 1
-  jumpPow: 12
+  jumpPow: 30
   currentCommandState: 0
   currentCommandStep: 0
   minShotPressure: 60
@@ -532,7 +533,9 @@ MonoBehaviour:
   isNearPlayer: 0
   isPlayerInRange: 0
   attackState: 
+  desperationAttackState: 
   enemyType: 0
+  desperationTransitionState: 0
 --- !u!114 &6942301879946958580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,6 +623,7 @@ MonoBehaviour:
   maxHealth: 100
   currentShieldHealth: 0
   currentHealth: 0
+  desperationHealth: -10
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -628,7 +632,8 @@ MonoBehaviour:
   damageShowTime: 1
   damageShowSpeed: 1
   IsDead: 0
-  shouldSpawnHealth: 1
+  shouldSpawnHealth: 0
+  isDesperation: 0
   HealthColor: {r: 1, g: 1, b: 1, a: 1}
   DamageColor: {r: 1, g: 1, b: 1, a: 1}
   BackColor: {r: 1, g: 1, b: 1, a: 1}
@@ -636,12 +641,38 @@ MonoBehaviour:
   currencyPickup: {fileID: 0}
   healthPickup: {fileID: 0}
   effectsAnim: {fileID: 3940268750546302645}
+  charAnim: {fileID: 2833465961720813668}
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 83875697}
+        m_MethodName: Respawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  DizzyMat: {fileID: 0}
+  dizzyMat: {fileID: 2100000, guid: 469afaba61093c04b87c4450611b6312, type: 2}
+  rend: {fileID: 2833465961720813671}
+  healthDropRate: 2
+--- !u!114 &83875697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833465963085331510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b117c5d9739bfd14e82031060cfd41bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2079165394299010438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -711,15 +742,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e32bad2e1f2644e4da0c9942bcb984d1, type: 3}
---- !u!4 &2180090164480652957 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 187903913973451547, guid: e32bad2e1f2644e4da0c9942bcb984d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 2079165394299010438}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &662620483319020562 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1578709824778699156, guid: e32bad2e1f2644e4da0c9942bcb984d1,
+    type: 3}
+  m_PrefabInstance: {fileID: 2079165394299010438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2180090164480652957 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 187903913973451547, guid: e32bad2e1f2644e4da0c9942bcb984d1,
     type: 3}
   m_PrefabInstance: {fileID: 2079165394299010438}
   m_PrefabAsset: {fileID: 0}
