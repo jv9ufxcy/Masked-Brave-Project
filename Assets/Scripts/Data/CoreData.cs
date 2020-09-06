@@ -23,7 +23,7 @@ public class CoreData : ScriptableObject
     //Save Files
 
     //Raw Inputs
-    public List<RawInput> rawInputs;
+    public List<RawInput> rawInputs, ps4Inputs, xboxInputs, keyboardInputs;
     public List<MotionCommand> motionCommands;
     public int currentMovelistIndex;
 
@@ -63,6 +63,33 @@ public class CoreData : ScriptableObject
         for (int i = 0; i < _names.Length; i++)
         {
             _names[i] = rawInputs[i].name;
+        }
+        return _names;
+    }
+    public string[] GetPs4InputNames()
+    {
+        string[] _names = new string[rawInputs.Count];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = ps4Inputs[i].name;
+        }
+        return _names;
+    }
+    public string[] GetXboxInputNames()
+    {
+        string[] _names = new string[rawInputs.Count];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = xboxInputs[i].name;
+        }
+        return _names;
+    }
+    public string[] GetKeyboardInputNames()
+    {
+        string[] _names = new string[rawInputs.Count];
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = keyboardInputs[i].name;
         }
         return _names;
     }

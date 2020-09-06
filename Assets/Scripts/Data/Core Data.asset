@@ -2138,12 +2138,19 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: NEW STATE
+  - stateName: Henshin
     index: 0
-    length: 60
+    length: 400
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 399
+      end: 400
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     meterReq: 0
@@ -3263,6 +3270,11 @@ MonoBehaviour:
       val: 5
     - name: Range
       val: 10
+  - index: 0
+    name: Henshin
+    parameters:
+    - name: Form Index
+      val: 0
   moveLists:
   - name: Brave
     commandStates:
@@ -4304,6 +4316,54 @@ MonoBehaviour:
         priority: 0
       omitList: 
       nextFollowups: 0100000002000000
+  - name: Zoe
+    commandStates:
+    - stateName: Grounded
+      aerial: 0
+      explicitState: 0
+      state: 0
+      commandSteps:
+      - idIndex: 0
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 200
+          height: 200
+        activated: 1
+        priority: 0
+      omitList: 
+      nextFollowups: 
+    - stateName: Aerial
+      aerial: 1
+      explicitState: 0
+      state: 0
+      commandSteps:
+      - idIndex: 0
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 200
+          height: 200
+        activated: 1
+        priority: 0
+      omitList: 
+      nextFollowups: 
   - name: PursuerMajin
     commandStates:
     - stateName: Grounded

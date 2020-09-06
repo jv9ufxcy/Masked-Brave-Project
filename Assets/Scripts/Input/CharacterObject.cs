@@ -353,16 +353,29 @@ public class CharacterObject : MonoBehaviour
             case 16:
                 TargetAttack(_params[0].val, _params[1].val);
                 break;
+            case 17:
+                QuickChangeForm((int)_params[0].val);
+                break;
 
         }
+    }
+    public void SetState(int stateIndex)
+    {
+        StartState(stateIndex);
     }
     public void DOChangeMovelist(int index)
     {
         PlayFlashParticle(henshinColors[index]);
         GameEngine.SetHitPause(10f);
+        QuickChangeForm(index);
+    }
+
+    public void QuickChangeForm(int index)
+    {
         GameEngine.gameEngine.ChangeMovelist(index);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
     }
+
     public void ToggleMovelist()
     {
         GameEngine.SetHitPause(10f);

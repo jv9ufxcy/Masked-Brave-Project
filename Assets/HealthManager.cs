@@ -185,6 +185,8 @@ public class HealthManager : MonoBehaviour
     public void SetMaxHealth()
     {
         currentHealth = maxHealth;
+        if(rend!=null)
+            rend.color = Color.white;
     }
 
     private void HideHealth()
@@ -464,16 +466,16 @@ public class HealthManager : MonoBehaviour
         
         audioManager.PlaySound("Death");
 
-        rend.color = new Color(0, 0, 0, 0);
-        yield return new WaitForSeconds(0f);//get length of death animation        
+        rend.color = Color.clear;
 
         switch (character.controlType)
         {
             case CharacterObject.ControlType.AI:
                 OnDeath.Invoke();
                 character.GlobalPrefab(1);
-                gameObject.SetActive(false);
                 character.OnDeath();
+                yield return new WaitForSeconds(1f);//get length of death animation        
+                gameObject.SetActive(false);
                 break;
             case CharacterObject.ControlType.PLAYER:
                 //RESPAWN HERE
