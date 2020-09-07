@@ -1560,20 +1560,20 @@ public class Player : MonoBehaviour
         }
     }
     #region Attacking Functions
-    private void KinzecterThrow()
-    {
-        if (kinzecter.isWithPlayer())
-        {
-            Vector3 throwDir = (wallCheck.transform.position - transform.position).normalized;
-            kinzecter.ThrowKinzecter(throwDir);
-        }
-        else
-            KinzecterRecall();
-    }
-    private void KinzecterRecall()
-    {
-        kinzecter.Recall();
-    }
+    //private void KinzecterThrow()
+    //{
+    //    if (kinzecter.isWithPlayer())
+    //    {
+    //        Vector3 throwDir = (wallCheck.transform.position - transform.position).normalized;
+    //        kinzecter.ThrowKinzecter(throwDir);
+    //    }
+    //    else
+    //        KinzecterRecall();
+    //}
+    //private void KinzecterRecall()
+    //{
+    //    kinzecter.Recall();
+    //}
     private void BraveBurst()
     {
         StartCoroutine(BraveBurstTimer());
@@ -2797,7 +2797,7 @@ public class Player : MonoBehaviour
     {
         IsParrying = true;
         yield return new WaitForSeconds(parryWindow);
-        KinzecterThrow();
+        //KinzecterThrow();
         audioManager.PlaySound(meterRecoverySound);
         IsParrying = false;
 

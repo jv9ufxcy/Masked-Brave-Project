@@ -6,33 +6,63 @@ using Cinemachine;
 public class BulletHit : MonoBehaviour
 {
     private Rigidbody2D bulletRB;
+    private Controller2D controller;
     private AudioManager audioManager;
-    private HurtEnemyOnHit hurtEnemy;
-    private HurtPlayerOnHit hurtPlayer;
-
-    [SerializeField] private GameObject bulletHitEffect;
-    [SerializeField] private string tagToHit = "Enemy";
-    [SerializeField] private float lifeTime = 2f;
+    [Tooltip("0 - straight, 1 - homing, 2 - target")]
+    public int bulletType;
+    public Vector2 direction;
+    public CharacterObject target;
+    public EnemySpawn closestEnemy;
+    public Vector3 targetPos, moveDirection;
+    [SerializeField] private GameObject bulletHitEffect, blastBlightGO;
+    [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
+    [SerializeField] private float lifeTime = 2f, speed, gravity=-2f, targetRange=10f;
+    [SerializeField] private int blastBlight = 0;
     [SerializeField] private LayerMask whatLayersToHit;
 
     [SerializeField] private string bulletCollisionSound;
     [SerializeField] private bool shouldScreenshakeOnHit=false, shouldStopOnHit = true, canReflect=true;
-
+    public CharacterObject character;
     // Use this for initialization
     void Start()
     {
         bulletRB = GetComponent<Rigidbody2D>();
-        hurtEnemy = GetComponent<HurtEnemyOnHit>();
-        hurtPlayer = GetComponent<HurtPlayerOnHit>();
-
-        audioManager = AudioManager.instance;
-        if (audioManager == null)
+        controller = GetComponent<Controller2D>();
+        if (bulletType!=0)
         {
-            Debug.LogError("No Audio Manager in Scene");
+            target = GameEngine.gameEngine.mainCharacter;
+            targetPos = target.transform.position;
+            moveDirection = (targetPos - transform.position).normalized * speed;
         }
+        //audioManager = AudioManager.instance;
+        //if (audioManager == null)
+        //{
+        //    Debug.LogError("No Audio Manager in Scene");
+        //}
     }
     private void Update()
     {
+        switch (bulletType)
+        {
+            case 0://fly straight
+                break;
+            case 1://home in
+                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed);
+                break;
+            case 2://fly firectly at target
+                transform.Translate(moveDirection* Time.deltaTime);
+                break;
+            case 3://home in on closest enemy
+                closestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetRange);
+                if (closestEnemy!=null)
+                    transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
+                break;
+            case 4: //follow ground
+                Vector2 velocity = new Vector2(transform.localScale.x*speed,-2);
+                velocity.y += gravity;
+                controller.Move(velocity*Time.deltaTime, direction);
+                break;
+        }
         //Countdown to lifetime
         if (lifeTime > 0)
         {
@@ -43,32 +73,61 @@ public class BulletHit : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(tagToCollide))
+        {
+            if (shouldStopOnHit)
+            {
+                RemoveForce();
+                Destroy(gameObject, .2f);
+            }
+            if (canReflect)
+            {
+                Vector2 wallNormal = collision.contacts[0].normal;
+                moveDirection = Vector2.Reflect(moveDirection, wallNormal).normalized;
+            }
+        }
+    }
+    public int projectileIndex;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(tagToHit))
+        if (other.CompareTag(tagToHit)&&other.gameObject!=character.gameObject)
         {
+            CharacterObject victim = other.transform.root.GetComponent<CharacterObject>();
+            if (victim != null&&projectileIndex>0)
+                victim.GetHit(character, projectileIndex);
+
             if (shouldScreenshakeOnHit)
                 Screenshake();
             if (shouldStopOnHit)
             {
                 RemoveForce();
-                Destroy(gameObject);
-            }
+                Destroy(gameObject,.2f);
                 Instantiate(bulletHitEffect, transform.position, transform.rotation);
+            }
+
+            if (blastBlight>0)
+            {
+                if (other.GetComponentInChildren<Blastblight>() != null)
+                {
+                    other.GetComponentInChildren<Blastblight>().AddBlast(blastBlight);
+                }
+                else
+                {
+                    GameObject bomb = Instantiate(blastBlightGO, other.transform);
+                    bomb.GetComponent<Blastblight>().AddBlast(blastBlight);
+                    bomb.transform.parent = other.transform;
+                }
+            }
         }
     }
     public void ReverseForce()
     {
         if (canReflect)
         {
-            tagToHit = "Enemy";
-            if (hurtPlayer != null)
-                hurtPlayer.enabled = false;
-
-            if (hurtEnemy != null)
-                hurtEnemy.enabled = true;
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-            bulletRB.velocity = -bulletRB.velocity;
+            
             gameObject.layer = LayerMask.NameToLayer("Projectile");
         }
         else

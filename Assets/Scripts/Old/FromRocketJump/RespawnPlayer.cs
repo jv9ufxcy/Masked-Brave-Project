@@ -11,11 +11,16 @@ public class RespawnPlayer : MonoBehaviour
 
     private void Start()
     {
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
+        gm = GameManager.instance;
         transform.position = gm.lastCheckpointPos;
     }
     public void Respawn()
     {
+        StartCoroutine(RespawnWait());
+    }
+    private IEnumerator RespawnWait()
+    {
+        yield return new WaitForSeconds(2f);
         if (Checkpoint.currentlyActiveCheckpoint == null)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

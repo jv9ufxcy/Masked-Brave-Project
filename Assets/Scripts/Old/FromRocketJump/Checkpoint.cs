@@ -9,13 +9,9 @@ public class Checkpoint : MonoBehaviour
 
 
     [SerializeField]
-    private float activatedScale;
+    private float activatedScale, deactivatedScale;
     [SerializeField]
-    private float deactivatedScale;
-    [SerializeField]
-    private Color activatedColor;
-    [SerializeField]
-    private Color deactivatedColor;
+    private Color activatedColor, deactivatedColor;
 
     private bool isActive = false;
     private SpriteRenderer spriteRenderer;

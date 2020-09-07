@@ -19,28 +19,23 @@ public class GlobalVars : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    switch (controllerNumber)
-    //    {
-    //        case 0:
-    //            _controllerState = ControllerState.ps4;
-    //            break;
-    //        case 1:
-    //            _controllerState = ControllerState.xbox;
-    //            break;
-    //        case 2:
-    //            _controllerState = ControllerState.keyboard;
-    //            break;
-    //        default:
-    //            _controllerState = ControllerState.ps4;
-    //            break;
-    //    }
-    //}
     public void PassControllerValue(int dropdownValue)
     {
         controllerNumber = dropdownValue;
+        switch (controllerNumber)
+        {
+            case 0:
+                GameEngine.coreData.rawInputs = GameEngine.coreData.ps4Inputs;
+                break;
+            case 1:
+                GameEngine.coreData.rawInputs = GameEngine.coreData.xboxInputs;
+                break;
+            case 2:
+                GameEngine.coreData.rawInputs = GameEngine.coreData.keyboardInputs;
+                break;
+            default:
+                break;
+        }
+        
     }
 }
