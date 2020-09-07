@@ -19092,7 +19092,8 @@ MonoBehaviour:
   kzSpeed: 20
   kzRecallSpeed: 40
   returnDistance: 2
-  targetNextEnemyDistance: 50
+  maxDistance: 20
+  targetNextEnemyDistance: 15
   minLethalSpeed: 7
   maxStamina: 100
   currentStamina: 100
@@ -19121,11 +19122,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletType: 0
+  direction: {x: 0, y: 0}
+  target: {fileID: 0}
+  closestEnemy: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  moveDirection: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 0}
   blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
     type: 3}
   tagToHit: Enemy
+  tagToCollide: Ground
   lifeTime: 1000
+  speed: 0
+  gravity: -2
+  targetRange: 10
   blastBlight: 0
   whatLayersToHit:
     serializedVersion: 2
@@ -19135,6 +19146,7 @@ MonoBehaviour:
   shouldStopOnHit: 0
   canReflect: 0
   character: {fileID: 0}
+  projectileIndex: 0
 --- !u!61 &1818449918886540405
 BoxCollider2D:
   m_ObjectHideFlags: 0

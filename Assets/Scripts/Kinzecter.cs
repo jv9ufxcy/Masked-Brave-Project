@@ -14,7 +14,7 @@ public class Kinzecter : MonoBehaviour
     private Hitbox hitbox;
 
     [Header("Kinzecter Stats")]
-    [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f;
+    [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance=25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f;
     [SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
     [SerializeField] private ParticleSystem kinzecterParticles, hpPS, buffedZecterPS, energyPS;
     [SerializeField] private bool shouldScreenshakeOnHit;
@@ -192,7 +192,7 @@ public class Kinzecter : MonoBehaviour
                 //if (isTooSlow)
                 //    TryGrabKinzecter();
 
-                if (currentStamina<=0f)
+                if (currentStamina<=0f|| (Vector3.Distance(transform.position, thrower.transform.position) >= maxDistance))
                 {
                     //TODO: count down in update
                     ReturnToPlayer();

@@ -620,6 +620,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8053200398135031173, guid: aa6d03188b0524046b302a0aef81942f,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.23137257
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053200398135031173, guid: aa6d03188b0524046b302a0aef81942f,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.27450982
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053200398135031173, guid: aa6d03188b0524046b302a0aef81942f,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.3372549
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6d03188b0524046b302a0aef81942f, type: 3}
 --- !u!4 &315615761 stripped
@@ -839,6 +854,8 @@ MonoBehaviour:
   midScreen: {x: 0, y: 30}
   battleStartText: KHRIS IS UNSTABLE!
   battleEndText: VICTORY
+  battleStartAudio: SlimePsi
+  battleEndAudio: Victory
   activeWaveCount: 0
   battleState: 0
   waveArray:
@@ -1936,8 +1953,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
         type: 3}
-      propertyPath: sounds.Array.data[9].volume
-      value: 0.35
+      propertyPath: sounds.Array.size
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[36].name
+      value: Victory
+      objectReference: {fileID: 0}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[36].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 45f56df019985894486e5094d545d7e5, type: 3}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[36].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[36].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[37].name
+      value: Defeat
+      objectReference: {fileID: 0}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[37].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: abda61a81a3ea2c40b68333b1cf69349, type: 3}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[37].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 521085487854849513, guid: 49564c1dc3e607944a52fe5319a30fad,
+        type: 3}
+      propertyPath: sounds.Array.data[37].pitch
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49564c1dc3e607944a52fe5319a30fad, type: 3}
@@ -2524,6 +2581,7 @@ MonoBehaviour:
   missionText: LET'S HENSHIN!
   midScreen: {x: 0, y: 0}
   offScreen: {x: -350, y: 0}
+  missionStartSeconds: 6
 --- !u!4 &1273356926
 Transform:
   m_ObjectHideFlags: 0
@@ -2630,6 +2688,8 @@ MonoBehaviour:
   midScreen: {x: 0, y: 30}
   battleStartText: A SLIME DRAWS NEAR!
   battleEndText: FINISH!
+  battleStartAudio: SlimePsi
+  battleEndAudio: Victory
   activeWaveCount: 0
   battleState: 0
   waveArray:
@@ -3655,6 +3715,8 @@ MonoBehaviour:
   midScreen: {x: 0, y: 30}
   battleStartText: BUBBLE SLIME ENCOUNTER!
   battleEndText: FINISH!
+  battleStartAudio: SlimePsi
+  battleEndAudio: Victory
   activeWaveCount: 0
   battleState: 0
   waveArray:

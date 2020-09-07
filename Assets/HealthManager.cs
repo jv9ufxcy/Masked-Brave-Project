@@ -125,6 +125,7 @@ public class HealthManager : MonoBehaviour
     public UIType UI = UIType.PLAYER;
     public float maxMeter = 100, minMeter = 0;
     public float maxHealth = 100, currentShieldHealth = 0, currentHealth, desperationHealth;
+    public int maxPoise = 10, currentPoise = 10;
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
@@ -184,6 +185,7 @@ public class HealthManager : MonoBehaviour
 
     public void SetMaxHealth()
     {
+        PoiseReset();
         currentHealth = maxHealth;
         if(rend!=null)
             rend.color = Color.white;
@@ -407,6 +409,7 @@ public class HealthManager : MonoBehaviour
         charAnim.SetFloat("aniHealthState", 1);
         isDesperation = true;
         character.OnDesperation();
+        PoiseReset();
     }
 
     public void AddShield(int amount)
@@ -424,6 +427,14 @@ public class HealthManager : MonoBehaviour
             effectsAnim.SetFloat("State", 0);
             currentShieldHealth = 0;
         }
+    }
+    public void PoiseDamage(int amount)
+    {
+        currentPoise -= amount;
+    }
+    public void PoiseReset()
+    {
+        currentPoise = maxPoise;
     }
     private void ShowHealth()
     {
@@ -464,7 +475,7 @@ public class HealthManager : MonoBehaviour
             }
         }
         
-        audioManager.PlaySound("Death");
+        
 
         rend.color = Color.clear;
 
@@ -474,6 +485,7 @@ public class HealthManager : MonoBehaviour
                 OnDeath.Invoke();
                 character.GlobalPrefab(1);
                 character.OnDeath();
+                audioManager.PlaySound("Death");
                 yield return new WaitForSeconds(1f);//get length of death animation        
                 gameObject.SetActive(false);
                 break;
@@ -482,6 +494,7 @@ public class HealthManager : MonoBehaviour
                 OnDeath.Invoke();
                 character.GlobalPrefab(4);
                 character.OnDeath();
+                audioManager.PlaySound("Defeat");
                 break;
             default:
                 break;

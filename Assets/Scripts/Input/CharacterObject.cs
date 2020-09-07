@@ -83,7 +83,7 @@ public class CharacterObject : MonoBehaviour
                     DashCut();
                     ChargeAttack();
                 }
-                leftStick = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
+                leftStick = new Vector2(Input.GetAxis(GameEngine.coreData.rawInputs[13].name), Input.GetAxis(GameEngine.coreData.rawInputs[14].name));
                 break;
             default:
                 break;
@@ -1129,7 +1129,7 @@ public class CharacterObject : MonoBehaviour
                 if (IsOnWall() && leftStick.x == direction && velocity.y < 0)//wall
                 {
                     velocity.y = -1.7f;
-                    animAerialState = -1f;
+                    animAerialState = -.01f;
                     wallFlag = true;
 
                 }
@@ -1234,17 +1234,22 @@ public class CharacterObject : MonoBehaviour
             knockOrientation.Normalize();
             nextKnockback.x *= knockOrientation.x;
 
-            SetVelocity(nextKnockback * 0.7f);//dampen a bit
-            targetHitAnim.x = curAtk.hitAnim.x;
-            targetHitAnim.y = curAtk.hitAnim.y;
+            healthManager.PoiseDamage(curAtk.poiseDamage);
+            if (healthManager.currentPoise <= 0)
+            {
+                SetVelocity(nextKnockback * 0.7f);//dampen a bit
+                targetHitAnim.x = curAtk.hitAnim.x;
+                targetHitAnim.y = curAtk.hitAnim.y;
 
-            //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-            //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-            curHitAnim = targetHitAnim * .25f;
+                //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+                //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+                curHitAnim = targetHitAnim * .25f;
+
+                hitStun = curAtk.hitStun;
+                StartState(hitStunStateIndex);
+            }
 
             GameEngine.SetHitPause(curAtk.hitStop);
-            hitStun = curAtk.hitStun;
-            StartState(hitStunStateIndex);
 
             attacker.hitConfirm += 1;
             attacker.BuildMeter(curAtk.meterGain);
@@ -1287,7 +1292,7 @@ public class CharacterObject : MonoBehaviour
     public void GettingHit()
     {
         hitStun--;
-        if (hitStun <= 0) { EndState(); }
+        if (hitStun <= 0) { EndState();healthManager.PoiseReset(); }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
     }
     [Header("EnemyLogic")]
@@ -1343,7 +1348,9 @@ public class CharacterObject : MonoBehaviour
     }
     public void OnDeath()
     {
+        StartState(hitStunStateIndex);
         controlType = ControlType.DEAD;
+        SetVelocity(Vector2.zero);
     }
     public void OnSpawn()
     {

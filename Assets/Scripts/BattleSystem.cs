@@ -16,7 +16,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private RectTransform enemyCounter;
     [SerializeField] private Vector2 restingLocation, startingLocation, midScreen;
     private Image enemyIcon;
-    [SerializeField] private string battleStartText="TATAKAE!", battleEndText="FINISH!";
+    [SerializeField] private string battleStartText="TATAKAE!", battleEndText="FINISH!", battleStartAudio = "SlimePsi", battleEndAudio = "Victory";
 
     public int activeWaveCount;
     private enum State { Idle, Active, Conclusion}
@@ -25,6 +25,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] ColliderTrigger collTrigger;
     private List<Wave> activeWaveList;
     private List<EnemySpawn> enemySpawnList= new List<EnemySpawn>();
+    private AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,7 @@ public class BattleSystem : MonoBehaviour
         enemyIcon = enemyCounter.GetComponentInChildren<Image>();
         battleState = State.Idle;
         activeWaveList = new List<Wave>();
+        audioManager = AudioManager.instance;
     }
     private int enemyNum()
     {
@@ -73,8 +75,8 @@ public class BattleSystem : MonoBehaviour
     {
         if (battleState == State.Idle)
         {
-            Debug.Log("Battle Started");
             StartBattleUI();
+            audioManager.PlaySound(battleStartAudio);
             battleState = State.Active;
             OnBattleStarted.Invoke();
         }
@@ -172,10 +174,10 @@ public class BattleSystem : MonoBehaviour
         if (battleState==State.Active&&IsBattleOver())
         {
             OnBattleEnded.Invoke();
-            Debug.Log("Battle Ended");
             enemySpawnList.Clear();
             numOfEnemies.text = "x " + enemyNum();
             EndBattleUI();
+            audioManager.PlaySound(battleEndAudio);
             battleState = State.Conclusion;
         }
     }

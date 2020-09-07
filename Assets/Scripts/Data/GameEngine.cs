@@ -60,10 +60,10 @@ public class GameEngine : MonoBehaviour
     {
         coreData = coreDataObject;
         gameEngine = this;
-        if (mainCharacter==null)
-        {
-            mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterObject>();
-        }
+        //if (mainCharacter==null)
+        //{
+        //    mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterObject>();
+        //}
 
 	}
     public static void SetHitPause(float _pow)

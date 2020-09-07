@@ -10,7 +10,7 @@ public class Mission : MonoBehaviour
     public TextMeshProUGUI missionStartText;
     public string missionText;
     public Vector2 midScreen, offScreen;
-
+    public float missionStartSeconds = 6f;
     public void StartMission()
     {
         StartCoroutine(MissionStart());
@@ -18,14 +18,15 @@ public class Mission : MonoBehaviour
     private IEnumerator MissionStart()
     {
         
-        yield return new WaitForSeconds(.01f);
+        yield return new WaitForSeconds(.001f);
+        mainChar.controlType = CharacterObject.ControlType.DEAD;
         missionStartText.rectTransform.DOAnchorPos(offScreen, 2);
         mainChar.QuickChangeForm(4);
         mainChar.SetState(37);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(missionStartSeconds/2);
         missionStartText.DOColor(Color.white, 1);
         missionStartText.rectTransform.DOAnchorPos(midScreen, 2);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(missionStartSeconds/2);
         missionStartText.transform.DOScale(8, .25f);
         missionStartText.DOColor(Color.clear, 0.25f);
         mainChar.controlType = CharacterObject.ControlType.PLAYER;
