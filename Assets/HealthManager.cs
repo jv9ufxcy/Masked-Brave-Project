@@ -483,7 +483,7 @@ public class HealthManager : MonoBehaviour
         {
             case CharacterObject.ControlType.AI:
                 OnDeath.Invoke();
-                character.GlobalPrefab(1);
+                character.GlobalPrefab(5);
                 character.OnDeath();
                 audioManager.PlaySound("Death");
                 yield return new WaitForSeconds(1f);//get length of death animation        
@@ -492,7 +492,7 @@ public class HealthManager : MonoBehaviour
             case CharacterObject.ControlType.PLAYER:
                 //RESPAWN HERE
                 OnDeath.Invoke();
-                character.GlobalPrefab(4);
+                character.GlobalPrefab(6);
                 character.OnDeath();
                 audioManager.PlaySound("Defeat");
                 break;

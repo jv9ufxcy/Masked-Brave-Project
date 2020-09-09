@@ -11,6 +11,15 @@ public class Mission : MonoBehaviour
     public string missionText;
     public Vector2 midScreen, offScreen;
     public float missionStartSeconds = 6f;
+
+    private void Start()
+    {
+        
+    }
+    private void FixedUpdate()
+    {
+        
+    }
     public void StartMission()
     {
         StartCoroutine(MissionStart());

@@ -1258,12 +1258,12 @@ public class CharacterObject : MonoBehaviour
                 case ControlType.AI:
                     healthManager.RemoveHealth(curAtk.damage);
                     PlayAudio(attackStrings[curAtk.attackType]);
-                    GlobalPrefab(0);
+                    GlobalPrefab(curAtk.attackType);
                     break;
                 case ControlType.PLAYER:
                     healthManager.RemoveHealth(curAtk.damage);
                     PlayAudio("PlayerTakeDamage");
-                    GlobalPrefab(3);
+                    GlobalPrefab(2);
                     break;
                 default:
                     break;

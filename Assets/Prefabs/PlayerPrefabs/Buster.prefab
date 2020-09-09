@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 0
+  direction: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
@@ -59,8 +60,9 @@ MonoBehaviour:
     type: 3}
   tagToHit: Enemy
   tagToCollide: Ground
-  lifeTime: 1
+  lifeTime: 0.7
   speed: 0
+  gravity: -2
   targetRange: 10
   blastBlight: 20
   whatLayersToHit:
