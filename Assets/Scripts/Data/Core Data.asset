@@ -3303,19 +3303,26 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 10.051282
-      end: 14.76923
+    - start: 10
+      end: 15
       active: 1
       script: 1
       parameters:
       - name: 
         val: 15
-    - start: 15.179487
-      end: 20.102562
+    - start: 15
+      end: 20
       active: 1
       script: 1
       parameters:
       - name: 
+        val: 0
+    - start: 10
+      end: 10
+      active: 1
+      script: 14
+      parameters:
+      - name: PunchWoosh
         val: 0
     attacks:
     - start: 15
@@ -3343,33 +3350,47 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 34.794872
-      end: 44.82051
+    - start: 35
+      end: 45
       active: 1
       script: 1
       parameters:
       - name: 
         val: 15
-    - start: 50.12821
-      end: 55.14103
+    - start: 50
+      end: 55
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
-    - start: 10.025641
-      end: 15.038458
+    - start: 35
+      end: 35
+      active: 1
+      script: 14
+      parameters:
+      - name: PunchWoosh
+        val: 0
+    - start: 10
+      end: 15
       active: 1
       script: 1
       parameters:
       - name: 
         val: 15
-    - start: 15.038462
-      end: 20.051281
+    - start: 15
+      end: 20
       active: 1
       script: 1
       parameters:
       - name: 
+        val: 0
+    - start: 10
+      end: 10
+      active: 1
+      script: 14
+      parameters:
+      - name: PunchWoosh
         val: 0
     attacks:
     - start: 15
@@ -3418,25 +3439,60 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 20
-    - start: 70.38462
+    - start: 70
       end: 75
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 14
+      parameters:
+      - name: ChargingStar
+        val: 0
     attacks:
     - start: 40
-      length: 30
-      hitStun: 20
+      length: 10
+      hitStun: 10
       hitStop: 5
-      damage: 6
+      damage: 2
       meterGain: 0
       blastBlight: 0
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 0, y: 0, z: 0}
+      knockback: {x: 30, y: 0, z: 0}
+      hitBoxPos: {x: 1, y: 0.5, z: 0}
+      hitBoxScale: {x: 4, y: 3, z: 1}
+      cancelWindow: 0
+    - start: 50
+      length: 10
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      blastBlight: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 30, y: 0, z: 0}
+      hitBoxPos: {x: 1, y: 0.5, z: 0}
+      hitBoxScale: {x: 4, y: 3, z: 1}
+      cancelWindow: 0
+    - start: 60
+      length: 10
+      hitStun: 20
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      blastBlight: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 30, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 0.5, z: 0}
       hitBoxScale: {x: 4, y: 3, z: 1}
       cancelWindow: 0
@@ -3451,7 +3507,7 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 5.076923
+    - start: 5
       end: 15
       active: 1
       script: 0
@@ -3459,15 +3515,22 @@ MonoBehaviour:
       - name: 
         val: 20
     - start: 0
-      end: 9.923077
+      end: 10
       active: 1
       script: 1
       parameters:
       - name: 
         val: 10
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: PunchWoosh
+        val: 10
     attacks:
     - start: 0
-      length: 20
+      length: 10
       hitStun: 20
       hitStop: 5
       damage: 4
@@ -3476,7 +3539,7 @@ MonoBehaviour:
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 20, y: 20, z: 0}
+      knockback: {x: 20, y: 40, z: 0}
       hitBoxPos: {x: 0, y: 0.5, z: 0}
       hitBoxScale: {x: 2, y: 3, z: 1}
       cancelWindow: 0
