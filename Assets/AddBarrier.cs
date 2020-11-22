@@ -20,7 +20,7 @@ public class AddBarrier : MonoBehaviour
             if (hp!=null)
             {
                 hp.AddShield(barrierHealth);
-                Destroy(gameObject, .2f);
+                Destroy(gameObject);
             }
         }
     }

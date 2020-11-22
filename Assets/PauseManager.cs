@@ -14,6 +14,8 @@ public class PauseManager : MonoBehaviour
     [SerializeField] string sceneToLoad;
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject[] skillList;
+    [SerializeField] private Sprite[] spriteList;
+    [SerializeField] private Image eyeCon;
     private void Start()
     {
         pauseManager = this;
@@ -69,10 +71,10 @@ public class PauseManager : MonoBehaviour
                 skillList[i].SetActive(false);
             }
         }
+        eyeCon.sprite = spriteList[GameEngine.gameEngine.globalMovelistIndex];
         switch (GameEngine.gameEngine.globalMovelistIndex)
         {
             case 0://brave
-                
                 break;
             case 1://bomb
                 
@@ -83,7 +85,10 @@ public class PauseManager : MonoBehaviour
             case 3://windgod
                 
                 break;
-            case 4://majin
+            case 4://zoe
+
+                break;
+            case 5://majin
 
                 break;
             default:

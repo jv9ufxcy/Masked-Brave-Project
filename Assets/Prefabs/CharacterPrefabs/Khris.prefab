@@ -9744,14 +9744,20 @@ MonoBehaviour:
   target: {fileID: 0}
   turret: {fileID: 0}
   aggroRange: 20
-  attackRange: 15
+  longAttackRange: 12
+  shortAttackRange: 6
   attackCooldown: 30
   isNearPlayer: 0
-  isPlayerInRange: 0
-  attackState: 3b00000044000000430000004300000037000000
-  desperationAttackState: 3b000000370000003b000000460000004700000044000000
+  isLongRange: 0
+  isShortRange: 0
+  closeAttackState: 3700000043000000
+  rangedAttackState: 3b00000044000000
+  desperationCAStates: 47000000
+  desperationRAStates: 3b0000004400000046000000
   enemyType: 2
   desperationTransitionState: 69
+  defensiveState: 0
+  defStateIndex: 0
 --- !u!50 &337827942030399246
 Rigidbody2D:
   serializedVersion: 4
@@ -9836,10 +9842,10 @@ MonoBehaviour:
   UI: 0
   maxMeter: 100
   minMeter: 0
-  maxHealth: 60
+  maxHealth: 80
   currentShieldHealth: 0
   currentHealth: 0
-  desperationHealth: 30
+  desperationHealth: 40
   maxPoise: 15
   currentPoise: 15
   HealthFill: {fileID: 0}

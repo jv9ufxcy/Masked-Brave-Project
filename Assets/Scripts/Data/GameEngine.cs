@@ -19,7 +19,8 @@ public class GameEngine : MonoBehaviour
     public float deadZone = 0.2f;
 
     public int currency;
-    public TextMeshProUGUI currencyText;
+    public RectTransform currencyObj;
+    private TextMeshProUGUI currencyText;
 
     public CharacterObject mainCharacter;
 
@@ -50,10 +51,14 @@ public class GameEngine : MonoBehaviour
     }
     public void ChangeCurrency(int val)
     {
+        currencyObj.DOScale(1f, 0f);
+
         currency += val;
         currencyText.text = "x " + currency.ToString();
         currencyText.rectTransform.DOScale(1.5f, .2f);
         currencyText.rectTransform.DOScale(1f, .2f).SetDelay(.4f);
+
+        currencyObj.DOScale(0f, 0f).SetDelay(3f);
     }
     // Use this for initialization
     void Start ()
@@ -64,8 +69,12 @@ public class GameEngine : MonoBehaviour
         //{
         //    mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterObject>();
         //}
-
-	}
+        if (currencyObj!=null)
+        {
+            currencyObj.DOScale(0f, 0f);
+            currencyText = currencyObj.GetComponentInChildren<TextMeshProUGUI>();
+        }
+    }
     public static void SetHitPause(float _pow)
     {
         if (_pow > hitStop)
@@ -146,7 +155,7 @@ public class GameEngine : MonoBehaviour
     //        GUI.Label(new Rect(500f, m * ySpace, 100, 20), coreData.motionCommands[m].name);
 
     //    }
-    //    GUI.Label(new Rect(600f , 10f, 100, 20), CurrentMoveList().name.ToString());
+    //    GUI.Label(new Rect(600f, 10f, 100, 20), CurrentMoveList().name.ToString());
 
     //}
 }

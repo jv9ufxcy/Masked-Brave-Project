@@ -4973,15 +4973,21 @@ MonoBehaviour:
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}
-  aggroRange: 8
-  attackRange: 3
+  aggroRange: 10
+  longAttackRange: 3
+  shortAttackRange: 3
   attackCooldown: 30
   isNearPlayer: 0
-  isPlayerInRange: 0
-  attackState: 35000000
-  desperationAttackState: 
+  isLongRange: 0
+  isShortRange: 0
+  closeAttackState: 35000000
+  rangedAttackState: 
+  desperationCAStates: 
+  desperationRAStates: 
   enemyType: 0
   desperationTransitionState: 0
+  defensiveState: 0
+  defStateIndex: 0
 --- !u!50 &4192995062992537801
 Rigidbody2D:
   serializedVersion: 4

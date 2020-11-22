@@ -107,19 +107,19 @@ public class BulletHit : MonoBehaviour
                 Instantiate(bulletHitEffect, transform.position, transform.rotation);
             }
 
-            if (blastBlight>0)
-            {
-                if (other.GetComponentInChildren<Blastblight>() != null)
-                {
-                    other.GetComponentInChildren<Blastblight>().AddBlast(blastBlight);
-                }
-                else
-                {
-                    GameObject bomb = Instantiate(blastBlightGO, other.transform);
-                    bomb.GetComponent<Blastblight>().AddBlast(blastBlight);
-                    bomb.transform.parent = other.transform;
-                }
-            }
+            //if (blastBlight>0)
+            //{
+            //    if (other.GetComponentInChildren<Blastblight>() != null)
+            //    {
+            //        other.GetComponentInChildren<Blastblight>().AddBlast(blastBlight);
+            //    }
+            //    else
+            //    {
+            //        GameObject bomb = Instantiate(blastBlightGO, other.transform);
+            //        bomb.GetComponent<Blastblight>().AddBlast(blastBlight);
+            //        bomb.transform.parent = other.transform;
+            //    }
+            //}
         }
     }
     public void ReverseForce()

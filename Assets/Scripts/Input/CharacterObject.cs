@@ -71,8 +71,10 @@ public class CharacterObject : MonoBehaviour
         switch (controlType)
         {
             case ControlType.AI:
-                isNearPlayer = (Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroRange);
-                isPlayerInRange = (Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= attackRange);
+                isNearPlayer = Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroRange;
+                isLongRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange &&
+                    (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x)) > shortAttackRange);
+                isShortRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= shortAttackRange);
                 break;
             case ControlType.PLAYER:
                 PauseMenu();
@@ -462,14 +464,12 @@ public class CharacterObject : MonoBehaviour
     }
     void HorizontalDrag(float x) { velocity.x = x; }
     void VerticalDrag(float y) { velocity.y = y; }
-    void Jump(float _pow)
+    public void Jump(float _pow)
     {
         velocity.y = _pow*jumpPow;
         jumps--;
-        //hasLanded = false;
+
         landingParticle.Play();
-        //    aerialTimer = coyoteTimer+1f;
-        //    aerialFlag = true;
     }
     void CanCancel(float _val)
     {
@@ -1140,6 +1140,7 @@ public class CharacterObject : MonoBehaviour
                     else
                     {
                         velocity.y += gravity;
+                        Mathf.Clamp(velocity.y, -17, 0);
                         hasLanded = false;
                     }
 
@@ -1220,53 +1221,64 @@ public class CharacterObject : MonoBehaviour
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[0];
         }
 
-        if (healthManager.HasShield())
+        if (defensiveState && (currentState == 0 || currentState == defStateIndex) && curAtk.poiseDamage < 20f)
         {
-            healthManager.ShieldDamage(curAtk.poiseDamage);
-            GameEngine.SetHitPause(curAtk.hitStop);
-            attacker.hitConfirm += 1;
+            //parry sound
+            StartState(defStateIndex);
+            dashCooldown = 0;
+            FaceTarget(target.transform.position);
+            if (projectileIndex == 0) attacker.FrontVelocity(-10f);
         }
         else
         {
-            Vector3 nextKnockback = curAtk.knockback;
-
-            Vector3 knockOrientation = transform.position - attacker.transform.position;
-            knockOrientation.Normalize();
-            nextKnockback.x *= knockOrientation.x;
-
-            healthManager.PoiseDamage(curAtk.poiseDamage);
-            if (healthManager.currentPoise <= 0)
+            if (healthManager.HasShield())
             {
-                SetVelocity(nextKnockback * 0.7f);//dampen a bit
-                targetHitAnim.x = curAtk.hitAnim.x;
-                targetHitAnim.y = curAtk.hitAnim.y;
-
-                //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-                //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-                curHitAnim = targetHitAnim * .25f;
-
-                hitStun = curAtk.hitStun;
-                StartState(hitStunStateIndex);
+                healthManager.ShieldDamage(curAtk.poiseDamage);
+                GameEngine.SetHitPause(curAtk.hitStop);
+                attacker.hitConfirm += 1;
             }
-
-            GameEngine.SetHitPause(curAtk.hitStop);
-
-            attacker.hitConfirm += 1;
-            attacker.BuildMeter(curAtk.meterGain);
-            switch (controlType)//damage calc
+            else
             {
-                case ControlType.AI:
-                    healthManager.RemoveHealth(curAtk.damage);
-                    PlayAudio(attackStrings[curAtk.attackType]);
-                    GlobalPrefab(curAtk.attackType);
-                    break;
-                case ControlType.PLAYER:
-                    healthManager.RemoveHealth(curAtk.damage);
-                    PlayAudio("PlayerTakeDamage");
-                    GlobalPrefab(2);
-                    break;
-                default:
-                    break;
+                Vector3 nextKnockback = curAtk.knockback;
+
+                Vector3 knockOrientation = transform.position - attacker.transform.position;
+                knockOrientation.Normalize();
+                nextKnockback.x *= knockOrientation.x;
+
+                healthManager.PoiseDamage(curAtk.poiseDamage);
+                if (healthManager.currentPoise <= 0)
+                {
+                    SetVelocity(nextKnockback * 0.7f);//dampen a bit
+                    targetHitAnim.x = curAtk.hitAnim.x;
+                    targetHitAnim.y = curAtk.hitAnim.y;
+
+                    //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+                    //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+                    curHitAnim = targetHitAnim * .25f;
+
+                    hitStun = curAtk.hitStun;
+                    StartState(hitStunStateIndex);
+                }
+
+                GameEngine.SetHitPause(curAtk.hitStop);
+
+                attacker.hitConfirm += 1;
+                attacker.BuildMeter(curAtk.meterGain);
+                switch (controlType)//damage calc
+                {
+                    case ControlType.AI:
+                        healthManager.RemoveHealth(curAtk.damage);
+                        PlayAudio(attackStrings[curAtk.attackType]);
+                        GlobalPrefab(curAtk.attackType);
+                        break;
+                    case ControlType.PLAYER:
+                        healthManager.RemoveHealth(curAtk.damage);
+                        PlayAudio("PlayerTakeDamage");
+                        GlobalPrefab(2);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -1298,10 +1310,14 @@ public class CharacterObject : MonoBehaviour
     [Header("EnemyLogic")]
     public CharacterObject target;
     public Turret turret;
-    public float aggroRange = 30f, attackRange = 3f, attackCooldown = 180f;
-    [SerializeField] private bool isNearPlayer, isPlayerInRange;
-    public int[] attackState, desperationAttackState;
+    public float aggroRange = 30f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
+    [SerializeField] private bool isNearPlayer, isLongRange, isShortRange;
+    public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
     public int enemyType, desperationTransitionState;
+    [Space]
+    [Header("Blocking States")]
+    public bool defensiveState = false;
+    public int defStateIndex = 0;
     private void UpdateAI()
     {
         if (target == null)
@@ -1310,7 +1326,7 @@ public class CharacterObject : MonoBehaviour
         }
         if (currentState == 0)//Neutral
         {
-            if (isNearPlayer && !isPlayerInRange && dashCooldown <= 0)
+            if (isNearPlayer && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) > longAttackRange))
             {
                 FaceTarget(target.transform.position);
                 switch (enemyType)
@@ -1322,26 +1338,36 @@ public class CharacterObject : MonoBehaviour
                         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, moveSpeed);
                         break;
                     case 2:
-                        StartState(attackState[0]);
+                        StartState(rangedAttackState[0]);
                         break;
                 }
             }
-            if (isPlayerInRange && dashCooldown <= 0)
+
+            if (dashCooldown <= 0 && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange))
             {
                 FaceTarget(target.transform.position);
-                int randNum = Random.Range(0, attackState.Length);
                 velocity = Vector2.zero;
-                StartState(attackState[randNum]);
+                if (isLongRange && rangedAttackState.Length > 0)
+                {
+                    int randNum = Random.Range(0, rangedAttackState.Length);
+                    StartState(rangedAttackState[randNum]);
+                }
+                if (isShortRange && closeAttackState.Length > 0)
+                {
+                    int randNum = Random.Range(0, closeAttackState.Length);
+                    StartState(closeAttackState[randNum]);
+                }
             }
         }
-        if (currentState != 0)//Attack
+        if (currentState != 0 && currentState != defStateIndex)//Attack
         {
             dashCooldown = attackCooldown;
         }
     }
     public void OnDesperation()
     {
-        attackState = desperationAttackState;
+        closeAttackState = desperationCAStates;
+        rangedAttackState = desperationRAStates;
         StartState(desperationTransitionState);
         dashCooldown += 100;
         attackCooldown *= 0.5f;
