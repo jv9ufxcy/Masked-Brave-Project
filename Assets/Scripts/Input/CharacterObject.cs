@@ -38,7 +38,7 @@ public class CharacterObject : MonoBehaviour
     public RuntimeAnimatorController[] formAnims;
     public SpriteRenderer spriteRend;
     public Material defaultMat, whiteMat;
-    private Color flashColor = new Color ( 0.5f,0,0.75f,1f);
+    private Color flashColor = new Color ( 0,0.5f,0.75f,1f);
     public GameObject kinzecter;
     public enum ControlType { AI, PLAYER, BOSS, DEAD };
     public ControlType controlType;
