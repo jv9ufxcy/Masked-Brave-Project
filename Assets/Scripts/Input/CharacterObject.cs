@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Experimental.XR;
+using System;
 
 public class CharacterObject : MonoBehaviour
 {
@@ -35,9 +36,11 @@ public class CharacterObject : MonoBehaviour
     public GameObject draw;
     public Animator characterAnim;
     public RuntimeAnimatorController[] formAnims;
-    [HideInInspector] public SpriteRenderer spriteRend;
+    public SpriteRenderer spriteRend;
+    public Material defaultMat, whiteMat;
+    private Color flashColor = new Color ( 0.5f,0,0.75f,1f);
     public GameObject kinzecter;
-    public enum ControlType { AI, PLAYER, DEAD };
+    public enum ControlType { AI, PLAYER, BOSS, DEAD };
     public ControlType controlType;
 
     [Header("HitCancel")]
@@ -54,7 +57,8 @@ public class CharacterObject : MonoBehaviour
         myRB = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
-        spriteRend = draw.GetComponentInChildren<SpriteRenderer>();
+        spriteRend = characterAnim.gameObject.GetComponent<SpriteRenderer>();
+        defaultMat = spriteRend.material;
         healthManager = GetComponent<HealthManager>();
 
         audioManager = AudioManager.instance;
@@ -71,6 +75,12 @@ public class CharacterObject : MonoBehaviour
         switch (controlType)
         {
             case ControlType.AI:
+                isNearPlayer = Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroRange;
+                isLongRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange &&
+                    (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x)) > shortAttackRange);
+                isShortRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= shortAttackRange);
+                break;
+            case ControlType.BOSS:
                 isNearPlayer = Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroRange;
                 isLongRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange &&
                     (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x)) > shortAttackRange);
@@ -106,6 +116,9 @@ public class CharacterObject : MonoBehaviour
                     case ControlType.AI:
                         UpdateAI();
                         break;
+                    case ControlType.BOSS:
+                        UpdateAI();
+                        break;
                     case ControlType.PLAYER:
                         UpdateInput();
                         break;
@@ -127,6 +140,8 @@ public class CharacterObject : MonoBehaviour
     void UpdateTimers()
     {
         if (dashCooldown > 0) { dashCooldown -= dashCooldownRate; }
+        if (invulCooldown > 0) { invulCooldown --; }
+        else { isInvulnerable = false; curComboValue = -1; }
     }
 
     [HideInInspector] public float animSpeed;
@@ -403,11 +418,11 @@ public class CharacterObject : MonoBehaviour
                     Vector2 nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
                     velocity = (nextTargetDir * speed);
                     //transform.position = Vector2.MoveTowards(transform.position, nextClosestEnemy.transform.position, speed);
-                    Debug.Log("enemy at " + nextClosestEnemy.transform.position);
+                    //Debug.Log("enemy at " + nextClosestEnemy.transform.position);
                 }
                 else
                 {
-                    Debug.Log("no one nearby");
+                    //Debug.Log("no one nearby");
                 }
                 break;
             default:
@@ -1079,7 +1094,7 @@ public class CharacterObject : MonoBehaviour
 
     [Header("Timers")]
     public float coyoteTimer = 3f;
-    public float dashCooldown, dashCooldownRate = 1f;
+    public float dashCooldown, dashCooldownRate = 1f, invulCooldown, invulFlickerRate = 4f;
     public float specialMeter, specialMeterMax = 100f, nextSpecialMeterUse;
 
     public void UseMeter(float _val)
@@ -1208,7 +1223,25 @@ public class CharacterObject : MonoBehaviour
     [Header("Hit Stun")]
     public Vector2 curHitAnim;
     public Vector2 targetHitAnim;
+    private int curComboValue;
 
+    public bool CanBeHit(AttackEvent curAtk)
+    {
+        if (invulCooldown > 0)
+        {
+            if (curComboValue < curAtk.comboValue)
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            isInvulnerable = false;
+            spriteRend.color = Color.white;
+            return true;
+        }
+    }
+    
     public void GetHit(CharacterObject attacker, int projectileIndex)
     {
         AttackEvent curAtk;
@@ -1221,7 +1254,7 @@ public class CharacterObject : MonoBehaviour
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[0];
         }
 
-        if (defensiveState && (currentState == 0 || currentState == defStateIndex) && curAtk.poiseDamage < 20f)
+        if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f)
         {
             //parry sound
             StartState(defStateIndex);
@@ -1239,64 +1272,101 @@ public class CharacterObject : MonoBehaviour
             }
             else
             {
-                Vector3 nextKnockback = curAtk.knockback;
-
-                Vector3 knockOrientation = transform.position - attacker.transform.position;
-                knockOrientation.Normalize();
-                nextKnockback.x *= knockOrientation.x;
-
-                healthManager.PoiseDamage(curAtk.poiseDamage);
-                if (healthManager.currentPoise <= 0)
+                if (CanBeHit(curAtk))
                 {
-                    SetVelocity(nextKnockback * 0.7f);//dampen a bit
-                    targetHitAnim.x = curAtk.hitAnim.x;
-                    targetHitAnim.y = curAtk.hitAnim.y;
+                    Vector3 nextKnockback = curAtk.knockback;
+                    Vector3 knockOrientation = transform.position - attacker.transform.position;
+                    knockOrientation.Normalize();
+                    nextKnockback.x *= knockOrientation.x;
+                    curComboValue = curAtk.comboValue;
+                    StartInvul(curAtk.hitStop);
 
-                    //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-                    //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
-                    curHitAnim = targetHitAnim * .25f;
+                    healthManager.PoiseDamage(curAtk.poiseDamage);
+                    if (healthManager.currentPoise <= 0)
+                    {
+                        SetVelocity(nextKnockback * 0.7f);//dampen a bit
+                        targetHitAnim.x = curAtk.hitAnim.x;
+                        targetHitAnim.y = curAtk.hitAnim.y;
 
-                    hitStun = curAtk.hitStun;
-                    StartState(hitStunStateIndex);
-                }
+                        //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
+                        //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
+                        curHitAnim = targetHitAnim * .25f;
 
-                GameEngine.SetHitPause(curAtk.hitStop);
+                        hitStun = curAtk.hitStun;
+                        StartState(hitStunStateIndex);
+                    }
 
-                attacker.hitConfirm += 1;
-                attacker.BuildMeter(curAtk.meterGain);
-                switch (controlType)//damage calc
-                {
-                    case ControlType.AI:
-                        healthManager.RemoveHealth(curAtk.damage);
-                        PlayAudio(attackStrings[curAtk.attackType]);
-                        GlobalPrefab(curAtk.attackType);
-                        break;
-                    case ControlType.PLAYER:
-                        healthManager.RemoveHealth(curAtk.damage);
-                        PlayAudio("PlayerTakeDamage");
-                        GlobalPrefab(2);
-                        break;
-                    default:
-                        break;
+                    GameEngine.SetHitPause(curAtk.hitStop);
+
+                    attacker.hitConfirm += 1;
+                    attacker.BuildMeter(curAtk.meterGain);
+                    switch (controlType)//damage calc
+                    {
+                        case ControlType.AI:
+                            healthManager.RemoveHealth(curAtk.damage);
+                            PlayAudio(attackStrings[curAtk.attackType]);
+                            GlobalPrefab(curAtk.attackType);
+                            break;
+                        case ControlType.BOSS:
+                            healthManager.RemoveHealth(curAtk.damage);
+                            PlayAudio(attackStrings[curAtk.attackType]);
+                            GlobalPrefab(curAtk.attackType);
+                            break;
+                        case ControlType.PLAYER:
+                            healthManager.RemoveHealth(curAtk.damage);
+                            PlayAudio("PlayerTakeDamage");
+                            GlobalPrefab(2);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
     }
-    [SerializeField] string[] attackStrings;
-
-    private void ActivateBlastblight(AttackEvent curAtk)
+    private bool isInvulnerable;
+    private void StartInvul(float hitFlash)
     {
-        if (GetComponentInChildren<Blastblight>() != null)//if blastblight is already childed to you
+        if (invulCooldown <= 0 && controlType != ControlType.AI)
         {
-            GetComponentInChildren<Blastblight>().AddBlast(curAtk.blastBlight);
+            invulCooldown = 90f;
+            isInvulnerable = true;
         }
-        else
+        StartCoroutine(FlashWhiteDamage(hitFlash));
+    }
+
+    private IEnumerator FlashWhiteDamage(float hitFlash)
+    {
+        spriteRend.material = defaultMat;
+        spriteRend.material = whiteMat;
+        for (int i = 0; i < hitFlash; i++)
         {
-            GameObject newBlight = Instantiate(blastBlightGO, transform);//if not create a new blastblight go and child it to you
-            newBlight.transform.parent = transform;
-            newBlight.GetComponent<Blastblight>().AddBlast(curAtk.blastBlight);
+            yield return new WaitForFixedUpdate();
+        }
+        spriteRend.material = defaultMat;
+        StartCoroutine(BlinkWhileInvulnerableCoroutine());
+    }
+    private IEnumerator BlinkWhileInvulnerableCoroutine()
+    {
+        while (isInvulnerable)
+        {
+            //yield return new WaitForSeconds(blinkInterval);
+            spriteRend.color = flashColor;
+            for (int i = 0; i < invulFlickerRate; i++)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+
+            spriteRend.color = Color.white;
+            for (int i = 0; i < invulFlickerRate; i++)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+
         }
     }
+
+    [SerializeField] string[] attackStrings;
 
     [Tooltip("hitstun index in coreData")]
     public int hitStunStateIndex = 7;//hitstun state in coreData
@@ -1316,8 +1386,20 @@ public class CharacterObject : MonoBehaviour
     public int enemyType, desperationTransitionState;
     [Space]
     [Header("Blocking States")]
-    public bool defensiveState = false;
-    public int defStateIndex = 0;
+    public bool canDefend = false;
+    public bool IsDefendingInState()
+    {
+        for (int i = 0; i < defStates.Length; i++)
+        {
+            if (currentState==defStates[i])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public int defStateIndex;
+    public int[] defStates;
     private void UpdateAI()
     {
         if (target == null)
@@ -1349,12 +1431,12 @@ public class CharacterObject : MonoBehaviour
                 velocity = Vector2.zero;
                 if (isLongRange && rangedAttackState.Length > 0)
                 {
-                    int randNum = Random.Range(0, rangedAttackState.Length);
+                    int randNum = UnityEngine.Random.Range(0, rangedAttackState.Length);
                     StartState(rangedAttackState[randNum]);
                 }
                 if (isShortRange && closeAttackState.Length > 0)
                 {
-                    int randNum = Random.Range(0, closeAttackState.Length);
+                    int randNum = UnityEngine.Random.Range(0, closeAttackState.Length);
                     StartState(closeAttackState[randNum]);
                 }
             }
@@ -1375,12 +1457,12 @@ public class CharacterObject : MonoBehaviour
     public void OnDeath()
     {
         StartState(hitStunStateIndex);
-        controlType = ControlType.DEAD;
+        //controlType = ControlType.DEAD;
         SetVelocity(Vector2.zero);
     }
     public void OnSpawn()
     {
-        controlType = ControlType.AI;
+        //controlType = ControlType.AI;
     }
     void FindTarget()
     {

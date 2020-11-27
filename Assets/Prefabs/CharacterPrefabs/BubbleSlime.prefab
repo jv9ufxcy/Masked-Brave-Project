@@ -4768,6 +4768,9 @@ MonoBehaviour:
   characterAnim: {fileID: 1215111962927127394}
   formAnims: []
   spriteRend: {fileID: 0}
+  defaultMat: {fileID: 0}
+  whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
+  flashColor: {r: 0.5, g: 0, b: 0.5, a: 0.5}
   kinzecter: {fileID: 0}
   controlType: 0
   hitbox: {fileID: 7041374209251672270}
@@ -4839,6 +4842,8 @@ MonoBehaviour:
   coyoteTimer: 3
   dashCooldown: 0
   dashCooldownRate: 1
+  invulCooldown: 0
+  invulFlickerRate: 4
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -4862,11 +4867,13 @@ MonoBehaviour:
   isShortRange: 0
   closeAttackState: 37000000
   rangedAttackState: 38000000390000003a000000
-  desperationAttackState: 3700000038000000390000003a000000
+  desperationCAStates: 
+  desperationRAStates: 
   enemyType: 1
   desperationTransitionState: 58
-  defensiveState: 0
+  canDefend: 0
   defStateIndex: 0
+  defStates: 
 --- !u!50 &6461934158015889093
 Rigidbody2D:
   serializedVersion: 4

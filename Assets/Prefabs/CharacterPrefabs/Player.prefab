@@ -429,6 +429,9 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 150baf4dcbf2ce54dac50c5fe7f57ffc, type: 2}
   - {fileID: 9100000, guid: 7cc0cdd34c08b0d46880c0601057af65, type: 2}
   spriteRend: {fileID: 0}
+  defaultMat: {fileID: 0}
+  whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
+  flashColor: {r: 0.5, g: 0, b: 0.5, a: 0.5}
   kinzecter: {fileID: 0}
   controlType: 1
   hitbox: {fileID: 7513360881928160874}
@@ -515,6 +518,8 @@ MonoBehaviour:
   coyoteTimer: 1
   dashCooldown: 0
   dashCooldownRate: 1
+  invulCooldown: 0
+  invulFlickerRate: 4
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -530,14 +535,21 @@ MonoBehaviour:
   target: {fileID: 0}
   turret: {fileID: 0}
   aggroRange: 30
-  attackRange: 0
+  longAttackRange: 10
+  shortAttackRange: 5
   attackCooldown: 180
   isNearPlayer: 0
-  isPlayerInRange: 0
-  attackState: 
-  desperationAttackState: 
+  isLongRange: 0
+  isShortRange: 0
+  closeAttackState: 
+  rangedAttackState: 
+  desperationCAStates: 
+  desperationRAStates: 
   enemyType: 0
   desperationTransitionState: 0
+  canDefend: 0
+  defStateIndex: 0
+  defStates: 
 --- !u!114 &6942301879946958580
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -486,7 +486,15 @@ public class HealthManager : MonoBehaviour
                 character.GlobalPrefab(5);
                 character.OnDeath();
                 audioManager.PlaySound("Death");
-                yield return new WaitForSeconds(1f);//get length of death animation        
+                yield return new WaitForFixedUpdate();//get length of death animation        
+                gameObject.SetActive(false);
+                break;
+            case CharacterObject.ControlType.BOSS:
+                OnDeath.Invoke();
+                character.GlobalPrefab(5);
+                character.OnDeath();
+                audioManager.PlaySound("Death");
+                yield return new WaitForFixedUpdate();//get length of death animation        
                 gameObject.SetActive(false);
                 break;
             case CharacterObject.ControlType.PLAYER:

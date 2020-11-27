@@ -12,7 +12,7 @@ public class AttackEvent
 
     public int damage;
     public int meterGain;
-    public int blastBlight;
+    public int comboValue;
     public int poiseDamage=1;
     public int attackType;
 
