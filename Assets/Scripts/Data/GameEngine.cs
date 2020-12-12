@@ -51,14 +51,15 @@ public class GameEngine : MonoBehaviour
     }
     public void ChangeCurrency(int val)
     {
-        currencyObj.DOScale(1f, 0f);
+        //currencyObj.DOScale(1f, 0f);
 
         currency += val;
-        currencyText.text = "x " + currency.ToString();
-        currencyText.rectTransform.DOScale(1.5f, .2f);
-        currencyText.rectTransform.DOScale(1f, .2f).SetDelay(.4f);
+        if (currencyText!=null)
+            currencyText.text = "x " + currency.ToString();
+        //currencyText.rectTransform.DOScale(1.5f, .2f);
+        //currencyText.rectTransform.DOScale(1f, .2f).SetDelay(.4f);
 
-        currencyObj.DOScale(0f, 0f).SetDelay(3f);
+        //currencyObj.DOScale(0f, 0f).SetDelay(3f);
     }
     // Use this for initialization
     void Start ()
