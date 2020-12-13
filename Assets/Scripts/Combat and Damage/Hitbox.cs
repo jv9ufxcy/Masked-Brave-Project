@@ -36,7 +36,7 @@ public class Hitbox : MonoBehaviour
                 if (victim != null)
                 {
                     enemies.Add(collision);
-                    victim.GetHit(character, projectileIndex);
+                    victim.GetHit(character, projectileIndex,0);
                 }
                 if (collision.gameObject.CompareTag("Shootable"))
                 {
@@ -54,7 +54,7 @@ public class Hitbox : MonoBehaviour
                 if (victim != null)
                 {
                     enemies.Add(collision);
-                    victim.GetHit(character, projectileIndex);
+                    victim.GetHit(character, projectileIndex,0);
                 }
                 if (collision.gameObject.CompareTag("Shootable"))
                 {

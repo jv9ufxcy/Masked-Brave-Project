@@ -6,7 +6,8 @@ using Cinemachine;
 public class BulletHit : MonoBehaviour
 {
     private Rigidbody2D bulletRB;
-    private Controller2D controller;
+    private SpriteRenderer[] bulletSprites;
+    private BoxCollider2D[] bulletColls;
     private AudioManager audioManager;
     [Tooltip("0 - straight, 1 - homing, 2 - target")]
     public int bulletType;
@@ -14,31 +15,40 @@ public class BulletHit : MonoBehaviour
     public CharacterObject target;
     public EnemySpawn closestEnemy;
     public Vector3 targetPos, moveDirection;
-    [SerializeField] private GameObject bulletHitEffect, blastBlightGO;
+    [SerializeField] private GameObject bulletHitEffect, bulletChild;
     [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
     [SerializeField] private float lifeTime = 2f, speed, gravity=-2f, targetRange=10f;
-    [SerializeField] private int blastBlight = 0;
+    [SerializeField] private int attackState = 0;
     [SerializeField] private LayerMask whatLayersToHit;
 
     [SerializeField] private string bulletCollisionSound;
-    [SerializeField] private bool shouldScreenshakeOnHit=false, shouldStopOnHit = true, canReflect=true;
-    public CharacterObject character;
+    [SerializeField] private bool shouldScreenshakeOnHit = false, shouldStopOnHit = true, canReflect = true, parabolicArc = false;
+    public int bulletChain = 0, newBulletSpeed = 0;
+    public CharacterObject character, thisBullet;
     // Use this for initialization
+    void Awake()
+    {
+        bulletSprites = GetComponentsInChildren<SpriteRenderer>();
+        bulletColls = GetComponents<BoxCollider2D>();
+        bulletRB = GetComponent<Rigidbody2D>();
+
+        if (bulletType==4)
+        {
+            thisBullet = GetComponent<CharacterObject>();
+        }
+    }
     void Start()
     {
-        bulletRB = GetComponent<Rigidbody2D>();
-        controller = GetComponent<Controller2D>();
         if (bulletType!=0)
         {
             target = GameEngine.gameEngine.mainCharacter;
             targetPos = target.transform.position;
             moveDirection = (targetPos - transform.position).normalized * speed;
         }
-        //audioManager = AudioManager.instance;
-        //if (audioManager == null)
-        //{
-        //    Debug.LogError("No Audio Manager in Scene");
-        //}
+        if (parabolicArc)
+        {
+            thisBullet.Jump(1);
+        }
     }
     private void Update()
     {
@@ -58,9 +68,8 @@ public class BulletHit : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
                 break;
             case 4: //follow ground
-                Vector2 velocity = new Vector2(transform.localScale.x*speed,-2);
-                velocity.y += gravity;
-                controller.Move(velocity*Time.deltaTime, direction);
+               
+                thisBullet.FrontVelocity(speed*transform.localScale.x);
                 break;
         }
         //Countdown to lifetime
@@ -70,7 +79,7 @@ public class BulletHit : MonoBehaviour
         }
         else if (lifeTime <= 0)
         {
-            Destroy(gameObject);
+            OnDestroyGO();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -79,8 +88,7 @@ public class BulletHit : MonoBehaviour
         {
             if (shouldStopOnHit)
             {
-                RemoveForce();
-                Destroy(gameObject, .2f);
+                OnDestroyGO();
             }
             if (canReflect)
             {
@@ -89,38 +97,60 @@ public class BulletHit : MonoBehaviour
             }
         }
     }
-    public int projectileIndex;
+    public int projectileIndex, attackIndex = 0;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(tagToHit)&&other.gameObject!=character.gameObject)
         {
             CharacterObject victim = other.transform.root.GetComponent<CharacterObject>();
             if (victim != null&&projectileIndex>0)
-                victim.GetHit(character, projectileIndex);
+                victim.GetHit(character, projectileIndex, attackIndex);
 
             if (shouldScreenshakeOnHit)
                 Screenshake();
             if (shouldStopOnHit)
             {
-                RemoveForce();
-                Destroy(gameObject,.2f);
-                Instantiate(bulletHitEffect, transform.position, transform.rotation);
+                OnDestroyGO();
             }
-
-            //if (blastBlight>0)
-            //{
-            //    if (other.GetComponentInChildren<Blastblight>() != null)
-            //    {
-            //        other.GetComponentInChildren<Blastblight>().AddBlast(blastBlight);
-            //    }
-            //    else
-            //    {
-            //        GameObject bomb = Instantiate(blastBlightGO, other.transform);
-            //        bomb.GetComponent<Blastblight>().AddBlast(blastBlight);
-            //        bomb.transform.parent = other.transform;
-            //    }
-            //}
         }
+    }
+    private bool isDestroyed = false;
+    [SerializeField] private float destroyTimer = .1f;
+    private void OnDestroyGO()
+    {
+        if (!isDestroyed)
+        {
+            isDestroyed = true;
+            foreach (SpriteRenderer s in bulletSprites)
+            {
+                s.color = Color.clear;
+            }
+            foreach (BoxCollider2D s in bulletColls)
+            {
+                s.enabled = false;
+            }
+            bulletRB.isKinematic = true;
+            RemoveForce();
+            Instantiate(bulletHitEffect, transform.position, transform.rotation);
+            if (thisBullet !=null)
+            {
+                thisBullet.StartStateFromScript(attackState);
+            }
+            Destroy(gameObject, destroyTimer);
+        }
+    }
+    public void FireBullet(float bulletSpeed, float offsetX, float offsetY, int newBulletChain)
+    {
+        var offset = new Vector3(offsetX * direction.x, offsetY, 0);
+        GameObject newbulletGO = Instantiate(bulletChild , transform.position + offset, Quaternion.identity);
+        BulletHit bulletHit = newbulletGO.GetComponent<BulletHit>();
+        bulletHit.character = character;
+        bulletHit.direction.x = direction.x;
+        newbulletGO.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction.x, 0);
+        newbulletGO.transform.localScale = new Vector3(direction.x, 1, 1);
+
+        bulletHit.bulletChain = newBulletChain;
+        bulletHit.attackIndex++;
     }
     public void ReverseForce()
     {

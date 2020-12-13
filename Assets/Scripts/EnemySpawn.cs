@@ -43,7 +43,7 @@ public class EnemySpawn : MonoBehaviour
     {
         character = GetComponent<CharacterObject>();
         enemyHealth = GetComponent<HealthManager>();
-        if (!IsSpawned)
+        if (!IsSpawned && (character.controlType==CharacterObject.ControlType.AI|| character.controlType == CharacterObject.ControlType.BOSS))
         {
             gameObject.SetActive(false);
         }

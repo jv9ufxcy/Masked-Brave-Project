@@ -12,7 +12,7 @@ public class HazardTile : MonoBehaviour
         CharacterObject victim = collision.transform.root.GetComponent<CharacterObject>();
         if (victim != null)
         {
-            victim.GetHit(character, projectileIndex);
+            victim.GetHit(character, projectileIndex,0);
         }
     }
 }

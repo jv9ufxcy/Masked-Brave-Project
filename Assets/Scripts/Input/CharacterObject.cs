@@ -40,7 +40,7 @@ public class CharacterObject : MonoBehaviour
     public Material defaultMat, whiteMat;
     private Color flashColor = new Color ( 0,0.5f,0.75f,1f);
     public GameObject kinzecter;
-    public enum ControlType { AI, PLAYER, BOSS, DEAD };
+    public enum ControlType { AI, PLAYER, BOSS, DEAD, OBJECT };
     public ControlType controlType;
 
     [Header("HitCancel")]
@@ -52,21 +52,23 @@ public class CharacterObject : MonoBehaviour
     public InputBuffer inputBuffer = new InputBuffer();
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         myRB = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         controller = GetComponent<Controller2D>();
         spriteRend = characterAnim.gameObject.GetComponent<SpriteRenderer>();
-        defaultMat = spriteRend.material;
         healthManager = GetComponent<HealthManager>();
+    }
+    void Start()
+    {
+        defaultMat = spriteRend.material;
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
             Debug.LogError("No Audio Manager in Scene");
         }
-
     }
 
     // Update is called once per frame
@@ -503,7 +505,7 @@ public class CharacterObject : MonoBehaviour
     {
         GlobalPrefab(_prefab, -1, -1);
     }
-    private void FrontVelocity(float _pow)
+    public void FrontVelocity(float _pow)
     {
         velocity.x = _pow * direction;
     }
@@ -572,7 +574,10 @@ public class CharacterObject : MonoBehaviour
     public float moveSpeed = 10f;
     public float airMod = 1f;
     public float jumpPow = 12;
-
+    public void StartStateFromScript(int _newState)
+    {
+        StartState(_newState);
+    }
     void StartState(int _newState)
     {
         currentState = _newState;
@@ -970,10 +975,11 @@ public class CharacterObject : MonoBehaviour
             p.Play();
         }
     }
-    [SerializeField] private int menuTimer, menuDelay = 12;
+    private int menuTimer;
+    [SerializeField] private int menuDelay = 12, henshinInput=2;
     private void Henshin()
     {
-        if (Input.GetButton(GameEngine.coreData.rawInputs[4].name))//open radial menu
+        if (Input.GetButton(GameEngine.coreData.rawInputs[henshinInput].name))//open radial menu
         {
             if (menuTimer < menuDelay)
             {
@@ -986,7 +992,7 @@ public class CharacterObject : MonoBehaviour
             henshin.ActivateMenu();
             menuTimer++;
         }
-        if (Input.GetButtonUp(GameEngine.coreData.rawInputs[4].name))//open radial menu
+        if (Input.GetButtonUp(GameEngine.coreData.rawInputs[henshinInput].name))//open radial menu
         {
             if (menuTimer < menuDelay)
             {
@@ -1022,11 +1028,12 @@ public class CharacterObject : MonoBehaviour
             }
         }
     }
+    [SerializeField] private int dashInput = 4;
     void DashCut()
     {
         if (currentState == 2 || currentState == 18)//dash and airdashState
         {
-            if (Input.GetButtonUp(GameEngine.coreData.rawInputs[2].name))
+            if (Input.GetButtonUp(GameEngine.coreData.rawInputs[dashInput].name))
             {
                 dashCooldown = 0;
                 StartState(0);
@@ -1048,11 +1055,11 @@ public class CharacterObject : MonoBehaviour
     {
         if (!aerialFlag || wallFlag)//on ground
         {
-            if (Input.GetButton(GameEngine.coreData.rawInputs[2].name))
+            if (Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name))
                 airMod = 2f;
-            if (Input.GetButtonUp(GameEngine.coreData.rawInputs[2].name))
+            if (Input.GetButtonUp(GameEngine.coreData.rawInputs[dashInput].name))
                 airMod = 1f;
-            if (!Input.GetButton(GameEngine.coreData.rawInputs[2].name) && isOnWall)
+            if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name) && isOnWall)
                 airMod = 1f;
         }
     }
@@ -1167,7 +1174,7 @@ public class CharacterObject : MonoBehaviour
         Move(velocity);
         velocity.Scale(friction);
     }
-    void Move(Vector2 velocity)
+    public void Move(Vector2 velocity)
     {
         //myRB.velocity = velocity;
         controller.Move(velocity * Time.fixedDeltaTime, leftStick);
@@ -1242,7 +1249,7 @@ public class CharacterObject : MonoBehaviour
         }
     }
     
-    public void GetHit(CharacterObject attacker, int projectileIndex)
+    public void GetHit(CharacterObject attacker, int projectileIndex, int atkIndex)
     {
         AttackEvent curAtk;
         if (projectileIndex == 0)//not a projectile
@@ -1251,7 +1258,7 @@ public class CharacterObject : MonoBehaviour
         }
         else//projectiles
         {
-            curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[0];
+            curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[atkIndex];
         }
 
         if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f)
@@ -1307,6 +1314,11 @@ public class CharacterObject : MonoBehaviour
                             PlayAudio(attackStrings[curAtk.attackType]);
                             GlobalPrefab(curAtk.attackType);
                             break;
+                        case ControlType.OBJECT:
+                            healthManager.RemoveHealth(curAtk.damage);
+                            PlayAudio(attackStrings[curAtk.attackType]);
+                            GlobalPrefab(curAtk.attackType);
+                            break;
                         case ControlType.BOSS:
                             healthManager.RemoveHealth(curAtk.damage);
                             PlayAudio(attackStrings[curAtk.attackType]);
@@ -1327,7 +1339,7 @@ public class CharacterObject : MonoBehaviour
     private bool isInvulnerable;
     private void StartInvul(float hitFlash)
     {
-        if (invulCooldown <= 0 && controlType != ControlType.AI)
+        if (invulCooldown <= 0 && (controlType != ControlType.AI && controlType != ControlType.OBJECT))
         {
             invulCooldown = 90f;
             isInvulnerable = true;
