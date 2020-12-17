@@ -11,7 +11,7 @@ public class CharacterObject : MonoBehaviour
     [Header("Movement")]
     public Vector2 velocity;
 
-    public float gravity = -0.01f;
+    public float gravity = -0.01f, gravityMin = -17f;
     public float aniMoveSpeed;
 
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
@@ -385,7 +385,7 @@ public class CharacterObject : MonoBehaviour
     public void DOChangeMovelist(int index)
     {
         PlayFlashParticle(henshinColors[index]);
-        GameEngine.SetHitPause(10f);
+        GameEngine.SetHitPause(5f);
         QuickChangeForm(index);
     }
 
@@ -397,7 +397,7 @@ public class CharacterObject : MonoBehaviour
 
     public void ToggleMovelist()
     {
-        GameEngine.SetHitPause(10f);
+        GameEngine.SetHitPause(5f);
         GameEngine.gameEngine.ToggleMovelist();
         PlayFlashParticle(henshinColors[GameEngine.gameEngine.globalMovelistIndex]);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
@@ -988,7 +988,7 @@ public class CharacterObject : MonoBehaviour
         }
         if (menuTimer >= menuDelay)
         {
-            GameEngine.SetHitPause(10f);
+            GameEngine.SetHitPause(5f);
             henshin.ActivateMenu();
             menuTimer++;
         }
@@ -1162,7 +1162,7 @@ public class CharacterObject : MonoBehaviour
                     else
                     {
                         velocity.y += gravity;
-                        Mathf.Clamp(velocity.y, -17, 0);
+                        Mathf.Clamp(velocity.y, gravityMin, 0);
                         hasLanded = false;
                     }
 
@@ -1469,12 +1469,21 @@ public class CharacterObject : MonoBehaviour
     public void OnDeath()
     {
         StartState(hitStunStateIndex);
-        //controlType = ControlType.DEAD;
+        //if (controlType==ControlType.PLAYER)
+        //{
+            controlType = ControlType.DEAD;
+        //}
         SetVelocity(Vector2.zero);
     }
-    public void OnSpawn()
+    public void OnEnemySpawn()
     {
-        //controlType = ControlType.AI;
+        controlType = ControlType.AI;
+        StartState(0);
+    }
+    public void OnBossSpawn()
+    {
+        controlType = ControlType.BOSS;
+        StartState(0);
     }
     void FindTarget()
     {

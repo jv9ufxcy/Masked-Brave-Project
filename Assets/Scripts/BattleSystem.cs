@@ -26,7 +26,10 @@ public class BattleSystem : MonoBehaviour
     private List<Wave> activeWaveList;
     private List<EnemySpawn> enemySpawnList= new List<EnemySpawn>();
     private AudioManager audioManager;
+    private MusicManager musicManager;
+    public AudioClip battleTheme, stageTheme;
     // Start is called before the first frame update
+
     void Start()
     {
         battleFightText.DOColor(Color.clear, 0);
@@ -34,7 +37,9 @@ public class BattleSystem : MonoBehaviour
         enemyIcon = enemyCounter.GetComponentInChildren<Image>();
         battleState = State.Idle;
         activeWaveList = new List<Wave>();
+
         audioManager = AudioManager.instance;
+        musicManager = MusicManager.instance;
     }
     private int enemyNum()
     {
@@ -77,6 +82,10 @@ public class BattleSystem : MonoBehaviour
         {
             StartBattleUI();
             audioManager.PlaySound(battleStartAudio);
+
+            stageTheme = musicManager.BackgroundMusic.clip;
+            musicManager.ChangeBGM(battleTheme);
+
             battleState = State.Active;
             OnBattleStarted.Invoke();
         }
@@ -165,7 +174,10 @@ public class BattleSystem : MonoBehaviour
 
         foreach (EnemySpawn enemySpawn in waveSpawnEnemyList)
         {
-            enemySpawn.Spawn();
+            if (wave.bossBattle)
+                enemySpawn.BossSpawn();
+            else
+                enemySpawn.Spawn();
         }
     }
     private void TestBattleOver()
@@ -173,11 +185,12 @@ public class BattleSystem : MonoBehaviour
         numOfEnemies.text = "x " + enemyNum();
         if (battleState==State.Active&&IsBattleOver())
         {
+            audioManager.PlaySound(battleEndAudio);
+            musicManager.ChangeBGM(stageTheme);
             OnBattleEnded.Invoke();
             enemySpawnList.Clear();
             numOfEnemies.text = "x " + enemyNum();
             EndBattleUI();
-            audioManager.PlaySound(battleEndAudio);
             battleState = State.Conclusion;
         }
     }
@@ -203,6 +216,7 @@ public class BattleSystem : MonoBehaviour
         public float timer=2f;
         public bool alreadySpawned=false;
         public bool listAlreadyChecked=false;
+        public bool bossBattle = false;
 
         public bool IsWaveOver()
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
+    public LayerMask defaultLayer, hiddenLayer;
     private HealthManager enemyHealth;
     private CharacterObject character;
     public bool IsSpawned;
@@ -43,13 +44,26 @@ public class EnemySpawn : MonoBehaviour
     {
         character = GetComponent<CharacterObject>();
         enemyHealth = GetComponent<HealthManager>();
-        if (!IsSpawned && (character.controlType==CharacterObject.ControlType.AI|| character.controlType == CharacterObject.ControlType.BOSS))
+        defaultLayer = gameObject.layer;
+        if (!IsSpawned && !(character.controlType==CharacterObject.ControlType.PLAYER || character.controlType == CharacterObject.ControlType.OBJECT))
         {
-            gameObject.SetActive(false);
+            HideCharacter();
         }
         
         spawnPos = transform.position;
     }
+
+    private void HideCharacter()
+    {
+        character.character.gameObject.SetActive(false);
+        gameObject.layer = LayerMask.NameToLayer("Hidden");
+    }
+    private void ShowCharacter()
+    {
+        character.character.gameObject.SetActive(true);
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
+    }
+
     private void Update()
     {
         if (!IsAlive()&&IsSpawned==true)
@@ -59,17 +73,43 @@ public class EnemySpawn : MonoBehaviour
     }
     public void Spawn()
     {
-        gameObject.SetActive(true);
+        ShowCharacter();
 
         if (enemyHealth==null)
             enemyHealth = GetComponent<HealthManager>();
         if (character==null)
             character = GetComponent<CharacterObject>();
-        character.OnSpawn();
         enemyHealth.SetMaxHealth();
         enemyHealth.IsDead=false;
         IsSpawned = true;
+        character.OnEnemySpawn();
         transform.SetParent(null);
+        transform.position = spawnPos;
+    }
+    public void BossSpawn()
+    {
+        ShowCharacter();
+
+        if (enemyHealth == null)
+            enemyHealth = GetComponent<HealthManager>();
+        if (character == null)
+            character = GetComponent<CharacterObject>();
+
+        enemyHealth.SetMaxHealth();
+        enemyHealth.IsDead = false;
+        IsSpawned = true;
+        character.OnBossSpawn();
+        transform.SetParent(null);
+        transform.position = spawnPos;
+    }
+    public void DeSpawn()
+    {
+        HideCharacter();
+
+        enemyHealth.SetMaxHealth();
+        enemyHealth.IsDead = true;
+        IsSpawned = false;
+        //transform.SetParent(null);
         transform.position = spawnPos;
     }
     public bool IsAlive()

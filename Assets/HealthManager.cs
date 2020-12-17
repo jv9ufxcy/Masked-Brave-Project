@@ -487,7 +487,9 @@ public class HealthManager : MonoBehaviour
                 character.OnDeath();
                 audioManager.PlaySound("Death");
                 yield return new WaitForFixedUpdate();//get length of death animation        
-                gameObject.SetActive(false);
+                EnemySpawn E = GetComponent<EnemySpawn>();
+                if (E != null)
+                    E.DeSpawn();
                 break;
             case CharacterObject.ControlType.BOSS:
                 OnDeath.Invoke();
@@ -495,13 +497,16 @@ public class HealthManager : MonoBehaviour
                 character.OnDeath();
                 audioManager.PlaySound("Death");
                 yield return new WaitForFixedUpdate();//get length of death animation        
-                gameObject.SetActive(false);
+                EnemySpawn B = GetComponent<EnemySpawn>();
+                if (B != null)
+                    B.DeSpawn();
                 break;
             case CharacterObject.ControlType.PLAYER:
                 //RESPAWN HERE
                 OnDeath.Invoke();
                 character.GlobalPrefab(6);
                 character.OnDeath();
+                yield return new WaitForFixedUpdate();//get length of death animation        
                 audioManager.PlaySound("Defeat");
                 break;
             default:

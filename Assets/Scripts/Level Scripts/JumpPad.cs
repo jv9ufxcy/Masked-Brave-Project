@@ -8,6 +8,7 @@ public class JumpPad : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        collision.gameObject.GetComponent<CharacterObject>().Jump(jumpPow);
+        CharacterObject chara = collision.gameObject.GetComponent<CharacterObject>();
+        if(chara!=null)chara.Jump(jumpPow);
     }
 }

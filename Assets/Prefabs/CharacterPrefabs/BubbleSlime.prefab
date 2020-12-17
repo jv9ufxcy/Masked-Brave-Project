@@ -4708,11 +4708,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1674745594676707915}
   - component: {fileID: 731972024624839394}
-  - component: {fileID: 6461934158015889093}
-  - component: {fileID: 827306854270880468}
-  - component: {fileID: 6027842129828734749}
   - component: {fileID: 4378571186507213677}
   - component: {fileID: 5321893039030211628}
+  - component: {fileID: 2280745227243873990}
+  - component: {fileID: 4692510234502807211}
+  - component: {fileID: 8543347872369524041}
   m_Layer: 9
   m_Name: BubbleSlime
   m_TagString: Enemy
@@ -4749,10 +4749,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
   gravity: 0
+  gravityMin: -17
   aniMoveSpeed: 0
   friction: {x: 0.5, y: 0.5, z: 0}
   direction: 1
-  myRB: {fileID: 6461934158015889093}
+  myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
   henshin: {fileID: 0}
@@ -4771,7 +4772,7 @@ MonoBehaviour:
   defaultMat: {fileID: 0}
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
-  controlType: 0
+  controlType: 3
   hitbox: {fileID: 7041374209251672270}
   canCancel: 0
   isHit: 0
@@ -4818,8 +4819,9 @@ MonoBehaviour:
   - {fileID: 1946779624007576, guid: 5ce40fee1cb5c4549aea1da77c569712, type: 3}
   bulletSpawnPos: {x: 0.25, y: 0.5}
   isKinzecterOut: 0
-  menuTimer: 0
   menuDelay: 12
+  henshinInput: 2
+  dashInput: 4
   fadeTime: 0.5
   shortDashInterval: 0.05
   dashLength: 0.45
@@ -4857,7 +4859,7 @@ MonoBehaviour:
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}
-  aggroRange: 20
+  aggroRange: 12
   longAttackRange: 10
   shortAttackRange: 3
   attackCooldown: 60
@@ -4865,7 +4867,7 @@ MonoBehaviour:
   isLongRange: 0
   isShortRange: 0
   closeAttackState: 37000000
-  rangedAttackState: 38000000390000003a000000
+  rangedAttackState: 3800000039000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 1
@@ -4873,75 +4875,6 @@ MonoBehaviour:
   canDefend: 0
   defStateIndex: 0
   defStates: 
---- !u!50 &6461934158015889093
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1087852686392485207}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
---- !u!114 &827306854270880468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1087852686392485207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66914df5cc564214c97d02b104fb968a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 256
-  horizontalRayCount: 6
-  verticalRayCount: 6
-  horizontalRaySpacing: 0
-  verticalRaySpacing: 0
-  collider: {fileID: 0}
-  maxSlopeAngle: 80
-  playerInput: {x: 0, y: 0}
---- !u!61 &6027842129828734749
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1087852686392485207}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20, y: 20}
-    newSize: {x: 7, y: 7}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2}
-  m_EdgeRadius: 0
 --- !u!114 &4378571186507213677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5003,7 +4936,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  hiddenLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   IsSpawned: 0
+--- !u!50 &2280745227243873990
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087852686392485207}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!61 &4692510234502807211
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087852686392485207}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 20, y: 20}
+    newSize: {x: 7, y: 7}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2}
+  m_EdgeRadius: 0
+--- !u!114 &8543347872369524041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087852686392485207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66914df5cc564214c97d02b104fb968a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 256
+  horizontalRayCount: 6
+  verticalRayCount: 6
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
+  collider: {fileID: 0}
+  maxSlopeAngle: 80
+  playerInput: {x: 0, y: 0}
 --- !u!1 &1355851515655560986
 GameObject:
   m_ObjectHideFlags: 0

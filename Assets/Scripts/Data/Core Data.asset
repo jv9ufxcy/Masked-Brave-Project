@@ -279,7 +279,7 @@ MonoBehaviour:
       length: 10
       hitStun: 30
       hitStop: 5
-      damage: 5
+      damage: 4
       meterGain: 10
       comboValue: 3
       poiseDamage: 3
@@ -741,7 +741,7 @@ MonoBehaviour:
       length: 15
       hitStun: 40
       hitStop: 5
-      damage: 0
+      damage: 4
       meterGain: 5
       comboValue: 4
       poiseDamage: 3
@@ -1056,7 +1056,7 @@ MonoBehaviour:
       hitStun: 5
       hitStop: 0
       damage: 2
-      meterGain: 0
+      meterGain: 1
       comboValue: 0
       poiseDamage: 1
       attackType: 1
@@ -1109,7 +1109,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 0
       damage: 4
-      meterGain: 0
+      meterGain: 2
       comboValue: 1
       poiseDamage: 2
       attackType: 1
@@ -1162,7 +1162,7 @@ MonoBehaviour:
       hitStun: 25
       hitStop: 10
       damage: 8
-      meterGain: 0
+      meterGain: 4
       comboValue: 1
       poiseDamage: 5
       attackType: 1
@@ -2019,8 +2019,8 @@ MonoBehaviour:
       length: 0
       hitStun: 10
       hitStop: 5
-      damage: 0
-      meterGain: 0
+      damage: 2
+      meterGain: 5
       comboValue: 1
       poiseDamage: 4
       attackType: 1
@@ -2030,7 +2030,7 @@ MonoBehaviour:
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
     jumpReq: 0
-    meterReq: 0
+    meterReq: 30
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -2041,14 +2041,21 @@ MonoBehaviour:
     blendRate: 0.1
     events:
     - start: 0
+      end: 25
+      active: 1
+      script: 13
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
       - name: CriticalBuster
         val: 0
-    - start: 0
-      end: 0
+    - start: 5
+      end: 5
       active: 1
       script: 5
       parameters:
@@ -2073,28 +2080,122 @@ MonoBehaviour:
       - name: 
         val: 1
       - name: 
-        val: 5
+        val: 8
+    - start: 10
+      end: 10
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 8
+    - start: 15
+      end: 15
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: -1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 8
+    - start: 20
+      end: 20
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: -1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 8
+    - start: 25
+      end: 25
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 8
     attacks:
-    - start: 0
-      length: 5
-      hitStun: 10
-      hitStop: 5
-      damage: 2
-      meterGain: 2
-      comboValue: 1
-      poiseDamage: 5
-      attackType: 1
-      hitAnim: {x: 1, y: 0}
-      knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 2, y: 2, z: 1}
-      cancelWindow: 0
     - start: 5
       length: 5
       hitStun: 10
       hitStop: 5
       damage: 3
-      meterGain: 2
+      meterGain: 0
       comboValue: 2
       poiseDamage: 5
       attackType: 1
@@ -2108,7 +2209,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 3
-      meterGain: 2
+      meterGain: 0
       comboValue: 3
       poiseDamage: 5
       attackType: 1
@@ -2122,7 +2223,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 3
-      meterGain: 2
+      meterGain: 0
       comboValue: 4
       poiseDamage: 5
       attackType: 1
@@ -2136,7 +2237,7 @@ MonoBehaviour:
       hitStun: 10
       hitStop: 5
       damage: 3
-      meterGain: 2
+      meterGain: 0
       comboValue: 5
       poiseDamage: 5
       attackType: 1
@@ -2262,12 +2363,12 @@ MonoBehaviour:
     wallReq: 0
   - stateName: Henshin
     index: 0
-    length: 240
+    length: 170
     loop: 0
     blendRate: 0.1
     events:
-    - start: 239
-      end: 240
+    - start: 169
+      end: 170
       active: 1
       script: 17
       parameters:
@@ -4048,7 +4149,7 @@ MonoBehaviour:
         command:
           motionCommand: 4
           input: 3
-          state: 33
+          state: 34
           inputs: 
         followUps: 
         strict: 0
@@ -4089,7 +4190,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000400000005000000060000000700000008000000090000000a0000000b0000000c000000
+        followUps: 010000000400000005000000060000000700000008000000090000000a0000000b000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -4285,14 +4386,14 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 809
-          y: 165
+          x: 743
+          y: 136
           width: 175
           height: 50
-        activated: 1
+        activated: 0
         priority: 1
       omitList: 0200000003000000
-      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000b0000000c000000
+      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000b000000
   - name: Bombadier
     commandStates:
     - stateName: Grounded
@@ -5134,6 +5235,7 @@ MonoBehaviour:
   - {fileID: 7459617967329291029, guid: bf5c767ee2e2a3a4490183b06da31d7a, type: 3}
   - {fileID: 7459617967329291029, guid: 4c45e9cace6c7844da47ae99d8d13a88, type: 3}
   - {fileID: 7459617967329291029, guid: 47dc339314e71b745bdc209b6a6887bf, type: 3}
+  - {fileID: 7459617967329291029, guid: 9b11ea7cb69bebf4796d5dcbbb673808, type: 3}
   rawInputs:
   - inputType: 0
     name: Ps4X
