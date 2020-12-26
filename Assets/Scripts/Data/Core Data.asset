@@ -686,8 +686,8 @@ MonoBehaviour:
     - start: 0
       length: 10
       hitStun: 10
-      hitStop: 1
-      damage: 1
+      hitStop: 3
+      damage: 2
       meterGain: 1
       comboValue: 0
       poiseDamage: 1
@@ -812,7 +812,7 @@ MonoBehaviour:
     wallReq: 0
   - stateName: ChargeSlash
     index: 0
-    length: 40
+    length: 30
     loop: 0
     blendRate: 0.05
     events:
@@ -838,13 +838,13 @@ MonoBehaviour:
       - name: SwordSlam
         val: 0
     attacks:
-    - start: 15
-      length: 15
+    - start: 10
+      length: 10
       hitStun: 30
       hitStop: 5
       damage: 8
       meterGain: 10
-      comboValue: 0
+      comboValue: 1
       poiseDamage: 10
       attackType: 0
       hitAnim: {x: 0, y: 0}
@@ -2309,10 +2309,10 @@ MonoBehaviour:
       damage: 2
       meterGain: 3
       comboValue: 1
-      poiseDamage: 4
+      poiseDamage: 5
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 16, y: 0, z: 0}
+      knockback: {x: 20, y: 0, z: 0}
       hitBoxPos: {x: 1.5, y: 0, z: 0}
       hitBoxScale: {x: 3, y: 1, z: 1}
       cancelWindow: 0
@@ -2323,10 +2323,10 @@ MonoBehaviour:
       damage: 2
       meterGain: 3
       comboValue: 2
-      poiseDamage: 4
+      poiseDamage: 5
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 16, y: 0, z: 0}
+      knockback: {x: 20, y: 0, z: 0}
       hitBoxPos: {x: 1.5, y: 0, z: 0}
       hitBoxScale: {x: 3, y: 1, z: 1}
       cancelWindow: 0
@@ -2337,10 +2337,10 @@ MonoBehaviour:
       damage: 2
       meterGain: 3
       comboValue: 3
-      poiseDamage: 4
+      poiseDamage: 5
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 16, y: 0, z: 0}
+      knockback: {x: 20, y: 0, z: 0}
       hitBoxPos: {x: 1.5, y: 0, z: 0}
       hitBoxScale: {x: 3, y: 1, z: 1}
       cancelWindow: 0
@@ -2363,12 +2363,12 @@ MonoBehaviour:
     wallReq: 0
   - stateName: Henshin
     index: 0
-    length: 170
+    length: 120
     loop: 0
     blendRate: 0.1
     events:
-    - start: 169
-      end: 170
+    - start: 119
+      end: 120
       active: 1
       script: 17
       parameters:
@@ -5415,7 +5415,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0

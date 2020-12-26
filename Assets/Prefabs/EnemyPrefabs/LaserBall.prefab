@@ -50,20 +50,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 1
+  direction: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 1203753089687928, guid: f1e3a171d3f89ba47be432fb44eb8d75,
     type: 3}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
+  bulletChild: {fileID: 0}
   tagToHit: Player
   tagToCollide: Ground
-  lifeTime: 12
+  lifeTime: 4
   speed: 0.1
+  gravity: -2
   targetRange: 10
-  blastBlight: 0
+  attackState: 0
   whatLayersToHit:
     serializedVersion: 2
     m_Bits: 9728
@@ -71,8 +72,14 @@ MonoBehaviour:
   shouldScreenshakeOnHit: 0
   shouldStopOnHit: 1
   canReflect: 1
+  parabolicArc: 0
+  bulletChain: 0
+  newBulletSpeed: 0
   character: {fileID: 0}
+  thisBullet: {fileID: 0}
   projectileIndex: 56
+  attackIndex: 0
+  destroyTimer: 0.1
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -205,6 +212,9 @@ MonoBehaviour:
   maxHealth: 1
   currentShieldHealth: 0
   currentHealth: 0
+  desperationHealth: 0
+  maxPoise: 10
+  currentPoise: 10
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -214,6 +224,7 @@ MonoBehaviour:
   damageShowSpeed: 1
   IsDead: 0
   shouldSpawnHealth: 1
+  isDesperation: 0
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
@@ -221,7 +232,15 @@ MonoBehaviour:
   currencyPickup: {fileID: 0}
   healthPickup: {fileID: 0}
   effectsAnim: {fileID: 0}
-  DizzyMat: {fileID: 0}
+  charAnim: {fileID: 0}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  dizzyMat: {fileID: 0}
+  rend: {fileID: 0}
+  healthDropRate: 2
 --- !u!1 &61445353783769308
 GameObject:
   m_ObjectHideFlags: 0

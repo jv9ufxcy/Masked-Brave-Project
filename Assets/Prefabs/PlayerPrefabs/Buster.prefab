@@ -56,24 +56,29 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
     type: 3}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
+  bulletChild: {fileID: 0}
   tagToHit: Enemy
   tagToCollide: Ground
   lifeTime: 0.7
   speed: 0
   gravity: -2
   targetRange: 10
-  blastBlight: 20
+  attackState: 0
   whatLayersToHit:
     serializedVersion: 2
     m_Bits: 9728
   bulletCollisionSound: 
   shouldScreenshakeOnHit: 0
-  shouldStopOnHit: 1
+  shouldStopOnHit: 0
   canReflect: 1
+  parabolicArc: 0
+  bulletChain: 0
+  newBulletSpeed: 0
   character: {fileID: 0}
+  thisBullet: {fileID: 0}
   projectileIndex: 21
+  attackIndex: 0
+  destroyTimer: 0.1
 --- !u!95 &95611479683623692
 Animator:
   serializedVersion: 3

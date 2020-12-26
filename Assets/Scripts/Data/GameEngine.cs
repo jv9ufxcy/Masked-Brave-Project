@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
+
 
 public class GameEngine : MonoBehaviour
 {
@@ -18,9 +18,7 @@ public class GameEngine : MonoBehaviour
 
     public float deadZone = 0.2f;
 
-    public int currency;
-    public RectTransform currencyObj;
-    private TextMeshProUGUI currencyText;
+    
 
     public CharacterObject mainCharacter;
 
@@ -49,18 +47,7 @@ public class GameEngine : MonoBehaviour
         }
         OnFormChange.Invoke();
     }
-    public void ChangeCurrency(int val)
-    {
-        //currencyObj.DOScale(1f, 0f);
-
-        currency += val;
-        if (currencyText!=null)
-            currencyText.text = "x " + currency.ToString();
-        //currencyText.rectTransform.DOScale(1.5f, .2f);
-        //currencyText.rectTransform.DOScale(1f, .2f).SetDelay(.4f);
-
-        //currencyObj.DOScale(0f, 0f).SetDelay(3f);
-    }
+    
     // Use this for initialization
     void Start ()
     {
@@ -70,11 +57,8 @@ public class GameEngine : MonoBehaviour
         //{
         //    mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterObject>();
         //}
-        if (currencyObj!=null)
-        {
-            currencyObj.DOScale(0f, 0f);
-            currencyText = currencyObj.GetComponentInChildren<TextMeshProUGUI>();
-        }
+        if(Mission.instance!=null)
+            Mission.instance.StartMission();
     }
     public static void SetHitPause(float _pow)
     {
@@ -93,13 +77,8 @@ public class GameEngine : MonoBehaviour
 	}
     public void EndLevel()
     {
-        StartCoroutine(LevelChange());
-        GameManager.instance.RestoreCheckpointStart();
-    }
-    private IEnumerator LevelChange()
-    {
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(0);
+        Mission.instance.EndMission();
+        Mission.instance.EndLevel();
     }
     public static void GlobalPrefab(int _index, GameObject _parentObj, int _state, int _ev)
     {

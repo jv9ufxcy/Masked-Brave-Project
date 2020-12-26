@@ -16,6 +16,8 @@ public class RespawnPlayer : MonoBehaviour
     }
     public void Respawn()
     {
+        if (Mission.instance != null)
+            Mission.instance.OnPlayerContinue();
         StartCoroutine(RespawnWait());
     }
     private IEnumerator RespawnWait()

@@ -6,8 +6,7 @@ public class PickupRecoveryItem : MonoBehaviour
     [SerializeField] private int healthToGive = 1,currencyToGive = 0,meterToGive = 0;
     [Header("Magnet Val")]
     [SerializeField] private bool shouldAttract = false;
-    [SerializeField] private float attractionSpeed = 50f;
-    [SerializeField] private float attractionRange = 10f;
+    [SerializeField] private float attractionSpeed = 50f, attractionRange = 10f, lifeTime = 8f;
     [SerializeField] private LayerMask whatCountsAsPlayer;
     [SerializeField] private string pickupSound="PickupRecovery";
     [SerializeField] private GameObject pickupEffect;
@@ -34,6 +33,15 @@ public class PickupRecoveryItem : MonoBehaviour
     {
         if (shouldAttract)
             MoveTowardsPlayer();
+
+        if (lifeTime > 0)
+        {
+            lifeTime -= Time.deltaTime;
+        }
+        else if (lifeTime <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -50,7 +58,7 @@ public class PickupRecoveryItem : MonoBehaviour
             }
             if (currencyToGive>0)
             {
-                GameEngine.gameEngine.ChangeCurrency(currencyToGive);
+                Mission.instance.ChangeCurrency(currencyToGive);
             }
             GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
             audioManager.PlaySound(pickupSound);

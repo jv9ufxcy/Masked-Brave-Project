@@ -141,7 +141,7 @@ public class HealthManager : MonoBehaviour
     private CharacterObject character;
     public UnityEvent OnDeath;
     public Material dizzyMat;
-    public SpriteRenderer rend;
+    public SpriteRenderer rend,effectsRend;
     private AudioManager audioManager;
     //private PlayerRespawner respawner;
     public bool HasShield()
@@ -160,6 +160,7 @@ public class HealthManager : MonoBehaviour
             Debug.LogError("No Audio Manager in Scene");
         }
         character = GetComponent<CharacterObject>();
+        //effectsRend = effectsAnim.gameObject.GetComponent<SpriteRenderer>();
         //respawner = GameObject.FindGameObjectWithTag("Respawner").GetComponent<PlayerRespawner>();
         
 
@@ -368,6 +369,9 @@ public class HealthManager : MonoBehaviour
                 else
                 {
                     HealthVisualManager.healthSystemStatic.Damage(amount);
+                    if (Mission.instance != null)
+                        Mission.instance.OnPlayerDamaged(amount);
+
                     if (Dead())
                     {
                         FinisherDeath();
@@ -417,6 +421,7 @@ public class HealthManager : MonoBehaviour
         effectsAnim.Play("shieldIntro");
         currentShieldHealth = amount;
         effectsAnim.SetFloat("State", 1);
+        effectsRend.color = Color.white;
     }
     public void ShieldDamage(int amount)
     {
@@ -426,6 +431,7 @@ public class HealthManager : MonoBehaviour
         {
             effectsAnim.SetFloat("State", 0);
             currentShieldHealth = 0;
+            effectsRend.color = Color.clear;
         }
     }
     public void PoiseDamage(int amount)
@@ -487,6 +493,9 @@ public class HealthManager : MonoBehaviour
                 character.OnDeath();
                 audioManager.PlaySound("Death");
                 yield return new WaitForFixedUpdate();//get length of death animation        
+                if (Mission.instance!=null)
+                    Mission.instance.OnEnemyKilled();
+
                 EnemySpawn E = GetComponent<EnemySpawn>();
                 if (E != null)
                     E.DeSpawn();
@@ -508,6 +517,7 @@ public class HealthManager : MonoBehaviour
                 character.OnDeath();
                 yield return new WaitForFixedUpdate();//get length of death animation        
                 audioManager.PlaySound("Defeat");
+                Mission.instance.EndMission();
                 break;
             default:
                 break;

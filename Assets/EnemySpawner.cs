@@ -12,8 +12,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+        StartCoroutine(SetPlayerCoRoutine());
     }
     private void FixedUpdate()
     {
@@ -21,6 +20,11 @@ public class EnemySpawner : MonoBehaviour
         {
             this.transform.position = playerChar.transform.position;
         }
+    }
+    private IEnumerator SetPlayerCoRoutine()
+    {
+        yield return new WaitForFixedUpdate();
+        SetPlayer();
     }
     public void SetPlayer()
     {

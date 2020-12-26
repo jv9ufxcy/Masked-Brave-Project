@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,9 +16,11 @@ public class HealthVisualManager : MonoBehaviour
     [SerializeField] private Sprite healthSprite2;
     private List<HealthImage> healthImageList;
     private HealthSystem healthSystem;
+    private RectTransform healthTransform;
     private void Awake()
     {
         healthImageList = new List<HealthImage>();
+        healthTransform = transform.parent.GetComponent<RectTransform>();
     }
     private void Start()
     {
@@ -44,6 +47,7 @@ public class HealthVisualManager : MonoBehaviour
     private void HealthSystem_OnDamaged(object sender, System.EventArgs e)
     {
         RefereshAllHearts();
+        healthTransform.DOShakeAnchorPos(0.2f, 5, 2, 0, true, false);
     }
     private void HealthSystem_OnHealed(object sender, System.EventArgs e)
     {

@@ -117,17 +117,17 @@ public class BattleSystem : MonoBehaviour
         battleFightText.DOColor(Color.white, 0.5f);
         battleFightText.transform.DOScale(1, 0.5f);
 
-        numOfEnemies.transform.DOScale(2f, 2f);
+        numOfEnemies.transform.DOScale(2f, 1f);
+        numOfEnemies.DOColor(Color.clear, 1f);
 
-        numOfEnemies.DOColor(Color.clear, 2f);
-        enemyIcon.DOColor(Color.clear, 2f);
+        enemyIcon.DOColor(Color.clear, 1f);
 
-        battleFightText.transform.DOScale(8, .25f).SetDelay(2f);
-        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(2f);
+        battleFightText.transform.DOScale(8, .25f).SetDelay(1f);
+        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(1f);
 
-        enemyCounter.DOAnchorPos(startingLocation, 0).SetDelay(2f);
+        enemyCounter.DOAnchorPos(startingLocation, 0).SetDelay(1f);
         numOfEnemies.transform.DOScale(1, .5f);
-        battleFightText.transform.DOScale(1, 0).SetDelay(3f);
+        battleFightText.transform.DOScale(1, 0).SetDelay(1f);
     }
     private void CheckNumOfEnemies()
     {

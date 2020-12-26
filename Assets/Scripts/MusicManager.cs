@@ -27,7 +27,7 @@ public class MusicManager : MonoBehaviour
     private void FixedUpdate()
     {
         if (PauseManager.IsGamePaused)
-            BackgroundMusic.volume = 0.25f;
+            BackgroundMusic.volume = 0.1f;
         else
             BackgroundMusic.volume = 0.5f;
     }
@@ -35,6 +35,12 @@ public class MusicManager : MonoBehaviour
     {
         if (BackgroundMusic.clip.name == music.name)
             return;
+        StopMusic();
+        BackgroundMusic.clip = music;
+        StartMusic();
+    }
+    public void StartBGM(AudioClip music)
+    {
         StopMusic();
         BackgroundMusic.clip = music;
         StartMusic();
