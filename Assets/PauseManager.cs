@@ -63,7 +63,7 @@ public class PauseManager : MonoBehaviour
     {
         IsGamePaused = false;
         Time.timeScale = 1f;
-        Destroy(Mission.instance);
+        Destroy(Mission.instance.gameObject);
         MusicManager.instance.StopMusic();
         GM.RestoreCheckpointStart();
         SceneTransitionController.instance.LoadScene(sceneToLoad);

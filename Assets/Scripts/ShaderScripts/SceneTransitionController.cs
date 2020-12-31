@@ -48,6 +48,10 @@ public class SceneTransitionController : MonoBehaviour
             }
         }
     }
+    void OnApplicationQuit()
+    {
+        transitionImage.material.SetFloat("_Cutoff", -0.1f);
+    }
 
     public void LoadScene(string sceneToLoad)
     {

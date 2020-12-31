@@ -15,7 +15,7 @@ public class Mission : MonoBehaviour
     [Space]
     public bool isMissionActive = false;
     public TextMeshProUGUI missionStartText, menuTimer;
-    public string missionText;
+    public string missionStart, missionComplete;
     public Vector2 midScreen, offScreen;
     public float missionStartSeconds = 6f;
     [Header("Timer")]
@@ -70,7 +70,7 @@ public class Mission : MonoBehaviour
         mainChar.controlType = CharacterObject.ControlType.OBJECT;
 
         missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
-        missionStartText.text = missionText;
+        missionStartText.text = missionStart;
 
         mainChar.QuickChangeForm(4);
         mainChar.SetState(37);
@@ -182,16 +182,35 @@ public class Mission : MonoBehaviour
     }
     public void EndLevel()
     {
+        StartCoroutine(MissionComplete());
+    }
+
+    private IEnumerator MissionComplete()
+    {
         CalculateGrade();
         GameManager.instance.RestoreCheckpointStart();
-        PauseManager.pauseManager.Results();
-        StartCoroutine(LevelChange());
-    }
-    [SerializeField] private string nextLevel = "MainMenu";
-    private IEnumerator LevelChange()
-    {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(missionStartSeconds/2);
 
+        missionStartText.transform.DOScale(1, 0);
+        missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
+        missionStartText.text = missionComplete;
+
+        yield return new WaitForSeconds(missionStartSeconds / 2);
+        missionStartText.DOColor(Color.white, missionStartSeconds / 4);
+        missionStartText.rectTransform.DOAnchorPos(midScreen, missionStartSeconds / 4);
+        yield return new WaitForSeconds(missionStartSeconds / 2);
+        missionStartText.transform.DOScale(8, .25f);
+        missionStartText.DOColor(Color.clear, 0.25f);
+
+        yield return new WaitForSeconds(missionStartSeconds);
+
+        PauseManager.pauseManager.Results();
+        LevelChange();
+    }
+
+    [SerializeField] private string nextLevel = "MainMenu";
+    private void LevelChange()
+    {
         SceneTransitionController.instance.LoadScene(nextLevel);
         Destroy(gameObject);
     }

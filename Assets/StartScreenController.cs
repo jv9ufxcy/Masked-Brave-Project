@@ -6,7 +6,6 @@ public class StartScreenController : MonoBehaviour
 {
     private bool isMainMenuActive=false;
     public GameObject startPanel, menuPanel;
-    public ControllerDropdownValueCheck controllerDrop;
     private int value;
     // Start is called before the first frame update
     void Start()
@@ -47,6 +46,6 @@ public class StartScreenController : MonoBehaviour
         startPanel.SetActive(false);
         menuPanel.SetActive(true);
         isMainMenuActive = true;
-        controllerDrop.StartOnMenu(value);
+        GlobalVars.instance.PassControllerValue(value);
     }
 }

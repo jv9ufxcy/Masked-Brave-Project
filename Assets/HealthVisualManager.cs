@@ -77,6 +77,7 @@ public class HealthVisualManager : MonoBehaviour
         //pos and size
         heartGO.GetComponent<RectTransform>().anchoredPosition = anchoredPos;
         heartGO.GetComponent<RectTransform>().sizeDelta = sizeDelta;
+        heartGO.GetComponent<RectTransform>().localScale = new Vector3(16,16,1);
 
         //image sprite
         Image healthImageUI = heartGO.GetComponent<Image>();
