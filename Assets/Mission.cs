@@ -187,11 +187,12 @@ public class Mission : MonoBehaviour
         PauseManager.pauseManager.Results();
         StartCoroutine(LevelChange());
     }
+    [SerializeField] private string nextLevel = "MainMenu";
     private IEnumerator LevelChange()
     {
         yield return new WaitForSeconds(3f);
-        
-        SceneManager.LoadScene(0);
+
+        SceneTransitionController.instance.LoadScene(nextLevel);
         Destroy(gameObject);
     }
 }

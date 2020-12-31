@@ -21,7 +21,7 @@ public class ParallaxBackground : MonoBehaviour {
     [SerializeField] private bool infiniteHorizontal;
     [SerializeField] private bool infiniteVertical;
 
-    private PixelPerfectCamera ppuCam;
+    private UnityEngine.Experimental.Rendering.Universal.PixelPerfectCamera ppuCam;
     private Transform cameraTransform;
     private Vector3 lastCameraPosition;
     private float textureUnitSizeX;
@@ -29,7 +29,7 @@ public class ParallaxBackground : MonoBehaviour {
 
     private void Start() {
         cameraTransform = Camera.main.transform;
-        ppuCam = Camera.main.GetComponent<PixelPerfectCamera>();
+        ppuCam = Camera.main.GetComponent<UnityEngine.Experimental.Rendering.Universal.PixelPerfectCamera>();
         lastCameraPosition = cameraTransform.position;
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
         Texture2D texture = sprite.texture;

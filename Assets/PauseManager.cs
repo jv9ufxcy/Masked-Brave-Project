@@ -66,7 +66,7 @@ public class PauseManager : MonoBehaviour
         Destroy(Mission.instance);
         MusicManager.instance.StopMusic();
         GM.RestoreCheckpointStart();
-        SceneManager.LoadScene(sceneToLoad);
+        SceneTransitionController.instance.LoadScene(sceneToLoad);
     }
     public void Quit()
     {
