@@ -40,7 +40,7 @@ public class PickupRecoveryItem : MonoBehaviour
         }
         else if (lifeTime <= 0)
         {
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,7 +62,7 @@ public class PickupRecoveryItem : MonoBehaviour
             }
             GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
             audioManager.PlaySound(pickupSound);
-            Destroy(gameObject.transform.parent.gameObject);
+            Destroy(transform.root.gameObject);
         }
     }
     private void MoveTowardsPlayer()
