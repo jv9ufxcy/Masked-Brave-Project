@@ -2981,19 +2981,25 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Enemy/SlimeTurret
+  - stateName: Enemy/SlimeBullet
     index: 0
-    length: 60
+    length: 40
     loop: 0
     blendRate: 0.1
     events:
-    - start: 50
-      end: 50
+    - start: 20
+      end: 20
       active: 1
-      script: 15
+      script: 10
       parameters:
       - name: 
-        val: 3
+        val: 0
+      - name: 
+        val: 8
+      - name: 
+        val: 1
+      - name: 
+        val: 0
     - start: 0
       end: 0
       active: 1
@@ -3001,27 +3007,27 @@ MonoBehaviour:
       parameters:
       - name: SlimePsi
         val: 0
-    - start: 50
-      end: 50
+    - start: 25.360825
+      end: 25.360825
       active: 1
       script: 14
       parameters:
       - name: 
         val: 3
     attacks:
-    - start: 50
-      length: 0
-      hitStun: 20
+    - start: 20
+      length: 5
+      hitStun: 15
       hitStop: 5
       damage: 2
       meterGain: 0
-      comboValue: 0
-      poiseDamage: 0
+      comboValue: 1
+      poiseDamage: 2
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 25, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 0, y: 0, z: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 1, y: 0, z: 0}
+      hitBoxScale: {x: 2, y: 1, z: 1}
       cancelWindow: 0
     jumpReq: 0
     meterReq: 0
@@ -5236,6 +5242,7 @@ MonoBehaviour:
   - {fileID: 7459617967329291029, guid: 4c45e9cace6c7844da47ae99d8d13a88, type: 3}
   - {fileID: 7459617967329291029, guid: 47dc339314e71b745bdc209b6a6887bf, type: 3}
   - {fileID: 7459617967329291029, guid: 9b11ea7cb69bebf4796d5dcbbb673808, type: 3}
+  - {fileID: 7459617967329291029, guid: 1e91b6f05126c0b4f976e296a76167f2, type: 3}
   rawInputs:
   - inputType: 0
     name: Ps4X

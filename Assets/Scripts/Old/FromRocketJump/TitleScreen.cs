@@ -10,9 +10,10 @@ public class TitleScreen : MonoBehaviour
     {
         //Cursor.visible = false;
     }
-    public void LoadByIndex(int sceneIndex)
+    public void LoadByIndex(string sceneToLoad)
     {
-        SceneManager.LoadScene(sceneIndex);
+        SceneTransitionController.instance.LoadScene(sceneToLoad);
+        //SceneManager.LoadScene(sceneIndex);
     }
     
 }

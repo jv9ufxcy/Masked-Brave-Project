@@ -97,18 +97,18 @@ public class BattleSystem : MonoBehaviour
         battleFightText.DOColor(Color.white, 0.25f);
         battleFightText.transform.DOScale(1, .5f);
 
-        enemyCounter.DOAnchorPos(midScreen, 1).SetDelay(2f);
-        numOfEnemies.transform.DOScale(2, .25f).SetDelay(2f);
+        enemyCounter.DOAnchorPos(midScreen, 0.5f).SetDelay(1f);
+        numOfEnemies.transform.DOScale(2, 0.25f).SetDelay(1f);
 
-        enemyIcon.DOColor(Color.white, 0f).SetDelay(2f);
-        numOfEnemies.DOColor(Color.white, 0f).SetDelay(2f);
+        enemyIcon.DOColor(Color.white, 0f).SetDelay(1f);
+        numOfEnemies.DOColor(Color.white, 0f).SetDelay(1f);
 
-        enemyCounter.DOAnchorPos(restingLocation, .5f).SetDelay(4f);
-        numOfEnemies.transform.DOScale(1, .5f).SetDelay(4f);
+        enemyCounter.DOAnchorPos(restingLocation, .5f).SetDelay(2f);
+        numOfEnemies.transform.DOScale(1, .5f).SetDelay(2f);
 
 
-        battleFightText.transform.DOScale(8, .25f).SetDelay(5f);
-        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(5f);
+        battleFightText.transform.DOScale(8, .25f).SetDelay(3f);
+        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(3f);
     }
     private void EndBattleUI()
     {
@@ -175,9 +175,9 @@ public class BattleSystem : MonoBehaviour
         foreach (EnemySpawn enemySpawn in waveSpawnEnemyList)
         {
             if (wave.bossBattle)
-                enemySpawn.BossSpawn();
+                enemySpawn.Spawn(1);
             else
-                enemySpawn.Spawn();
+                enemySpawn.Spawn(0);
         }
     }
     private void TestBattleOver()

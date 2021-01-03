@@ -25,12 +25,12 @@ public class RespawnPlayer : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (Checkpoint.currentlyActiveCheckpoint == null)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneTransitionController.instance.LoadScene(SceneManager.GetActiveScene().name);/* SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);*/
         }
         else
         {
-            transform.position = gm.lastCheckpointPos;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //transform.position = gm.lastCheckpointPos;
+            SceneTransitionController.instance.LoadScene(SceneManager.GetActiveScene().name);
             //if (PlayerRespawnedFromCheckpoint)
             //{
 

@@ -56,17 +56,16 @@ MonoBehaviour:
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   moveDirection: {x: 0, y: 0, z: 0}
-  bulletHitEffect: {fileID: 1203753089687928, guid: f1e3a171d3f89ba47be432fb44eb8d75,
+  bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
     type: 3}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
+  bulletChild: {fileID: 0}
   tagToHit: Player
   tagToCollide: Ground
   lifeTime: 3
   speed: 3
   gravity: -2
   targetRange: 10
-  blastBlight: 0
+  attackState: 0
   whatLayersToHit:
     serializedVersion: 2
     m_Bits: 9728
@@ -74,8 +73,14 @@ MonoBehaviour:
   shouldScreenshakeOnHit: 0
   shouldStopOnHit: 1
   canReflect: 1
+  parabolicArc: 0
+  bulletChain: 0
+  newBulletSpeed: 0
   character: {fileID: 0}
+  thisBullet: {fileID: 0}
   projectileIndex: 56
+  attackIndex: 0
+  destroyTimer: 0.1
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90,6 +95,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -101,6 +107,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -208,6 +215,9 @@ MonoBehaviour:
   maxHealth: 1
   currentShieldHealth: 0
   currentHealth: 0
+  desperationHealth: 0
+  maxPoise: 10
+  currentPoise: 10
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -217,6 +227,7 @@ MonoBehaviour:
   damageShowSpeed: 1
   IsDead: 0
   shouldSpawnHealth: 1
+  isDesperation: 0
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
@@ -224,12 +235,15 @@ MonoBehaviour:
   currencyPickup: {fileID: 0}
   healthPickup: {fileID: 0}
   effectsAnim: {fileID: 0}
+  charAnim: {fileID: 0}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  DizzyMat: {fileID: 0}
+  dizzyMat: {fileID: 0}
+  rend: {fileID: 0}
+  effectsRend: {fileID: 0}
+  healthDropRate: 2
+  effectIndex: 0
 --- !u!114 &995338652320179467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1613,6 +1627,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 0
     mode: 0
     timeMode: 0
@@ -1730,7 +1745,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 0}
     flipU: 0
@@ -2541,8 +2556,61 @@ ParticleSystem:
     inWorldSpace: 0
     randomizePerFrame: 0
   ExternalForcesModule:
+    serializedVersion: 2
     enabled: 0
-    multiplier: 1
+    multiplierCurve:
+      serializedVersion: 2
+      minMaxState: 0
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     influenceFilter: 0
     influenceMask:
       serializedVersion: 2
@@ -4904,6 +4972,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4916,6 +4985,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

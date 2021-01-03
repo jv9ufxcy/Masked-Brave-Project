@@ -1395,7 +1395,11 @@ public class CharacterObject : MonoBehaviour
     public float aggroRange = 30f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
     [SerializeField] private bool isNearPlayer, isLongRange, isShortRange;
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
-    public int enemyType, desperationTransitionState;
+
+    [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction")]
+    public int enemyType;
+    public int desperationTransitionState;
+
     [Space]
     [Header("Blocking States")]
     public bool canDefend = false;
@@ -1478,6 +1482,11 @@ public class CharacterObject : MonoBehaviour
     public void OnEnemySpawn()
     {
         controlType = ControlType.AI;
+        StartState(0);
+    }
+    public void OnObjectSpawn()
+    {
+        controlType = ControlType.OBJECT;
         StartState(0);
     }
     public void OnBossSpawn()
