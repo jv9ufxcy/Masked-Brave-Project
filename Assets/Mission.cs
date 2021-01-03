@@ -72,6 +72,7 @@ public class Mission : MonoBehaviour
         missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
         missionStartText.text = missionStart;
 
+        yield return new WaitForSeconds(missionStartSeconds/2);
         mainChar.QuickChangeForm(4);
         mainChar.SetState(37);
 
@@ -182,6 +183,7 @@ public class Mission : MonoBehaviour
     }
     public void EndLevel()
     {
+        EndMission();
         StartCoroutine(MissionComplete());
     }
 
@@ -213,5 +215,6 @@ public class Mission : MonoBehaviour
     {
         SceneTransitionController.instance.LoadScene(nextLevel);
         Destroy(gameObject);
+        Destroy(GameManager.instance.gameObject);
     }
 }

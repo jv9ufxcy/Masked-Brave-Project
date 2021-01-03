@@ -849,6 +849,14 @@ BlendTree:
   m_Name: Neutral Tree
   m_Childs:
   - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 53d438e689062df4b9c72f7953b892dd, type: 2}
+    m_Threshold: -0.01
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: moveSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
     m_Motion: {fileID: 206895538787073126}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
@@ -866,7 +874,7 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: aerialState
   m_BlendParameterY: Blend
-  m_MinThreshold: 0
+  m_MinThreshold: -0.01
   m_MaxThreshold: 0.01
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0

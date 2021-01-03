@@ -71,7 +71,7 @@ public class EnemySpawn : MonoBehaviour
             IsSpawned = false;
         }
     }
-    public void Spawn()
+    public void Spawn(int type)
     {
         ShowCharacter();
 
@@ -82,30 +82,28 @@ public class EnemySpawn : MonoBehaviour
         enemyHealth.SetMaxHealth();
         enemyHealth.IsDead=false;
         IsSpawned = true;
-        character.OnEnemySpawn();
-        transform.SetParent(null);
-        transform.position = spawnPos;
-    }
-    public void BossSpawn()
-    {
-        ShowCharacter();
 
-        if (enemyHealth == null)
-            enemyHealth = GetComponent<HealthManager>();
-        if (character == null)
-            character = GetComponent<CharacterObject>();
-
-        enemyHealth.SetMaxHealth();
-        enemyHealth.IsDead = false;
-        IsSpawned = true;
-        character.OnBossSpawn();
+        switch (type)
+        {
+            case 0://Enemy
+                character.OnEnemySpawn();
+                break;
+            case 1://Boss
+                character.OnBossSpawn();
+                break;
+            case 2://Crate
+                character.OnObjectSpawn();
+                break;
+            case 3:
+                break;
+        }
         transform.SetParent(null);
         transform.position = spawnPos;
     }
     public void DeSpawn()
     {
+        character.OnObjectSpawn();
         HideCharacter();
-
         enemyHealth.SetMaxHealth();
         enemyHealth.IsDead = true;
         IsSpawned = false;

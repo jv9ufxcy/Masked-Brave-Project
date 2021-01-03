@@ -29,7 +29,7 @@ public class RespawnPlayer : MonoBehaviour
         }
         else
         {
-            transform.position = gm.lastCheckpointPos;
+            //transform.position = gm.lastCheckpointPos;
             SceneTransitionController.instance.LoadScene(SceneManager.GetActiveScene().name);
             //if (PlayerRespawnedFromCheckpoint)
             //{

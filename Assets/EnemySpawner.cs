@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             EnemySpawn E = collision.gameObject.GetComponent<EnemySpawn>();
-            if (soloEnemies.Contains(E))
+            if (soloEnemies.Contains(E)&&!E.IsSpawned)
             {
                 SpawnEnemy(E);
             }
@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void SpawnEnemy(EnemySpawn enemy)
     {
-        enemy.Spawn();
+        enemy.Spawn(0);
     }
     public void DeSpawnEnemy(EnemySpawn enemy)
     {

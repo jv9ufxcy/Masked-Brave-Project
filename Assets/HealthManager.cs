@@ -457,7 +457,7 @@ public class HealthManager : MonoBehaviour
             StartCoroutine(DeathEvent(shouldSpawnHealth));
         //GameEngine.gameEngine.Screenshake();
     }
-    public int healthDropRate = 2;
+    public int healthDropRate = 2, effectIndex;
     /// <summary>
     /// waits until the death animation is done and then destroys the character
     /// </summary>
@@ -520,6 +520,16 @@ public class HealthManager : MonoBehaviour
                 Mission.instance.EndMission();
                 break;
             default:
+                break;
+            case CharacterObject.ControlType.OBJECT:
+                OnDeath.Invoke();
+                character.GlobalPrefab(effectIndex);
+                character.OnDeath();
+                audioManager.PlaySound("Death");
+                yield return new WaitForFixedUpdate();//get length of death animation        
+                EnemySpawn O = GetComponent<EnemySpawn>();
+                if (O != null)
+                    O.DeSpawn();
                 break;
         }
 
