@@ -121,7 +121,7 @@ public class HealthSystem
 }
 public class HealthManager : MonoBehaviour
 {
-    public enum UIType { AI, PLAYER }
+    public enum UIType { AI, PLAYER, BOSS }
     public UIType UI = UIType.PLAYER;
     public float maxMeter = 100, minMeter = 0;
     public float maxHealth = 100, currentShieldHealth = 0, currentHealth, desperationHealth;
@@ -167,21 +167,20 @@ public class HealthManager : MonoBehaviour
         switch (UI)
         {
             case UIType.PLAYER:
-                UpdateFill();
+                UpdateMeter();
                 SetDefaultMeter();
                 break;
             case UIType.AI:
                 SetMaxHealth();
                 break;
+            case UIType.BOSS:
+                SetMaxHealth();
+                UpdateHealth();
+                HideHealth();
+                break;
             default:
                 break;
         }
-        
-
-        //if (ui == UIType.enemy)
-        //{
-        //    HideHealth();
-        //}
     }
 
     public void SetMaxHealth()
@@ -202,14 +201,23 @@ public class HealthManager : MonoBehaviour
 
     }
 
-    private void UpdateFill()
+    private void UpdateMeter()
     {
-        HealthFill.fillAmount = currentMeter / 100;
+        HealthFill.fillAmount = currentMeter / maxMeter;
     }
 
-    private void UpdateFillForHeal()
+    private void UpdateGainMeter()
     {
-        DamageFill.fillAmount = currentMeter / 100f;
+        DamageFill.fillAmount = currentMeter / maxMeter;
+    }
+    private void UpdateHealth()
+    {
+        HealthFill.fillAmount = currentHealth / maxHealth;
+    }
+
+    private void UpdateHealthGain()
+    {
+        DamageFill.fillAmount = currentHealth / maxHealth;
     }
 
     private void Update()
@@ -244,6 +252,32 @@ public class HealthManager : MonoBehaviour
                 break;
             case UIType.AI:
                 break;
+            case UIType.BOSS:
+                if (damageShowTimer < 0)//if the timer is up
+                {
+                    if (HealthFill.fillAmount < DamageFill.fillAmount && isHealing)//if the bars aren't equal and it's healing
+                    {
+                        HealthFill.fillAmount += damageShowSpeed * Time.deltaTime;//increase the health bar
+                    }
+                    else if (HealthFill.fillAmount < DamageFill.fillAmount)//if the health amount is smaller than the damage show
+                    {
+                        DamageFill.fillAmount -= damageShowSpeed * Time.deltaTime;//decrease the damage bar 
+                    }
+                    else if (isHealing)//otherwise if the bars are even we're done showing healing so turn the bool off
+                        isHealing = false;
+                }
+                else//DECREASE TIMERS
+                {
+                    damageShowTimer -= Time.deltaTime;
+                    healthBarFadeTimer -= Time.deltaTime;
+                }
+
+                if (healthBarFadeTimer < 0)//if we need to start fading health out
+                {
+                    if (!coroutineStarted && healthIsVisible)
+                        StartCoroutine(FadeHealth());
+                }
+                break;
             default:
                 break;
         }
@@ -274,16 +308,13 @@ public class HealthManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        //if (ui == UIType.enemy)
-        //{
-        //    if (healthBarFadeTimer > 0)//if you get hit while it's fading
-        //    {
-        //        ShowHealth();//go back to showing
-        //    }
+        if (healthBarFadeTimer > 0)//if you get hit while it's fading
+        {
+            ShowHealth();//go back to showing
+        }
 
-        //    if (healthBarFadeTimer <= 0)//as long as that timer isn't running, we've done a successful fade and can set the bool to false
-        //        healthIsVisible = false;
-        //}
+        if (healthBarFadeTimer <= 0)//as long as that timer isn't running, we've done a successful fade and can set the bool to false
+            healthIsVisible = false;
 
         coroutineStarted = false;
     }
@@ -292,8 +323,8 @@ public class HealthManager : MonoBehaviour
     void SetDefaultMeter()
     {
         currentMeter = 0;
-        UpdateFill();
-        UpdateFillForHeal();
+        UpdateMeter();
+        UpdateGainMeter();
     }
     public void ChangeMeter(int _val)
     {
@@ -307,7 +338,7 @@ public class HealthManager : MonoBehaviour
             switch (UI)
             {
                 case UIType.PLAYER:
-                    UpdateFillForHeal();
+                    UpdateGainMeter();
                     break;
                 case UIType.AI:
                     break;
@@ -321,9 +352,13 @@ public class HealthManager : MonoBehaviour
             switch (UI)
             {
                 case UIType.PLAYER:
-                    UpdateFill();
+                    UpdateMeter();
                     break;
                 case UIType.AI:
+                    //UpdateHealth();
+                    break;
+                case UIType.BOSS:
+                    UpdateHealth();
                     break;
                 default:
                     break;
@@ -340,6 +375,17 @@ public class HealthManager : MonoBehaviour
                 //UpdateFillForHeal();
                 break;
             case UIType.AI:
+                currentHealth += amount;
+
+                if (currentHealth > maxHealth)
+                    currentHealth = maxHealth;
+
+
+                damageShowTimer = damageShowTime;//set the timer back to max when injured happens
+
+                isHealing = true;
+                break;
+            case UIType.BOSS:
                 currentHealth += amount;
 
                 if (currentHealth > maxHealth)
@@ -402,6 +448,29 @@ public class HealthManager : MonoBehaviour
                         StartCoroutine(DeathEvent(shouldSpawnHealth));
                 }
                 break;
+            case UIType.BOSS:
+                if (currentShieldHealth > 0)
+                {
+                    ShieldDamage(amount);
+                }
+                else
+                {
+                    damageShowTimer = damageShowTime;//set the timer back to max when injured happens
+                    healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
+                    currentHealth -= amount;
+                }
+                if (currentHealth <= desperationHealth&&!isDesperation)
+                {
+                    DesperationTrigger();
+                }
+                if (currentHealth <= 0)
+                {
+                    currentHealth = 0;
+                    if (!IsDead)
+                        StartCoroutine(DeathEvent(shouldSpawnHealth));
+                }
+                UpdateHealth();
+                break;
             default:
                 break;
         }
@@ -442,7 +511,7 @@ public class HealthManager : MonoBehaviour
     {
         currentPoise = maxPoise;
     }
-    private void ShowHealth()
+    public void ShowHealth()
     {
         BarImage.color = BackColor;
         HealthFill.color = HealthColor;

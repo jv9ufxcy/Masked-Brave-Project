@@ -90,6 +90,7 @@ public class EnemySpawn : MonoBehaviour
                 break;
             case 1://Boss
                 character.OnBossSpawn();
+                enemyHealth.ShowHealth();
                 break;
             case 2://Crate
                 character.OnObjectSpawn();
