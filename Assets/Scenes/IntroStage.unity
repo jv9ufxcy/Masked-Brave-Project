@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -31114,6 +31114,7 @@ GameObject:
   - component: {fileID: 374440217}
   - component: {fileID: 374440218}
   - component: {fileID: 374440219}
+  - component: {fileID: 374440220}
   m_Layer: 0
   m_Name: CityBG_4
   m_TagString: Untagged
@@ -31192,7 +31193,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374440216}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ecbe11e85475647b4814609206f22e, type: 3}
   m_Name: 
@@ -31200,6 +31201,20 @@ MonoBehaviour:
   parallaxEffectMultiplier: {x: 1, y: 0}
   infiniteHorizontal: 1
   infiniteVertical: 0
+--- !u!114 &374440220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374440216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: 1, y: 0}
+  zeroOnStart: 1
 --- !u!1001 &417557679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31908,6 +31923,7 @@ GameObject:
   - component: {fileID: 696362716}
   - component: {fileID: 696362717}
   - component: {fileID: 696362718}
+  - component: {fileID: 696362719}
   m_Layer: 0
   m_Name: CityBG_0
   m_TagString: Untagged
@@ -31986,14 +32002,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696362715}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ecbe11e85475647b4814609206f22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxEffectMultiplier: {x: -0.125, y: 0}
+  parallaxEffectMultiplier: {x: 0.125, y: 0}
   infiniteHorizontal: 1
   infiniteVertical: 0
+--- !u!114 &696362719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696362715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: -0.2, y: 0}
+  zeroOnStart: 1
 --- !u!4 &697353849 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1580854466, guid: d8219e2aa65eeb54a955d4b779692f3a,
@@ -32017,6 +32047,7 @@ GameObject:
   - component: {fileID: 735519240}
   - component: {fileID: 735519241}
   - component: {fileID: 735519242}
+  - component: {fileID: 735519243}
   m_Layer: 0
   m_Name: CityBG_1
   m_TagString: Untagged
@@ -32095,14 +32126,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735519239}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ecbe11e85475647b4814609206f22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxEffectMultiplier: {x: -0.1, y: 0}
+  parallaxEffectMultiplier: {x: 0.1, y: 0}
   infiniteHorizontal: 1
   infiniteVertical: 0
+--- !u!114 &735519243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735519239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: -0.1, y: 0}
+  zeroOnStart: 1
 --- !u!1001 &770862503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32252,6 +32297,7 @@ GameObject:
   - component: {fileID: 792781600}
   - component: {fileID: 792781601}
   - component: {fileID: 792781602}
+  - component: {fileID: 792781603}
   m_Layer: 0
   m_Name: CityBG_3
   m_TagString: Untagged
@@ -32330,14 +32376,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792781599}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ecbe11e85475647b4814609206f22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxEffectMultiplier: {x: -0.13, y: 0}
+  parallaxEffectMultiplier: {x: 0.13, y: 0}
   infiniteHorizontal: 1
   infiniteVertical: 0
+--- !u!114 &792781603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792781599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: -0.025, y: 0}
+  zeroOnStart: 1
 --- !u!4 &817300266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1674745594676707915, guid: 0dfc1bf25d867df48b4b229a5a26513f,
@@ -32828,7 +32888,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 2064488614}
+      objectReference: {fileID: 0}
     - target: {fileID: 3472802787041728707, guid: 9455fb4c907e5024cb8a1dbeb80aabd0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -32967,7 +33027,7 @@ PrefabInstance:
     - target: {fileID: 5526083273016201929, guid: 9455fb4c907e5024cb8a1dbeb80aabd0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -720.00006
+      value: -720
       objectReference: {fileID: 0}
     - target: {fileID: 6485553833527739819, guid: 9455fb4c907e5024cb8a1dbeb80aabd0,
         type: 3}
@@ -33485,6 +33545,7 @@ GameObject:
   - component: {fileID: 1330861923}
   - component: {fileID: 1330861924}
   - component: {fileID: 1330861925}
+  - component: {fileID: 1330861926}
   m_Layer: 0
   m_Name: CityBG_2
   m_TagString: Untagged
@@ -33563,14 +33624,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330861922}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ecbe11e85475647b4814609206f22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxEffectMultiplier: {x: -0.075, y: 0}
+  parallaxEffectMultiplier: {x: 0.075, y: 0}
   infiniteHorizontal: 1
   infiniteVertical: 0
+--- !u!114 &1330861926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330861922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: -0.05, y: 0}
+  zeroOnStart: 1
 --- !u!1001 &1342656747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33950,14 +34025,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4871327149313626, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -119.99403
-      objectReference: {fileID: 0}
-    - target: {fileID: 4871327149313626, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.499975
-      objectReference: {fileID: 0}
     - target: {fileID: 114771058291156574, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
         type: 3}
       propertyPath: m_Follow
@@ -34245,7 +34312,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 2064488614}
+      objectReference: {fileID: 0}
     - target: {fileID: 4827906925535728541, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -36265,12 +36332,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2055683471}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &2064488614 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 20470386952078164, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
-    type: 3}
-  m_PrefabInstance: {fileID: 1400466965}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2085982803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6476919978724093375, guid: 83a95f1077cc84541a77feabf629e69d,
@@ -36844,7 +36905,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 2064488614}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0217e488a0fccd347832d1f4ae04514a, type: 3}
 --- !u!1001 &1543555868975295564
@@ -37174,7 +37235,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 2064488614}
+      objectReference: {fileID: 0}
     - target: {fileID: 8349147280268559844, guid: b15644831d23344418cb87a6f558ee43,
         type: 3}
       propertyPath: transitionSpeed
