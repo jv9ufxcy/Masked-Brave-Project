@@ -191,7 +191,7 @@ public class Mission : MonoBehaviour
     {
         CalculateGrade();
         GameManager.instance.RestoreCheckpointStart();
-        yield return new WaitForSeconds(missionStartSeconds/2);
+        yield return new WaitForSeconds(missionStartSeconds);
 
         missionStartText.transform.DOScale(1, 0);
         missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
@@ -201,7 +201,7 @@ public class Mission : MonoBehaviour
         missionStartText.DOColor(Color.white, missionStartSeconds / 4);
         missionStartText.rectTransform.DOAnchorPos(midScreen, missionStartSeconds / 4);
         yield return new WaitForSeconds(missionStartSeconds / 2);
-        missionStartText.transform.DOScale(8, .25f);
+        missionStartText.transform.DOScale(2, .25f);
         missionStartText.DOColor(Color.clear, 0.25f);
 
         yield return new WaitForSeconds(missionStartSeconds);
