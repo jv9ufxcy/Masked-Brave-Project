@@ -710,7 +710,7 @@ public class CharacterObject : MonoBehaviour
     private float shotPressure;
     [SerializeField] private float minShotPressure = 30f, maxShotPressure = 60f;
     private bool shouldChargeBuster;
-    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22;
+    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22, shotgunIndex = 40, missileIndex = 41;
     [SerializeField] private bool firstCharge, secondCharge;
     private Color c;
 
@@ -778,7 +778,43 @@ public class CharacterObject : MonoBehaviour
                     //shotPressure = 0;
                 }
                 break;
-            case 2:
+            case 2://Pursuer
+                if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
+                {
+                    ColorCharge();
+                    ChargeUp(chargeIncrement);
+                    if (shotPressure < maxShotPressure)
+                    {
+                        hasShotChargingStarted = true;
+                    }
+                }
+                if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
+                {
+                    if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
+                    {
+                        StartState(shotgunIndex);
+                        shotPressure = 0f;
+                        firstCharge = false; secondCharge = false;
+                    }
+                    else if (shotPressure >= maxShotPressure)
+                    {
+                        StartState(missileIndex);
+                        shotPressure = 0f;
+                        firstCharge = false; secondCharge = false;
+                    }
+                    if (shotPressure != 0f)
+                    {
+                        hasReleasedShot = true;
+                        shotPressure = 0f;
+                        firstCharge = false; secondCharge = false;
+                    }
+                    foreach (ParticleSystem p in primaryGunParticles)
+                    {
+                        p.startColor = Color.clear;
+                        p.Stop();
+                    }
+                    //shotPressure = 0;
+                }
                 break;
             case 3:
                 break;

@@ -2555,12 +2555,39 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
-  - stateName: NEW STATE
+  - stateName: MissileFire
     index: 0
-    length: 60
+    length: 40
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 10
+      end: 10
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 7
+      - name: 
+        val: 12
+      - name: 
+        val: 2
+      - name: 
+        val: 1.5
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 20.41237
+      active: 1
+      script: 13
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     meterReq: 0
@@ -4637,7 +4664,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000020000000300000008000000090000000b000000
+        followUps: 0100000002000000030000000800000009000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -4817,14 +4844,14 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 132
-          y: 232
+          x: 110
+          y: 265
           width: 175
           height: 50
-        activated: 1
+        activated: 0
         priority: 2
       omitList: 040000000500000006000000070000000a000000
-      nextFollowups: 01000000020000000300000008000000090000000b000000
+      nextFollowups: 0100000002000000030000000800000009000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -5426,4 +5453,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 0
+  currentMovelistIndex: 2
