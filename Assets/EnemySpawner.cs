@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public EnemySpawn[] enemies;
     public List<EnemySpawn> soloEnemies = new List<EnemySpawn>();
     public Vector2 rand = new Vector2(0, 2);
-    public CharacterObject playerChar;
+    public Transform playerChar;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void SetPlayer()
     {
-        playerChar = GameEngine.gameEngine.mainCharacter;
+        playerChar = Camera.main.transform;
         AddEnemiesToList();
     }
     private void AddEnemiesToList()

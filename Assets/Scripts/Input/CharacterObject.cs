@@ -1024,8 +1024,8 @@ public class CharacterObject : MonoBehaviour
         }
         if (menuTimer >= menuDelay)
         {
-            GameEngine.SetHitPause(5f);
-            henshin.ActivateMenu();
+            //GameEngine.SetHitPause(5f);
+            //henshin.ActivateMenu();
             menuTimer++;
         }
         if (Input.GetButtonUp(GameEngine.coreData.rawInputs[henshinInput].name))//open radial menu
@@ -1037,7 +1037,8 @@ public class CharacterObject : MonoBehaviour
             }
             else
             {
-                henshin.SelectForm();
+                //henshin.SelectForm();
+                ToggleMovelist();
                 menuTimer = 0;
             }
         }
