@@ -13,7 +13,8 @@ public class PickupRecoveryItem : MonoBehaviour
     private CharacterObject thePlayer;
     private bool isPlayerInRange;
 
-    private HealthManager player;
+    private HealthManager playerHP;
+    private CharacterObject player;
     private AudioManager audioManager;
     // Use this for initialization
     void Start()
@@ -45,16 +46,17 @@ public class PickupRecoveryItem : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        player = collision.gameObject.GetComponent<HealthManager>();
+        playerHP = collision.gameObject.GetComponent<HealthManager>();
+        player = collision.gameObject.GetComponent<CharacterObject>();
         if (collision.CompareTag("Player"))
         {
             if (healthToGive > 0)
             {
-                player.AddHealth(healthToGive);
+                playerHP.AddHealth(healthToGive);
             }
             if (meterToGive > 0)
             {
-                player.ChangeMeter(meterToGive);
+                player.BuildMeter(meterToGive);
             }
             if (currencyToGive>0)
             {

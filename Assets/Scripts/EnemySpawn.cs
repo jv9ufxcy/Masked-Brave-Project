@@ -44,7 +44,10 @@ public class EnemySpawn : MonoBehaviour
     {
         character = GetComponent<CharacterObject>();
         enemyHealth = GetComponent<HealthManager>();
-        defaultLayer = gameObject.layer;
+        //if (defaultLayer == 0)
+        //{
+        //    defaultLayer = gameObject.layer;
+        //}
         if (!IsSpawned && !(character.controlType==CharacterObject.ControlType.PLAYER || character.controlType == CharacterObject.ControlType.OBJECT))
         {
             HideCharacter();
@@ -56,12 +59,12 @@ public class EnemySpawn : MonoBehaviour
     private void HideCharacter()
     {
         character.character.gameObject.SetActive(false);
-        gameObject.layer = LayerMask.NameToLayer("Hidden");
+        gameObject.layer = (int)Mathf.Log(hiddenLayer.value, 2);
     }
     private void ShowCharacter()
     {
         character.character.gameObject.SetActive(true);
-        gameObject.layer = LayerMask.NameToLayer("Enemy");
+        gameObject.layer = (int)Mathf.Log(defaultLayer.value, 2);
     }
 
     private void Update()

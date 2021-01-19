@@ -9826,6 +9826,8 @@ MonoBehaviour:
   menuDelay: 12
   henshinInput: 2
   dashInput: 4
+  headColl: {fileID: 0}
+  crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
   dashLength: 0.45
@@ -9844,6 +9846,8 @@ MonoBehaviour:
   animFallSpeed: 0
   jumps: 0
   jumpMax: 1
+  dashes: 0
+  dashMax: 1
   coyoteTimer: 3
   dashCooldown: 0
   dashCooldownRate: 1
@@ -9860,6 +9864,7 @@ MonoBehaviour:
   - TakeDamage
   - TakeDamage
   hitStunStateIndex: 7
+  deathStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}
@@ -9870,9 +9875,9 @@ MonoBehaviour:
   isNearPlayer: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 3700000043000000
+  closeAttackState: 4400000043000000
   rangedAttackState: 3b00000044000000
-  desperationCAStates: 3700000047000000
+  desperationCAStates: 4300000047000000
   desperationRAStates: 3b0000004400000046000000
   enemyType: 2
   desperationTransitionState: 69

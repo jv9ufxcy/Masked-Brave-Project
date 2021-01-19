@@ -24194,12 +24194,16 @@ MonoBehaviour:
   shootAnim: 0
   shootAnimMax: 0
   fireRate: 10
-  bullets: []
+  bullets:
+  - {fileID: 1946779624007576, guid: ae8250bfc1f132c46afa261d098667d6, type: 3}
+  - {fileID: 1946779624007576, guid: f50d52cb40290394daffc39943364489, type: 3}
   bulletSpawnPos: {x: 1, y: 1}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
   dashInput: 4
+  headColl: {fileID: 0}
+  crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
   dashLength: 0.45
@@ -24218,6 +24222,8 @@ MonoBehaviour:
   animFallSpeed: 0
   jumps: 0
   jumpMax: 1
+  dashes: 0
+  dashMax: 1
   coyoteTimer: 3
   dashCooldown: 0
   dashCooldownRate: 1
@@ -24234,6 +24240,7 @@ MonoBehaviour:
   - TakeDamage
   - TakeDamage
   hitStunStateIndex: 7
+  deathStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}
@@ -24244,10 +24251,10 @@ MonoBehaviour:
   isNearPlayer: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 4f0000005000000052000000
-  rangedAttackState: 51000000
+  closeAttackState: 4f00000050000000
+  rangedAttackState: 4f00000051000000
   desperationCAStates: 5000000052000000
-  desperationRAStates: 51000000
+  desperationRAStates: 5100000052000000
   enemyType: 0
   desperationTransitionState: 83
   canDefend: 1

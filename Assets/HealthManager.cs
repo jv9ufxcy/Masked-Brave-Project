@@ -582,8 +582,11 @@ public class HealthManager : MonoBehaviour
             case CharacterObject.ControlType.PLAYER:
                 //RESPAWN HERE
                 OnDeath.Invoke();
+                character.QuickChangeForm(4);
+                yield return new WaitForFixedUpdate();//get length of death animation        
                 character.GlobalPrefab(6);
                 character.OnDeath();
+                //character.StartStateFromScript(36);
                 yield return new WaitForFixedUpdate();//get length of death animation        
                 audioManager.PlaySound("Defeat");
                 Mission.instance.EndMission();

@@ -21,6 +21,7 @@ public class CharacterState
     public List<AttackEvent> attacks;
 
     public int jumpReq;
+    public int dashReq;
     public int meterReq;
     public float dashCooldownReq;
     public bool groundedReq;
@@ -37,6 +38,8 @@ public class CharacterState
         {
             if (!character.wallFlag) { return false; }
         }
+        if (character.dashes<dashReq){ return false;}
+        else { character.SpendDash(dashReq); }
 
         if (dashCooldownReq>0)
         {

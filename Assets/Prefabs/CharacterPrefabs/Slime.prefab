@@ -30,8 +30,8 @@ Transform:
   - {fileID: 8516546573584472115}
   - {fileID: 5725310548637651049}
   - {fileID: 6221273439497495436}
-  - {fileID: 8254572937940407007}
-  - {fileID: 1403616128182569973}
+  - {fileID: 8076559174142958705}
+  - {fileID: 745503043334821904}
   m_Father: {fileID: 6476919979401484990}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -131,11 +131,13 @@ MonoBehaviour:
   chargeAttackIndex: 15
   chargeShotIndex: 21
   critBusterIndex: 22
+  shotgunIndex: 40
+  missileIndex: 41
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
-  gunChargeParticles: {fileID: 8254572937940407007}
-  jumpChargeParticles: {fileID: 1403616128182569973}
+  gunChargeParticles: {fileID: 8076559174142958705}
+  jumpChargeParticles: {fileID: 745503043334821904}
   flashParticles: {fileID: 6221273439497495436}
   turboColors: []
   henshinColors: []
@@ -155,6 +157,8 @@ MonoBehaviour:
   menuDelay: 12
   henshinInput: 2
   dashInput: 4
+  headColl: {fileID: 0}
+  crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
   dashLength: 0.45
@@ -173,6 +177,8 @@ MonoBehaviour:
   animFallSpeed: 0
   jumps: 0
   jumpMax: 1
+  dashes: 0
+  dashMax: 1
   coyoteTimer: 3
   dashCooldown: 0
   dashCooldownRate: 1
@@ -189,6 +195,7 @@ MonoBehaviour:
   - TakeDamage
   - TakeDamage
   hitStunStateIndex: 7
+  deathStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}
@@ -263,12 +270,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   dizzyMat: {fileID: 2100000, guid: 469afaba61093c04b87c4450611b6312, type: 2}
   rend: {fileID: 6476919979961269261}
   effectsRend: {fileID: 1035165108724481129}
   healthDropRate: 3
+  effectIndex: 0
 --- !u!114 &4658252686572797528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +430,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -435,6 +442,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -567,6 +575,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -578,6 +587,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -731,11 +741,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5585484287106154741}
     m_Modifications:
-    - target: {fileID: 7543642516012167277, guid: cd009f73d381dd94b9adf1742052d7ff,
-        type: 3}
-      propertyPath: m_Name
-      value: JumpChargingParticles
-      objectReference: {fileID: 0}
     - target: {fileID: 1811056729361028696, guid: cd009f73d381dd94b9adf1742052d7ff,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -791,6 +796,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7543642516012167277, guid: cd009f73d381dd94b9adf1742052d7ff,
+        type: 3}
+      propertyPath: m_Name
+      value: JumpChargingParticles
+      objectReference: {fileID: 0}
     - target: {fileID: 8560794047157321819, guid: cd009f73d381dd94b9adf1742052d7ff,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -798,7 +808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd009f73d381dd94b9adf1742052d7ff, type: 3}
---- !u!4 &1403616128182569973 stripped
+--- !u!4 &745503043334821904 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1811056729361028696, guid: cd009f73d381dd94b9adf1742052d7ff,
     type: 3}
@@ -811,11 +821,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5585484287106154741}
     m_Modifications:
-    - target: {fileID: 7613128487068795677, guid: 2492d5c65fdcfbf468d84182a11af585,
-        type: 3}
-      propertyPath: m_Name
-      value: BombDashPS
-      objectReference: {fileID: 0}
     - target: {fileID: 7613128487068795676, guid: 2492d5c65fdcfbf468d84182a11af585,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -870,6 +875,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7613128487068795677, guid: 2492d5c65fdcfbf468d84182a11af585,
+        type: 3}
+      propertyPath: m_Name
+      value: BombDashPS
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2492d5c65fdcfbf468d84182a11af585, type: 3}
@@ -967,11 +977,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5585484287106154741}
     m_Modifications:
-    - target: {fileID: 7673230500438863949, guid: 91713ef748a775e48bc0a189871b6398,
-        type: 3}
-      propertyPath: m_Name
-      value: LandingParticles
-      objectReference: {fileID: 0}
     - target: {fileID: 7668158897144127769, guid: 91713ef748a775e48bc0a189871b6398,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1027,6 +1032,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7673230500438863949, guid: 91713ef748a775e48bc0a189871b6398,
+        type: 3}
+      propertyPath: m_Name
+      value: LandingParticles
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91713ef748a775e48bc0a189871b6398, type: 3}
 --- !u!4 &5725310548637651049 stripped
@@ -1048,11 +1058,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5585484287106154741}
     m_Modifications:
-    - target: {fileID: 2136198207992870740, guid: e32bad2e1f2644e4da0c9942bcb984d1,
-        type: 3}
-      propertyPath: m_Name
-      value: GunChargingParticles
-      objectReference: {fileID: 0}
     - target: {fileID: 187903913973451547, guid: e32bad2e1f2644e4da0c9942bcb984d1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1108,9 +1113,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2136198207992870740, guid: e32bad2e1f2644e4da0c9942bcb984d1,
+        type: 3}
+      propertyPath: m_Name
+      value: GunChargingParticles
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e32bad2e1f2644e4da0c9942bcb984d1, type: 3}
---- !u!4 &8254572937940407007 stripped
+--- !u!4 &8076559174142958705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 187903913973451547, guid: e32bad2e1f2644e4da0c9942bcb984d1,
     type: 3}

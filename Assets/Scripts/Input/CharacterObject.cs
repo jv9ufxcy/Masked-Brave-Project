@@ -90,7 +90,10 @@ public class CharacterObject : MonoBehaviour
                 break;
             case ControlType.PLAYER:
                 PauseMenu();
-                Henshin();
+
+                if (CanUnCrouch())
+                    Henshin();
+
                 if (!PauseManager.IsGamePaused)
                 {
                     JumpCut();
@@ -214,7 +217,7 @@ public class CharacterObject : MonoBehaviour
     {
         CharacterState myCurrentState = GameEngine.coreData.characterStates[currentState];
 
-        if (hitStun > 0)
+        if (hitStun > 0 && controlType!=ControlType.DEAD)
         {
             GettingHit();
         }
@@ -352,7 +355,7 @@ public class CharacterObject : MonoBehaviour
                 AirMove(_params[0].val);
                 break;
             case 10:
-                FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val);
+                FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val);
                 break;
             case 11:
                 Dash(_params[0].val);
@@ -401,6 +404,11 @@ public class CharacterObject : MonoBehaviour
         GameEngine.gameEngine.ToggleMovelist();
         PlayFlashParticle(henshinColors[GameEngine.gameEngine.globalMovelistIndex]);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
+
+        if (GameEngine.gameEngine.globalMovelistIndex == 1)//bomb
+            SetCrouchFlag(true);
+        else
+            SetCrouchFlag(false);
     }
     private void PlayAudio(string audioName)
     {
@@ -445,29 +453,22 @@ public class CharacterObject : MonoBehaviour
     }
     private void Dash(float dashSpeed)
     {
-        //Screenshake();
-        //if (NumberOfDashes <= 0 && CurrentNumberOfBullets > 0)
-        //{
-        //    if (!isOnGround)
-        //        SpendAmmo(1);
-        //    if (CurrentNumberOfBullets <= 0)
-        //    {
-        //        hasAirDashed = true;
-        //    }
-        //}
-        //else
-        //    hasAirDashed = true;
-
-        velocity = Vector2.zero;
+        //velocity = Vector2.zero;
         Vector2 dir = new Vector2(leftStick.x, leftStick.y);
         if (dir == Vector2.zero)
         {
             dir.x = direction;
         }
-        velocity += dir.normalized * dashSpeed;
+        if (!isOnGround && dir.y == 0)
+        {
+            AirStill(0);
+        }
+        //velocity += dir.normalized * dashSpeed;
+        FrontVelocity(Mathf.Abs(dir.x) * dashSpeed);
+        VelocityY(dir.y * dashSpeed);
         characterAnim.SetFloat("dirAnimX", Mathf.Abs(dir.x));
         characterAnim.SetFloat("dirAnimY", dir.y);
-        StartCoroutine(DashWait());
+        //StartCoroutine(DashWait());
     }
     IEnumerator DashWait()
     {
@@ -932,13 +933,14 @@ public class CharacterObject : MonoBehaviour
         }
     }
 
-    public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY)
+    public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY, float attackIndex)
     {
         shootAnim = shootAnimMax;
         var offset = new Vector3(offsetX * direction, offsetY, 0);
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position + offset, Quaternion.identity);
         newbullet.GetComponent<BulletHit>().character = characterObject;
         newbullet.GetComponent<BulletHit>().direction.x = direction;
+        newbullet.GetComponent<BulletHit>().attackIndex = (int)attackIndex;
         //newbullet.GetComponent<Hitbox>().character = characterObject;
         newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction, 0);
         newbullet.transform.localScale = new Vector3(direction, 1, 1);
@@ -1066,27 +1068,49 @@ public class CharacterObject : MonoBehaviour
         }
     }
     [SerializeField] private int dashInput = 4;
+    public Collider2D headColl;
+    public bool crouchFlag;
+
+    private void SetCrouchFlag(bool crouch)
+    {
+        crouchFlag = crouch;
+        headColl.enabled = !crouchFlag;
+    }
+    public bool CanUnCrouch()
+    {
+        return !Physics2D.OverlapCircle(transform.position + Vector3.up, 0.5f, whatCountsAsGround);
+    }
+    private void UnCrouch()
+    {
+        if (GameEngine.gameEngine.globalMovelistIndex != 1)//bomb
+        {
+            SetCrouchFlag(false);
+        }
+    }
     void DashCut()
     {
-        if (currentState == 2 || currentState == 18)//dash and airdashState
+        if (currentState == 2 || currentState == 23||currentState==35)//dash and airdashState
         {
-            if (Input.GetButtonUp(GameEngine.coreData.rawInputs[dashInput].name))
+            SetCrouchFlag(true);
+            if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name))
             {
-                dashCooldown = 0;
-                StartState(0);
+                if (!CanUnCrouch())//ceiling collision
+                {
+                    StartState(currentState);
+                }
+                else
+                {
+                    dashCooldown = 0;
+                    StartState(0);
+                    UnCrouch();
+                }
             }
-            //if (Mathf.Abs(Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==1)
-            //{
-            //    if ((Input.GetAxis(GameEngine.coreData.rawInputs[13].name))==0)
-            //    {
-            //        dashCooldown = 0;
-            //        StartState(0);
-            //    }
-            //}
             DashJump();
         }
-
+        else if (crouchFlag)
+            UnCrouch();
     }
+
 
     private void DashJump()
     {
@@ -1135,6 +1159,12 @@ public class CharacterObject : MonoBehaviour
     [SerializeField] private float aerialTimer, groundDetectHeight, wallDetectWidth, animAerialState, animFallSpeed;
 
     public int jumps, jumpMax = 1;
+    public int dashes, dashMax = 1;
+    public void SpendDash(int dash)
+    {
+        dashes -= dash;
+        Mathf.Clamp(dashes, 0, dashMax);
+    }
 
     [Header("Timers")]
     public float coyoteTimer = 3f;
@@ -1165,6 +1195,7 @@ public class CharacterObject : MonoBehaviour
             aerialTimer = 0;
             animAerialState = 0f;
             jumps = jumpMax;
+            dashes = dashMax;
             //velocity.y = 0;
             GroundTouch();
         }
@@ -1271,6 +1302,8 @@ public class CharacterObject : MonoBehaviour
 
     public bool CanBeHit(AttackEvent curAtk)
     {
+        if (controlType == ControlType.DEAD)
+            return false;
         if (invulCooldown > 0)
         {
             if (curComboValue < curAtk.comboValue)
@@ -1418,7 +1451,7 @@ public class CharacterObject : MonoBehaviour
     [SerializeField] string[] attackStrings;
 
     [Tooltip("hitstun index in coreData")]
-    public int hitStunStateIndex = 7;//hitstun state in coreData
+    public int hitStunStateIndex = 7, deathStateIndex = 36;//hitstun state in coreData
     public float hitStun;
     public void GettingHit()
     {
@@ -1509,11 +1542,11 @@ public class CharacterObject : MonoBehaviour
     }
     public void OnDeath()
     {
-        StartState(hitStunStateIndex);
-        //if (controlType==ControlType.PLAYER)
-        //{
-            controlType = ControlType.DEAD;
-        //}
+        StartState(deathStateIndex);
+        controlType = ControlType.DEAD;
+        invulCooldown = 0f;
+        spriteRend.color = Color.white;
+        spriteRend.material = defaultMat;
         SetVelocity(Vector2.zero);
     }
     public void OnEnemySpawn()

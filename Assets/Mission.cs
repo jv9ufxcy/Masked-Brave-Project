@@ -72,8 +72,8 @@ public class Mission : MonoBehaviour
         missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
         missionStartText.text = missionStart;
 
-        yield return new WaitForSeconds(missionStartSeconds/2);
         mainChar.QuickChangeForm(4);
+        yield return new WaitForSeconds(missionStartSeconds/2);
         mainChar.SetState(37);
 
         yield return new WaitForSeconds(missionStartSeconds/2);
