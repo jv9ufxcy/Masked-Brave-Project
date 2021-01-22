@@ -89,12 +89,14 @@ public class CharacterObject : MonoBehaviour
                 isShortRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= shortAttackRange);
                 break;
             case ControlType.PLAYER:
-                PauseMenu();
+
+                if (!DialogueManager.instance.isDialogueActive)
+                    PauseMenu();
 
                 if (CanUnCrouch())
                     Henshin();
 
-                if (!PauseManager.IsGamePaused)
+                if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
                 {
                     JumpCut();
                     DashCut();
@@ -108,7 +110,7 @@ public class CharacterObject : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!PauseManager.IsGamePaused)
+        if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
         {
             if (GameEngine.hitStop <= 0)
             {
@@ -138,10 +140,18 @@ public class CharacterObject : MonoBehaviour
                 //
             }
             UpdateTimers();
-            UpdateAnimator();
         }
+            UpdateAnimator();
     }
-
+    public void UpdateCharacter()
+    {
+        UpdateState();
+        //Update Physcis
+        UpdatePhysics();
+        //
+        UpdateTimers();
+        UpdateAnimator();
+    }
     void UpdateTimers()
     {
         if (dashCooldown > 0) { dashCooldown -= dashCooldownRate; }
@@ -1089,7 +1099,7 @@ public class CharacterObject : MonoBehaviour
     }
     void DashCut()
     {
-        if (currentState == 2 || currentState == 23||currentState==35)//dash and airdashState
+        if (currentState == 2 || currentState == 23)//dash and airdashState
         {
             SetCrouchFlag(true);
             if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name))

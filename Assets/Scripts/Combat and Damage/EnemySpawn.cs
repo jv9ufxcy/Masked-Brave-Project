@@ -66,6 +66,10 @@ public class EnemySpawn : MonoBehaviour
         character.character.gameObject.SetActive(true);
         gameObject.layer = (int)Mathf.Log(defaultLayer.value, 2);
     }
+    public void ShowCharacterCutscene()
+    {
+        character.character.gameObject.SetActive(true);
+    }
 
     private void Update()
     {

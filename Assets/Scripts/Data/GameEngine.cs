@@ -57,8 +57,8 @@ public class GameEngine : MonoBehaviour
         //{
         //    mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterObject>();
         //}
-        if(Mission.instance!=null)
-            Mission.instance.StartMission();
+        //if(Mission.instance!=null)
+        //    Mission.instance.StartMission();
     }
     public static void SetHitPause(float _pow)
     {

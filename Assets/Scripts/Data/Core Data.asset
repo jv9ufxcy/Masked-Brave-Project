@@ -115,8 +115,8 @@ MonoBehaviour:
       parameters:
       - name: BraveDash
         val: 0
-    - start: 0
-      end: 0
+    - start: 1
+      end: 1
       active: 1
       script: 5
       parameters:
@@ -2231,7 +2231,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 5
       comboValue: 1
-      poiseDamage: 4
+      poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 0, y: 0, z: 0}
@@ -2407,7 +2407,7 @@ MonoBehaviour:
       damage: 3
       meterGain: 0
       comboValue: 2
-      poiseDamage: 5
+      poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -2421,7 +2421,7 @@ MonoBehaviour:
       damage: 3
       meterGain: 0
       comboValue: 3
-      poiseDamage: 5
+      poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -2435,7 +2435,7 @@ MonoBehaviour:
       damage: 3
       meterGain: 0
       comboValue: 4
-      poiseDamage: 5
+      poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -2449,7 +2449,7 @@ MonoBehaviour:
       damage: 3
       meterGain: 0
       comboValue: 5
-      poiseDamage: 5
+      poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -4834,7 +4834,7 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 4
-          state: 23
+          state: 2
           inputs: 
         followUps: 
         strict: 0
@@ -5817,4 +5817,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 2
+  currentMovelistIndex: 1

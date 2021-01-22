@@ -13,7 +13,7 @@ public class Mission : MonoBehaviour
 
     [Header("Mission Start Text")]
     [Space]
-    public bool isMissionActive = false;
+    public bool isMissionActive = false, isReload = false;
     public TextMeshProUGUI missionStartText, menuTimer;
     public string missionStart, missionComplete;
     public Vector2 midScreen, offScreen;
@@ -53,39 +53,49 @@ public class Mission : MonoBehaviour
     {
         timeCounter = "00:00.00";
         isMissionActive = false;
-        
-        //StartMission();
+
+        StartCoroutine(InitializeCoRoutine());
     }
-    private void FixedUpdate()
-    {
-        
-    }
-    private IEnumerator MissionStart()
+    private IEnumerator InitializeCoRoutine()
     {
         yield return new WaitForFixedUpdate();
+        Initialize();
+        if (isReload)
+        {
+            StartMission();
+        }
+    }
+    private void Initialize()
+    {
         mainChar = GameEngine.gameEngine.mainCharacter;
         menuTimer = PauseManager.pauseManager.pointsText[3];
         currencyText = PauseManager.pauseManager.pointsText[4];
         missionStartText = PauseManager.pauseManager.pointsText[5];
-        mainChar.controlType = CharacterObject.ControlType.OBJECT;
-
+    }
+    private IEnumerator MissionStart()
+    {
         missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
         missionStartText.text = missionStart;
-
-        mainChar.QuickChangeForm(4);
-        yield return new WaitForSeconds(missionStartSeconds/2);
+        mainChar.controlType = CharacterObject.ControlType.OBJECT;
+        yield return new WaitForSeconds(missionStartSeconds / 2);
         mainChar.SetState(37);
 
-        yield return new WaitForSeconds(missionStartSeconds/2);
+        yield return new WaitForSeconds(missionStartSeconds / 2);
         missionStartText.DOColor(Color.white, missionStartSeconds / 4);
         missionStartText.rectTransform.DOAnchorPos(midScreen, missionStartSeconds / 4);
-        yield return new WaitForSeconds(missionStartSeconds/2);
+        yield return new WaitForSeconds(missionStartSeconds / 2);
         missionStartText.transform.DOScale(8, .25f);
         missionStartText.DOColor(Color.clear, 0.25f);
 
         mainChar.controlType = CharacterObject.ControlType.PLAYER;
         BeginTimer();
         MusicManager.instance.StartBGM(stageTheme);
+    }
+
+    public void HumanForm()
+    {
+        mainChar.QuickChangeForm(4);
+        mainChar.controlType = CharacterObject.ControlType.OBJECT;
     }
     public void StartMission()
     {
@@ -142,6 +152,7 @@ public class Mission : MonoBehaviour
     {
         retryTaken--;
         retryCount++;
+        isReload = true;
     }
     public void OnMissionPoint(int point) 
     {
