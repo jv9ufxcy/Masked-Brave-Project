@@ -14,10 +14,10 @@ public class BulletHit : MonoBehaviour
     public Vector2 direction;
     public CharacterObject target;
     public EnemySpawn closestEnemy;
-    public Vector3 targetPos, moveDirection;
+    public Vector3 targetPos, velocity;
     [SerializeField] private GameObject bulletHitEffect, bulletChild;
     [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
-    [SerializeField] private float lifeTime = 2f, speed, gravity=-2f, targetRange=10f;
+    public float lifeTime = 2f, speed, rotation, gravity=-2f, targetRange=10f;
     [SerializeField] private int attackState = 0;
     [SerializeField] private LayerMask whatLayersToHit;
 
@@ -35,6 +35,7 @@ public class BulletHit : MonoBehaviour
         if (bulletType==4)
         {
             thisBullet = GetComponent<CharacterObject>();
+            thisBullet.FaceDir(direction.x);
         }
     }
     void Start()
@@ -43,24 +44,29 @@ public class BulletHit : MonoBehaviour
         {
             target = GameEngine.gameEngine.mainCharacter;
             targetPos = target.transform.position;
-            moveDirection = (targetPos - transform.position).normalized * speed;
+            velocity = (targetPos - transform.position).normalized * speed;
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, rotation);
         }
         if (parabolicArc)
         {
             thisBullet.Jump(1);
         }
     }
-    private void Update()
+    private void FixedUpdate()
     {
         switch (bulletType)
         {
             case 0://fly straight
+                transform.Translate(velocity * speed * Time.fixedDeltaTime);
                 break;
             case 1://home in
                 transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed);
                 break;
             case 2://fly firectly at target
-                transform.Translate(moveDirection* Time.deltaTime);
+                transform.Translate(velocity * Time.fixedDeltaTime);
                 break;
             case 3://home in on closest enemy
                 closestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetRange);
@@ -68,14 +74,14 @@ public class BulletHit : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
                 break;
             case 4: //follow ground
-               
-                thisBullet.FrontVelocity(speed*transform.localScale.x);
+
+                thisBullet.FrontVelocity( speed * transform.localScale.x);
                 break;
         }
         //Countdown to lifetime
         if (lifeTime > 0)
         {
-            lifeTime -= Time.deltaTime;
+            lifeTime -= Time.fixedDeltaTime;
         }
         else if (lifeTime <= 0)
         {
@@ -93,7 +99,7 @@ public class BulletHit : MonoBehaviour
             if (canReflect)
             {
                 Vector2 wallNormal = collision.contacts[0].normal;
-                moveDirection = Vector2.Reflect(moveDirection, wallNormal).normalized;
+                velocity = Vector2.Reflect(velocity, wallNormal).normalized;
             }
         }
     }
@@ -139,19 +145,19 @@ public class BulletHit : MonoBehaviour
             Destroy(gameObject, destroyTimer);
         }
     }
-    public void FireBullet(float bulletSpeed, float offsetX, float offsetY, int newBulletChain)
-    {
-        var offset = new Vector3(offsetX * direction.x, offsetY, 0);
-        GameObject newbulletGO = Instantiate(bulletChild , transform.position + offset, Quaternion.identity);
-        BulletHit bulletHit = newbulletGO.GetComponent<BulletHit>();
-        bulletHit.character = character;
-        bulletHit.direction.x = direction.x;
-        newbulletGO.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction.x, 0);
-        newbulletGO.transform.localScale = new Vector3(direction.x, 1, 1);
+    //public void FireBullet(float bulletSpeed, float offsetX, float offsetY, int newBulletChain)
+    //{
+    //    var offset = new Vector3(offsetX * direction.x, offsetY, 0);
+    //    GameObject newbulletGO = Instantiate(bulletChild , transform.position + offset, Quaternion.identity);
+    //    BulletHit bulletHit = newbulletGO.GetComponent<BulletHit>();
+    //    bulletHit.character = character;
+    //    bulletHit.direction.x = direction.x;
+    //    newbulletGO.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction.x, 0);
+    //    newbulletGO.transform.localScale = new Vector3(direction.x, 1, 1);
 
-        bulletHit.bulletChain = newBulletChain;
-        bulletHit.attackIndex++;
-    }
+    //    bulletHit.bulletChain = newBulletChain;
+    //    bulletHit.attackIndex++;
+    //}
     public void ReverseForce()
     {
         if (canReflect)

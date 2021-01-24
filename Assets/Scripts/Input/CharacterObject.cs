@@ -948,11 +948,13 @@ public class CharacterObject : MonoBehaviour
         shootAnim = shootAnimMax;
         var offset = new Vector3(offsetX * direction, offsetY, 0);
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position + offset, Quaternion.identity);
-        newbullet.GetComponent<BulletHit>().character = characterObject;
-        newbullet.GetComponent<BulletHit>().direction.x = direction;
-        newbullet.GetComponent<BulletHit>().attackIndex = (int)attackIndex;
+        BulletHit bullet = newbullet.GetComponent<BulletHit>();
+        bullet.character = characterObject;
+        bullet.direction.x = direction;
+        bullet.velocity.x = direction;
+        bullet.attackIndex = (int)attackIndex;
+        bullet.speed = bulletSpeed;
         //newbullet.GetComponent<Hitbox>().character = characterObject;
-        newbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction, 0);
         newbullet.transform.localScale = new Vector3(direction, 1, 1);
     }
     public void SpecialFireCheck(float bulletType)
@@ -1583,5 +1585,14 @@ public class CharacterObject : MonoBehaviour
         Vector3 tarOffset = (tarPos - transform.position);
         direction = Mathf.Sign(tarOffset.x);
         transform.localScale = new Vector3(direction, 1f, 1f);
+    }
+    public void FaceDir(float dir)
+    {
+        direction = Mathf.Sign(dir);
+        transform.localScale = new Vector3(direction, 1f, 1f);
+    }
+    public void FacePlayer()
+    {
+        FaceTarget(GameEngine.gameEngine.mainCharacter.transform.position);
     }
 }
