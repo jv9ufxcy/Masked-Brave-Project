@@ -365,7 +365,7 @@ public class CharacterObject : MonoBehaviour
                 AirMove(_params[0].val);
                 break;
             case 10:
-                FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val);
+                FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, 0);
                 break;
             case 11:
                 Dash(_params[0].val);
@@ -383,7 +383,7 @@ public class CharacterObject : MonoBehaviour
                 SpawnTurret(_params[0].val);
                 break;
             case 16:
-                TargetAttack(_params[0].val, _params[1].val);
+                FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, _params[5].val);
                 break;
             case 17:
                 QuickChangeForm((int)_params[0].val);
@@ -943,7 +943,7 @@ public class CharacterObject : MonoBehaviour
         }
     }
 
-    public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY, float attackIndex)
+    public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY, float attackIndex, float bulletRot)
     {
         shootAnim = shootAnimMax;
         var offset = new Vector3(offsetX * direction, offsetY, 0);
@@ -954,6 +954,7 @@ public class CharacterObject : MonoBehaviour
         bullet.velocity.x = direction;
         bullet.attackIndex = (int)attackIndex;
         bullet.speed = bulletSpeed;
+        bullet.rotation = bulletRot*direction;
         //newbullet.GetComponent<Hitbox>().character = characterObject;
         newbullet.transform.localScale = new Vector3(direction, 1, 1);
     }

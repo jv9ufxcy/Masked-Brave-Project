@@ -3298,6 +3298,23 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
+    - start: 20
+      end: 20
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 8
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: -30
     - start: 0
       end: 0
       active: 1
@@ -4363,12 +4380,20 @@ MonoBehaviour:
     - name: turretIndex
       val: 3
   - index: 0
-    name: TargetAttack
+    name: AngledBullet
     parameters:
+    - name: Index
+      val: 0
     - name: Speed
-      val: 5
-    - name: Range
       val: 10
+    - name: PosX
+      val: 1
+    - name: PosY
+      val: 1
+    - name: AttackIndex
+      val: 0
+    - name: Rotation
+      val: 0
   - index: 0
     name: Henshin
     parameters:
@@ -5817,4 +5842,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 1
+  currentMovelistIndex: 2
