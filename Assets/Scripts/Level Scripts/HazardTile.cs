@@ -9,10 +9,10 @@ public class HazardTile : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        CharacterObject victim = collision.transform.root.GetComponent<CharacterObject>();
+        IHittable victim = collision.transform.root.GetComponent<IHittable>();
         if (victim != null)
         {
-            victim.GetHit(character, projectileIndex,0);
+            victim.Hit(character, projectileIndex,0);
         }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 249713908}
   - component: {fileID: 249713910}
   - component: {fileID: 249713909}
-  m_Layer: 9
+  m_Layer: 17
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,8 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: -1411348221
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1362058913294850930, guid: b568f74881ba6c74fb94fa2b149e833a,
-    type: 3}
+  m_Sprite: {fileID: 729403007213506071, guid: a58a1895b92e6fc4c989ed49d238c8bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -93,7 +92,7 @@ Animator:
   m_GameObject: {fileID: 249713907}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a9a6a1c5ee4ca844eaddf0de2f9d7e85, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -111,7 +110,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 441265606}
-  m_Layer: 9
+  - component: {fileID: 774779604019293018}
+  m_Layer: 17
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,6 +134,32 @@ Transform:
   m_Father: {fileID: 1580854466}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &774779604019293018
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441265605}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 20, y: 20}
+    newSize: {x: 7, y: 7}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1345034098
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1345034099}
-  m_Layer: 9
+  m_Layer: 17
   m_Name: GroundDetect
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -173,12 +199,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1580854466}
-  - component: {fileID: 6796047483693398246}
+  - component: {fileID: 2208960329544843072}
   - component: {fileID: 5808954520956565907}
   - component: {fileID: 7131327210722087137}
   - component: {fileID: 2225795552688392928}
-  m_Layer: 8
-  m_Name: JustACrate
+  - component: {fileID: 8715402425323364913}
+  m_Layer: 14
+  m_Name: SlimeMyube
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,7 +226,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6796047483693398246
+--- !u!114 &2208960329544843072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,9 +251,9 @@ MonoBehaviour:
   defaultMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   hitAudio: TakeDamage
-  movementSpeed: 15
-  maxHealth: 1
-  currentHealth: 0
+  movementSpeed: 5
+  maxHealth: 3
+  currentHealth: 3
   audioManager: {fileID: 0}
   whatCountsAsGround:
     serializedVersion: 2
@@ -251,18 +278,18 @@ MonoBehaviour:
   effectIndex: 0
   numOfPickups: 1
   deathCoroutineStarted: 0
-  shouldSpawnHealth: 1
-  isDestructable: 1
+  shouldSpawnHealth: 0
+  isDestructable: 0
   pickup:
   - {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f, type: 3}
   - {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c, type: 3}
-  deathEffect: {fileID: 7459617967329291029, guid: 1e91b6f05126c0b4f976e296a76167f2,
+  deathEffect: {fileID: 7459617967329291029, guid: a27062d9c47b0e34b9afb6942de1ffab,
     type: 3}
   IsDead: 0
   IsSpawned: 0
   defaultLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 16384
   hiddenLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -276,7 +303,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -290,7 +317,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &7131327210722087137
 Rigidbody2D:
@@ -335,6 +362,24 @@ MonoBehaviour:
   collider: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}
+--- !u!114 &8715402425323364913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580854460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41d04ca21236e843b9576f2042071fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpPow: 1.25
+  lifeTime: 0
+  isDestructible: 1
+  aerialOnly: 1
+  charaSpawn: {fileID: 0}
+  objType: 1
 --- !u!1 &1587091123
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +391,7 @@ GameObject:
   - component: {fileID: 1587091124}
   - component: {fileID: 1587091126}
   - component: {fileID: 1587091125}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: LandingParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +406,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587091123}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1855242748}
@@ -5121,8 +5166,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1480257295
-  m_SortingLayer: 5
+  m_SortingLayerID: -2027092311
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -5156,7 +5201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1715182401}
-  m_Layer: 9
+  m_Layer: 17
   m_Name: Offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5187,7 +5232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1855242748}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5220,7 +5265,7 @@ GameObject:
   - component: {fileID: 1993314661}
   - component: {fileID: 1993314659}
   - component: {fileID: 1993314660}
-  m_Layer: 9
+  m_Layer: 17
   m_Name: Draw
   m_TagString: Untagged
   m_Icon: {fileID: 0}

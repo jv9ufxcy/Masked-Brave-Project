@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawn : MonoBehaviour
+public class EnemySpawn : MonoBehaviour, ISpawnable
 {
     public LayerMask defaultLayer, hiddenLayer;
     private HealthManager enemyHealth;

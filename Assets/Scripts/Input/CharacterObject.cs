@@ -6,7 +6,7 @@ using DG.Tweening;
 using UnityEngine.Experimental.XR;
 using System;
 
-public class CharacterObject : MonoBehaviour
+public class CharacterObject : MonoBehaviour, IHittable
 {
     [Header("Movement")]
     public Vector2 velocity;
@@ -1168,8 +1168,8 @@ public class CharacterObject : MonoBehaviour
     [Header("Grounded Check")]
     [SerializeField]
     private LayerMask whatCountsAsGround;
-    public bool aerialFlag, wallFlag, isOnGround, isOnWall;
-    [SerializeField] private float aerialTimer, groundDetectHeight, wallDetectWidth, animAerialState, animFallSpeed;
+    [HideInInspector] public bool aerialFlag, wallFlag, isOnGround, isOnWall;
+    public float aerialTimer, groundDetectHeight, wallDetectWidth, animAerialState, animFallSpeed;
 
     public int jumps, jumpMax = 1;
     public int dashes, dashMax = 1;
@@ -1331,7 +1331,11 @@ public class CharacterObject : MonoBehaviour
             return true;
         }
     }
-    
+    public void Hit(CharacterObject attacker, int projectileIndex, int atkIndex)
+    {
+        GetHit(attacker, projectileIndex, atkIndex);
+    }
+
     public void GetHit(CharacterObject attacker, int projectileIndex, int atkIndex)
     {
         AttackEvent curAtk;
@@ -1596,4 +1600,6 @@ public class CharacterObject : MonoBehaviour
     {
         FaceTarget(GameEngine.gameEngine.mainCharacter.transform.position);
     }
+
+    
 }

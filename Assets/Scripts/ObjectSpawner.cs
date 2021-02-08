@@ -5,11 +5,11 @@ using UnityEngine;
 public class ObjectSpawner : MonoBehaviour
 {
     public Transform crateContainer;
-    public EnemySpawn[] crates;
-    public List<EnemySpawn> soloCrates = new List<EnemySpawn>();
+    public ISpawnable[] crates;
+    public List<ISpawnable> soloCrates = new List<ISpawnable>();
     void Start()
     {
-        crates = crateContainer.GetComponentsInChildren<EnemySpawn>();
+        crates = crateContainer.GetComponentsInChildren<ISpawnable>();
         StartCoroutine(SetPlayerCoRoutine());
     }
     private IEnumerator SetPlayerCoRoutine()
@@ -19,7 +19,7 @@ public class ObjectSpawner : MonoBehaviour
     }
     private void SpawnCrates()
     {
-        foreach (EnemySpawn e in crates)
+        foreach (ISpawnable e in crates)
         {
             //EnemySpawn e = t.GetComponent<EnemySpawn>();
             //if (e != null)

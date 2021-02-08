@@ -63,7 +63,7 @@ public class BulletHit : MonoBehaviour
                 transform.Translate(velocity * speed * Time.fixedDeltaTime);
                 break;
             case 1://home in
-                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed);
+                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, (speed/80));
                 break;
             case 2://fly firectly at target
                 transform.Translate(velocity * Time.fixedDeltaTime);
@@ -108,9 +108,9 @@ public class BulletHit : MonoBehaviour
     {
         if (other.CompareTag(tagToHit)&&other.gameObject!=character.gameObject)
         {
-            CharacterObject victim = other.transform.root.GetComponent<CharacterObject>();
+            IHittable victim = other.transform.root.GetComponent<IHittable>();
             if (victim != null&&projectileIndex>0)
-                victim.GetHit(character, projectileIndex, attackIndex);
+                victim.Hit(character, projectileIndex, attackIndex);
 
             if (shouldScreenshakeOnHit)
                 Screenshake();

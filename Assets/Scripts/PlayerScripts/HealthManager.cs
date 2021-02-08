@@ -549,9 +549,6 @@ public class HealthManager : MonoBehaviour
                 SpawnPickup(healthPickup);
             }
         }
-        
-        
-
         rend.color = Color.clear;
 
         switch (character.controlType)

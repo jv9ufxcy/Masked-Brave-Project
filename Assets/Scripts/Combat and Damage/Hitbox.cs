@@ -32,11 +32,11 @@ public class Hitbox : MonoBehaviour
         {
             if (character.hitActive > 0 && !enemies.Contains(collision))
             {
-                CharacterObject victim = collision.transform.root.GetComponent<CharacterObject>();
+                IHittable victim = collision.transform.root.GetComponent<IHittable>();
                 if (victim != null)
                 {
                     enemies.Add(collision);
-                    victim.GetHit(character, projectileIndex,0);
+                    victim.Hit(character, projectileIndex,0);
                 }
                 if (collision.gameObject.CompareTag("Shootable"))
                 {
@@ -50,11 +50,11 @@ public class Hitbox : MonoBehaviour
         {
             if (!enemies.Contains(collision))
             {
-                CharacterObject victim = collision.transform.root.GetComponent<CharacterObject>();
+                IHittable victim = collision.transform.root.GetComponent<IHittable>();
                 if (victim != null)
                 {
                     enemies.Add(collision);
-                    victim.GetHit(character, projectileIndex,0);
+                    victim.Hit(character, projectileIndex,0);
                 }
                 if (collision.gameObject.CompareTag("Shootable"))
                 {
