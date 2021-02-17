@@ -4933,7 +4933,7 @@ MonoBehaviour:
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
-  moveDirection: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 7459617967329291029, guid: 9b11ea7cb69bebf4796d5dcbbb673808,
     type: 3}
   bulletChild: {fileID: 0}
@@ -4941,6 +4941,7 @@ MonoBehaviour:
   tagToCollide: Ground
   lifeTime: 1
   speed: 1
+  rotation: 0
   gravity: -2
   targetRange: 10
   attackState: 33
@@ -5044,6 +5045,8 @@ MonoBehaviour:
   menuDelay: 12
   henshinInput: 2
   dashInput: 4
+  headColl: {fileID: 0}
+  crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
   dashLength: 0.45
@@ -5062,6 +5065,8 @@ MonoBehaviour:
   animFallSpeed: 0
   jumps: 0
   jumpMax: 1
+  dashes: 0
+  dashMax: 1
   coyoteTimer: 3
   dashCooldown: 0
   dashCooldownRate: 1
@@ -5078,6 +5083,7 @@ MonoBehaviour:
   - TakeDamage
   - TakeDamage
   hitStunStateIndex: 7
+  deathStateIndex: 36
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}

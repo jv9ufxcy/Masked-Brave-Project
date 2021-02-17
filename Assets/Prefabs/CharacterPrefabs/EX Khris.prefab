@@ -29264,6 +29264,8 @@ MonoBehaviour:
   menuDelay: 12
   henshinInput: 2
   dashInput: 4
+  headColl: {fileID: 0}
+  crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
   dashLength: 0.45
@@ -29282,6 +29284,8 @@ MonoBehaviour:
   animFallSpeed: 0
   jumps: 0
   jumpMax: 1
+  dashes: 0
+  dashMax: 1
   coyoteTimer: 3
   dashCooldown: 0
   dashCooldownRate: 1
@@ -29298,6 +29302,7 @@ MonoBehaviour:
   - TakeDamage
   - TakeDamage
   hitStunStateIndex: 7
+  deathStateIndex: 36
   hitStun: 0
   target: {fileID: 0}
   turret: {fileID: 0}
