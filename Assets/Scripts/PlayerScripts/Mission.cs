@@ -78,7 +78,7 @@ public class Mission : MonoBehaviour
         missionStartText.text = missionStart;
         mainChar.controlType = CharacterObject.ControlType.OBJECT;
         yield return new WaitForSeconds(missionStartSeconds / 2);
-        mainChar.SetState(37);
+        mainChar.StartStateFromScript(37);
 
         yield return new WaitForSeconds(missionStartSeconds / 2);
         missionStartText.DOColor(Color.white, missionStartSeconds / 4);

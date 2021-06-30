@@ -341,6 +341,15 @@ MonoBehaviour:
       parameters:
       - name: RiderPunch
         val: 0
+    - start: 35
+      end: 35
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0.5
     attacks:
     - start: 35
       length: 15
@@ -852,6 +861,15 @@ MonoBehaviour:
       parameters:
       - name: SwordSlam
         val: 0
+    - start: 5
+      end: 5
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0.2
     attacks:
     - start: 10
       length: 10
@@ -893,6 +911,15 @@ MonoBehaviour:
       parameters:
       - name: TakeDamage
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0.5
     attacks:
     - start: 5
       length: 15
@@ -1184,6 +1211,15 @@ MonoBehaviour:
       parameters:
       - name: CriticalBuster
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0.2
     attacks:
     - start: 0
       length: 5
@@ -2399,6 +2435,15 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 8
+    - start: 0
+      end: 0
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0.5
     attacks:
     - start: 5
       length: 5
@@ -2666,11 +2711,11 @@ MonoBehaviour:
     attacks:
     - start: 5
       length: 20
-      hitStun: 20
+      hitStun: 25
       hitStop: 5
       damage: 2
       meterGain: 4
-      comboValue: 2
+      comboValue: 3
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
@@ -2714,11 +2759,11 @@ MonoBehaviour:
     attacks:
     - start: 10
       length: 5
-      hitStun: 10
+      hitStun: 20
       hitStop: 5
       damage: 2
       meterGain: 2
-      comboValue: 3
+      comboValue: 4
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 0, y: 1}
@@ -2728,11 +2773,11 @@ MonoBehaviour:
       cancelWindow: 0
     - start: 20
       length: 5
-      hitStun: 10
+      hitStun: 20
       hitStop: 5
       damage: 3
       meterGain: 4
-      comboValue: 4
+      comboValue: 5
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: -1, y: 1}
@@ -4160,33 +4205,33 @@ MonoBehaviour:
     wallReq: 0
   - stateName: Roy/DragonPunch
     index: 0
-    length: 50
+    length: 70
     loop: 0
     blendRate: 0.1
     events:
-    - start: 5
-      end: 15
+    - start: 25
+      end: 35
       active: 1
       script: 0
       parameters:
       - name: 
         val: 20
-    - start: 0
-      end: 10
+    - start: 20
+      end: 30
       active: 1
       script: 1
       parameters:
       - name: 
         val: 8
-    - start: 0
-      end: 0
+    - start: 20
+      end: 20
       active: 1
       script: 14
       parameters:
       - name: PunchWoosh
         val: 10
-    - start: 14
-      end: 14
+    - start: 34
+      end: 34
       active: 1
       script: 10
       parameters:
@@ -4200,8 +4245,15 @@ MonoBehaviour:
         val: -0.5
       - name: 
         val: 0
-    attacks:
     - start: 0
+      end: 10.463918
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 4
+    attacks:
+    - start: 20
       length: 10
       hitStun: 20
       hitStop: 5
@@ -4399,6 +4451,13 @@ MonoBehaviour:
     parameters:
     - name: Form Index
       val: 0
+  - index: 0
+    name: ScreenShake
+    parameters:
+    - name: Amplitude
+      val: 1
+    - name: Time
+      val: 0.2
   moveLists:
   - name: Brave
     commandStates:
@@ -5838,7 +5897,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0

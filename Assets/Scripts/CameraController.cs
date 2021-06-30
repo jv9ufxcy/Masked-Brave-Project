@@ -1,31 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraController : MonoBehaviour {
+    
     [SerializeField]
     Transform objectToFollow;
 
-    [SerializeField]
-    float xOffset;
-    [SerializeField]
-    float yOffset;
-    [SerializeField]
-    private float cameraFollowSpeed;
-
-    float zOffset;
+    CinemachineVirtualCamera vCam;
+    CinemachineConfiner confiner;
+    [SerializeField] private Collider2D[] boundingBoxes;
 
     // Use this for initialization
     void Start ()
     {
-        zOffset = -10;
+        vCam = GetComponent<CinemachineVirtualCamera>();
+        confiner = GetComponent<CinemachineConfiner>();
 	}
 	
-	// Update is called once per frame
-	void Update ()
+    public void ChangeConfiner(int index)
     {
-        Vector3 newPosition = new Vector3(objectToFollow.position.x + xOffset,
-            objectToFollow.position.y + yOffset, zOffset);
-        transform.position = Vector3.Lerp(transform.position, newPosition, cameraFollowSpeed*Time.deltaTime);
-	}
+        confiner.InvalidatePathCache();
+        confiner.m_BoundingShape2D = boundingBoxes[index];
+    }
 }

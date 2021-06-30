@@ -50,7 +50,8 @@ public class CharacterState
         if (character.specialMeter < meterReq) { return false; }
         else { character.nextSpecialMeterUse = meterReq; }
 
-        //else { character.jumps--; }
+        //if (!playerSkills.IsSkillUnlocked(stateName){ return false; }
+
         return true;
     }
 }

@@ -42,7 +42,9 @@ public class JumpPad : MonoBehaviour
         {
             if ((aerialOnly && chara.aerialFlag) || !aerialOnly)
             {
+                chara.jumps++;
                 chara.Jump(jumpPow);
+                chara.canCancel = true;
                 switch (objType)
                 {
                     case ObjectType.LEVEL:
@@ -66,7 +68,9 @@ public class JumpPad : MonoBehaviour
         {
             if ((aerialOnly && chara.aerialFlag) || !aerialOnly)
             {
+                chara.jumps++;
                 chara.Jump(jumpPow);
+                chara.canCancel=true;
                 switch (objType)
                 {
                     case ObjectType.LEVEL:

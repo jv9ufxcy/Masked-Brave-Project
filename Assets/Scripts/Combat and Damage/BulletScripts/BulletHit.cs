@@ -71,7 +71,7 @@ public class BulletHit : MonoBehaviour
             case 3://home in on closest enemy
                 closestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetRange);
                 if (closestEnemy!=null)
-                    transform.position = Vector2.MoveTowards(transform.position, closestEnemy.transform.position, speed);
+                    transform.position = closestEnemy.transform.position;
                 break;
             case 4: //follow ground
 
@@ -104,6 +104,7 @@ public class BulletHit : MonoBehaviour
         }
     }
     public int projectileIndex, attackIndex = 0;
+    public float shakeAmp = 1f, shakeTime = .2f;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(tagToHit)&&other.gameObject!=character.gameObject)
@@ -113,7 +114,7 @@ public class BulletHit : MonoBehaviour
                 victim.Hit(character, projectileIndex, attackIndex);
 
             if (shouldScreenshakeOnHit)
-                Screenshake();
+                Screenshake(shakeAmp,shakeTime);
             if (shouldStopOnHit)
             {
                 OnDestroyGO();
@@ -175,8 +176,8 @@ public class BulletHit : MonoBehaviour
         if (bulletRB!=null)
             bulletRB.velocity = Vector2.zero;
     }
-    private static void Screenshake()
+    private void Screenshake(float amp, float time)
     {
-        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+        CinemachineShake.instance.ShakeCamera(amp, time);
     }
 }

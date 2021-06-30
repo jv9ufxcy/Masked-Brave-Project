@@ -388,12 +388,11 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 17:
                 QuickChangeForm((int)_params[0].val);
                 break;
+            case 18:
+                Screenshake(_params[0].val, _params[1].val);
+                break;
 
         }
-    }
-    public void SetState(int stateIndex)
-    {
-        StartState(stateIndex);
     }
     public void DOChangeMovelist(int index)
     {
@@ -740,7 +739,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 {
                     if (shotPressure > maxShotPressure)
                     {
-                        StartState(chargeAttackIndex);
+                        StartStateFromScript(chargeAttackIndex);
                     }
                     firstCharge = false; secondCharge = false;
                     foreach (ParticleSystem p in primaryGunParticles)
@@ -803,13 +802,13 @@ public class CharacterObject : MonoBehaviour, IHittable
                 {
                     if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
                     {
-                        StartState(shotgunIndex);
+                        StartStateFromScript(shotgunIndex);
                         shotPressure = 0f;
                         firstCharge = false; secondCharge = false;
                     }
                     else if (shotPressure >= maxShotPressure)
                     {
-                        StartState(missileIndex);
+                        StartStateFromScript(missileIndex);
                         shotPressure = 0f;
                         firstCharge = false; secondCharge = false;
                     }
@@ -974,11 +973,11 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public void BusterShooting()
     {
-        StartState(chargeShotIndex);
+        StartStateFromScript(chargeShotIndex);
     }
     public void CriticalBusterShooting()
     {
-        StartState(critBusterIndex);
+        StartStateFromScript(critBusterIndex);
     }
     public void ColorCharge()
     {
@@ -1063,9 +1062,9 @@ public class CharacterObject : MonoBehaviour, IHittable
         if (Input.GetButtonDown(GameEngine.coreData.rawInputs[8].name))
             PauseManager.pauseManager.PauseButtonPressed();
     }
-    private static void Screenshake()
+    private void Screenshake(float amp, float time)
     {
-        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+        CinemachineShake.instance.ShakeCamera(amp, time);
     }
     void JumpCut()
     {
@@ -1076,7 +1075,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             {
                 VelocityY(-2);
                 if (IsGrounded())
-                    StartState(0);
+                    StartStateFromScript(0);
             }
         }
     }
@@ -1109,12 +1108,12 @@ public class CharacterObject : MonoBehaviour, IHittable
             {
                 if (!CanUnCrouch())//ceiling collision
                 {
-                    StartState(currentState);
+                    StartStateFromScript(currentState);
                 }
                 else
                 {
                     dashCooldown = 0;
-                    StartState(0);
+                    StartStateFromScript(0);
                     UnCrouch();
                 }
             }
@@ -1351,7 +1350,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f)
         {
             //parry sound
-            StartState(defStateIndex);
+            StartStateFromScript(defStateIndex);
             dashCooldown = 0;
             FaceTarget(target.transform.position);
             if (projectileIndex == 0) attacker.FrontVelocity(-10f);
@@ -1523,7 +1522,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, moveSpeed);
                         break;
                     case 2:
-                        StartState(rangedAttackState[0]);
+                        StartStateFromScript(rangedAttackState[0]);
                         break;
                 }
             }
@@ -1535,12 +1534,12 @@ public class CharacterObject : MonoBehaviour, IHittable
                 if (isLongRange && rangedAttackState.Length > 0)
                 {
                     int randNum = UnityEngine.Random.Range(0, rangedAttackState.Length);
-                    StartState(rangedAttackState[randNum]);
+                    StartStateFromScript(rangedAttackState[randNum]);
                 }
                 if (isShortRange && closeAttackState.Length > 0)
                 {
                     int randNum = UnityEngine.Random.Range(0, closeAttackState.Length);
-                    StartState(closeAttackState[randNum]);
+                    StartStateFromScript(closeAttackState[randNum]);
                 }
             }
         }
@@ -1553,33 +1552,34 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         closeAttackState = desperationCAStates;
         rangedAttackState = desperationRAStates;
-        StartState(desperationTransitionState);
+        StartStateFromScript(desperationTransitionState);
         dashCooldown += 100;
         attackCooldown *= 0.5f;
     }
     public void OnDeath()
     {
-        StartState(deathStateIndex);
+        StartStateFromScript(deathStateIndex);
         controlType = ControlType.DEAD;
         invulCooldown = 0f;
         spriteRend.color = Color.white;
         spriteRend.material = defaultMat;
+        Screenshake(2, .4f);
         SetVelocity(Vector2.zero);
     }
     public void OnEnemySpawn()
     {
         controlType = ControlType.AI;
-        StartState(0);
+        StartStateFromScript(0);
     }
     public void OnObjectSpawn()
     {
         controlType = ControlType.OBJECT;
-        StartState(0);
+        StartStateFromScript(0);
     }
     public void OnBossSpawn()
     {
         controlType = ControlType.BOSS;
-        StartState(0);
+        StartStateFromScript(0);
     }
     void FindTarget()
     {

@@ -348,9 +348,10 @@ public class Kinzecter : MonoBehaviour
             kState = ThrowingState.Recalling;
         }
     }
-    private static void Screenshake()
+    public float shakeAmp = 1f, shakeTime = .2f;
+    private void Screenshake(float amp, float time)
     {
-        Camera.main.transform.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+        CinemachineShake.instance.ShakeCamera(amp, time);
     }
 
     private void SpendStamina(float _val)
