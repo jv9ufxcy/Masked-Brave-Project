@@ -44,7 +44,7 @@ public class PickupRecoveryItem : MonoBehaviour
             Destroy(transform.root.gameObject);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         playerHP = collision.gameObject.GetComponent<HealthManager>();
         player = collision.gameObject.GetComponent<CharacterObject>();
@@ -62,8 +62,8 @@ public class PickupRecoveryItem : MonoBehaviour
             {
                 Mission.instance.ChangeCurrency(currencyToGive);
             }
-            GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
             audioManager.PlaySound(pickupSound);
+            GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
             Destroy(transform.root.gameObject);
         }
     }

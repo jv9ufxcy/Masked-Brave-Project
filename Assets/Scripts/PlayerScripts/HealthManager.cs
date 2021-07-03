@@ -611,5 +611,6 @@ public class HealthManager : MonoBehaviour
         Vector2 offsetDir = new Vector2(randNumX, randNumY);
         GameObject effect = Instantiate(pickup, transform.position, transform.rotation);
         effect.GetComponentInChildren<Rigidbody2D>().AddForce(offsetDir,ForceMode2D.Impulse);
+        effect.transform.SetParent(null);
     }
 }

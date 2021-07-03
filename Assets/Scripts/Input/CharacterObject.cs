@@ -9,7 +9,7 @@ using System;
 public class CharacterObject : MonoBehaviour, IHittable
 {
     [Header("Movement")]
-    public Vector2 velocity;
+    [HideInInspector]public Vector2 velocity;
 
     public float gravity = -0.01f, gravityMin = -17f;
     public float aniMoveSpeed;
@@ -17,18 +17,18 @@ public class CharacterObject : MonoBehaviour, IHittable
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
     [SerializeField] private float direction = 1;
 
-    public Rigidbody2D myRB;
+    [HideInInspector] public Rigidbody2D myRB;
     [HideInInspector] public BoxCollider2D boxCollider2D;
     [HideInInspector] public Controller2D controller;
     public RadialMenuController henshin;
-    public AfterImagePool[] afterImage;
+    [HideInInspector] public AfterImagePool[] afterImage;
     [HideInInspector] public HealthManager healthManager;
     [HideInInspector] public AudioManager audioManager;
 
     [Header("CurrentState")]
-    public int currentState;
-    public float currentStateTime;
-    public float prevStateTime;
+    [HideInInspector] public int currentState;
+    [HideInInspector] public float currentStateTime;
+    [HideInInspector] public float prevStateTime;
 
     [Header("CharacterModel")]
     public CharacterObject characterObject;
@@ -36,7 +36,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public GameObject draw;
     public Animator characterAnim;
     public RuntimeAnimatorController[] formAnims;
-    public SpriteRenderer spriteRend;
+    [HideInInspector] public SpriteRenderer spriteRend;
     public Material defaultMat, whiteMat;
     private Color flashColor = new Color ( 0,0.5f,0.75f,1f);
     public GameObject kinzecter;
@@ -45,9 +45,9 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     [Header("HitCancel")]
     public Hitbox hitbox;
-    public bool canCancel;
-    public bool isHit;
-    public int hitConfirm;
+    [HideInInspector] public bool canCancel;
+    [HideInInspector] public bool isHit;
+    [HideInInspector] public int hitConfirm;
 
     public InputBuffer inputBuffer = new InputBuffer();
 
@@ -63,7 +63,12 @@ public class CharacterObject : MonoBehaviour, IHittable
     void Start()
     {
         defaultMat = spriteRend.material;
-
+        if (lineRend!=null)
+        {
+            lineRend.transform.SetParent(null);
+            lineRend.transform.position = Vector3.zero;
+            lineRend.enabled = false;
+        }
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
@@ -282,8 +287,8 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
     }
     [Header("CurrentAttack")]
-    public float hitActive;
-    public int currentAttackIndex;
+    [HideInInspector] public float hitActive;
+    [HideInInspector] public int currentAttackIndex;
     void UpdateStateAttacks()
     {
         int _cur = 0;
@@ -391,7 +396,41 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 18:
                 Screenshake(_params[0].val, _params[1].val);
                 break;
+            case 19:
+                GrappleActions((int)_params[0].val, (int)_params[1].val);
+                break;
+            case 20:
+                AirLoop();
+                break;
 
+        }
+    }
+    public void AirLoop()
+    {
+        if (aerialFlag)
+        {
+            currentStateTime = prevStateTime;
+            animSpeed = 0;
+        }
+    }
+    public void GrappleActions(int actIndex, int impactState)
+    {
+        switch (actIndex)
+        {
+            case 0:
+                lineRend.enabled = true;
+                grappleVictim.Grappled();
+                lineRend.SetPosition(0, transform.position);
+                lineRend.SetPosition(1, grappleVictim.transform.position);
+                break;
+            case 1:
+                lineRend.enabled = false;
+                grappleVictim.GetHit(this, impactState, 0);
+                break;
+            case 2:
+                lineRend.enabled = false;
+                grappleVictim = null;
+                break;
         }
     }
     public void DOChangeMovelist(int index)
@@ -1330,11 +1369,20 @@ public class CharacterObject : MonoBehaviour, IHittable
             return true;
         }
     }
+    public static float grappleDampen = 20f;
+    public LineRenderer lineRend;
+    public void Grappled()
+    {
+        hitStun = 4;
+        Vector3 followVel = (grappleTarget.position - transform.position) * grappleDampen;
+        SetVelocity(followVel);
+    }
     public void Hit(CharacterObject attacker, int projectileIndex, int atkIndex)
     {
         GetHit(attacker, projectileIndex, atkIndex);
     }
-
+    public CharacterObject grappleVictim;
+    public Transform grapplePoint, grappleTarget;
     public void GetHit(CharacterObject attacker, int projectileIndex, int atkIndex)
     {
         AttackEvent curAtk;
@@ -1346,7 +1394,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[atkIndex];
         }
-
+        
         if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f)
         {
             //parry sound
@@ -1387,10 +1435,16 @@ public class CharacterObject : MonoBehaviour, IHittable
 
                         hitStun = curAtk.hitStun;
                         StartState(hitStunStateIndex);
+                    if (curAtk.attackType == 10&&controlType!= ControlType.OBJECT)
+                    {
+                        Debug.Log("Gripped");
+                        grappleTarget = attacker.grapplePoint;
+                        attacker.grappleVictim = this;
+                        attacker.StartStateFromScript((int)curAtk.hitAnim.x);
+                    }
                     }
 
                     GameEngine.SetHitPause(curAtk.hitStop);
-
                     attacker.hitConfirm += 1;
                     attacker.BuildMeter(curAtk.meterGain);
                     switch (controlType)//damage calc
