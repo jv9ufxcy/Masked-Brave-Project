@@ -77,6 +77,19 @@ public class BulletHit : MonoBehaviour
 
                 thisBullet.FrontVelocity( speed * transform.localScale.x);
                 break;
+            case 5:
+                if (boomerangStartTime > 0)
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, rotation);
+                    boomerangStartTime--;
+                    direction.y += ((target.transform.position.y + target.transform.position.normalized.y) - transform.position.y) * speedDampen;
+                    transform.Translate(direction * speed * Time.fixedDeltaTime);
+                }
+                else
+                { 
+                    Boomerang(); 
+                }
+                break;
         }
         //Countdown to lifetime
         if (lifeTime > 0)
@@ -120,6 +133,13 @@ public class BulletHit : MonoBehaviour
                 OnDestroyGO();
             }
         }
+        if (bulletType==5)
+        {
+            if (boomerangStartTime <=0 && other.CompareTag(tagToCollide))
+            {
+                OnDestroyGO();
+            }
+        }
     }
     private bool isDestroyed = false;
     [SerializeField] private float destroyTimer = .1f;
@@ -146,19 +166,30 @@ public class BulletHit : MonoBehaviour
             Destroy(gameObject, destroyTimer);
         }
     }
-    //public void FireBullet(float bulletSpeed, float offsetX, float offsetY, int newBulletChain)
-    //{
-    //    var offset = new Vector3(offsetX * direction.x, offsetY, 0);
-    //    GameObject newbulletGO = Instantiate(bulletChild , transform.position + offset, Quaternion.identity);
-    //    BulletHit bulletHit = newbulletGO.GetComponent<BulletHit>();
-    //    bulletHit.character = character;
-    //    bulletHit.direction.x = direction.x;
-    //    newbulletGO.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed * direction.x, 0);
-    //    newbulletGO.transform.localScale = new Vector3(direction.x, 1, 1);
-
-    //    bulletHit.bulletChain = newBulletChain;
-    //    bulletHit.attackIndex++;
-    //}
+    public float speedDampen = 0.01f, boomerangStartTime = 30f, angle, boomerSpeed = 10f/*(2 * Mathf.PI) / 1*/, radius=1f;
+    public Vector3 boomerangDist;
+    public Vector3 followVel;
+    private void Boomerang()
+    {
+        //if (Mathf.Abs(target.transform.position.x - transform.position.x)>=boomerangDist.x)
+        //{
+        //    followVel.x += (target.transform.position.x - transform.position.x) * speedDampen;
+        //    Mathf.Clamp(followVel.x, -.25f, .25f);
+        //}
+        //if (Mathf.Abs(target.transform.position.y - transform.position.y)>=boomerangDist.y)
+        //{
+        //    followVel.y += ((target.transform.position.y + target.transform.position.normalized.y) - transform.position.y ) * speedDampen;
+        //    Mathf.Clamp(followVel.y, -.25f, .25f);
+        //}
+        angle += boomerSpeed * Time.fixedDeltaTime; //if you want to switch direction, use -= instead of +=
+        followVel.x = Mathf.Cos(angle) * radius;
+        followVel.y = Mathf.Sin(angle) * radius;
+        SetVelocity(followVel);
+    }
+    private void SetVelocity(Vector3 vel)
+    {
+        transform.Translate(vel);
+    }
     public void ReverseForce()
     {
         if (canReflect)

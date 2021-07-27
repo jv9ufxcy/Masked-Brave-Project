@@ -19334,6 +19334,8 @@ MonoBehaviour:
   ammoStock: 0
   _effect: 0
   flightSound: Fly
+  shakeAmp: 1
+  shakeTime: 0.2
 --- !u!114 &3370682605297422044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19346,7 +19348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletType: 5
+  bulletType: -1
   direction: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
@@ -19376,7 +19378,16 @@ MonoBehaviour:
   thisBullet: {fileID: 0}
   projectileIndex: 0
   attackIndex: 0
+  shakeAmp: 1
+  shakeTime: 0.2
   destroyTimer: 0.1
+  speedDampen: 0.01
+  boomerangStartTime: 30
+  angle: 0
+  boomerSpeed: 1.2566371
+  radius: 5
+  boomerangDist: {x: 0, y: 0, z: 0}
+  followVel: {x: 0, y: 0, z: 0}
 --- !u!61 &1818449918886540405
 BoxCollider2D:
   m_ObjectHideFlags: 0

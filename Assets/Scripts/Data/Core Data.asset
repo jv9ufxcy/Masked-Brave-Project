@@ -3330,17 +3330,46 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: NEW STATE
+  - stateName: Shuriken
     index: 0
-    length: 60
+    length: 30
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 5
+      end: 5
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 8
+      - name: 
+        val: 8
+      - name: 
+        val: 2
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 5
+      damage: 0
+      meterGain: 2
+      comboValue: 0
+      poiseDamage: 2
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
-    dashCooldownReq: 0
+    dashCooldownReq: 120
     groundedReq: 0
     wallReq: 0
   - stateName: Enemy/SmallJumpAttack
@@ -5788,7 +5817,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000020000000300000004000000
+        followUps: 010000000200000003000000040000000500000006000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -5850,9 +5879,9 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 1
-          state: 3
+          state: 52
           inputs: 
-        followUps: 05000000
+        followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
@@ -5868,7 +5897,7 @@ MonoBehaviour:
           input: 1
           state: 11
           inputs: 
-        followUps: 06000000
+        followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
@@ -5876,7 +5905,7 @@ MonoBehaviour:
           y: 168
           width: 175
           height: 50
-        activated: 1
+        activated: 0
         priority: 0
       - idIndex: 6
         command:
@@ -5892,10 +5921,10 @@ MonoBehaviour:
           y: 171
           width: 175
           height: 50
-        activated: 1
+        activated: 0
         priority: 0
-      omitList: 0500000006000000
-      nextFollowups: 01000000020000000300000004000000
+      omitList: 
+      nextFollowups: 010000000200000003000000040000000500000006000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -5907,7 +5936,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000
+        followUps: 01000000020000000300000004000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -5965,8 +5994,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 4
+        command:
+          motionCommand: 0
+          input: 1
+          state: 52
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 295
+          y: 36
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 010000000200000003000000
+      nextFollowups: 01000000020000000300000004000000
   - name: Zoe
     commandStates:
     - stateName: Grounded
