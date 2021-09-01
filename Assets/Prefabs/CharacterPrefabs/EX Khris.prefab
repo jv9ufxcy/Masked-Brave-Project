@@ -4917,7 +4917,8 @@ SpriteRenderer:
   m_SortingLayerID: -1411348221
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 47578dec803056a4f8f9452988ca97ff, type: 3}
+  m_Sprite: {fileID: -8544823363615396180, guid: 4968ec55e1f9dff49abc83fce598464d,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4938,7 +4939,7 @@ Animator:
   m_GameObject: {fileID: 3705489587784396807}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e8b96d52fce58c54a978298aee0fff06, type: 2}
+  m_Controller: {fileID: 9100000, guid: dd8bb6b4c34fd8e48a58a8658272bdd9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -29228,7 +29229,7 @@ MonoBehaviour:
   deadzone: 0.2
   moveSpeed: 0
   airMod: 1
-  jumpPow: 24
+  jumpPow: 0
   currentCommandState: 0
   currentCommandStep: 0
   minShotPressure: 30
@@ -29257,7 +29258,7 @@ MonoBehaviour:
   shootAnimMax: 0
   fireRate: 10
   bullets:
-  - {fileID: 3152041610049941263, guid: f5373294e7ef98c48b119bffe5714008, type: 3}
+  - {fileID: 1946779624007576, guid: a3a3077bfe70242439758ebb1d4c4bc7, type: 3}
   - {fileID: 1946779624007576, guid: c5ac5e1e6106f8440a1d7e08e969103f, type: 3}
   bulletSpawnPos: {x: 1, y: 1}
   isKinzecterOut: 0
@@ -29287,7 +29288,7 @@ MonoBehaviour:
   dashes: 0
   dashMax: 1
   coyoteTimer: 3
-  dashCooldown: 0
+  dashCooldown: 60
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
@@ -29296,6 +29297,7 @@ MonoBehaviour:
   nextSpecialMeterUse: 0
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
+  lineRend: {fileID: 0}
   grappleVictim: {fileID: 0}
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
@@ -29315,20 +29317,20 @@ MonoBehaviour:
   deathStateIndex: 36
   hitStun: 0
   target: {fileID: 0}
-  turret: {fileID: 0}
+  turret: {fileID: 6476919978724093363, guid: 3500a8a785c0730438dc33c458bf9e79, type: 3}
   aggroRange: 20
-  longAttackRange: 12
+  longAttackRange: 20
   shortAttackRange: 6
-  attackCooldown: 30
+  attackCooldown: 60
   isNearPlayer: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 4300000043000000
-  rangedAttackState: 3b00000044000000
-  desperationCAStates: 3700000047000000
-  desperationRAStates: 3b0000004400000046000000
-  enemyType: 2
-  desperationTransitionState: 69
+  closeAttackState: 4800000049000000
+  rangedAttackState: 4600000049000000
+  desperationCAStates: 460000004800000049000000
+  desperationRAStates: 480000004900000046000000
+  enemyType: 0
+  desperationTransitionState: 0
   canDefend: 0
   defStateIndex: 0
   defStates: 
@@ -29347,12 +29349,12 @@ MonoBehaviour:
   UI: 2
   maxMeter: 100
   minMeter: 0
-  maxHealth: 64
+  maxHealth: 96
   currentShieldHealth: 0
   currentHealth: 0
-  desperationHealth: 64
-  maxPoise: 15
-  currentPoise: 15
+  desperationHealth: 32
+  maxPoise: 96
+  currentPoise: 96
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -29445,7 +29447,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
 --- !u!114 &6815943733452896748
 MonoBehaviour:

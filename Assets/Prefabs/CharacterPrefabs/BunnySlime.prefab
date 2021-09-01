@@ -19477,7 +19477,7 @@ MonoBehaviour:
   dashes: 0
   dashMax: 1
   coyoteTimer: 3
-  dashCooldown: 0
+  dashCooldown: 60
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
@@ -19486,6 +19486,7 @@ MonoBehaviour:
   nextSpecialMeterUse: 0
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
+  lineRend: {fileID: 0}
   grappleVictim: {fileID: 0}
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
@@ -19537,7 +19538,7 @@ MonoBehaviour:
   UI: 0
   maxMeter: 100
   minMeter: 0
-  maxHealth: 5
+  maxHealth: 6
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10

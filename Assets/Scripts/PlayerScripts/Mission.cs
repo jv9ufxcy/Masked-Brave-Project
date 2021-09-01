@@ -200,6 +200,8 @@ public class Mission : MonoBehaviour
 
     private IEnumerator MissionComplete()
     {
+        missionStartText = PauseManager.pauseManager.battleUI;
+        menuTimer = PauseManager.pauseManager.menuTimer;
         CalculateGrade();
         GameManager.instance.RestoreCheckpointStart();
         yield return new WaitForSeconds(missionStartSeconds);

@@ -38,12 +38,13 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     private void Awake()
     {
         enemyList.Add(this);
+        character = GetComponent<CharacterObject>();
+        enemyHealth = GetComponent<HealthManager>();
+        spawnPos = transform.position;
     }
     // Start is called before the first frame update
     void Start()
     {
-        character = GetComponent<CharacterObject>();
-        enemyHealth = GetComponent<HealthManager>();
         //if (defaultLayer == 0)
         //{
         //    defaultLayer = gameObject.layer;
@@ -53,7 +54,6 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
             HideCharacter();
         }
         
-        spawnPos = transform.position;
     }
 
     private void HideCharacter()

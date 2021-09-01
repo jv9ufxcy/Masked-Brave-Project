@@ -385,7 +385,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 PlayAudio(_params[0].name);
                 break;
             case 15:
-                SpawnTurret(_params[0].val);
+                SpawnTurret( new Vector2(_params[0].val, _params[1].val));
                 break;
             case 16:
                 FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, _params[5].val);
@@ -931,21 +931,41 @@ public class CharacterObject : MonoBehaviour, IHittable
             kinzecter.GetComponent<Kinzecter>().AttackClosestEnemy();
         }
     }
-
-    private void SpawnTurret(float index)
+    private List<GameObject> summons = new List<GameObject>();
+    private void SpawnTurret(Vector3 pos)
     {
-        if (isKinzecterOut)
+        if (summons.Count >= 3)
         {
-            turret.FireBullet();
+            //summons.RemoveAll(e => e.GetComponent<CharacterObject>().controlType == CharacterObject.ControlType.DEAD);
+            foreach (GameObject sum in summons)
+            {
+                if (sum.GetComponent<CharacterObject>().controlType != CharacterObject.ControlType.AI)
+                {
+                    sum.GetComponent<EnemySpawn>().Spawn(0);
+                    break;
+                }
+            }
         }
         else
         {
-            var offset = new Vector3(1.5f * direction, 1.5f, 0);
-            GameObject newTurret = Instantiate(bullets[(int)index], transform.position + offset, Quaternion.identity);
-            turret = newTurret.GetComponent<Turret>();
-            turret.characterObject = characterObject;
-            isKinzecterOut = true;
+            GameObject clone = Instantiate(turret, transform.position + pos, Quaternion.identity) as GameObject;
+            summons.Add(clone);
+            //clone.transform.position = transform.position + pos;
+            clone.GetComponent<EnemySpawn>().Spawn(0);
         }
+        //summons.RemoveAll(e => e.GetComponent<CharacterObject>().controlType == CharacterObject.ControlType.DEAD);
+        //if (isKinzecterOut)
+        //{
+        //    turret.FireBullet();
+        //}
+        //else
+        //{
+        //    var offset = new Vector3(1.5f * direction, 1.5f, 0);
+        //    GameObject newTurret = Instantiate(bullets[(int)index], transform.position + offset, Quaternion.identity);
+        //    turret = newTurret.GetComponent<Turret>();
+        //    turret.characterObject = characterObject;
+        //    isKinzecterOut = true;
+        //}
     }
     private void SpawnKinzecter(float offsetX, float offsetY)
     {
@@ -1395,7 +1415,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[atkIndex];
         }
         
-        if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f)
+        if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f && attacker.direction==-direction)
         {
             //parry sound
             StartStateFromScript(defStateIndex);
@@ -1531,7 +1551,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     [Header("EnemyLogic")]
     public CharacterObject target;
-    public Turret turret;
+    public GameObject turret;
     public float aggroRange = 30f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
     [SerializeField] private bool isNearPlayer, isLongRange, isShortRange;
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;

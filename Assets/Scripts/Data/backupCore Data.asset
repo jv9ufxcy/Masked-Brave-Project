@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c6b7b03345b92e4baaebb497235f779, type: 3}
-  m_Name: backupCore Data 1
+  m_Name: backupCore Data
   m_EditorClassIdentifier: 
   characterStates:
   - stateName: Neutral
@@ -3354,15 +3354,15 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 0
-      hitStun: 0
-      hitStop: 0
+      hitStun: 20
+      hitStop: 5
       damage: 0
-      meterGain: 0
+      meterGain: 2
       comboValue: 0
-      poiseDamage: 0
+      poiseDamage: 2
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 0, y: 0, z: 0}
+      knockback: {x: 10, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
@@ -3845,13 +3845,34 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Enemy/Skewer
     index: 0
-    length: 60
+    length: 90
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    attacks:
+    - start: 25
+      length: 10
+      hitStun: 30
+      hitStop: 10
+      damage: 4
+      meterGain: 0
+      comboValue: 2
+      poiseDamage: 8
+      attackType: 0
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 25, y: 0, z: 0}
+      hitBoxPos: {x: 5, y: 0, z: 0}
+      hitBoxScale: {x: 9, y: 1, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -5936,7 +5957,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000
+        followUps: 01000000020000000300000004000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -5994,8 +6015,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 4
+        command:
+          motionCommand: 0
+          input: 1
+          state: 52
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 295
+          y: 36
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 010000000200000003000000
+      nextFollowups: 01000000020000000300000004000000
   - name: Zoe
     commandStates:
     - stateName: Grounded
@@ -6287,19 +6324,19 @@ MonoBehaviour:
   - inputType: 0
     name: KeyboardSpace
   - inputType: 0
-    name: KeyboardF
+    name: KeyboardZ
+  - inputType: 0
+    name: KeyboardC
+  - inputType: 0
+    name: KeyboardX
   - inputType: 0
     name: KeyboardLeftShift
   - inputType: 0
-    name: KeyboardE
-  - inputType: 0
-    name: KeyboardLeftCtrl
+    name: KeyboardV
   - inputType: 0
     name: KeyboardQ
   - inputType: 0
-    name: KeyboardX
-  - inputType: 0
-    name: KeyboardX
+    name: KeyboardE
   - inputType: 0
     name: KeyboardP
   - inputType: 0
@@ -6387,4 +6424,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 3
+  currentMovelistIndex: 0

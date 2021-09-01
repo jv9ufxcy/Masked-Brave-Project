@@ -20,6 +20,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject[] skillList;
     [SerializeField] private Sprite[] spriteList;
     [SerializeField] private Image eyeCon;
+    public TextMeshProUGUI menuTimer, battleUI;
     private void Start()
     {
         pauseManager = this;
