@@ -4173,19 +4173,19 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 65
-      end: 65
+    - start: 60
+      end: 60
       active: 1
       script: 10
       parameters:
       - name: 
         val: 1
       - name: 
-        val: 20
+        val: 30
       - name: 
         val: 1
       - name: 
-        val: 1
+        val: 0.5
       - name: 
         val: 0
     - start: 0
@@ -4202,10 +4202,37 @@ MonoBehaviour:
       parameters:
       - name: EnemyShoot
         val: 0
+    - start: 60
+      end: 60
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0.5
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 11
     attacks:
-    - start: 0
-      length: 0
-      hitStun: 0
+    - start: 65
+      length: 5
+      hitStun: 20
       hitStop: 5
       damage: 4
       meterGain: 0
@@ -4214,8 +4241,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 20, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 3, y: 0, z: 0}
+      hitBoxScale: {x: 5, y: 3, z: 1}
       cancelWindow: 0
     jumpReq: 0
     dashReq: 0
@@ -6353,6 +6380,7 @@ MonoBehaviour:
   - {fileID: 7459617967329291029, guid: 9b11ea7cb69bebf4796d5dcbbb673808, type: 3}
   - {fileID: 7459617967329291029, guid: 1e91b6f05126c0b4f976e296a76167f2, type: 3}
   - {fileID: 7459617967329291029, guid: 6a7f9c1b9adee0f4aa460733e6cfe5b9, type: 3}
+  - {fileID: 7459617967329291029, guid: e80d730a461e1be4fa6621db5313f6a1, type: 3}
   rawInputs:
   - inputType: 0
     name: Ps4X
