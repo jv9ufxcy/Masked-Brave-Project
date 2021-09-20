@@ -321,6 +321,10 @@ public class Kinzecter : MonoBehaviour
             nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
             TargetNextEnemy();
         }
+        else
+        {
+            ReturnToPlayer();
+        }
     }
 
     IEnumerator AddEssence()

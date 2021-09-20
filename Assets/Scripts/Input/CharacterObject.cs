@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Experimental.XR;
 using System;
+using System.Linq;
 
 public class CharacterObject : MonoBehaviour, IHittable
 {
@@ -385,7 +386,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 PlayAudio(_params[0].name);
                 break;
             case 15:
-                SpawnTurret( new Vector2(_params[0].val, _params[1].val));
+                SpawnTurret((int)_params[0].val, new Vector2(_params[1].val, _params[2].val));
                 break;
             case 16:
                 FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, _params[5].val);
@@ -932,40 +933,22 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
     }
     private List<GameObject> summons = new List<GameObject>();
-    private void SpawnTurret(Vector3 pos)
+    private void SpawnTurret( int minionIndex, Vector3 pos)
     {
-        if (summons.Count >= 3)
+        if (/*spawners[minionIndex].gameObject.activeInHierarchy && */spawners[minionIndex].IsSpawned)
         {
-            //summons.RemoveAll(e => e.GetComponent<CharacterObject>().controlType == CharacterObject.ControlType.DEAD);
-            foreach (GameObject sum in summons)
+            if (spawners[minionIndex].GetComponentInChildren<MinionSpawner>().summonID==0)
             {
-                if (sum.GetComponent<CharacterObject>().controlType != CharacterObject.ControlType.AI)
-                {
-                    sum.GetComponent<EnemySpawn>().Spawn(0);
-                    break;
-                }
+                spawners[minionIndex].GetComponentInChildren<MinionSpawner>().UpgradeHouse();
+                audioManager.PlaySound("SlimePsi");
             }
         }
         else
         {
-            GameObject clone = Instantiate(turret, transform.position + pos, Quaternion.identity) as GameObject;
-            summons.Add(clone);
-            //clone.transform.position = transform.position + pos;
-            clone.GetComponent<EnemySpawn>().Spawn(0);
+            //spawners[minionIndex].gameObject.SetActive(true);
+            spawners[minionIndex].Spawn(0);
+            audioManager.PlaySound("SlimeHop");
         }
-        //summons.RemoveAll(e => e.GetComponent<CharacterObject>().controlType == CharacterObject.ControlType.DEAD);
-        //if (isKinzecterOut)
-        //{
-        //    turret.FireBullet();
-        //}
-        //else
-        //{
-        //    var offset = new Vector3(1.5f * direction, 1.5f, 0);
-        //    GameObject newTurret = Instantiate(bullets[(int)index], transform.position + offset, Quaternion.identity);
-        //    turret = newTurret.GetComponent<Turret>();
-        //    turret.characterObject = characterObject;
-        //    isKinzecterOut = true;
-        //}
     }
     private void SpawnKinzecter(float offsetX, float offsetY)
     {
@@ -1551,7 +1534,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     [Header("EnemyLogic")]
     public CharacterObject target;
-    public GameObject turret;
+    public InteractableObject[] spawners;
     public float aggroRange = 30f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
     [SerializeField] private bool isNearPlayer, isLongRange, isShortRange;
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
@@ -1639,6 +1622,14 @@ public class CharacterObject : MonoBehaviour, IHittable
         spriteRend.material = defaultMat;
         Screenshake(2, .4f);
         SetVelocity(Vector2.zero);
+
+        if (spawners.Length>0)
+        {
+            foreach (InteractableObject spawner in spawners)
+            {
+                spawner.DeSpawn();
+            }
+        }
     }
     public void OnEnemySpawn()
     {

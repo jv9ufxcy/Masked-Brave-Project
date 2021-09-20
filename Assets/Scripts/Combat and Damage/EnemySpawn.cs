@@ -69,6 +69,7 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     public void ShowCharacterCutscene()
     {
         character.character.gameObject.SetActive(true);
+        character.FacePlayer();
     }
 
     private void Update()

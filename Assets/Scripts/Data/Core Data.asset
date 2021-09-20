@@ -2452,7 +2452,7 @@ MonoBehaviour:
       damage: 1
       meterGain: 0
       comboValue: 2
-      poiseDamage: 20
+      poiseDamage: 5
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -2466,7 +2466,7 @@ MonoBehaviour:
       damage: 1
       meterGain: 0
       comboValue: 3
-      poiseDamage: 20
+      poiseDamage: 5
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -2480,7 +2480,7 @@ MonoBehaviour:
       damage: 1
       meterGain: 0
       comboValue: 4
-      poiseDamage: 20
+      poiseDamage: 5
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -2494,7 +2494,7 @@ MonoBehaviour:
       damage: 1
       meterGain: 0
       comboValue: 5
-      poiseDamage: 20
+      poiseDamage: 5
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 10, y: 0, z: 0}
@@ -4376,7 +4376,7 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Khris/Summon
+  - stateName: Khris/SummonA
     index: 0
     length: 60
     loop: 0
@@ -4388,9 +4388,11 @@ MonoBehaviour:
       script: 15
       parameters:
       - name: 
-        val: -2
+        val: 0
       - name: 
-        val: 2
+        val: 0
+      - name: 
+        val: 0
     - start: 0
       end: 0
       active: 1
@@ -4405,12 +4407,30 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Khris/NEWSTATE
+  - stateName: Khris/SummonB
     index: 0
     length: 60
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 55
+      end: 55
+      active: 1
+      script: 15
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: SlimeFrenzy
+        val: 1
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -4418,12 +4438,30 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Khris/NEWSTATE
+  - stateName: Khris/SummonC
     index: 0
     length: 60
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 55
+      end: 55
+      active: 1
+      script: 15
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: SlimeFrenzy
+        val: 1
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -4948,10 +4986,12 @@ MonoBehaviour:
   - index: 0
     name: SpawnTurret
     parameters:
+    - name: index
+      val: 1
     - name: posX
-      val: 1
+      val: 0
     - name: posY
-      val: 1
+      val: 0
   - index: 0
     name: AngledBullet
     parameters:
@@ -5529,7 +5569,7 @@ MonoBehaviour:
         priority: 0
       - idIndex: 7
         command:
-          motionCommand: 6
+          motionCommand: 0
           input: 5
           state: 48
           inputs: 
@@ -5664,7 +5704,7 @@ MonoBehaviour:
         priority: 0
       - idIndex: 6
         command:
-          motionCommand: 6
+          motionCommand: 0
           input: 5
           state: 48
           inputs: 
@@ -6584,4 +6624,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 1
+  currentMovelistIndex: 0

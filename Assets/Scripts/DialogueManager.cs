@@ -103,9 +103,9 @@ public class DialogueManager : MonoBehaviour
     }
     private void EndDialogue()
     {
-        currentDialogue.EndDialogue();
         //PauseManager.IsGamePaused = false;
         isDialogueActive = false;
         dialogueParent.DOScaleY(0f, tweenSpeed);
+        currentDialogue.EndDialogue();
     }
 }

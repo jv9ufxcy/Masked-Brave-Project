@@ -33,7 +33,8 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         }
         GetHit(attacker, curAtk);
     }
-
+    public bool isEnemySpawner = false;
+    private MinionSpawner minion;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,10 +42,15 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         controller = GetComponent<Controller2D>();
         spriteRend = characterAnim.gameObject.GetComponent<SpriteRenderer>();
         audioManager = AudioManager.instance;
-
+        
         currentHealth = maxHealth;
         defaultMat = spriteRend.material;
         spawnPos = transform.position;
+        if (isEnemySpawner)
+        {
+            minion = GetComponentInChildren<MinionSpawner>();
+            DeSpawn();
+        }
     }
 
     // Update is called once per frame
@@ -291,7 +297,10 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         IsSpawned = true;
 
         transform.SetParent(null);
-        transform.position = spawnPos;
+        if (type==2)
+        {
+            transform.position = spawnPos;
+        }
     }
     public void DeSpawn()
     {
@@ -300,5 +309,9 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         IsDead = true;
         IsSpawned = false;
         transform.position = spawnPos;
+        if (isEnemySpawner)
+        {
+            
+        }
     }
 }
