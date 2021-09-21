@@ -1627,6 +1627,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             foreach (InteractableObject spawner in spawners)
             {
+                spawner.GetComponentInChildren<MinionSpawner>().KillThemAll();
                 spawner.DeSpawn();
             }
         }
