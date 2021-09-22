@@ -17,12 +17,11 @@ public class MusicManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            //Debug.LogError("More than one AudioManager in the scene.");
         }
     }
     private void Start()
     {
-        BackgroundMusic = GetComponent<AudioSource>();
+        //BackgroundMusic = GetComponent<AudioSource>();
     }
     private void FixedUpdate()
     {
@@ -33,17 +32,17 @@ public class MusicManager : MonoBehaviour
     }
     public void ChangeBGM(AudioClip music)
     {
-        if (BackgroundMusic.clip.name == music.name)
-            return;
-        StopMusic();
-        BackgroundMusic.clip = music;
-        StartMusic();
+        //if (BackgroundMusic.clip.name == music.name)
+        //    return;
+        //StopMusic();
+        //BackgroundMusic.clip = music;
+        //StartMusic();
     }
     public void StartBGM(AudioClip music)
     {
-        StopMusic();
-        BackgroundMusic.clip = music;
-        StartMusic();
+        //StopMusic();
+        //BackgroundMusic.clip = music;
+        //StartMusic();
     }
 
     public void StartMusic()
@@ -53,6 +52,6 @@ public class MusicManager : MonoBehaviour
 
     public void StopMusic()
     {
-        BackgroundMusic.Stop();
+        //BackgroundMusic.Stop();
     }
 }
