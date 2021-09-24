@@ -83,8 +83,8 @@ public class BattleSystem : MonoBehaviour
             StartBattleUI();
             audioManager.PlaySound(battleStartAudio);
 
-            stageTheme = musicManager.BackgroundMusic.clip;
-            musicManager.ChangeBGM(battleTheme);
+            //stageTheme = musicManager.BackgroundMusic.clip;
+            //musicManager.ChangeBGM(battleTheme);
 
             battleState = State.Active;
             OnBattleStarted.Invoke();
@@ -186,7 +186,7 @@ public class BattleSystem : MonoBehaviour
         if (battleState==State.Active&&IsBattleOver())
         {
             audioManager.PlaySound(battleEndAudio);
-            musicManager.ChangeBGM(stageTheme);
+            //musicManager.ChangeBGM(stageTheme);
             OnBattleEnded.Invoke();
             enemySpawnList.Clear();
             numOfEnemies.text = "x " + enemyNum();
