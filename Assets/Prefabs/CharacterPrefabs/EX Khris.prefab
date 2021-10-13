@@ -29194,7 +29194,7 @@ MonoBehaviour:
   gravity: -2
   gravityMin: -17
   aniMoveSpeed: 0
-  friction: {x: 0.95, y: 0.99, z: 0}
+  friction: {x: 0, y: 0, z: 0}
   direction: 1
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
@@ -29317,7 +29317,7 @@ MonoBehaviour:
   deathStateIndex: 36
   hitStun: 0
   target: {fileID: 0}
-  turret: {fileID: 6476919978724093363, guid: 3500a8a785c0730438dc33c458bf9e79, type: 3}
+  spawners: []
   aggroRange: 20
   longAttackRange: 20
   shortAttackRange: 6
@@ -29353,8 +29353,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: 32
-  maxPoise: 96
-  currentPoise: 96
+  maxPoise: 255
+  currentPoise: 255
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}

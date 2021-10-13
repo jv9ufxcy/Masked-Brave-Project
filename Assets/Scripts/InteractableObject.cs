@@ -11,7 +11,7 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
     public float aniMoveSpeed;
 
     public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
-    [SerializeField] private float direction = 1;
+    //[SerializeField] private float direction = 1;
     [Header("CharacterModel")]
     public GameObject character;
     public GameObject draw;
@@ -181,13 +181,13 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         Vector2 latSpeed = new Vector2(velocity.x, 0);
         aniMoveSpeed = Vector3.SqrMagnitude(latSpeed);
         animFallSpeed = velocity.y /** 30f*/;
-        characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
-        characterAnim.SetFloat("aerialState", animAerialState);
+        //characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
+        //characterAnim.SetFloat("aerialState", animAerialState);
         //characterAnim.SetBool("wallState", wallFlag);
-        characterAnim.SetFloat("fallSpeed", animFallSpeed);
-        characterAnim.SetFloat("hitAnimX", curHitAnim.x);
-        characterAnim.SetFloat("hitAnimY", curHitAnim.y);
-        characterAnim.SetFloat("animSpeed", animSpeed);
+        //characterAnim.SetFloat("fallSpeed", animFallSpeed);
+        //characterAnim.SetFloat("hitAnimX", curHitAnim.x);
+        //characterAnim.SetFloat("hitAnimY", curHitAnim.y);
+        //characterAnim.SetFloat("animSpeed", animSpeed);
 
     }
 

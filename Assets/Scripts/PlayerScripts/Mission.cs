@@ -36,7 +36,8 @@ public class Mission : MonoBehaviour
     public string[] scoreText;
 
     public CharacterObject mainChar;
-    public AudioClip stageTheme;
+    //[FMODUnity.EventRef(MigrateTo = "<fieldname>")]
+    public FMODUnity.EventReference stageTheme;
     private void Awake()
     {
         if (instance == null)

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerMaster" id="{4b06b689-81fb-4ac8-88be-62c9996a9a9c}">
+		<relationship name="effectChain">
+			<destination>{c418123d-ad54-4059-8621-c4ec701bfc8e}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{5188dce2-f9d3-418e-9553-46264bd04eb5}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{cd6eb746-7e41-438e-8327-4dc338edeb6e}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{c418123d-ad54-4059-8621-c4ec701bfc8e}">
+		<relationship name="effects">
+			<destination>{13325e6c-7175-4c1b-97ef-c10973ceab3d}</destination>
+			<destination>{bff9550a-ed57-421b-8f7d-d508a502b4e3}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{5188dce2-f9d3-418e-9553-46264bd04eb5}" />
+	<object class="MixerBusFader" id="{13325e6c-7175-4c1b-97ef-c10973ceab3d}" />
+	<object class="LimiterEffect" id="{bff9550a-ed57-421b-8f7d-d508a502b4e3}">
+		<property name="ceiling">
+			<value>-0.699999988</value>
+		</property>
+	</object>
+</objects>

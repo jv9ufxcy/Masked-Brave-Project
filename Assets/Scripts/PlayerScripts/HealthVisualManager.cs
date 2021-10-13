@@ -71,7 +71,8 @@ public class HealthVisualManager : MonoBehaviour
     {
         GameObject heartGO = new GameObject("Health", typeof(Image));
         //child
-        heartGO.transform.parent = transform;
+        //heartGO.transform.parent = transform;
+        heartGO.transform.SetParent(transform,false);
         heartGO.transform.localPosition = Vector3.zero;
 
         //pos and size
