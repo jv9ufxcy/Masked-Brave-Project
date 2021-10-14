@@ -4869,13 +4869,11 @@ MonoBehaviour:
     type: 3}
   shootAnim: 0
   shootAnimMax: 0
-  fireRate: 10
   bullets:
   - {fileID: 1946779624007576, guid: 4d44dc666ad645a46a539a483990aaf9, type: 3}
   - {fileID: 1946779624007576, guid: b4ef358abf1f55f43a9e874ccb19b4ad, type: 3}
   - {fileID: 1946779624007576, guid: 3c0465471e8bee14ea8764fc450febc5, type: 3}
   - {fileID: 1946779624007576, guid: 5ce40fee1cb5c4549aea1da77c569712, type: 3}
-  bulletSpawnPos: {x: 0.25, y: 0.5}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -4932,8 +4930,8 @@ MonoBehaviour:
   deathStateIndex: 36
   hitStun: 0
   target: {fileID: 0}
-  turret: {fileID: 0}
-  aggroRange: 12
+  spawners: []
+  aggroRange: 10
   longAttackRange: 8
   shortAttackRange: 3
   attackCooldown: 60

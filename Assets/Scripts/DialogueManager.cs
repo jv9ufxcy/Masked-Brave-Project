@@ -10,7 +10,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
     public DialogueTrigger currentDialogue;
-
+    private AudioManager audioManager;
     public TextMeshProUGUI nameText, dialogueText;
     public Image profileImage;
     public RectTransform dialogueParent;
@@ -33,6 +33,7 @@ public class DialogueManager : MonoBehaviour
     }
     void Start()
     {
+        audioManager = AudioManager.instance;
         dialogueParent.DOScaleY(0f, 0f);
         sentences = new Queue<Dialogue>();
     }
@@ -92,12 +93,14 @@ public class DialogueManager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(Type(sentence));
     }
+    public string charSound = "Cutscene/Dialogue Scroll";
     IEnumerator Type(string sentence)
     {
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
+            audioManager.PlaySound(charSound);
             yield return new WaitForFixedUpdate();
         }
     }

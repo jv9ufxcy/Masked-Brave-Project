@@ -72,7 +72,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Jump
+      - name: Player/Jump
         val: 0
     attacks: []
     jumpReq: 1
@@ -113,7 +113,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: BraveDash
+      - name: Player/Dash
         val: 0
     - start: 1
       end: 1
@@ -181,7 +181,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 5
@@ -229,7 +229,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 5
@@ -277,7 +277,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 5
@@ -414,7 +414,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 5
@@ -462,7 +462,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 1
     - start: 2
       end: 3
@@ -517,7 +517,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 5
@@ -558,14 +558,14 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     - start: 15
       end: 15
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 3
@@ -703,6 +703,20 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Cutscene/Sword Brandish
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 0
       length: 10
@@ -756,7 +770,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlash
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 5
@@ -859,7 +873,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlam
+      - name: Player/Sword Swing
         val: 0
     - start: 5
       end: 5
@@ -1266,7 +1280,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: BombDash
+      - name: Player/Dash
         val: 0
     - start: 1
       end: 1
@@ -2524,6 +2538,13 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Cutscene/Sword Brandish
+        val: 0
     attacks:
     - start: 0
       length: 0
@@ -2558,6 +2579,27 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 16
+    - start: 5
+      end: 5
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
+    - start: 10
+      end: 10
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
+    - start: 15
+      end: 15
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
     attacks:
     - start: 5
       length: 5
@@ -2627,6 +2669,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Death
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -2646,6 +2695,27 @@ MonoBehaviour:
       script: 17
       parameters:
       - name: 
+        val: 0
+    - start: 5
+      end: 5
+      active: 1
+      script: 14
+      parameters:
+      - name: Cutscene/Transform
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Landing
+        val: 0
+    - start: 95
+      end: 95
+      active: 1
+      script: 14
+      parameters:
+      - name: Cutscene/Sword Brandish
         val: 0
     attacks: []
     jumpReq: 0
@@ -6624,4 +6694,4 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 1
+  currentMovelistIndex: 0

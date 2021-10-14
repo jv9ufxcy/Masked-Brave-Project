@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 public class RespawnPlayer : MonoBehaviour
 {
     private GameManager gm;
-    public static event Action PlayerRespawnedFromCheckpoint;
-
     private void Start()
     {
         gm = GameManager.instance;

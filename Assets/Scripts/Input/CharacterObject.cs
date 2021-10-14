@@ -797,7 +797,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                     ChargeUp(chargeIncrement);
                     if (shotPressure < maxShotPressure)
                     {
-                        hasShotChargingStarted = true;
+                        //hasShotChargingStarted = true;
                     }
                 }
                 if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
@@ -816,7 +816,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                     }
                     if (shotPressure != 0f)
                     {
-                        hasReleasedShot = true;
+                        //hasReleasedShot = true;
                         shotPressure = 0f;
                         firstCharge = false; secondCharge = false;
                     }
@@ -835,7 +835,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                     ChargeUp(chargeIncrement);
                     if (shotPressure < maxShotPressure)
                     {
-                        hasShotChargingStarted = true;
+                        //hasShotChargingStarted = true;
                     }
                 }
                 if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
@@ -854,7 +854,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                     }
                     if (shotPressure != 0f)
                     {
-                        hasReleasedShot = true;
+                        //hasReleasedShot = true;
                         shotPressure = 0f;
                         firstCharge = false; secondCharge = false;
                     }
@@ -875,13 +875,13 @@ public class CharacterObject : MonoBehaviour, IHittable
 
 
     }
+    //[Header("Charged Buster")]
+
+    //private bool hasReleasedShot = false;
+    //private bool hasShotChargingStarted = false;
+    //private bool hasReachedMaxShotCharge = false;
+
     [Space]
-    [Header("Charged Buster")]
-
-    private bool hasReleasedShot = false;
-    private bool hasShotChargingStarted = false;
-    private bool hasReachedMaxShotCharge = false;
-
     [Header("ParticleGroups")]
     public Transform gunChargeParticles;
     public Transform jumpChargeParticles;
@@ -896,10 +896,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     [Header("Shooting Stats")]
     public GameObject blastBlightGO;
     public float shootAnim, shootAnimMax;
-    public float fireRate = 10f;
-    private float timeToNextFire = 0f;
     public GameObject[] bullets;
-    [SerializeField] private Vector2 bulletSpawnPos = new Vector2(0.5f, 1f);
     [HideInInspector] public bool isKinzecterOut;
     public void KinzectorActions(float action, float offsetX, float offsetY)
     {
@@ -1331,7 +1328,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         //return rayCastHit.collider != null;
         return controller.collisions.left || controller.collisions.right;
     }
-    private bool hasLanded;
+    private bool hasLanded=true;
     private void GroundTouch()
     {
         //DashReset();
@@ -1343,6 +1340,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             //isDashing = false;
             hasLanded = true;
             landingParticle.Play();
+            audioManager.PlaySound("Player/Landing");
         }
     }
     public void SetVelocity(Vector3 v)
@@ -1627,7 +1625,11 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             foreach (InteractableObject spawner in spawners)
             {
-                spawner.GetComponentInChildren<MinionSpawner>().KillThemAll();
+                MinionSpawner mSpawn = spawner.gameObject.GetComponentInChildren<MinionSpawner>();
+
+                if(mSpawn!=null)
+                    mSpawn.KillThemAll();
+
                 spawner.DeSpawn();
             }
         }
@@ -1667,5 +1669,9 @@ public class CharacterObject : MonoBehaviour, IHittable
         FaceTarget(GameEngine.gameEngine.mainCharacter.transform.position);
     }
 
-    
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(this.transform.position, aggroRange);
+    }
 }

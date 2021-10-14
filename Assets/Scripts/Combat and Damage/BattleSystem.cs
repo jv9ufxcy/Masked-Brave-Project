@@ -27,7 +27,8 @@ public class BattleSystem : MonoBehaviour
     private List<EnemySpawn> enemySpawnList= new List<EnemySpawn>();
     private AudioManager audioManager;
     private MusicManager musicManager;
-    public AudioClip battleTheme, stageTheme;
+    //[FMODUnity.EventRef(MigrateTo = "<fieldname>")]
+    public FMODUnity.EventReference battleTheme, stageTheme;
     // Start is called before the first frame update
 
     void Start()
@@ -83,8 +84,8 @@ public class BattleSystem : MonoBehaviour
             StartBattleUI();
             audioManager.PlaySound(battleStartAudio);
 
-            stageTheme = musicManager.BackgroundMusic.clip;
-            musicManager.ChangeBGM(battleTheme);
+            stageTheme = musicManager.stageTheme;
+            musicManager.StartBGM(battleTheme);
 
             battleState = State.Active;
             OnBattleStarted.Invoke();
@@ -186,7 +187,7 @@ public class BattleSystem : MonoBehaviour
         if (battleState==State.Active&&IsBattleOver())
         {
             audioManager.PlaySound(battleEndAudio);
-            musicManager.ChangeBGM(stageTheme);
+            musicManager.StartBGM(stageTheme);
             OnBattleEnded.Invoke();
             enemySpawnList.Clear();
             numOfEnemies.text = "x " + enemyNum();

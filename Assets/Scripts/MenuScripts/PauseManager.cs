@@ -10,7 +10,6 @@ public class PauseManager : MonoBehaviour
 {
     GameManager GM;
     public static PauseManager pauseManager;
-    private Player player;
     public static bool IsGamePaused = false;
     [SerializeField] string sceneToLoad;
     [SerializeField] private GameObject pauseMenuUI, resultsMenuUI;

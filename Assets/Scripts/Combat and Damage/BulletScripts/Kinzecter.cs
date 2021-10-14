@@ -17,19 +17,16 @@ public class Kinzecter : MonoBehaviour
     [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance=25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f;
     [SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
     [SerializeField] private ParticleSystem kinzecterParticles, hpPS, buffedZecterPS, energyPS;
-    [SerializeField] private bool shouldScreenshakeOnHit;
 
     private AudioManager audioManager;
     private EnemySpawn enemy;
 
 [SerializeField] private ThrowingState kState;
-    private bool shouldFly, essenceAdded=false;
+    private bool essenceAdded=false;
     private float startScale, flightSpeed;
     [SerializeField] private int hpStock, eStock, ammoStock;
 
     private bool isTooSlow;
-    private bool newEnemyTargeted=false;
-    private bool coroutineStarted=false;
     Vector3 nextTargetDir;
 
     public DamageEffect _effect;
@@ -251,7 +248,7 @@ public class Kinzecter : MonoBehaviour
                 //hpPS.Stop();
                 //ammoPS.Stop();
                 //energyPS.Stop();
-                shouldFly = true;
+                //shouldFly = true;
                 kzColl.enabled = false;
                 kzSprite.enabled = false;
                 transform.position = thrower.transform.position;
@@ -340,7 +337,7 @@ public class Kinzecter : MonoBehaviour
     private void TargetNextEnemy()
     {
         kzRB.velocity = nextTargetDir * kzSpeed;
-        audioManager.PlaySound(flightSound);
+        //audioManager.PlaySound(flightSound);
         SpendStamina(staminaCost);
         SpriteDirectionChange();
     }
