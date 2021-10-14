@@ -1669,5 +1669,9 @@ public class CharacterObject : MonoBehaviour, IHittable
         FaceTarget(GameEngine.gameEngine.mainCharacter.transform.position);
     }
 
-    
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(this.transform.position, aggroRange);
+    }
 }

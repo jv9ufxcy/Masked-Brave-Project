@@ -873,7 +873,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SwordSlam
+      - name: Player/Sword Swing
         val: 0
     - start: 5
       end: 5
@@ -2579,6 +2579,27 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 16
+    - start: 5
+      end: 5
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
+    - start: 10
+      end: 10
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
+    - start: 15
+      end: 15
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
     attacks:
     - start: 5
       length: 5
@@ -2653,7 +2674,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Cutscene/Transform
+      - name: Player/Death
         val: 0
     attacks: []
     jumpReq: 0
@@ -6619,7 +6640,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -6629,7 +6650,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -6639,7 +6660,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -6649,7 +6670,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -6659,7 +6680,7 @@ MonoBehaviour:
     commands: 000000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -6669,7 +6690,7 @@ MonoBehaviour:
     commands: 00000000030000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
