@@ -10,18 +10,18 @@ public class MusicManager : MonoBehaviour
     FMOD.Studio.EventInstance BGM;
     //[FMODUnity.EventRef(MigrateTo ="<fieldname>")]
     public EventReference stageTheme;
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(instance);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    //void Awake()
+    //{
+    //    if (instance == null)
+    //    {
+    //        instance = this;
+    //        DontDestroyOnLoad(instance);
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
     private void Start()
     {
         studioEventEmitter = GetComponent<StudioEventEmitter>();
