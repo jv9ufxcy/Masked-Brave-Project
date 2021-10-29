@@ -228,6 +228,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                 //ShowAfterImage();
             }
         }
+        if (controlType==ControlType.AI || controlType == ControlType.BOSS)
+        {
+            FacePlayer();
+        }
     }
     void UpdateState()
     {
@@ -349,6 +353,9 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 1:
                 FrontVelocity(_params[0].val);
                 break;
+            case 2:
+                FacePlayer();
+                break;
             case 3:
                 StickMove(_params[0].val);
                 break;
@@ -403,8 +410,18 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 20:
                 AirLoop();
                 break;
+            case 21:
+                TargetAttack(_params[0].val, _params[1].val);
+                break;
+            case 22:
+                MaintainVelocity();
+                break;
 
         }
+    }
+    public void MaintainVelocity()
+    {
+        SetVelocity(velocity);
     }
     public void AirLoop()
     {
@@ -468,7 +485,9 @@ public class CharacterObject : MonoBehaviour, IHittable
         switch (controlType)
         {
             case ControlType.AI:
-
+                Transform player = GameEngine.gameEngine.mainCharacter.transform;
+                Vector2 playerDir = (player.position - transform.position).normalized;
+                velocity += (playerDir * speed);
                 break;
             case ControlType.PLAYER:
                 EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, range);
@@ -1534,10 +1553,13 @@ public class CharacterObject : MonoBehaviour, IHittable
     public CharacterObject target;
     public InteractableObject[] spawners;
     public float aggroRange = 30f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
+    [Tooltip("x = frequency, y = amplitude")]
+    public Vector2 horiCos, vertSign;
+    //public float amplitude = 1f, frequency = 1f;
     [SerializeField] private bool isNearPlayer, isLongRange, isShortRange;
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
 
-    [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction")]
+    [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction, 3 = Circle")]
     public int enemyType;
     public int desperationTransitionState;
 
@@ -1578,6 +1600,11 @@ public class CharacterObject : MonoBehaviour, IHittable
                         break;
                     case 2:
                         StartStateFromScript(rangedAttackState[0]);
+                        break;
+                    case 3:
+                        //FrontVelocity(moveSpeed);
+                        FrontVelocity(Mathf.Cos(Time.time * horiCos.x) * horiCos.y);
+                        VelocityY(Mathf.Sin(Time.time * vertSign.x) * vertSign.y);
                         break;
                 }
             }
