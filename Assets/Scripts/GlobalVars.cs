@@ -22,6 +22,7 @@ public class GlobalVars : MonoBehaviour
     public void PassControllerValue(int dropdownValue)
     {
         controllerNumber = dropdownValue;
+        GameEngine.coreData.currentControllerIndex = controllerNumber;
         switch (controllerNumber)
         {
             case 0:

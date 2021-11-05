@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class StartScreenController : MonoBehaviour
 {
     private bool isMainMenuActive=false;
-    public GameObject startPanel, menuPanel;
+    public GameObject startPanel, menuPanel, optionsPanel;
     private int value;
+    public EventSystem eventSystem;
+    public GameObject selectedObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,12 +44,35 @@ public class StartScreenController : MonoBehaviour
                 ActivateMenu();
             }
         }
+        else
+        {
+            if (Input.GetButton("Cancel") && eventSystem.alreadySelecting == false)
+            {
+                ActivateMenu();
+                eventSystem.SetSelectedGameObject(selectedObject);
+                //buttonSelected = true;
+            }
+        }
     }
     void ActivateMenu()
     {
         startPanel.SetActive(false);
+        optionsPanel.SetActive(false);
         menuPanel.SetActive(true);
         isMainMenuActive = true;
         GlobalVars.instance.PassControllerValue(value);
+    }
+    public void LoadByIndex(string sceneToLoad)
+    {
+        SceneTransitionController.instance.LoadScene(sceneToLoad);
+        //SceneManager.LoadScene(sceneIndex);
+    }
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

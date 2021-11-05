@@ -27,6 +27,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1445
+--- !u!114 &-8104166110827862431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Boss
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Boss
+  Guid:
+    Data1: 633641115
+    Data2: 1290937138
+    Data3: -858821189
+    Data4: -704507764
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 100519
+--- !u!114 &-7656570767313839684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Boss
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Boss
+  Guid:
+    Data1: 633641115
+    Data2: 1290937138
+    Data3: -858821189
+    Data4: -704507764
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 100519
 --- !u!114 &-5404912509212916533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,7 +107,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 40
 --- !u!114 &-5278085138714813847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,8 +200,7 @@ MonoBehaviour:
     Data2: 1247660994
     Data3: 96579208
     Data4: -1449196056
-  Banks:
-  - {fileID: -2488119440328235944}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -170,11 +223,38 @@ MonoBehaviour:
   Path: FMODAssets/Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637697415300000000
+  lastModified: 637714837072189149
   FileSizes:
   - Name: Desktop
-    Value: 2162560
+    Value: 4786880
   Exists: 1
+--- !u!114 &-2438038158075382596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Sword Swing
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Sword Swing
+  Guid:
+    Data1: -597654729
+    Data2: 1247660994
+    Data3: 96579208
+    Data4: -1449196056
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1209
 --- !u!114 &-2302190663226195154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +282,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-1378159861858220967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Enemy/Slime Hurt
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Enemy/Slime Hurt
+  Guid:
+    Data1: 1939837674
+    Data2: 1319236469
+    Data3: 1102643878
+    Data4: 1641967118
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 880
+--- !u!114 &-1184317146410632122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Enemy/Enemy Hurt
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Enemy/Enemy Hurt
+  Guid:
+    Data1: 1661720918
+    Data2: 1218569985
+    Data3: 1899178912
+    Data4: 959870213
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 880
 --- !u!114 &-1105323346455377608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +381,6 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 2702176101412307285}
   - {fileID: -3234588688096052826}
-  - {fileID: -2985651962570178425}
   - {fileID: 8705110764655425655}
   - {fileID: 5097143083123909074}
   - {fileID: 5304280473800379447}
@@ -261,13 +394,71 @@ MonoBehaviour:
   - {fileID: -1105323346455377608}
   - {fileID: 2613920810790639410}
   - {fileID: 8139284945376831018}
+  - {fileID: -2438038158075382596}
+  - {fileID: 1530017542509609346}
+  - {fileID: -7656570767313839684}
+  - {fileID: -1378159861858220967}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2488119440328235944}
   StringsBanks:
   - {fileID: 7656597564302096557}
-  cacheTime: 637697415300000000
+  cacheTime: 637714837072239159
   cacheVersion: 9
+--- !u!114 &141932751449616161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Enemy/Slime Hurt
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Enemy/Slime Hurt
+  Guid:
+    Data1: 1939837674
+    Data2: 1319236469
+    Data3: 1102643878
+    Data4: 1641967118
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 880
+--- !u!114 &1530017542509609346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Enemy/Enemy Hurt
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Enemy/Enemy Hurt
+  Guid:
+    Data1: 1661720918
+    Data2: 1218569985
+    Data3: 1899178912
+    Data4: 959870213
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 880
 --- !u!114 &1644698814167444360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,10 +683,10 @@ MonoBehaviour:
   Path: FMODAssets/Audio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637697415300000000
+  lastModified: 637714837072239159
   FileSizes:
   - Name: Desktop
-    Value: 1538
+    Value: 1826
   Exists: 1
 --- !u!114 &8139284945376831018
 MonoBehaviour:
@@ -517,13 +708,13 @@ MonoBehaviour:
     Data4: 568787321
   Banks:
   - {fileID: -2488119440328235944}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 80842
 --- !u!114 &8705110764655425655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,3 +742,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3916
+--- !u!114 &9203040972941767427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Sword Swing
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Sword Swing
+  Guid:
+    Data1: -597654729
+    Data2: 1247660994
+    Data3: 96579208
+    Data4: -1449196056
+  Banks:
+  - {fileID: -2488119440328235944}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1209

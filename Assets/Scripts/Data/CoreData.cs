@@ -25,7 +25,7 @@ public class CoreData : ScriptableObject
     //Raw Inputs
     public List<RawInput> rawInputs, ps4Inputs, xboxInputs, keyboardInputs;
     public List<MotionCommand> motionCommands;
-    public int currentMovelistIndex;
+    public int currentMovelistIndex, currentControllerIndex;
 
     public string[] GetScriptNames()
     {

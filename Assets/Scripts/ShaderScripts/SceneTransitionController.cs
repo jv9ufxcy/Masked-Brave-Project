@@ -52,10 +52,15 @@ public class SceneTransitionController : MonoBehaviour
     {
         transitionImage.material.SetFloat("_Cutoff", -0.1f);
     }
-
+    public string transitionAudioEvent = "Cutscene/Scene Transition";
+    private void PlayTransitionAudio()
+    {
+        AudioManager.instance.PlaySound(transitionAudioEvent);
+    }
     public void LoadScene(string sceneToLoad)
     {
         SceneToLoad = sceneToLoad;
         shouldReveal = false;
+        PlayTransitionAudio();
     }
 }

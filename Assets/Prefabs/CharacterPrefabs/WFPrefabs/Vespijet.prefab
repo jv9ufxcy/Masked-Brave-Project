@@ -24190,24 +24190,24 @@ MonoBehaviour:
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
   attackStrings:
-  - SwordHit
+  - Enemy/Enemy Hurt
   - BulletHit
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
   hitStunStateIndex: 7
   deathStateIndex: 36
   hitStun: 0
   target: {fileID: 0}
   spawners: []
-  aggroRange: 10
-  longAttackRange: 4
+  aggroRange: 12
+  longAttackRange: 6
   shortAttackRange: 2
   attackCooldown: 30
   horiCos: {x: 4.5, y: 9}
@@ -24253,12 +24253,12 @@ MonoBehaviour:
   damageShowTime: 1
   damageShowSpeed: 1
   IsDead: 0
-  shouldSpawnHealth: 0
+  shouldSpawnHealth: 1
   isDesperation: 0
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
-  numOfPickups: 0
+  numOfPickups: 5
   currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
     type: 3}
   healthPickup: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
@@ -24271,7 +24271,7 @@ MonoBehaviour:
   dizzyMat: {fileID: 2100000, guid: 469afaba61093c04b87c4450611b6312, type: 2}
   rend: {fileID: 8516340991073596113}
   effectsRend: {fileID: 8393869544678266868}
-  healthDropRate: 5
+  healthDropRate: 4
   effectIndex: 0
 --- !u!114 &214390542630930461
 MonoBehaviour:

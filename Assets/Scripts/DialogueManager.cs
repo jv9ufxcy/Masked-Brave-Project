@@ -11,6 +11,8 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager instance;
     public DialogueTrigger currentDialogue;
     private AudioManager audioManager;
+    private MusicManager musicManager;
+    public FMODUnity.EventReference dialogueTheme;
     public TextMeshProUGUI nameText, dialogueText;
     public Image profileImage;
     public RectTransform dialogueParent;
@@ -34,6 +36,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         audioManager = AudioManager.instance;
+        musicManager = MusicManager.instance;
         dialogueParent.DOScaleY(0f, 0f);
         sentences = new Queue<Dialogue>();
     }
@@ -110,5 +113,9 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = false;
         dialogueParent.DOScaleY(0f, tweenSpeed);
         currentDialogue.EndDialogue();
+    }
+    public void BossRoomMusic()
+    {
+        musicManager.StartBGM(dialogueTheme);
     }
 }

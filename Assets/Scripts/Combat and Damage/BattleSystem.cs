@@ -41,6 +41,8 @@ public class BattleSystem : MonoBehaviour
 
         audioManager = AudioManager.instance;
         musicManager = MusicManager.instance;
+
+        stageTheme = musicManager.stageTheme;
     }
     private int enemyNum()
     {
@@ -84,7 +86,7 @@ public class BattleSystem : MonoBehaviour
             StartBattleUI();
             audioManager.PlaySound(battleStartAudio);
 
-            stageTheme = musicManager.stageTheme;
+            
             musicManager.StartBGM(battleTheme);
 
             battleState = State.Active;

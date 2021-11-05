@@ -5165,7 +5165,7 @@ MonoBehaviour:
   gravity: -1.8
   gravityMin: -17
   aniMoveSpeed: 0
-  friction: {x: 0.5, y: 0.5, z: 0}
+  friction: {x: 0.95, y: 0.99, z: 0}
   direction: 1
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
@@ -5228,7 +5228,7 @@ MonoBehaviour:
   shootAnim: 0
   shootAnimMax: 0
   bullets:
-  - {fileID: 1946779624007576, guid: a3a3077bfe70242439758ebb1d4c4bc7, type: 3}
+  - {fileID: 1946779624007576, guid: 10e3966c32593ce4f901de6c1a077754, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -5256,7 +5256,7 @@ MonoBehaviour:
   dashes: 0
   dashMax: 1
   coyoteTimer: 3
-  dashCooldown: 60
+  dashCooldown: 90
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
@@ -5270,17 +5270,17 @@ MonoBehaviour:
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
   attackStrings:
-  - SwordHit
+  - Enemy/Enemy Hurt
   - BulletHit
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
   hitStunStateIndex: 7
   deathStateIndex: 36
   hitStun: 0
@@ -5333,12 +5333,12 @@ MonoBehaviour:
   damageShowTime: 1
   damageShowSpeed: 1
   IsDead: 0
-  shouldSpawnHealth: 0
+  shouldSpawnHealth: 1
   isDesperation: 0
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
-  numOfPickups: 0
+  numOfPickups: 3
   currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
     type: 3}
   healthPickup: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
@@ -5351,7 +5351,7 @@ MonoBehaviour:
   dizzyMat: {fileID: 2100000, guid: 469afaba61093c04b87c4450611b6312, type: 2}
   rend: {fileID: 806714263726348811}
   effectsRend: {fileID: 684295059216596782}
-  healthDropRate: 5
+  healthDropRate: 2
   effectIndex: 0
 --- !u!114 &9222160700570607815
 MonoBehaviour:

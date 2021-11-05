@@ -5273,17 +5273,17 @@ MonoBehaviour:
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
   attackStrings:
-  - SwordHit
+  - Enemy/Enemy Hurt
   - BulletHit
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
   hitStunStateIndex: 7
   deathStateIndex: 36
   hitStun: 0
@@ -5341,7 +5341,7 @@ MonoBehaviour:
   HealthColor: {r: 0, g: 0, b: 0, a: 0}
   DamageColor: {r: 0, g: 0, b: 0, a: 0}
   BackColor: {r: 0, g: 0, b: 0, a: 0}
-  numOfPickups: 0
+  numOfPickups: 1
   currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
     type: 3}
   healthPickup: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
@@ -5354,7 +5354,7 @@ MonoBehaviour:
   dizzyMat: {fileID: 2100000, guid: 469afaba61093c04b87c4450611b6312, type: 2}
   rend: {fileID: 847266597192422533}
   effectsRend: {fileID: 688774325221454240}
-  healthDropRate: 5
+  healthDropRate: 1
   effectIndex: 0
 --- !u!114 &9154600237284142665
 MonoBehaviour:
@@ -5409,7 +5409,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5420,7 +5420,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 3}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &4629863471296448300
 MonoBehaviour:

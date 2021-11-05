@@ -4195,11 +4195,11 @@ MonoBehaviour:
   collTrigger: {fileID: 2001105818}
   battleTheme:
     Guid:
-      Data1: 1147201400
-      Data2: 1131910282
-      Data3: -829060182
-      Data4: 125213129
-    Path: event:/Music/Stage One
+      Data1: 633641115
+      Data2: 1290937138
+      Data3: -858821189
+      Data4: -704507764
+    Path: event:/Music/Boss
   stageTheme:
     Guid:
       Data1: 1147201400
@@ -4409,11 +4409,11 @@ MonoBehaviour:
   collTrigger: {fileID: 1766584603}
   battleTheme:
     Guid:
-      Data1: 1147201400
-      Data2: 1131910282
-      Data3: -829060182
-      Data4: 125213129
-    Path: event:/Music/Stage One
+      Data1: 633641115
+      Data2: 1290937138
+      Data3: -858821189
+      Data4: -704507764
+    Path: event:/Music/Boss
   stageTheme:
     Guid:
       Data1: 1147201400
@@ -6312,11 +6312,11 @@ MonoBehaviour:
   collTrigger: {fileID: 1473822133}
   battleTheme:
     Guid:
-      Data1: 1147201400
-      Data2: 1131910282
-      Data3: -829060182
-      Data4: 125213129
-    Path: event:/Music/Stage One
+      Data1: 633641115
+      Data2: 1290937138
+      Data3: -858821189
+      Data4: -704507764
+    Path: event:/Music/Boss
   stageTheme:
     Guid:
       Data1: 1147201400
@@ -7945,11 +7945,11 @@ MonoBehaviour:
   collTrigger: {fileID: 1952786862}
   battleTheme:
     Guid:
-      Data1: 1147201400
-      Data2: 1131910282
-      Data3: -829060182
-      Data4: 125213129
-    Path: event:/Music/Stage One
+      Data1: 633641115
+      Data2: 1290937138
+      Data3: -858821189
+      Data4: -704507764
+    Path: event:/Music/Boss
   stageTheme:
     Guid:
       Data1: 1147201400
@@ -8858,14 +8858,23 @@ MonoBehaviour:
   - profile: {fileID: 7694656284260392015, guid: f0120b5629f3f4449a7fe99b64f1ab92,
       type: 3}
     name: ???
-    sentences: 'You''re my problem.
-
-      I''m taking that driver now.'
+    sentences: Not before I take your belt.
   OnDialogueStart:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 163429667}
         m_MethodName: ShowCharacterCutscene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4711075557076098983}
+        m_MethodName: BossRoomMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8960,6 +8969,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8935356816375863428}
         m_MethodName: ShowCharacterCutscene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6662486003191460004}
+        m_MethodName: StopMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9661,6 +9681,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 633103858996051773}
         m_MethodName: FacePlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4711075557076098983}
+        m_MethodName: BossRoomMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10770,6 +10801,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21b46931672535a4988b783d11419114, type: 3}
+--- !u!114 &4711075557076098983 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5842628681000577003, guid: 21b46931672535a4988b783d11419114,
+    type: 3}
+  m_PrefabInstance: {fileID: 4711075557076098982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a521cc3beec2db43a93da3ad7febcf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4799150547384471484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4799150547384471484, guid: aa6d03188b0524046b302a0aef81942f,

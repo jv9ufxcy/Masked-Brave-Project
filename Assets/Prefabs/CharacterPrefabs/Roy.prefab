@@ -24193,11 +24193,9 @@ MonoBehaviour:
     type: 3}
   shootAnim: 0
   shootAnimMax: 0
-  fireRate: 10
   bullets:
   - {fileID: 1946779624007576, guid: ae8250bfc1f132c46afa261d098667d6, type: 3}
   - {fileID: 1946779624007576, guid: f50d52cb40290394daffc39943364489, type: 3}
-  bulletSpawnPos: {x: 1, y: 1}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -24239,26 +24237,28 @@ MonoBehaviour:
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
   attackStrings:
-  - SwordHit
+  - Enemy/Enemy Hurt
   - BulletHit
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
   hitStunStateIndex: 7
   deathStateIndex: 7
   hitStun: 0
   target: {fileID: 0}
-  turret: {fileID: 0}
+  spawners: []
   aggroRange: 20
   longAttackRange: 10
   shortAttackRange: 5
   attackCooldown: 60
+  horiCos: {x: 0, y: 0}
+  vertSign: {x: 0, y: 0}
   isNearPlayer: 0
   isLongRange: 0
   isShortRange: 0

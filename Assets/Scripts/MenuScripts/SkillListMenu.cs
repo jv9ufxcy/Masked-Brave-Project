@@ -6,7 +6,7 @@ using TMPro;
 
 public class SkillListMenu : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI descriptionAreaText;
+    [SerializeField] private TextMeshProUGUI descriptionAreaText, controlText;
     private void Start()
     {
         
@@ -14,9 +14,10 @@ public class SkillListMenu : MonoBehaviour
     private void Update()
     {
     }
-    public void UpdateDescriptionAreaText(string descriptionText)
+    public void UpdateDescriptionAreaText(string descriptionText, string controls)
     {
         descriptionAreaText.text = descriptionText;
+        controlText.text = controls;
     }
     
 }

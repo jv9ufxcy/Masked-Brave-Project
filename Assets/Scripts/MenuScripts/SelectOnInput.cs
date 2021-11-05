@@ -18,14 +18,14 @@ public class SelectOnInput : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetAxisRaw("Vertical")!=0&&buttonSelected==false)
+        if (Input.GetButton("Cancel") && eventSystem.alreadySelecting == false)
         {
             eventSystem.SetSelectedGameObject(selectedObject);
-                buttonSelected = true;
+                //buttonSelected = true;
         }
 	}
     private void OnDisable()
     {
-        buttonSelected = false;
+        //buttonSelected = false;
     }
 }

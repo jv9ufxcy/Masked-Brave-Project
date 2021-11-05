@@ -58,7 +58,7 @@ public class PickupRecoveryItem : MonoBehaviour
             {
                 player.BuildMeter(meterToGive);
             }
-            if (currencyToGive>0)
+            if (currencyToGive>0&&Mission.instance!=null)
             {
                 Mission.instance.ChangeCurrency(currencyToGive);
             }

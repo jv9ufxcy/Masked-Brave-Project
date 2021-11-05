@@ -42,24 +42,27 @@ public class MusicManager : MonoBehaviour
     {
         StopMusic();
         //BackgroundMusic.clip = music;
-        studioEventEmitter.EventReference = path;
-        //BGM = FMODUnity.RuntimeManager.CreateInstance(path);
-        StartMusic();
+        //studioEventEmitter.EventReference = path;
+        BGM = FMODUnity.RuntimeManager.CreateInstance(path);
+        BGM.start();
+        BGM.release();
 
+        //Debug.Log(path);
         //FMODUnity.RuntimeManager.PlayOneShot()
     }
 
     public void StartMusic()
     {
-        studioEventEmitter.Play();
-        //BGM.start();
+        //studioEventEmitter.Play();
+        //Debug.Log(studioEventEmitter.EventReference);
+        
         //BackgroundMusic.Play();
     }
 
     public void StopMusic()
     {
-        studioEventEmitter.Stop();
-        //BGM.release();
+        //studioEventEmitter.Stop();
+        BGM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         //BackgroundMusic.Stop();
     }
 }

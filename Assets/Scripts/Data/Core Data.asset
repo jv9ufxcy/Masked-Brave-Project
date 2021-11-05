@@ -2826,6 +2826,13 @@ MonoBehaviour:
       parameters:
       - name: Vroom2
         val: 0
+    - start: 20.103092
+      end: 50
+      active: 1
+      script: 9
+      parameters:
+      - name: 
+        val: 1
     attacks:
     - start: 10
       length: 5
@@ -3897,7 +3904,7 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 0
-      hitStun: 10
+      hitStun: 20
       hitStop: 10
       damage: 4
       meterGain: 0
@@ -4018,13 +4025,27 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Enemy/Laser
     index: 0
     length: 60
     loop: 0
     blendRate: 0.1
     events: []
-    attacks: []
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 15
+      hitStop: 5
+      damage: 3
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 100
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 30, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -5028,7 +5049,7 @@ MonoBehaviour:
       length: 25
       hitStun: 20
       hitStop: 5
-      damage: 0
+      damage: 3
       meterGain: 0
       comboValue: 0
       poiseDamage: 0
@@ -5143,7 +5164,7 @@ MonoBehaviour:
       length: 45
       hitStun: 10
       hitStop: 5
-      damage: 0
+      damage: 2
       meterGain: 0
       comboValue: 0
       poiseDamage: 0
@@ -5175,9 +5196,26 @@ MonoBehaviour:
       - name: 
         val: 16
       - name: 
+        val: 1
+      - name: 
+        val: 0.75
+      - name: 
         val: 0
       - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
         val: 1
+      - name: 
+        val: 0.75
       - name: 
         val: 0
       - name: 
@@ -5192,31 +5230,28 @@ MonoBehaviour:
       - name: 
         val: 16
       - name: 
-        val: 0
-      - name: 
         val: 1
       - name: 
-        val: 0
-      - name: 
-        val: 0
-    - start: 60
-      end: 60
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 16
-      - name: 
-        val: 0
-      - name: 
-        val: 1
+        val: 0.75
       - name: 
         val: 0
       - name: 
         val: 0
-    attacks: []
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 10
+      hitStop: 5
+      damage: 1
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 3
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -5225,7 +5260,7 @@ MonoBehaviour:
     wallReq: 0
   - stateName: Weapon/RetreatShooting
     index: 0
-    length: 190
+    length: 160
     loop: 0
     blendRate: 0.1
     events:
@@ -5250,101 +5285,101 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -4
-    - start: 55
+    - start: 50
+      end: 50
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: -45
+    - start: 65
+      end: 65
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: -45
+    - start: 80
+      end: 80
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: -45
+    - start: 50
       end: 55
       active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 16
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: -45
-    - start: 75
-      end: 75
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 16
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: -45
-    - start: 95
-      end: 95
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 16
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: -45
-    - start: 55
-      end: 60
-      active: 1
       script: 1
       parameters:
       - name: 
         val: -8
-    - start: 55
-      end: 60
+    - start: 50
+      end: 55
       active: 1
       script: 0
       parameters:
       - name: 
         val: 8
-    - start: 70
-      end: 75
+    - start: 65
+      end: 70
       active: 1
       script: 1
       parameters:
       - name: 
         val: -8
-    - start: 70
-      end: 75
+    - start: 65
+      end: 70
       active: 1
       script: 0
       parameters:
       - name: 
         val: 8
-    - start: 90
-      end: 120
+    - start: 80
+      end: 100
       active: 1
       script: 1
       parameters:
       - name: 
         val: -8
-    - start: 90
-      end: 95
+    - start: 80
+      end: 85
       active: 1
       script: 0
       parameters:
       - name: 
         val: 8
-    - start: 125
-      end: 190
+    - start: 100
+      end: 160
       active: 1
       script: 0
       parameters:
@@ -5355,10 +5390,10 @@ MonoBehaviour:
       length: 0
       hitStun: 20
       hitStop: 5
-      damage: 0
+      damage: 1
       meterGain: 0
       comboValue: 0
-      poiseDamage: 0
+      poiseDamage: 3
       attackType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 20, y: 0, z: 0}
@@ -5391,7 +5426,21 @@ MonoBehaviour:
       active: 1
       script: 22
       parameters: []
-    attacks: []
+    attacks:
+    - start: 30
+      length: 15
+      hitStun: 5
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 15, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -6551,7 +6600,7 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 3
-          state: 38
+          state: 39
           inputs: 
         followUps: 
         strict: 0
@@ -7181,4 +7230,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 0
+  currentMovelistIndex: 2
+  currentControllerIndex: 0

@@ -26,7 +26,7 @@ public class CharacterStateEditorWindow : EditorWindow
             }
         }
         scrollView = GUILayout.BeginScrollView(scrollView);
-        //currentStateIndex = 0; //use in case of nre
+        currentStateIndex = 0; //use in case of nre
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label(currentStateIndex.ToString() + " | " + currentCharacterState.stateName, GUILayout.Width(200));
         currentStateIndex = EditorGUILayout.Popup(currentStateIndex, coreData.GetStateNames());

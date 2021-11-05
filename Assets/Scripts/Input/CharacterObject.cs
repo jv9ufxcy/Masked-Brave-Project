@@ -972,7 +972,8 @@ public class CharacterObject : MonoBehaviour, IHittable
         GameObject newbullet = Instantiate(bullets[5], transform.position + offset, Quaternion.identity);
         kinzecter = newbullet;
         //kinzecter.transform.localScale = new Vector3(direction, 1, 1);
-        kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction, 0, 0));
+        int onWall = wallFlag ? -1 : 1;
+        kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction*onWall, 0, 0));
         kinzecter.GetComponent<BulletHit>().character = characterObject;
         kinzecter.GetComponent<Hitbox>().character = characterObject;
         isKinzecterOut = true;
@@ -1007,13 +1008,14 @@ public class CharacterObject : MonoBehaviour, IHittable
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position + offset, Quaternion.identity);
         BulletHit bullet = newbullet.GetComponent<BulletHit>();
         bullet.character = characterObject;
-        bullet.direction.x = direction;
-        bullet.velocity.x = direction;
+        int onWall = wallFlag ? -1 : 1;
+        bullet.direction.x = direction * onWall;
+        bullet.velocity.x = direction * onWall;
         bullet.attackIndex = (int)attackIndex;
         bullet.speed = bulletSpeed;
         bullet.rotation = bulletRot*direction;
         //newbullet.GetComponent<Hitbox>().character = characterObject;
-        newbullet.transform.localScale = new Vector3(direction, 1, 1);
+        newbullet.transform.localScale = new Vector3(direction * onWall, 1, 1);
     }
     public void SpecialFireCheck(float bulletType)
     {
@@ -1190,7 +1192,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 airMod = 2f;
             if (Input.GetButtonUp(GameEngine.coreData.rawInputs[dashInput].name))
                 airMod = 1f;
-            if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name) && isOnWall)
+            if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name) && wallFlag)
                 airMod = 1f;
         }
     }

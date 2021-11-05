@@ -734,17 +734,17 @@ MonoBehaviour:
   grapplePoint: {fileID: 2833465961454588525}
   grappleTarget: {fileID: 2833465961454588525}
   attackStrings:
-  - SwordHit
+  - Enemy/Enemy Hurt
   - BulletHit
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
-  - TakeDamage
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
+  - Enemy/Enemy Hurt
   hitStunStateIndex: 7
   deathStateIndex: 36
   hitStun: 0
@@ -754,6 +754,8 @@ MonoBehaviour:
   longAttackRange: 10
   shortAttackRange: 5
   attackCooldown: 180
+  horiCos: {x: 0, y: 0}
+  vertSign: {x: 0, y: 0}
   isNearPlayer: 0
   isLongRange: 0
   isShortRange: 0
