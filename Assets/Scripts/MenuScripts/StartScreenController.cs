@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class StartScreenController : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class StartScreenController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //ApplyVideoOptions();
     }
 
     // Update is called once per frame
@@ -74,5 +75,45 @@ public class StartScreenController : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+    [Header("Video Settings")]
+    [SerializeField] private TextMeshProUGUI resDisplayText;
+    [SerializeField] private Toggle toggle;
+    [SerializeField] private List<int> resolutionWidths;
+    [SerializeField] private List<int> resolutionHeights;
+    private int resolutionIndex=3;
+    private int chosenWidth, chosenHeight;
+    private bool isFullScreen;
+    public void ApplyVideoOptions()
+    {
+        GlobalVars.LoadOptions();
+
+        isFullScreen = (Screen.fullScreen);
+        toggle.isOn = isFullScreen;
+        resolutionIndex = 3;
+        chosenWidth = resolutionWidths[resolutionIndex];
+        chosenHeight = resolutionHeights[resolutionIndex];
+    }
+    public void ToggleFullScreen()
+    {
+        isFullScreen = toggle.isOn;
+    }
+    private void DisplayChosenRes()
+    {
+        resDisplayText.text = chosenWidth + " x " + chosenHeight;
+    }
+    public void SetResolution(int index)
+    {
+        resolutionIndex = index;
+        chosenWidth = resolutionWidths[resolutionIndex];
+        chosenHeight = resolutionHeights[resolutionIndex];
+
+        DisplayChosenRes();//show what was set with the text
+        
+    }
+    public void Apply()
+    {
+        GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1);
+        Screen.SetResolution(chosenWidth, chosenHeight, isFullScreen);
     }
 }

@@ -22,7 +22,7 @@ public class Mission : MonoBehaviour
     [Space]
     private TimeSpan timePlaying;
     [SerializeField]private string timeCounter = "Time: 00:00.00";
-    public float elapsedTime;
+    public float elapsedTime, savedTime;
     public float bestTime, maxTime;
 
     public float missionPoints, missionPointMax;
@@ -50,28 +50,51 @@ public class Mission : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (isReload)
+        {
+            RestartMission();
+            Debug.Log("ReStart");
+        }
+    }
     private void Start()
     {
         timeCounter = "00:00.00";
         isMissionActive = false;
-
+        Debug.Log("Start");
         StartCoroutine(InitializeCoRoutine());
     }
     private IEnumerator InitializeCoRoutine()
     {
         yield return new WaitForFixedUpdate();
         Initialize();
-        if (isReload)
-        {
-            StartMission();
-        }
     }
+
+    private void RestartMission()
+    {
+        StartCoroutine(InitializeCoRoutine());
+        elapsedTime = savedTime;
+        mainChar.controlType = CharacterObject.ControlType.PLAYER;
+        BeginTimer();
+        MusicManager.instance.StartBGM(stageTheme);
+    }
+
     private void Initialize()
     {
         mainChar = GameEngine.gameEngine.mainCharacter;
         menuTimer = PauseManager.pauseManager.pointsText[3];
         currencyText = PauseManager.pauseManager.pointsText[4];
         missionStartText = PauseManager.pauseManager.pointsText[5];
+        Debug.Log("Initialize");
     }
     private IEnumerator MissionStart()
     {
@@ -100,7 +123,10 @@ public class Mission : MonoBehaviour
     }
     public void StartMission()
     {
-        StartCoroutine(MissionStart());
+        if (isReload)
+            RestartMission();
+        else
+            StartCoroutine(MissionStart());
     }
     public void EndMission()
     {
@@ -114,6 +140,7 @@ public class Mission : MonoBehaviour
     }
     private void EndTimer()
     {
+        savedTime = elapsedTime;
         MusicManager.instance.StopMusic();
         isMissionActive = false;
     }
