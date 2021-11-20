@@ -11,20 +11,21 @@ public class BulletHit : MonoBehaviour
     private AudioManager audioManager;
     [Tooltip("0 - straight, 1 - homing, 2 - target")]
     public int bulletType;
-    public Vector2 direction;
+    public Vector2 direction, bulletVel;
     public CharacterObject target;
     public EnemySpawn closestEnemy;
     public Vector3 targetPos, velocity;
     [SerializeField] private GameObject bulletHitEffect, bulletChild;
     [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
-    public float lifeTime = 2f, speed, rotation, gravity=-2f, targetRange=10f;
+    public float lifeTime = 2f, speed, rotation,maxJumpHeight = 4f, timeToJumpApex=0.125f,maxJumpVelocity, gravity,velocityXSmoothing, targetRange=10f;
     [SerializeField] private int attackState = 0;
     [SerializeField] private LayerMask whatLayersToHit;
 
     [SerializeField] private string bulletCollisionSound;
     [SerializeField] private bool shouldScreenshakeOnHit = false, shouldStopOnHit = true, canReflect = true, parabolicArc = false;
     public int bulletChain = 0, newBulletSpeed = 0;
-    public CharacterObject character, thisBullet;
+    public CharacterObject character;
+    private Controller2D thisBullet;
     // Use this for initialization
     void Awake()
     {
@@ -34,8 +35,10 @@ public class BulletHit : MonoBehaviour
 
         if (bulletType==4)
         {
-            thisBullet = GetComponent<CharacterObject>();
-            thisBullet.FaceDir(direction.x);
+            thisBullet = GetComponent<Controller2D>();
+            gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+            maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+            //minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);//thisBullet.FaceDir(direction.x);
         }
     }
     void Start()
@@ -52,7 +55,7 @@ public class BulletHit : MonoBehaviour
         }
         if (parabolicArc)
         {
-            thisBullet.Jump(1);
+            bulletVel.y = maxJumpHeight;
         }
     }
     private void FixedUpdate()
@@ -74,8 +77,8 @@ public class BulletHit : MonoBehaviour
                     transform.position = closestEnemy.transform.position;
                 break;
             case 4: //follow ground
-
-                thisBullet.FrontVelocity( speed * transform.localScale.x);
+                Controller2DMovement();
+                //thisBullet.FrontVelocity( speed * transform.localScale.x);
                 break;
             case 5:
                 if (boomerangStartTime > 0)
@@ -101,6 +104,26 @@ public class BulletHit : MonoBehaviour
             OnDestroyGO();
         }
     }
+
+    private void Controller2DMovement()
+    {
+        float targetVelocityX = (speed/100) * transform.localScale.x;
+        bulletVel.x = Mathf.SmoothDamp(bulletVel.x, targetVelocityX, ref velocityXSmoothing, 0);
+        bulletVel.y += gravity * Time.fixedDeltaTime;
+        thisBullet.Move(bulletVel, false);
+        if (thisBullet.collisions.above || thisBullet.collisions.below)
+        {
+            if (thisBullet.collisions.slidingDownMaxSlope)
+            {
+                velocity.y += thisBullet.collisions.slopeNormal.y * -gravity * Time.fixedDeltaTime;
+            }
+            else
+            {
+                velocity.y = 0;
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(tagToCollide))
@@ -133,7 +156,14 @@ public class BulletHit : MonoBehaviour
                 OnDestroyGO();
             }
         }
-        if (bulletType==5)
+        if (other.gameObject.CompareTag(tagToCollide))
+        {
+            if (shouldStopOnHit)
+            {
+                OnDestroyGO();
+            }
+        }
+        if (bulletType == 5)
         {
             if (boomerangStartTime <=0 && other.CompareTag(tagToCollide))
             {
@@ -161,7 +191,8 @@ public class BulletHit : MonoBehaviour
             Instantiate(bulletHitEffect, transform.position, transform.rotation);
             if (thisBullet !=null)
             {
-                thisBullet.StartStateFromScript(attackState);
+                //thisBullet.StartStateFromScript(attackState);
+                //rework explosion
             }
             Destroy(gameObject, destroyTimer);
         }

@@ -10,12 +10,10 @@ using System.Linq;
 public class CharacterObject : MonoBehaviour, IHittable
 {
     [Header("Movement")]
-    [HideInInspector]public Vector2 velocity;
+    public Vector2 velocity;
 
-    public float gravity = -0.01f, gravityMin = -17f;
+    public float gravity = -0.01f;
     public float aniMoveSpeed;
-
-    public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
     [SerializeField] private float direction = 1;
 
     [HideInInspector] public Rigidbody2D myRB;
@@ -70,6 +68,11 @@ public class CharacterObject : MonoBehaviour, IHittable
             lineRend.transform.position = Vector3.zero;
             lineRend.enabled = false;
         }
+
+        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
@@ -147,7 +150,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
             UpdateTimers();
         }
-            UpdateAnimator();
+        UpdateAnimator();
     }
     public void UpdateCharacter()
     {
@@ -550,12 +553,62 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     void HorizontalDrag(float x) { velocity.x = x; }
     void VerticalDrag(float y) { velocity.y = y; }
+    [Header("Wall Jumps")]
+    public float maxJumpHeight = 4;
+    public float minJumpHeight = .125f;
+    public float timeToJumpApex = .4f;
+    public float accelerationTimeAirborne = 0f, accelerationTimeGrounded = 0f;
+
+    public Vector2 wallJumpClimb;
+    public Vector2 wallJumpOff;
+    public Vector2 wallLeap;
+
+    public float wallSlideSpeedMax = 4;
+    public float wallStickTime = .06f;
+    float timeToWallUnstick;
+    float maxJumpVelocity;
+    float minJumpVelocity;
+    bool wallSliding;
+    int wallDirX;
     public void Jump(float _pow)
     {
-        velocity.y = _pow*jumpPow;
-        jumps--;
+        //velocity.y = _pow*jumpPow;
+        //jumps--;
 
         landingParticle.Play();
+        if (wallSliding)
+        {
+            if (wallDirX == leftStick.x)
+            {
+                velocity.x = -wallDirX * wallJumpClimb.x;
+                velocity.y = wallJumpClimb.y;
+            }
+            else if (leftStick.x == 0)
+            {
+                velocity.x = -wallDirX * wallJumpOff.x;
+                velocity.y = wallJumpOff.y;
+            }
+            else
+            {
+                velocity.x = -wallDirX * wallLeap.x;
+                velocity.y = wallLeap.y;
+            }
+        }
+        if (!aerialFlag)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                if (leftStick.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
+                { // not jumping against max slope
+                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+                }
+            }
+            else
+            {
+                velocity.y = maxJumpVelocity*_pow;
+            }
+        }
     }
     void CanCancel(float _val)
     {
@@ -585,6 +638,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
         {
+            float targetVelocityX;
             float _mov = 0;
             if (leftStick.x > deadzone)
             {
@@ -596,14 +650,25 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
             if (aerialFlag)
             {
-                velocity.x = (airMod * _mov) * moveSpeed * _pow;
+                targetVelocityX = leftStick.x * (moveSpeed*airMod) * _pow;
+                velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
+                //velocity.x = (airMod * _mov) * moveSpeed * _pow;
                 if (Mathf.Abs(airMod) == 2)
                 {
                     //ShowAfterImage();
                 }
             }
             else
-                velocity.x = (_mov) * moveSpeed * _pow;
+            {
+                targetVelocityX = leftStick.x * moveSpeed * _pow;
+                velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+                //velocity.x = (_mov) * moveSpeed * _pow;
+            }
+        }
+        else
+        {
+            velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         }
         if (hitStun <= 0)
         {
@@ -616,6 +681,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             if ((leftStick.x > deadzone || leftStick.x < -deadzone || leftStick.y > deadzone || leftStick.y < -deadzone))
             {
+                float targetVelocityX;
                 float _mov = 0;
                 if (leftStick.x > deadzone)
                 {
@@ -625,15 +691,22 @@ public class CharacterObject : MonoBehaviour, IHittable
                 {
                     _mov = -1;
                 }
-                velocity.x = (airMod * _mov) * moveSpeed * _pow;
+                //velocity.x = (airMod * _mov) * moveSpeed * _pow;
+                targetVelocityX = leftStick.x * (moveSpeed * airMod) * _pow;
+                velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
             }
+        }
+        else
+        {
+            velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         }
         if (hitStun <= 0)
         {
             FaceStick();
         }
     }
-    void VelocityY(float _pow)
+    public void VelocityY(float _pow)
     {
         velocity.y = _pow;
     }
@@ -1181,6 +1254,10 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         else if (crouchFlag)
             UnCrouch();
+        //else if (!aerialFlag)
+        //{
+        //    airMod = 1f;
+        //}
     }
 
 
@@ -1258,8 +1335,65 @@ public class CharacterObject : MonoBehaviour, IHittable
         specialMeter = Mathf.Clamp(specialMeter, 0f, specialMeterMax);
         healthManager.ChangeMeter((int)_val);
     }
+    float velocityXSmoothing;
+    void CalculateGravity()
+    {
+        //float targetVelocityX = leftStick.x * moveSpeed;
+        //velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        velocity.y += gravity * Time.fixedDeltaTime;
+    }
+    void HandleWallSliding()
+    {
+        wallDirX = (controller.collisions.left) ? -1 : 1;
+        wallSliding = false;
+        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0 && leftStick.x == wallDirX)
+        {
+            wallSliding = true;
+            animAerialState = -1f;
+            if (velocity.y < -wallSlideSpeedMax)
+            {
+                velocity.y = -wallSlideSpeedMax;
+            }
+
+            if (timeToWallUnstick > 0)
+            {
+                velocityXSmoothing = 0;
+                velocity.x = 0;
+
+                if (leftStick.x != wallDirX && leftStick.x != 0)
+                {
+                    timeToWallUnstick -= Time.fixedDeltaTime;
+                }
+                else
+                {
+                    timeToWallUnstick = wallStickTime;
+                }
+            }
+            else
+            {
+                timeToWallUnstick = wallStickTime;
+            }
+
+        }
+
+    }
     void UpdatePhysics()
     {
+        CalculateGravity();
+        HandleWallSliding();
+        controller.Move(velocity * Time.fixedDeltaTime, leftStick);
+        wallFlag = wallSliding;
+        if (controller.collisions.above || controller.collisions.below)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.fixedDeltaTime;
+            }
+            else
+            {
+                velocity.y = 0;
+            }
+        }
         if (IsGrounded())
         {
             aerialFlag = false;
@@ -1280,6 +1414,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             if (aerialTimer >= coyoteTimer)//coyote time
             {
                 aerialFlag = true;
+                hasLanded = false;
                 if (animAerialState <= 1f)
                 {
                     animAerialState += 0.1f;
@@ -1288,31 +1423,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                 {
                     jumps--;
                 }
-                if (IsOnWall() && leftStick.x == direction && velocity.y < 0)//wall
-                {
-                    velocity.y = -1.7f;
-                    animAerialState = -.01f;
-                    wallFlag = true;
-
-                }
-                else
-                {
-                    if (controller.collisions.above || controller.collisions.below)
-                        velocity.y = 0;
-                    else
-                    {
-                        velocity.y += gravity;
-                        Mathf.Clamp(velocity.y, gravityMin, 0);
-                        hasLanded = false;
-                    }
-
-                    wallFlag = false;
-                }
             }
 
         }
-        Move(velocity);
-        velocity.Scale(friction);
     }
     public void Move(Vector2 velocity)
     {
@@ -1326,19 +1439,19 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     public bool IsGrounded()
     {
-        RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
-        Color rayColor;
-        if (rayCastHit.collider != null)
-            rayColor = Color.green;
-        else
-            rayColor = Color.red;
-        Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y + groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
+        //RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
+        //Color rayColor;
+        //if (rayCastHit.collider != null)
+        //    rayColor = Color.green;
+        //else
+        //    rayColor = Color.red;
+        //Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        //Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
+        //Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y + groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
 
-        return rayCastHit.collider != null;
+        //return rayCastHit.collider != null;
 
-        //return controller.collisions.below;
+        return controller.collisions.below;
     }
     public bool IsOnWall()
     {
@@ -1581,6 +1694,9 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public int defStateIndex;
     public int[] defStates;
+
+    public float MaxJumpVelocity { get => maxJumpVelocity; set => maxJumpVelocity = value; }
+
     private void UpdateAI()
     {
         if (target == null)

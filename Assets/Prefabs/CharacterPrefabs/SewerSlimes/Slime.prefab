@@ -86,9 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
   gravity: -1.8
-  gravityMin: -17
   aniMoveSpeed: 0
-  friction: {x: 0.95, y: 0.99, z: 0}
   direction: 1
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
@@ -117,6 +115,16 @@ MonoBehaviour:
   animSpeed: 0
   hitActive: 0
   currentAttackIndex: 0
+  maxJumpHeight: 4
+  minJumpHeight: 0.125
+  timeToJumpApex: 0.4
+  accelerationTimeAirborne: 0.2
+  accelerationTimeGrounded: 0.1
+  wallJumpClimb: {x: 0, y: 0}
+  wallJumpOff: {x: 0, y: 0}
+  wallLeap: {x: 0, y: 0}
+  wallSlideSpeedMax: 4
+  wallStickTime: 0.06
   leftStick: {x: 0, y: 0}
   horizontalAxis: altPs4Horizontal
   verticalAxis: altPs4Vertical

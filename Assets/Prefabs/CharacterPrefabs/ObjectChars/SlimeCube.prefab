@@ -239,19 +239,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23e734f110507e48a4cd2e7298c898f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0}
-  gravity: -1.8
-  gravityMin: -17
   aniMoveSpeed: 0
-  friction: {x: 0.95, y: 0.99, z: 0.95}
-  direction: 1
   character: {fileID: 441265605}
   draw: {fileID: 1993314658}
   characterAnim: {fileID: 249713909}
   spriteRend: {fileID: 249713910}
   defaultMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
-  hitAudio: TakeDamage
+  isEnemySpawner: 0
+  hitAudio: Enemy/Slime Hurt
   movementSpeed: 15
   maxHealth: 3
   currentHealth: 0
@@ -273,7 +269,6 @@ MonoBehaviour:
   targetHitAnim: {x: 0, y: 0}
   animSpeed: 0
   landingParticle: {fileID: 1587091126}
-  controller: {fileID: 0}
   boxCollider2D: {fileID: 0}
   healthDropRate: 10
   effectIndex: 0
@@ -294,6 +289,16 @@ MonoBehaviour:
   hiddenLayer:
     serializedVersion: 2
     m_Bits: 1024
+  maxJumpHeight: 4
+  minJumpHeight: 1
+  timeToJumpApex: 0.4
+  wallJumpClimb: {x: 0, y: 0}
+  wallJumpOff: {x: 0, y: 0}
+  wallLeap: {x: 0, y: 0}
+  wallSlideSpeedMax: 3
+  wallStickTime: 0.25
+  gravity: -1.8
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!61 &5808954520956565907
 BoxCollider2D:
   m_ObjectHideFlags: 0

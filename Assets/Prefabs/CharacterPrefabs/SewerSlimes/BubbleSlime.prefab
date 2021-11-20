@@ -4805,9 +4805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
   gravity: 0
-  gravityMin: -17
   aniMoveSpeed: 0
-  friction: {x: 0.5, y: 0.5, z: 0}
   direction: 1
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
@@ -4836,6 +4834,16 @@ MonoBehaviour:
   animSpeed: 0
   hitActive: 0
   currentAttackIndex: 0
+  maxJumpHeight: 0
+  minJumpHeight: 0
+  timeToJumpApex: 0.4
+  accelerationTimeAirborne: 0.2
+  accelerationTimeGrounded: 0.1
+  wallJumpClimb: {x: 0, y: 0}
+  wallJumpOff: {x: 0, y: 0}
+  wallLeap: {x: 0, y: 0}
+  wallSlideSpeedMax: 0
+  wallStickTime: 0.06
   leftStick: {x: 0, y: 0}
   horizontalAxis: altPs4Horizontal
   verticalAxis: altPs4Vertical
@@ -4941,7 +4949,7 @@ MonoBehaviour:
   isLongRange: 0
   isShortRange: 0
   closeAttackState: 37000000
-  rangedAttackState: 3800000039000000
+  rangedAttackState: 38000000380000003900000038000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 1
@@ -4964,7 +4972,7 @@ MonoBehaviour:
   UI: 0
   maxMeter: 100
   minMeter: 0
-  maxHealth: 6
+  maxHealth: 8
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10

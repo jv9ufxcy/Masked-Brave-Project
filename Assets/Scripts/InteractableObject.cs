@@ -5,12 +5,12 @@ using UnityEngine;
 public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
 {
     [Header("Movement")]
-    public Vector2 velocity;
+    //public Vector2 velocity;
 
-    public float gravity = -0.01f, gravityMin = -17f;
+    //public float gravity = -0.01f, gravityMin = -17f;
     public float aniMoveSpeed;
 
-    public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
+    //public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
     //[SerializeField] private float direction = 1;
     [Header("CharacterModel")]
     public GameObject character;
@@ -39,7 +39,6 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
     void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
-        controller = GetComponent<Controller2D>();
         spriteRend = characterAnim.gameObject.GetComponent<SpriteRenderer>();
         audioManager = AudioManager.instance;
         
@@ -51,6 +50,11 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
             minion = GetComponentInChildren<MinionSpawner>();
             DeSpawn();
         }
+        controller = GetComponent<Controller2D>();
+
+        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
     }
 
     // Update is called once per frame
@@ -65,7 +69,7 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         }
         UpdateAnimator();
     }
-    public string hitAudio = "TakeDamage";
+    public string hitAudio = "Props/Box Break";
     public float movementSpeed=15f;
     void GetHit(CharacterObject attacker, AttackEvent curAtk)
     {
@@ -130,11 +134,28 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
     public float aerialTimer, groundDetectHeight, wallDetectWidth, animAerialState, animFallSpeed, coyoteTimer = 3f;
     void UpdatePhysics()
     {
+        CalculateVelocity();
+        HandleWallSliding();
+        controller.Move(velocity * Time.fixedDeltaTime, Vector2.zero);
+        wallFlag = wallSliding;
+        if (controller.collisions.above || controller.collisions.below)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.fixedDeltaTime;
+            }
+            else
+            {
+                velocity.y = 0;
+            }
+        }
         if (IsGrounded())
         {
             aerialFlag = false;
+            //wallFlag = false;
             aerialTimer = 0;
             animAerialState = 0f;
+            //velocity.y = 0;
             GroundTouch();
         }
         else
@@ -146,24 +167,14 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
             if (aerialTimer >= coyoteTimer)//coyote time
             {
                 aerialFlag = true;
+                hasLanded = false;
                 if (animAerialState <= 1f)
                 {
                     animAerialState += 0.1f;
                 }
-
-                if (controller.collisions.above || controller.collisions.below)
-                    velocity.y = 0;
-                else
-                {
-                    velocity.y += gravity;
-                    Mathf.Clamp(velocity.y, gravityMin, 0);
-                    hasLanded = false;
-                }
-                wallFlag = false;
             }
+
         }
-        Move(velocity);
-        velocity.Scale(friction);
     }
     [Header("Hit Stun")]
     public Vector2 curHitAnim;
@@ -180,15 +191,7 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
 
         Vector2 latSpeed = new Vector2(velocity.x, 0);
         aniMoveSpeed = Vector3.SqrMagnitude(latSpeed);
-        animFallSpeed = velocity.y /** 30f*/;
-        //characterAnim.SetFloat("moveSpeed", aniMoveSpeed);
-        //characterAnim.SetFloat("aerialState", animAerialState);
-        //characterAnim.SetBool("wallState", wallFlag);
-        //characterAnim.SetFloat("fallSpeed", animFallSpeed);
-        //characterAnim.SetFloat("hitAnimX", curHitAnim.x);
-        //characterAnim.SetFloat("hitAnimY", curHitAnim.y);
-        //characterAnim.SetFloat("animSpeed", animSpeed);
-
+        animFallSpeed = velocity.y;
     }
 
     public void SetVelocity(Vector3 v)
@@ -197,23 +200,10 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
     }
     public bool IsGrounded()
     {
-        RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, groundDetectHeight, whatCountsAsGround);
-        Color rayColor;
-        if (rayCastHit.collider != null)
-            rayColor = Color.green;
-        else
-            rayColor = Color.red;
-        Debug.DrawRay(boxCollider2D.bounds.center + new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, 0), Vector2.down * (boxCollider2D.bounds.extents.y + groundDetectHeight), rayColor);
-        Debug.DrawRay(boxCollider2D.bounds.center - new Vector3(boxCollider2D.bounds.extents.x, boxCollider2D.bounds.extents.y + groundDetectHeight), Vector2.right * (boxCollider2D.bounds.extents.x), rayColor);
-
-        return rayCastHit.collider != null;
-
-        //return controller.collisions.below;
+        return controller.collisions.below;
     }
     public bool IsOnWall()
     {
-
         return controller.collisions.left || controller.collisions.right;
     }
     private bool hasLanded;
@@ -227,7 +217,6 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
             landingParticle.Play();
         }
     }
-    [HideInInspector] public Controller2D controller;
     [HideInInspector] public BoxCollider2D boxCollider2D;
     public void Move(Vector2 velocity)
     {
@@ -302,16 +291,139 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
             transform.position = spawnPos;
         }
     }
+    public bool gravityFix = true;
     public void DeSpawn()
     {
         HideCharacter();
         SetMaxHealth();
         IsDead = true;
-        IsSpawned = false;
+        
+            IsSpawned = false;
+
         transform.position = spawnPos;
-        if (isEnemySpawner)
+    }
+    [Header("Jump")]
+    public float maxJumpHeight = 4;
+    public float minJumpHeight = 1;
+    public float timeToJumpApex = .4f;
+    float accelerationTimeAirborne = .2f;
+    float accelerationTimeGrounded = .1f;
+    float moveSpeed = 6;
+
+    public Vector2 wallJumpClimb;
+    public Vector2 wallJumpOff;
+    public Vector2 wallLeap;
+
+    public float wallSlideSpeedMax = 3;
+    public float wallStickTime = .25f;
+    float timeToWallUnstick;
+
+    public float gravity;
+    float maxJumpVelocity;
+    float minJumpVelocity;
+    public Vector3 velocity;
+    float velocityXSmoothing;
+
+    Controller2D controller;
+
+    Vector2 directionalInput;
+    bool wallSliding;
+    int wallDirX;
+
+    public void SetDirectionalInput(Vector2 input)
+    {
+        directionalInput = input;
+    }
+
+    public void OnJumpInputDown()
+    {
+        if (wallSliding)
         {
-            
+            if (wallDirX == directionalInput.x)
+            {
+                velocity.x = -wallDirX * wallJumpClimb.x;
+                velocity.y = wallJumpClimb.y;
+            }
+            else if (directionalInput.x == 0)
+            {
+                velocity.x = -wallDirX * wallJumpOff.x;
+                velocity.y = wallJumpOff.y;
+            }
+            else
+            {
+                velocity.x = -wallDirX * wallLeap.x;
+                velocity.y = wallLeap.y;
+            }
+        }
+        if (controller.collisions.below)
+        {
+            if (controller.collisions.slidingDownMaxSlope)
+            {
+                if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x))
+                { // not jumping against max slope
+                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+                }
+            }
+            else
+            {
+                velocity.y = maxJumpVelocity;
+            }
+        }
+    }
+
+    public void OnJumpInputUp()
+    {
+        if (velocity.y > minJumpVelocity)
+        {
+            velocity.y = minJumpVelocity;
+        }
+    }
+
+
+    void HandleWallSliding()
+    {
+        wallDirX = (controller.collisions.left) ? -1 : 1;
+        wallSliding = false;
+        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
+        {
+            wallSliding = true;
+
+            if (velocity.y < -wallSlideSpeedMax)
+            {
+                velocity.y = -wallSlideSpeedMax;
+            }
+
+            if (timeToWallUnstick > 0)
+            {
+                velocityXSmoothing = 0;
+                velocity.x = 0;
+
+                if (directionalInput.x != wallDirX && directionalInput.x != 0)
+                {
+                    timeToWallUnstick -= Time.deltaTime;
+                }
+                else
+                {
+                    timeToWallUnstick = wallStickTime;
+                }
+            }
+            else
+            {
+                timeToWallUnstick = wallStickTime;
+            }
+
+        }
+
+    }
+
+    void CalculateVelocity()
+    {
+        float targetVelocityX = directionalInput.x * moveSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        if (gravityFix)
+        {
+            velocity.y += gravity * Time.fixedDeltaTime;
         }
     }
 }

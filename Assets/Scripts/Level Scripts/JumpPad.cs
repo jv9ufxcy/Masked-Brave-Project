@@ -43,7 +43,8 @@ public class JumpPad : MonoBehaviour
             if ((aerialOnly && chara.aerialFlag) || !aerialOnly)
             {
                 chara.jumps++;
-                chara.Jump(jumpPow);
+                chara.VelocityY(chara.MaxJumpVelocity*jumpPow);
+                Debug.Log("Jumped at speed of " + chara.MaxJumpVelocity * jumpPow);
                 chara.canCancel = true;
                 switch (objType)
                 {
@@ -69,7 +70,8 @@ public class JumpPad : MonoBehaviour
             if ((aerialOnly && chara.aerialFlag) || !aerialOnly)
             {
                 chara.jumps++;
-                chara.Jump(jumpPow);
+                chara.VelocityY(chara.MaxJumpVelocity * jumpPow);
+                Debug.Log("Jumped at speed of " + chara.MaxJumpVelocity * jumpPow);
                 chara.canCancel=true;
                 switch (objType)
                 {
