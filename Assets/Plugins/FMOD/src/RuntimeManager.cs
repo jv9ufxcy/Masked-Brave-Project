@@ -20,6 +20,8 @@ namespace FMODUnity
     [AddComponentMenu("")]
     public class RuntimeManager : MonoBehaviour
     {
+        public const string BankStubPrefix = "bank stub:";
+
         static SystemNotInitializedException initException = null;
         static RuntimeManager instance;
 
@@ -27,7 +29,38 @@ namespace FMODUnity
         FMOD.DEBUG_CALLBACK debugCallback;
         FMOD.SYSTEM_CALLBACK errorCallback;
 
+        FMOD.Studio.System studioSystem;
+        FMOD.System coreSystem;
+        FMOD.DSP mixerHead;
+
         private bool isMuted = false;
+
+        Dictionary<FMOD.GUID, FMOD.Studio.EventDescription> cachedDescriptions = new Dictionary<FMOD.GUID, FMOD.Studio.EventDescription>(new GuidComparer());
+
+        Dictionary<string, LoadedBank> loadedBanks = new Dictionary<string, LoadedBank>();
+        List<string> sampleLoadRequests = new List<string>();
+
+        List<StudioEventEmitter> activeEmitters = new List<StudioEventEmitter>();
+
+        List<AttachedInstance> attachedInstances = new List<AttachedInstance>(128);
+
+#if UNITY_EDITOR
+        List<FMOD.Studio.EventInstance> eventPositionWarnings = new List<FMOD.Studio.EventInstance>();
+#endif
+
+        bool listenerWarningIssued = false;
+
+        protected bool isOverlayEnabled = false;
+        FMODRuntimeManagerOnGUIHelper overlayDrawer = null;
+        Rect windowRect = new Rect(10, 10, 300, 100);
+
+        string lastDebugText;
+        float lastDebugUpdate = 0;
+
+        private int LoadingBanksRef = 0;
+
+        public static List<StudioListener> Listeners = new List<StudioListener>();
+        private static int numListeners = 0;
 
         public static bool IsMuted
         {
@@ -158,18 +191,11 @@ namespace FMODUnity
             get { return Instance.coreSystem; }
         }
 
-        FMOD.Studio.System studioSystem;
-        FMOD.System coreSystem;
-        FMOD.DSP mixerHead;
-
         struct LoadedBank
         {
             public FMOD.Studio.Bank Bank;
             public int RefCount;
         }
-
-        Dictionary<string, LoadedBank> loadedBanks = new Dictionary<string, LoadedBank>();
-        List<string> sampleLoadRequests = new List<string>();
 
         // Explicit comparer to avoid issues on platforms that don't support JIT compilation
         class GuidComparer : IEqualityComparer<FMOD.GUID>
@@ -184,7 +210,6 @@ namespace FMODUnity
                 return obj.GetHashCode();
             }
         }
-        Dictionary<FMOD.GUID, FMOD.Studio.EventDescription> cachedDescriptions = new Dictionary<FMOD.GUID, FMOD.Studio.EventDescription>(new GuidComparer());
 
         void CheckInitResult(FMOD.RESULT result, string cause)
         {
@@ -366,8 +391,6 @@ retry:
             }
         }
 
-        List<StudioEventEmitter> activeEmitters = new List<StudioEventEmitter>();
-
         class AttachedInstance
         {
             public FMOD.Studio.EventInstance instance;
@@ -379,12 +402,6 @@ retry:
             public Rigidbody2D rigidBody2D;
             #endif
         }
-
-        List<AttachedInstance> attachedInstances = new List<AttachedInstance>(128);
-
-        #if UNITY_EDITOR
-        List<FMOD.Studio.EventInstance> eventPositionWarnings = new List<FMOD.Studio.EventInstance>();
-        #endif
 
         public static int AddListener(StudioListener listener)
         {
@@ -463,8 +480,6 @@ retry:
                 return false;
             }
         }
-
-        bool listenerWarningIssued = false;
 
         void Update()
         {
@@ -669,10 +684,6 @@ retry:
             }
         }
 
-        protected bool isOverlayEnabled = false;
-        FMODRuntimeManagerOnGUIHelper overlayDrawer = null;
-        Rect windowRect = new Rect(10, 10, 300, 100);
-
         public void ExecuteOnGUI()
         {
             if (studioSystem.isValid() && isOverlayEnabled)
@@ -688,8 +699,6 @@ retry:
         }
         #endif
 
-        string lastDebugText;
-        float lastDebugUpdate = 0;
         void DrawDebugOverlay(int windowID)
         {
             if (lastDebugUpdate + 0.25f < Time.unscaledTime)
@@ -826,8 +835,6 @@ retry:
         }
         #endif
 
-        private int LoadingBanksRef = 0;
-
         private void loadedBankRegister(LoadedBank loadedBank, string bankPath, string bankName, bool loadSamples, FMOD.RESULT loadResult)
         {
             LoadingBanksRef--;
@@ -959,8 +966,6 @@ retry:
             }
         }
 
-        public const string BankStubPrefix = "bank stub:";
-
         public static void LoadBank(TextAsset asset, bool loadSamples = false)
         {
             string bankName = asset.name;
@@ -1064,7 +1069,7 @@ retry:
                         LoadBank(bankName);
                     }
 
-                    WaitForAllLoads();
+                    WaitForAllSampleLoading();
                 }
                 catch (BankLoadException e)
                 {
@@ -1122,7 +1127,13 @@ retry:
             }
         }
 
+        [Obsolete("[FMOD] Deprecated. Use AnySampleDataLoading instead.")]
         public static bool AnyBankLoading()
+        {
+            return AnySampleDataLoading();
+        }
+
+        public static bool AnySampleDataLoading()
         {
             bool loading = false;
             foreach (LoadedBank bank in Instance.loadedBanks.Values)
@@ -1134,7 +1145,13 @@ retry:
             return loading;
         }
 
+        [Obsolete("[FMOD] Deprecated. Use WaitForAllSampleLoading instead.")]
         public static void WaitForAllLoads()
+        {
+            WaitForAllSampleLoading();
+        }
+
+        public static void WaitForAllSampleLoading()
         {
             Instance.studioSystem.flushSampleLoading();
         }
@@ -1328,9 +1345,6 @@ retry:
             return eventDesc;
         }
 
-        public static List<StudioListener> Listeners = new List<StudioListener>();
-        private static int numListeners = 0;
-
 #if UNITY_PHYSICS_EXIST
         public static void SetListenerLocation(GameObject gameObject, Rigidbody rigidBody, GameObject attenuationObject = null)
         {
@@ -1453,11 +1467,7 @@ retry:
         {
             get
             {
-                if (Instance.LoadingBanksRef == 0)
-                {
-                    return true;
-                }
-                return false;
+                return Instance.LoadingBanksRef == 0;
             }
         }
 

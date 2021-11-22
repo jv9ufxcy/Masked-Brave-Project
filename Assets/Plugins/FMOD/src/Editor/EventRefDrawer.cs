@@ -13,12 +13,12 @@ namespace FMODUnity
         static readonly Texture WarningIcon = EditorUtils.LoadImage("NotFound.png");
         static readonly GUIContent NotFoundWarning = new GUIContent("Event Not Found", WarningIcon);
 
+        static GUIStyle buttonStyle;
+
         private static Vector2 WarningSize()
         {
             return GUI.skin.label.CalcSize(NotFoundWarning);
         }
-
-        static GUIStyle buttonStyle;
 
         private static float GetBaseHeight()
         {
@@ -421,14 +421,6 @@ namespace FMODUnity
     {
         GUIStyle RichTextStyle;
 
-        void AffirmStyles()
-        {
-            if (RichTextStyle == null)
-            {
-                RichTextStyle = new GUIStyle(GUI.skin.label) { richText = true };
-            }
-        }
-
         const string HelpText =
             "This field has the <b>[EventRef]</b> attribute, which is obsolete.\n" +
             "To resolve this issue:\n" +
@@ -437,6 +429,17 @@ namespace FMODUnity
             "<b>[EventRef(MigrateTo=\"<fieldname>\")]</b>\n" +
             "* Run the <b>" + EventReferenceUpdater.MenuPath + "</b> command to " +
             "automatically migrate values from this field to the <b>EventReference</b> field";
+
+        static readonly Texture InfoIcon = EditorGUIUtility.IconContent("console.infoicon.sml").image;
+        static readonly Texture WarningIcon = EditorUtils.LoadImage("NotFound.png");
+
+        void AffirmStyles()
+        {
+            if (RichTextStyle == null)
+            {
+                RichTextStyle = new GUIStyle(GUI.skin.label) { richText = true };
+            }
+        }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -465,9 +468,6 @@ namespace FMODUnity
 
             EditorGUI.EndProperty();
         }
-
-        static readonly Texture InfoIcon = EditorGUIUtility.IconContent("console.infoicon.sml").image;
-        static readonly Texture WarningIcon = EditorUtils.LoadImage("NotFound.png");
 
         private GUIContent StatusContent(SerializedProperty property)
         {

@@ -50,7 +50,7 @@ public class StartScreenController : MonoBehaviour
             if (Input.GetButton("Cancel") && eventSystem.alreadySelecting == false)
             {
                 ActivateMenu();
-                eventSystem.SetSelectedGameObject(selectedObject);
+                //eventSystem.SetSelectedGameObject(selectedObject);
                 //buttonSelected = true;
             }
         }
@@ -62,6 +62,7 @@ public class StartScreenController : MonoBehaviour
         menuPanel.SetActive(true);
         isMainMenuActive = true;
         GlobalVars.instance.PassControllerValue(value);
+        eventSystem.SetSelectedGameObject(selectedObject);
     }
     public void LoadByIndex(string sceneToLoad)
     {

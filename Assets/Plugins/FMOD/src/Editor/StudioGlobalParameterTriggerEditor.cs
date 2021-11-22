@@ -17,6 +17,10 @@ namespace FMODUnity
 
         SerializedProperty data1, data2;
 
+        static GUIContent NotFoundWarning;
+
+        string currentPath;
+
         [SerializeField]
         EditorParamRef editorParamRef;
 
@@ -27,10 +31,6 @@ namespace FMODUnity
             tag = serializedObject.FindProperty("CollisionTag");
             value = serializedObject.FindProperty("value");
         }
-
-        static GUIContent NotFoundWarning;
-
-        string currentPath;
 
         public override void OnInspectorGUI()
         {

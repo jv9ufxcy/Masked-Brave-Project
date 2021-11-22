@@ -104,7 +104,7 @@ namespace FMODUnity
                     RuntimeUtils.DebugLogException(e);
                 }
             }
-            RuntimeManager.WaitForAllLoads();
+            RuntimeManager.WaitForAllSampleLoading();
         }
 
         public void Unload()

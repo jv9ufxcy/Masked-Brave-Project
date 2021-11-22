@@ -74,12 +74,6 @@ namespace FMODUnity
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtils.UpdateParamsOnEmitter(serializedObject, eventPath.stringValue);
-                if (editorEvent != null)
-                {
-                    overrideAtt.boolValue = false;
-                    minDistance.floatValue = editorEvent.MinDistance;
-                    maxDistance.floatValue = editorEvent.MaxDistance;
-                }
             }
 
             // Attenuation
@@ -140,6 +134,14 @@ namespace FMODUnity
             // This holds one SerializedObject for each object in the current selection.
             private List<SerializedObject> serializedTargets = new List<SerializedObject>();
 
+            // Mappings from EditorParamRef to initial parameter value property for all properties
+            // found in the current selection.
+            private List<PropertyRecord> propertyRecords = new List<PropertyRecord>();
+
+            // Any parameters that are in the current event but are missing from some objects in
+            // the current selection, so we can put them in the "Add" menu.
+            private List<EditorParamRef> missingParameters = new List<EditorParamRef>();
+
             // A mapping from EditorParamRef to the initial parameter value properties in the
             // current selection that have the same name.
             // We need this because some objects may be missing some properties, and properties with
@@ -150,14 +152,6 @@ namespace FMODUnity
                 public EditorParamRef paramRef;
                 public List<SerializedProperty> valueProperties;
             }
-
-            // Mappings from EditorParamRef to initial parameter value property for all properties
-            // found in the current selection.
-            private List<PropertyRecord> propertyRecords = new List<PropertyRecord>();
-
-            // Any parameters that are in the current event but are missing from some objects in
-            // the current selection, so we can put them in the "Add" menu.
-            private List<EditorParamRef> missingParameters = new List<EditorParamRef>();
 
             public ParameterValueView(SerializedObject serializedObject)
             {

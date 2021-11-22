@@ -29,6 +29,23 @@ namespace FMODUnity
 
     class EditorUtils : MonoBehaviour
     {
+        public const string BuildFolder = "Build";
+
+        static FMOD.Studio.System system;
+        static FMOD.SPEAKERMODE speakerMode;
+        static string encryptionKey;
+
+        private static List<FMOD.Studio.Bank> loadedPreviewBanks = new List<FMOD.Studio.Bank>();
+        static FMOD.Studio.EventDescription previewEventDesc;
+        static FMOD.Studio.EventInstance previewEventInstance;
+
+        static PreviewState previewState;
+
+        const int StudioScriptPort = 3663;
+        static NetworkStream networkStream = null;
+        static Socket socket = null;
+        static IAsyncResult socketConnection = null;
+
         public static void CheckResult(FMOD.RESULT result)
         {
             if (result != FMOD.RESULT.OK)
@@ -36,8 +53,6 @@ namespace FMODUnity
                 RuntimeUtils.DebugLogError(string.Format("FMOD Studio: Encountered Error: {0} {1}", result, FMOD.Error.String(result)));
             }
         }
-
-        public const string BuildFolder = "Build";
 
         public static void ValidateSource(out bool valid, out string reason)
         {
@@ -422,6 +437,12 @@ namespace FMODUnity
 
             EditorApplication.update -= CallStartupMethodsWhenReady;
 
+            // Explicitly initialize Settings so that both it and EditorSettings will work.
+            Settings.Initialize();
+
+            CheckBaseFolderGUID();
+            CheckMacLibraries();
+
             Legacy.CleanTemporaryChanges();
             CleanObsoleteFiles();
 
@@ -431,10 +452,6 @@ namespace FMODUnity
             EventManager.Startup();
             SetupWizardWindow.Startup();
         }
-
-        static FMOD.Studio.System system;
-        static FMOD.SPEAKERMODE speakerMode;
-        static string encryptionKey;
 
         static void RecreateSystem()
         {
@@ -532,6 +549,10 @@ namespace FMODUnity
                     i--;
                 }
             }
+
+            emitter.OverrideAttenuation = false;
+            emitter.OverrideMinDistance = eventRef.MinDistance;
+            emitter.OverrideMaxDistance = eventRef.MaxDistance;
         }
 
         public static FMOD.Studio.System System
@@ -618,19 +639,19 @@ namespace FMODUnity
             EditorUtility.DisplayDialog("FMOD Studio Unity Integration", text, "OK");
         }
 
-        private static List<FMOD.Studio.Bank> loadedPreviewBanks = new List<FMOD.Studio.Bank>();
-        static FMOD.Studio.EventDescription previewEventDesc;
-        static FMOD.Studio.EventInstance previewEventInstance;
-
-        static PreviewState previewState;
         public static PreviewState PreviewState
         {
             get { return previewState; }
         }
 
+        public static bool PreviewBanksLoaded
+        {
+            get { return loadedPreviewBanks.Count > 0; }
+        }
+
         public static void LoadPreviewBanks()
         {
-            if (loadedPreviewBanks.Count != 0)
+            if (PreviewBanksLoaded)
             {
                 return;
             }
@@ -649,7 +670,7 @@ namespace FMODUnity
 
         public static void UnloadPreviewBanks()
         {
-            if (loadedPreviewBanks.Count == 0)
+            if (!PreviewBanksLoaded)
             {
                 return;
             }
@@ -770,12 +791,6 @@ namespace FMODUnity
             }
             return data;
         }
-
-
-        const int StudioScriptPort = 3663;
-        static NetworkStream networkStream = null;
-        static Socket socket = null;
-        static IAsyncResult socketConnection = null;
 
         static NetworkStream ScriptStream
         {
@@ -1001,6 +1016,173 @@ namespace FMODUnity
             return eventGuid;
         }
 
+        // The FMOD base folder needs to have a known GUID so that we can find it
+        // if it has been moved, and so that platform specific integration packages can
+        // be installed correctly.
+        //
+        // However, old FMOD packages didn't specify a GUID for the base folder, meaning Unity
+        // would generate a new one. If this is the case, we need to patch the metadata with
+        // the correct GUID.
+        private static void CheckBaseFolderGUID()
+        {
+            if (string.IsNullOrEmpty(AssetDatabase.GUIDToAssetPath(RuntimeUtils.BaseFolderGUID)))
+            {
+                string folderPath = $"Assets/{RuntimeUtils.PluginBasePathDefault}";
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Debug.LogErrorFormat("FMOD: Couldn't find base folder by GUID ({0}) or path ({1})",
+                        RuntimeUtils.BaseFolderGUID, RuntimeUtils.PluginBasePathDefault);
+                    return;
+                }
+
+                const string DialogTitle = "Update FMOD Folder Metadata";
+
+                bool update = EditorUtility.DisplayDialog(DialogTitle,
+                    $"The metadata for the {folderPath} folder needs to be updated"
+                    + " so that FMOD can locate required files.\n\n"
+                    + "After this change you may move the FMOD folder to any location within your project.",
+                    "Update Metadata", "Ignore");
+
+                while (update)
+                {
+                    string error = ReplaceMetaFileGUID(folderPath, RuntimeUtils.BaseFolderGUID);
+
+                    if (error == null)
+                    {
+                        return;
+                    }
+
+                    update = EditorUtility.DisplayDialog(DialogTitle,
+                        $"Error updating metadata for {folderPath}:\n\n{error}\n\nDo you want to try again?",
+                        "Try Again", "Ignore");
+                }
+            }
+        }
+
+        private static string ReplaceMetaFileGUID(string assetPath, string newGUID)
+        {
+            try
+            {
+                string filePath = $"{assetPath}.meta";
+
+                if (!AssetDatabase.MakeEditable(filePath))
+                {
+                    return $"Failed to open {filePath} for editing";
+                }
+
+                string[] lines = File.ReadAllLines(filePath);
+
+                const string GuidPrefix = "guid:";
+                bool guidReplaced = false;
+
+                using (StreamWriter stream = File.CreateText(filePath))
+                {
+                    foreach (string line in lines)
+                    {
+                        if (!guidReplaced && line.StartsWith(GuidPrefix))
+                        {
+                            guidReplaced = true;
+                            stream.WriteLine($"{GuidPrefix} {newGUID}");
+                        }
+                        else
+                        {
+                            stream.WriteLine(line);
+                        }
+                    }
+                }
+
+                if (!guidReplaced)
+                {
+                    return $"Couldn't find a line starting with '{GuidPrefix}' in {filePath}";
+                }
+
+                Debug.LogFormat("FMOD: Updated the GUID for {0} to {1}", assetPath, newGUID);
+
+                AssetDatabase.ImportAsset(assetPath);
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarningFormat("FMOD: Failed to update the GUID for {0}: {1}", assetPath, e.Message);
+
+                return e.Message;
+            }
+        }
+
+        private static void CheckMacLibraries()
+        {
+            Platform platformMac = EditorSettings.Instance.GetPlatform(BuildTarget.StandaloneOSX);
+
+            IEnumerable<string> allLibraries = platformMac.GetBuildTargets()
+                .SelectMany(t => platformMac.GetBinaryAssetPaths(t, Platform.BinaryType.All))
+                .Distinct();
+
+            List<string> librariesToRepair = allLibraries.Where(path => {
+                    string infoPlistPath = $"{path}/Contents/Info.plist";
+
+                    if (File.Exists(infoPlistPath))
+                    {
+                        string contents = File.ReadAllText(infoPlistPath);
+
+                        return contents.Contains("\r\n");
+                    }
+
+                    return false;
+                })
+                .ToList();
+
+            if (!librariesToRepair.Any())
+            {
+                return;
+            }
+
+            librariesToRepair.Sort();
+
+            const string DialogTitle = "Repair FMOD Libraries";
+
+            bool repair = EditorUtility.DisplayDialog(DialogTitle,
+                "The following FMOD libraries contain incorrect line endings, and need to be repaired:\n\n" +
+                $"{string.Join("\n", librariesToRepair)}\n\n" +
+                "Do you want to repair them now?", "Repair", "Ignore");
+
+            while (repair)
+            {
+                try
+                {
+                    RepairMacLibraries(librariesToRepair);
+                    repair = false;
+                }
+                catch (Exception e)
+                {
+                    repair = EditorUtility.DisplayDialog(DialogTitle,
+                        $"Error repairing FMOD libraries:\n\n{e.Message}\n\nDo you want to try again?",
+                        "Try Again", "Ignore");
+                }
+            }
+        }
+
+        private static void RepairMacLibraries(IEnumerable<string> paths)
+        {
+            foreach (string path in paths)
+            {
+                string infoPlistPath = $"{path}/Contents/Info.plist";
+
+                if (!AssetDatabase.MakeEditable(infoPlistPath))
+                {
+                    throw new Exception($"Failed to open {infoPlistPath} for editing");
+                }
+
+                string contents = File.ReadAllText(infoPlistPath);
+                contents = contents.Replace("\r\n", "\n");
+
+                File.WriteAllText(infoPlistPath, contents);
+
+                Debug.LogFormat("FMOD: Replaced CRLF line endings with LF in {0}", infoPlistPath);
+            }
+        }
+
         private static void CleanObsoleteFiles()
         {
             if (Environment.GetCommandLineArgs().Any(a => a == "-exportPackage"))
@@ -1041,6 +1223,17 @@ namespace FMODUnity
 
     public class StagingSystem
     {
+        static string PlatformsFolder => $"Assets/{RuntimeUtils.PluginBasePath}/platforms";
+        static string StagingFolder => $"Assets/{RuntimeUtils.PluginBasePath}/staging";
+        const string AnyCPU = "AnyCPU";
+
+        static readonly LibInfo[] LibrariesToUpdate = {
+            new LibInfo() {cpu = "x86", os = "Windows",  lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows},
+            new LibInfo() {cpu = "x86_64", os = "Windows", lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows64},
+            new LibInfo() {cpu = "x86_64", os = "Linux", lib = "libfmodstudioL.so", platform = "linux", buildTarget = BuildTarget.StandaloneLinux64},
+            new LibInfo() {cpu = AnyCPU, os = "OSX", lib = "fmodstudioL.bundle", platform = "mac", buildTarget = BuildTarget.StandaloneOSX},
+        };
+
         struct LibInfo
         {
             public string cpu;
@@ -1049,10 +1242,6 @@ namespace FMODUnity
             public string platform;
             public BuildTarget buildTarget;
         };
-
-        static string PlatformsFolder => $"Assets/{RuntimeUtils.PluginBasePath}/platforms";
-        static string StagingFolder => $"Assets/{RuntimeUtils.PluginBasePath}/staging";
-        const string AnyCPU = "AnyCPU";
 
         private static string GetTargetPath(LibInfo libInfo)
         {
@@ -1094,13 +1283,6 @@ namespace FMODUnity
         {
             return $"{StagingFolder}/{libInfo.platform}/lib/{CPUAndLibPath(libInfo)}";
         }
-
-        static readonly LibInfo[] LibrariesToUpdate = {
-            new LibInfo() {cpu = "x86", os = "Windows",  lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows},
-            new LibInfo() {cpu = "x86_64", os = "Windows", lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows64},
-            new LibInfo() {cpu = "x86_64", os = "Linux", lib = "libfmodstudioL.so", platform = "linux", buildTarget = BuildTarget.StandaloneLinux64},
-            new LibInfo() {cpu = AnyCPU, os = "OSX", lib = "fmodstudioL.bundle", platform = "mac", buildTarget = BuildTarget.StandaloneOSX},
-        };
 
         public class UpdateStep
         {
@@ -1277,15 +1459,10 @@ namespace FMODUnity
                     ResetUpdateStage();
 
                     // This is so that Unity finds the new libraries
-                    ReloadScripts();
+                    EditorUtility.RequestScriptReload();
                 }
             ),
         };
-
-        private static void ReloadScripts()
-        {
-            EditorUtility.RequestScriptReload();
-        }
 
         private static PluginImporter GetPluginImporter(LibInfo libInfo)
         {
@@ -1365,11 +1542,11 @@ namespace FMODUnity
 
     public abstract class HelpContent : PopupWindowContent
     {
+        private GUIContent icon;
+
         protected abstract void Prepare();
         protected abstract Vector2 GetContentSize();
         protected abstract void DrawContent();
-
-        private GUIContent icon;
 
         public override void OnOpen()
         {
@@ -1407,15 +1584,15 @@ namespace FMODUnity
 
     public class SimpleHelp : HelpContent
     {
+        private GUIContent text;
+        private GUIStyle style;
+        private float textWidth;
+
         public SimpleHelp(string text, float textWidth = 300)
         {
             this.text = new GUIContent(text);
             this.textWidth = textWidth;
         }
-
-        private GUIContent text;
-        private GUIStyle style;
-        private float textWidth;
 
         protected override void Prepare()
         {

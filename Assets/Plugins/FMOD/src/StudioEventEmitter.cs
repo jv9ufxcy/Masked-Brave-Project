@@ -24,10 +24,8 @@ namespace FMODUnity
         public float OverrideMaxDistance = -1.0f;
 
         protected FMOD.Studio.EventDescription eventDescription;
-        public  FMOD.Studio.EventDescription EventDescription { get { return eventDescription; } }
 
         protected FMOD.Studio.EventInstance instance;
-        public  FMOD.Studio.EventInstance EventInstance { get { return instance; } }
 
         private bool hasTriggered = false;
         private bool isQuitting = false;
@@ -35,6 +33,10 @@ namespace FMODUnity
         private List<ParamRef> cachedParams = new List<ParamRef>();
 
         private const string SnapshotString = "snapshot";
+
+        public FMOD.Studio.EventDescription EventDescription { get { return eventDescription; } }
+
+        public FMOD.Studio.EventInstance EventInstance { get { return instance; } }
 
         public bool IsActive { get; private set; }
 
