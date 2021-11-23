@@ -44,7 +44,7 @@ public class JumpPad : MonoBehaviour
             {
                 chara.jumps++;
                 chara.VelocityY(chara.MaxJumpVelocity*jumpPow);
-                Debug.Log("Jumped at speed of " + chara.MaxJumpVelocity * jumpPow);
+                //Debug.Log("Jumped at speed of " + chara.MaxJumpVelocity * jumpPow);
                 chara.canCancel = true;
                 switch (objType)
                 {

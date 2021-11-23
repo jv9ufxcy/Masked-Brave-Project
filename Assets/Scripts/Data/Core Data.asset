@@ -2745,6 +2745,13 @@ MonoBehaviour:
       parameters:
       - name: Cutscene/Sword Brandish
         val: 0
+    - start: 0
+      end: 120
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -4161,8 +4168,8 @@ MonoBehaviour:
       parameters:
       - name: SlimeDrill
         val: 0
-    - start: 15
-      end: 25
+    - start: 0
+      end: 5.0000005
       active: 1
       script: 8
       parameters:
@@ -4383,8 +4390,8 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 11
-    - start: 20
-      end: 40
+    - start: 0
+      end: 10
       active: 1
       script: 8
       parameters:
@@ -4445,8 +4452,8 @@ MonoBehaviour:
       parameters:
       - name: Vroom
         val: 0
-    - start: 15
-      end: 30
+    - start: 0
+      end: 10
       active: 1
       script: 8
       parameters:
@@ -5028,7 +5035,7 @@ MonoBehaviour:
     attacks:
     - start: 5
       length: 10
-      hitStun: 30
+      hitStun: 20
       hitStop: 0
       damage: 0
       meterGain: 0
@@ -5036,9 +5043,9 @@ MonoBehaviour:
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 10, y: 0, z: 0}
+      knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 4, y: 2, z: 0}
+      hitBoxScale: {x: 4, y: 2, z: 1}
       cancelWindow: 0
     jumpReq: 0
     dashReq: 0
@@ -6921,7 +6928,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 
+        followUps: 0100000002000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -6931,8 +6938,40 @@ MonoBehaviour:
           height: 200
         activated: 1
         priority: 0
+      - idIndex: 1
+        command:
+          motionCommand: 0
+          input: 0
+          state: 1
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      - idIndex: 2
+        command:
+          motionCommand: 0
+          input: 2
+          state: 37
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 49
+          y: 126
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 
+      nextFollowups: 0100000002000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -6944,7 +6983,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 
+        followUps: 01000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -6954,8 +6993,24 @@ MonoBehaviour:
           height: 200
         activated: 1
         priority: 0
+      - idIndex: 1
+        command:
+          motionCommand: 0
+          input: 0
+          state: 18
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 
+      nextFollowups: 01000000
   - name: PursuerMajin
     commandStates:
     - stateName: Grounded
@@ -7300,5 +7355,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 2
+  currentMovelistIndex: 4
   currentControllerIndex: 0

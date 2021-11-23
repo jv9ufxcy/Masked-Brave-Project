@@ -70,7 +70,7 @@ public class Mission : MonoBehaviour
     {
         timeCounter = "00:00.00";
         isMissionActive = false;
-        Debug.Log("Start");
+        //Debug.Log("Start");
         StartCoroutine(InitializeCoRoutine());
     }
     private IEnumerator InitializeCoRoutine()
@@ -94,7 +94,7 @@ public class Mission : MonoBehaviour
         menuTimer = PauseManager.pauseManager.pointsText[3];
         currencyText = PauseManager.pauseManager.pointsText[4];
         missionStartText = PauseManager.pauseManager.pointsText[5];
-        Debug.Log("Initialize");
+        //Debug.Log("Initialize");
     }
     private IEnumerator MissionStart()
     {

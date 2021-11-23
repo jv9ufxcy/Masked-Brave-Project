@@ -188,15 +188,21 @@ public class BattleSystem : MonoBehaviour
         numOfEnemies.text = "x " + enemyNum();
         if (battleState==State.Active&&IsBattleOver())
         {
-            audioManager.PlaySound(battleEndAudio);
-            musicManager.StartBGM(stageTheme);
+            EndBattle();
             OnBattleEnded.Invoke();
-            enemySpawnList.Clear();
-            numOfEnemies.text = "x " + enemyNum();
-            EndBattleUI();
-            battleState = State.Conclusion;
         }
     }
+
+    public void EndBattle()
+    {
+        audioManager.PlaySound(battleEndAudio);
+        musicManager.StartBGM(stageTheme);
+        enemySpawnList.Clear();
+        numOfEnemies.text = "x " + enemyNum();
+        EndBattleUI();
+        battleState = State.Conclusion;
+    }
+
     private bool IsBattleOver()
     {
         foreach (Wave wave in waveArray)

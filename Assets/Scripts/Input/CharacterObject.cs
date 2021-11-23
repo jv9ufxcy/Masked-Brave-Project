@@ -102,7 +102,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 if (!DialogueManager.instance.isDialogueActive)
                     PauseMenu();
 
-                if (CanUnCrouch())
+                if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4)
                     Henshin();
 
                 if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
@@ -403,6 +403,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
             case 17:
                 QuickChangeForm((int)_params[0].val);
+                healthManager.lastChance = true;
                 break;
             case 18:
                 Screenshake(_params[0].val, _params[1].val);

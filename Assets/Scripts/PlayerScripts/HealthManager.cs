@@ -169,6 +169,8 @@ public class HealthManager : MonoBehaviour
             case UIType.PLAYER:
                 UpdateMeter();
                 SetDefaultMeter();
+                lastChance = true;
+                OnLastChance += LastChanceEvent;
                 break;
             case UIType.AI:
                 SetMaxHealth();
@@ -527,16 +529,14 @@ public class HealthManager : MonoBehaviour
         //GameEngine.gameEngine.Screenshake();
     }
     public int healthDropRate = 2, effectIndex;
+    public bool lastChance = true;
+    public event EventHandler OnLastChance;
     /// <summary>
     /// waits until the death animation is done and then destroys the character
     /// </summary>
     /// <returns></returns>
     IEnumerator DeathEvent(bool spawnPickup)
     {
-        deathCoroutineStarted = true;
-        IsDead = true;
-        charAnim.SetFloat("aniHealthState", 0);
-        isDesperation = false;
         if (spawnPickup)
         {
             for (int i = 0; i < numOfPickups; i++)
@@ -554,12 +554,14 @@ public class HealthManager : MonoBehaviour
         switch (character.controlType)
         {
             case CharacterObject.ControlType.AI:
+                DeathStates();
+
                 OnDeath.Invoke();
                 character.GlobalPrefab(5);
                 character.OnDeath();
                 audioManager.PlaySound("Death");
                 yield return new WaitForFixedUpdate();//get length of death animation        
-                if (Mission.instance!=null)
+                if (Mission.instance != null)
                     Mission.instance.OnEnemyKilled();
 
                 EnemySpawn E = GetComponent<EnemySpawn>();
@@ -567,6 +569,8 @@ public class HealthManager : MonoBehaviour
                     E.DeSpawn();
                 break;
             case CharacterObject.ControlType.BOSS:
+                DeathStates();
+
                 OnDeath.Invoke();
                 character.GlobalPrefab(5);
                 character.OnDeath();
@@ -577,20 +581,31 @@ public class HealthManager : MonoBehaviour
                     B.DeSpawn();
                 break;
             case CharacterObject.ControlType.PLAYER:
-                //RESPAWN HERE
-                OnDeath.Invoke();
-                character.QuickChangeForm(4);
-                yield return new WaitForFixedUpdate();//get length of death animation        
-                character.GlobalPrefab(6);
-                character.OnDeath();
-                //character.StartStateFromScript(36);
-                yield return new WaitForFixedUpdate();//get length of death animation        
-                audioManager.PlaySound("Defeat");
-                Mission.instance.EndMission();
+                //LAST CHANCE
+                if (lastChance)
+                {
+                    LastChance();
+                }
+                else
+                {
+                    DeathStates();
+                    yield return new WaitForFixedUpdate();//get length of death animation
+                    //ActualDefeat
+                    character.QuickChangeForm(4);
+                    OnDeath.Invoke();
+                    character.OnDeath();
+                    //character.StartStateFromScript(36);
+                    yield return new WaitForFixedUpdate();//get length of death animation        
+                    audioManager.PlaySound("Defeat");
+                    Mission.instance.EndMission();
+                    lastChance = true;
+                }
                 break;
             default:
                 break;
             case CharacterObject.ControlType.OBJECT:
+                DeathStates();
+
                 OnDeath.Invoke();
                 character.GlobalPrefab(effectIndex);
                 character.OnDeath();
@@ -601,7 +616,28 @@ public class HealthManager : MonoBehaviour
                     O.DeSpawn();
                 break;
         }
+    }
 
+    private void DeathStates()
+    {
+        deathCoroutineStarted = true;
+        IsDead = true;
+        charAnim.SetFloat("aniHealthState", 0);
+        isDesperation = false;
+    }
+
+    void LastChanceEvent(object sender, EventArgs e)
+    {
+        Debug.Log("Play Loss event");
+    }
+    private void LastChance()//transform to human
+    {
+        character.DOChangeMovelist(4);
+        AddHealth(2);
+        character.hitStun = 30f;
+        character.GlobalPrefab(6);
+        OnLastChance?.Invoke(this, EventArgs.Empty);
+        lastChance = false;
     }
 
     private void SpawnPickup(GameObject pickup)
