@@ -466,6 +466,11 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         GameEngine.gameEngine.ChangeMovelist(index);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
+
+        if (isKinzecterOut)
+        {
+            kinzecter.GetComponent<Kinzecter>().RemoveKinzecter();
+        }
     }
 
     public void ToggleMovelist()
@@ -479,6 +484,10 @@ public class CharacterObject : MonoBehaviour, IHittable
             SetCrouchFlag(true);
         else
             SetCrouchFlag(false);
+        if (isKinzecterOut)
+        {
+            kinzecter.GetComponent<Kinzecter>().RemoveKinzecter();
+        }
     }
     private void PlayAudio(string audioName)
     {
@@ -1697,6 +1706,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public int[] defStates;
 
     public float MaxJumpVelocity { get => maxJumpVelocity; set => maxJumpVelocity = value; }
+    public float Direction { get => direction; set => direction = value; }
 
     private void UpdateAI()
     {

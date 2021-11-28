@@ -832,7 +832,7 @@ MonoBehaviour:
       length: 15
       hitStun: 30
       hitStop: 5
-      damage: 3
+      damage: 4
       meterGain: 4
       comboValue: 5
       poiseDamage: 3
@@ -1401,7 +1401,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 1
+        val: 0
     attacks:
     - start: 5
       length: 3
@@ -2304,7 +2304,7 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 0
-      hitStun: 10
+      hitStun: 25
       hitStop: 5
       damage: 4
       meterGain: 5
@@ -2312,7 +2312,7 @@ MonoBehaviour:
       poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 0, y: 0, z: 0}
+      knockback: {x: 10, y: 10, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
@@ -2779,13 +2779,6 @@ MonoBehaviour:
       parameters:
       - name: Speed
         val: 0
-    - start: 5
-      end: 20
-      active: 1
-      script: 13
-      parameters:
-      - name: Speed
-        val: 0
     - start: 0
       end: 0
       active: 1
@@ -2900,7 +2893,7 @@ MonoBehaviour:
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: -1, y: 1}
-      knockback: {x: -30, y: 20, z: 0}
+      knockback: {x: -15, y: 10, z: 0}
       hitBoxPos: {x: 0, y: 0.5, z: 0}
       hitBoxScale: {x: 4.5, y: 4, z: 0}
       cancelWindow: 0
@@ -3975,7 +3968,7 @@ MonoBehaviour:
       poiseDamage: 100
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 20, y: 30, z: 0}
+      knockback: {x: 20, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
@@ -5053,12 +5046,19 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Roy/NEW STATE
+  - stateName: Weapon/Guard
     index: 0
-    length: 0
+    length: 20
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Block
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -6928,7 +6928,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 0100000002000000
+        followUps: 010000000200000003000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -6970,8 +6970,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 3
+        command:
+          motionCommand: 6
+          input: 3
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 406
+          y: 80
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 0100000002000000
+      nextFollowups: 010000000200000003000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -7024,7 +7040,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000
+        followUps: 01000000020000000300000004000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -7082,8 +7098,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 4
+        command:
+          motionCommand: 0
+          input: 1
+          state: 42
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 284
+          y: 109
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 010000000200000003000000
+      nextFollowups: 01000000020000000300000004000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -7355,5 +7387,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 4
+  currentMovelistIndex: 5
   currentControllerIndex: 0

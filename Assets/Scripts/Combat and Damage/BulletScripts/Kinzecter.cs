@@ -17,7 +17,7 @@ public class Kinzecter : MonoBehaviour
     [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance=25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f;
     [SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
     [SerializeField] private ParticleSystem kinzecterParticles, hpPS, buffedZecterPS, energyPS;
-
+    [SerializeField] private Vector3 offset = new Vector3(2, 2, 1);
     private AudioManager audioManager;
     private EnemySpawn enemy;
 
@@ -29,24 +29,10 @@ public class Kinzecter : MonoBehaviour
     private bool isTooSlow;
     Vector3 nextTargetDir;
 
-    public DamageEffect _effect;
-    public enum DamageEffect { stun, knockback, launch }
-
     private enum ThrowingState 
     {
         WithPlayer, Thrown, Recalling,
     }
-    //[Header("Boomerang")]
-    //public bool hasBeenThrown = false;//collision
-    //public bool doCollision = false;//collision
-    //public bool boomerangFlag = false;//ai on
-    //public float boomerangTime = 20;//time spent turning back to the player
-    //public float orient = 0; //direction boomerang turns  in the boomerang state
-    //public float turnAmount = 0; //how much boomerang has turned, used to end the state
-    //public float direction; //
-    //public int state;
-    //public Vector3 velocity;
-    //public Vector3 friction = new Vector3(0.95f, 0.99f, 0.95f);
     private void Awake()
     {
         kzSprite = GetComponent<SpriteRenderer>();
@@ -67,87 +53,6 @@ public class Kinzecter : MonoBehaviour
         hitbox = GetComponent<Hitbox>();
         startScale = transform.localScale.x;
     }
-    //private void FailedUpdate()
-    //{
-    //    if (hasBeenThrown==false)
-    //    {
-    //        //reset vars
-    //        boomerangFlag = false;
-    //        boomerangTime = 10;
-    //        turnAmount = 0;
-    //        state = 0;
-    //        direction = 0;
-    //        doCollision = true;
-    //    }
-    //    else
-    //    {
-    //        if (boomerangFlag)
-    //        {
-    //            doCollision = false;
-    //            switch (state)
-    //            {
-    //                case 0://spin state
-    //                    var rspd = 50;//rotation speed
-    //                    velocity += transform.right.normalized;
-    //                    transform.Translate(velocity);
-    //                    //scale
-    //                    direction += rspd * orient * Time.deltaTime;//gradually change direction to create path of boomerang
-    //                    if (turnAmount >= 190)//once boomerange rotates 190 degrees it goes to the returning state
-    //                    {
-    //                        state = 1;
-    //                    }
-    //                    else
-    //                        turnAmount += rspd * Time.deltaTime;//increment degrees we have rotated
-    //                    break;
-    //                case 1://throw state
-    //                    var pdir = transform.position - (thrower.transform.position + Vector3.down * 16);//direction to face towards the thrower
-    //                    transform.forward = Vector3.RotateTowards(transform.forward, pdir, 3f * Time.deltaTime,0f); //smoothly shift current dir to previous dir
-    //                    velocity += transform.right.normalized;//move
-    //                    transform.Translate(velocity);
-    //                    //check to see if spin state is needed
-    //                    if (Vector2.Distance(transform.position, thrower.transform.position) <=8)//is boomerang within 8 units of thrower
-    //                        if (orient==1 && transform.position.x>thrower.transform.position.x+16|| orient == -1 && transform.position.x < thrower.transform.position.x - 16)//if 16 units past thrower
-    //                        {
-    //                            //set orient relative to current dir
-    //                            if (direction > 90 && direction < 270)
-    //                                orient = -1;
-    //                            else
-    //                                orient = 1;
-
-    //                            turnAmount = 0;//reset rot timer
-    //                            //set initial dir for spin based on orient
-    //                            if (orient==1)
-    //                                direction=0;
-    //                            else
-    //                                direction=180;
-
-    //                            state = 0;
-    //                        }
-    //                    if (Vector2.Distance(transform.position, thrower.transform.position) <= returnDistance){ TryGrabKinzecter(); }
-    //                    break;
-
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if (boomerangTime>0)
-    //            {
-    //                boomerangTime -= 4*Time.deltaTime;
-    //                orient = Mathf.Sign(velocity.x);
-    //            }
-    //            else
-    //            {
-    //                boomerangFlag = true;
-    //                //set initial dir for spin based on orient
-    //                if (orient == 1)
-    //                    direction = 0;
-    //                else
-    //                    direction = 180;
-    //            }
-    //        }
-            
-    //    }
-    //}
     public void ThrowKinzecter(CharacterObject player, Vector3 throwDir)
     {
         //thrower = player;
@@ -166,10 +71,9 @@ public class Kinzecter : MonoBehaviour
             //velocity = Vector2.zero;
             kzRB.isKinematic = true;
             //hasBeenThrown = false;
-            thrower.isKinzecterOut = false;
-            Destroy(gameObject,.2f);
         }
     }
+
     private void Update()
     {
         
@@ -244,14 +148,19 @@ public class Kinzecter : MonoBehaviour
         switch (kState)
         {
             case ThrowingState.WithPlayer:
-                //kinzecterParticles.Stop();
+                currentStamina = maxStamina;
+                kinzecterParticles.Stop();
                 //hpPS.Stop();
                 //ammoPS.Stop();
                 //energyPS.Stop();
                 //shouldFly = true;
                 kzColl.enabled = false;
-                kzSprite.enabled = false;
-                transform.position = thrower.transform.position;
+                //kzSprite.enabled = false;
+                offset.x = thrower.Direction*-2;
+                transform.localScale = new Vector2(thrower.Direction, transform.localScale.y);
+
+                //transform.position = thrower.transform.position + offset;
+                kzRB.velocity= ((thrower.transform.position + offset) - transform.position) * kzSpeed;
                 break;
             case ThrowingState.Thrown:
                 kinzecterParticles.Play();
@@ -336,8 +245,12 @@ public class Kinzecter : MonoBehaviour
     [SerializeField] private string flightSound = "Fly";
     private void TargetNextEnemy()
     {
+        kState = ThrowingState.Thrown;
+        kzRB.isKinematic = false;
+
         kzRB.velocity = nextTargetDir * kzSpeed;
-        //audioManager.PlaySound(flightSound);
+
+        audioManager.PlaySound(flightSound);
         SpendStamina(staminaCost);
         SpriteDirectionChange();
     }
@@ -348,6 +261,13 @@ public class Kinzecter : MonoBehaviour
         {
             kState = ThrowingState.Recalling;
         }
+    }
+    public void RemoveKinzecter()
+    {
+        hitbox.RestoreGetHitBools();
+        kState = ThrowingState.WithPlayer;
+        thrower.isKinzecterOut = false;
+        Destroy(gameObject, .2f);
     }
     public float shakeAmp = 1f, shakeTime = .2f;
     private void Screenshake(float amp, float time)
