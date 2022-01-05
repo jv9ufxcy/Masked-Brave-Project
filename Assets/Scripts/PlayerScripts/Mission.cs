@@ -25,7 +25,7 @@ public class Mission : MonoBehaviour
     public float elapsedTime, savedTime;
     public float bestTime, maxTime;
 
-    public int missionPoints, missionPointMax;
+    public int missionPointMax;
 
     public float enemiesKilled, enemyKillReq;
 
@@ -208,10 +208,14 @@ public class Mission : MonoBehaviour
     }
     public void OnEnemyKilled() 
     {
+        int killPoint = 100;
+
         enemiesKilled++;
         ScoreMultiplier += 0.1f;
         Mathf.Clamp(ScoreMultiplier, 1, maxScoremultiplier);
         KillStreakBegin();
+
+        OnMissionPoint(killPoint);
     }
     private void KillStreakBegin()
     {
@@ -314,6 +318,18 @@ public class Mission : MonoBehaviour
             ScoreVisible(value);
         }
     }
+
+    public int MissionPoints
+    {
+        get => missionPoints;
+        set
+        { 
+            missionPoints = value; 
+            totalScoreText.SetText(missionPoints.ToString(DecimalFormat)); 
+        }
+    }
+
+
     void ScoreVisible(bool isVisible)
     {
         if (isVisible)
@@ -399,16 +415,27 @@ public class Mission : MonoBehaviour
     }
     public void OnMissionPoint(int point) 
     {
-        missionPoints += point;
-        totalScoreText.SetText(missionPoints.ToString(DecimalFormat));
+        MissionPoints += point;
+        
         //Mathf.Clamp(missionPoints, 0, missionPointMax);
+    }
+    private void CalculateScore()
+    {
+        timeScore = TimeGrade(elapsedTime, bestTime,2);
+        timeScore = Mathf.Clamp(timeScore, 0.5f, 2);
+        scoreText[0] = timeScore.ToString();
+
+        scoreText[1] = MissionPoints.ToString(DecimalFormat);
+
+        totalScore = (timeScore + missionScore + enemyScore + damageScore + retryScore);
+        scoreText[5] = totalScore.ToString();
     }
     private void CalculateGrade()
     {
-        timeScore = TimeGrade(elapsedTime, bestTime);
+        timeScore = TimeGrade(elapsedTime, bestTime,20f);
         scoreText[0] = timeScore.ToString();
 
-        missionScore = Grade(missionPoints, missionPointMax);
+        missionScore = Grade(MissionPoints, missionPointMax);
         scoreText[1] = missionScore.ToString();
 
         enemyScore = Grade(enemiesKilled, enemyKillReq);
@@ -423,11 +450,11 @@ public class Mission : MonoBehaviour
         totalScore = (timeScore + missionScore + enemyScore + damageScore + retryScore);
         scoreText[5] = totalScore.ToString();
     }
-    public int TimeGrade(float elapsed, float best)
+    public int TimeGrade(float elapsed, float best, float multiplier)
     {
         float score = Mathf.Clamp(elapsed, best, maxTime);
         float result = (score-best)/(maxTime-best);
-        float grade = 20f - (20f*result);
+        float grade = multiplier - (multiplier*result);
         return Mathf.RoundToInt(grade);
     }
     public int Grade(float score,float max)
@@ -446,7 +473,8 @@ public class Mission : MonoBehaviour
     {
         missionStartText = PauseManager.pauseManager.battleUI;
         menuTimer = PauseManager.pauseManager.menuTimer;
-        CalculateGrade();
+        CalculateScore();
+        //CalculateGrade();
         GameManager.instance.RestoreCheckpointStart();
         yield return new WaitForSeconds(missionStartSeconds);
 
@@ -467,6 +495,8 @@ public class Mission : MonoBehaviour
         LevelChange();
     }
     [SerializeField] private string nextLevel = "MainMenu";
+    private int missionPoints;
+
     private void LevelChange()
     {
         SceneTransitionController.instance.LoadScene(nextLevel);
