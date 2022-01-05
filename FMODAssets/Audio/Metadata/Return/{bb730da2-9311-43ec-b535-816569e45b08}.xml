@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerReturn" id="{bb730da2-9311-43ec-b535-816569e45b08}">
+		<property name="volume">
+			<value>-80</value>
+		</property>
+		<property name="name">
+			<value>Sewer Verb</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{179ccd0c-a34b-4958-a4b7-d45b30daec26}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{e21f4757-6743-4118-a6b9-2254e4a62c25}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{4b06b689-81fb-4ac8-88be-62c9996a9a9c}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{179ccd0c-a34b-4958-a4b7-d45b30daec26}">
+		<relationship name="effects">
+			<destination>{92a208da-1c81-4d46-a439-f20206d59100}</destination>
+			<destination>{7ad5f9a5-5380-4096-872c-848f0721a6c0}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{e21f4757-6743-4118-a6b9-2254e4a62c25}" />
+	<object class="MixerBusFader" id="{92a208da-1c81-4d46-a439-f20206d59100}" />
+	<object class="SFXReverbEffect" id="{7ad5f9a5-5380-4096-872c-848f0721a6c0}">
+		<property name="highCut">
+			<value>3200</value>
+		</property>
+		<property name="dryLevel">
+			<value>-80</value>
+		</property>
+	</object>
+</objects>

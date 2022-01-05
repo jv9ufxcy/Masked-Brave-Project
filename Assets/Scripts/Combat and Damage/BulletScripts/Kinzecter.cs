@@ -14,7 +14,7 @@ public class Kinzecter : MonoBehaviour
     private Hitbox hitbox;
 
     [Header("Kinzecter Stats")]
-    [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance=25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f;
+    [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance=25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f, followSpeedDampen=10f;
     [SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
     [SerializeField] private ParticleSystem kinzecterParticles, hpPS, buffedZecterPS, energyPS;
     [SerializeField] private Vector3 offset = new Vector3(2, 2, 1);
@@ -160,7 +160,7 @@ public class Kinzecter : MonoBehaviour
                 transform.localScale = new Vector2(thrower.Direction, transform.localScale.y);
 
                 //transform.position = thrower.transform.position + offset;
-                kzRB.velocity= ((thrower.transform.position + offset) - transform.position) * kzSpeed;
+                kzRB.velocity= ((thrower.transform.position + offset) - transform.position) * followSpeedDampen;
                 break;
             case ThrowingState.Thrown:
                 kinzecterParticles.Play();

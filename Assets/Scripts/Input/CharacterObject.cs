@@ -62,6 +62,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     void Start()
     {
         defaultMat = spriteRend.material;
+        hasLanded = true;
         if (lineRend!=null)
         {
             lineRend.transform.SetParent(null);
@@ -189,37 +190,6 @@ public class CharacterObject : MonoBehaviour, IHittable
         characterAnim.SetFloat("animSpeed", animSpeed);
 
     }
-    /*public Vector2 leftStick;
-     void CameraRelativeStickMove(float _val)
-    {
-        Vector3 velHelp = new Vector3(0, 0, 0);
-        Vector3 velDir;
-
-        //leftStick = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-
-        if ((leftStick.x > GameEngine.gameEngine.deadZone || leftStick.x < -GameEngine.gameEngine.deadZone || leftStick.y > GameEngine.gameEngine.deadZone || leftStick.y < -GameEngine.gameEngine.deadZone))
-        {
-
-            //if (stickHelp.sqrMagnitude > 1) { stickHelp.Normalize(); }
-
-
-            velDir = Camera.main.transform.forward;
-            velDir.y = 0;
-            velDir.Normalize();
-            velHelp += velDir * leftStick.y;
-
-            velHelp += Camera.main.transform.right * leftStick.x;
-            velHelp.y = 0;
-
-
-
-            velHelp *= _val;
-            
-            velocity += velHelp;
-        }
-    }
-    */
     void FaceStick()
     {
         if (CheckVelocityDeadZone())
@@ -246,13 +216,11 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         else
         {
-
             UpdateStateEvents();
             UpdateStateAttacks();
 
             prevStateTime = currentStateTime;
             currentStateTime++;
-
 
             if (currentStateTime >= myCurrentState.length)
             {
@@ -260,7 +228,6 @@ public class CharacterObject : MonoBehaviour, IHittable
                 else { EndState(); }
             }
         }
-
     }
     void LoopState()
     {
@@ -268,7 +235,6 @@ public class CharacterObject : MonoBehaviour, IHittable
         //currentState = 0;
         prevStateTime = -1;
     }
-
     void EndState()
     {
         currentStateTime = 0;
@@ -276,7 +242,6 @@ public class CharacterObject : MonoBehaviour, IHittable
         prevStateTime = -1;
         StartState(currentState);
     }
-
     void UpdateStateEvents()
     {
         int _curEv = 0;
@@ -420,7 +385,27 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 22:
                 MaintainVelocity();
                 break;
+            case 23:
+                SummonSatellite((int)_params[0].val, (int)_params[1].val, _params[2].val, _params[3].val, _params[4].val);
+                break;
 
+        }
+    }
+    private GameObject satelliteInstance;
+    public List<GameObject> satellitesCreated;
+    public void SummonSatellite(int satteliteIndex, int numOfBullets, float bulletSpeed,float rotRadius, float attackIndex)
+    {
+        //CREATE ICE BLOCKS
+        for (int i = 0; i < numOfBullets; i++)
+        {
+            satelliteInstance = Instantiate(bullets[satteliteIndex], transform.position, Quaternion.identity);//make prefab
+            BulletHit bullet = satelliteInstance.GetComponent<BulletHit>();
+            bullet.SetStartingAngle(i, numOfBullets);//tell it which angle to start at
+            bullet.character = characterObject;//transform of kitty cat because why not do it the stupid way
+            bullet.projectileIndex = (int)attackIndex;
+            bullet.speed = bulletSpeed;
+            bullet.radius = rotRadius;
+            satellitesCreated.Add(satelliteInstance);//add to the list of references to ice blocks
         }
     }
     public void MaintainVelocity()
@@ -1022,12 +1007,18 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     private void TryKinzecterThrow(float offsetX, float offsetY)
     {
+        int onWall = wallFlag ? -1 : 1;
         if (!isKinzecterOut)
         {
             SpawnKinzecter(offsetX, offsetY);
         }
         else
         {
+            if (kinzecter.GetComponent<Kinzecter>().isWithPlayer())
+            {
+                kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction * onWall, 0, 0));
+            }
+            else
             kinzecter.GetComponent<Kinzecter>().AttackClosestEnemy();
         }
     }
@@ -1377,14 +1368,19 @@ public class CharacterObject : MonoBehaviour, IHittable
                 else
                 {
                     timeToWallUnstick = wallStickTime;
+                    //PlayAudio("Player/Wall Grip");
                 }
             }
             else
             {
                 timeToWallUnstick = wallStickTime;
+                PlayAudio("Player/Wall Grip");
+                Debug.Log("Wall Gripped");
             }
 
         }
+        else
+            timeToWallUnstick = 0;
 
     }
     void UpdatePhysics()
@@ -1592,26 +1588,21 @@ public class CharacterObject : MonoBehaviour, IHittable
                     GameEngine.SetHitPause(curAtk.hitStop);
                     attacker.hitConfirm += 1;
                     attacker.BuildMeter(curAtk.meterGain);
+
+                    healthManager.RemoveHealth(curAtk.damage, curAtk);
+                    PlayAudio(attackStrings[curAtk.attackType]);
                     switch (controlType)//damage calc
                     {
                         case ControlType.AI:
-                            healthManager.RemoveHealth(curAtk.damage);
-                            PlayAudio(attackStrings[curAtk.attackType]);
                             GlobalPrefab(curAtk.attackType);
                             break;
                         case ControlType.OBJECT:
-                            healthManager.RemoveHealth(curAtk.damage);
-                            PlayAudio(attackStrings[curAtk.attackType]);
                             GlobalPrefab(curAtk.attackType);
                             break;
                         case ControlType.BOSS:
-                            healthManager.RemoveHealth(curAtk.damage);
-                            PlayAudio(attackStrings[curAtk.attackType]);
                             GlobalPrefab(curAtk.attackType);
                             break;
                         case ControlType.PLAYER:
-                            healthManager.RemoveHealth(curAtk.damage);
-                            PlayAudio("PlayerTakeDamage");
                             GlobalPrefab(2);
                             break;
                         default:

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4416640776730492586}
   - component: {fileID: 6167764556433329041}
-  - component: {fileID: 6645088818452296722}
   - component: {fileID: 476840838158514604}
   - component: {fileID: 7447885408590751653}
   - component: {fileID: 7392957442314757607}
@@ -55,7 +54,7 @@ MonoBehaviour:
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
-  bulletHitEffect: {fileID: 7459617967329291029, guid: 4c45e9cace6c7844da47ae99d8d13a88,
+  bulletHitEffect: {fileID: 7459617967329291029, guid: 15d5dd67332d80949957259b5f6112e3,
     type: 3}
   bulletChild: {fileID: 0}
   tagToHit: Enemy
@@ -86,6 +85,7 @@ MonoBehaviour:
   shakeAmp: 1
   shakeTime: 0.2
   destroyTimer: 0.6
+  isExplosion: 1
   speedDampen: 0.01
   boomerangStartTime: 30
   angle: 0
@@ -93,25 +93,6 @@ MonoBehaviour:
   radius: 1
   boomerangDist: {x: 0, y: 0, z: 0}
   followVel: {x: 0, y: 0, z: 0}
---- !u!114 &6645088818452296722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3152041610049941263}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  hiddenLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  IsSpawned: 0
 --- !u!50 &476840838158514604
 Rigidbody2D:
   serializedVersion: 4
@@ -157,7 +138,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.95}
+  m_Size: {x: 1.5, y: 0.8}
   m_EdgeRadius: 0
 --- !u!114 &7392957442314757607
 MonoBehaviour:

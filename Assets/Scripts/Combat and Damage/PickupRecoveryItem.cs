@@ -5,7 +5,7 @@ public class PickupRecoveryItem : MonoBehaviour
     [Header("Recovery Val")]
     [SerializeField] private int healthToGive = 1,currencyToGive = 0,meterToGive = 0;
     [Header("Magnet Val")]
-    [SerializeField] private bool shouldAttract = false;
+    [SerializeField] private bool shouldAttract = false, shouldDestroy = true;
     [SerializeField] private float attractionSpeed = 50f, attractionRange = 10f, lifeTime = 8f;
     [SerializeField] private LayerMask whatCountsAsPlayer;
     [SerializeField] private string pickupSound="PickupRecovery";
@@ -35,13 +35,16 @@ public class PickupRecoveryItem : MonoBehaviour
         if (shouldAttract)
             MoveTowardsPlayer();
 
-        if (lifeTime > 0)
+        if (shouldDestroy)
         {
-            lifeTime -= Time.deltaTime;
-        }
-        else if (lifeTime <= 0)
-        {
-            Destroy(transform.root.gameObject);
+            if (lifeTime > 0)
+            {
+                lifeTime -= Time.deltaTime;
+            }
+            else if (lifeTime <= 0)
+            {
+                Destroy(transform.root.gameObject);
+            }
         }
     }
     private void OnTriggerStay2D(Collider2D collision)

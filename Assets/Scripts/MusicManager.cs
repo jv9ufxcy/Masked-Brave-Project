@@ -65,4 +65,8 @@ public class MusicManager : MonoBehaviour
         BGM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         //BackgroundMusic.Stop();
     }
+    public void StopReverbZone()
+    {
+        studioEventEmitter.enabled = false;
+    }
 }

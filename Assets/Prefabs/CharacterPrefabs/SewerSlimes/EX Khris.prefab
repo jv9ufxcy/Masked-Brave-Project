@@ -29139,6 +29139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileIndex: 0
+  atkIndex: 0
   character: {fileID: 0}
   stateIndex: 68
 --- !u!1 &8871674216463066587
@@ -29267,6 +29268,7 @@ MonoBehaviour:
   bullets:
   - {fileID: 1946779624007576, guid: a3a3077bfe70242439758ebb1d4c4bc7, type: 3}
   - {fileID: 1946779624007576, guid: c5ac5e1e6106f8440a1d7e08e969103f, type: 3}
+  - {fileID: 1946779624007576, guid: 4d44dc666ad645a46a539a483990aaf9, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -29309,7 +29311,7 @@ MonoBehaviour:
   grappleTarget: {fileID: 0}
   attackStrings:
   - Enemy/Slime Hurt
-  - BulletHit
+  - Enemy/Slime Hurt
   - Enemy/Slime Hurt
   - Enemy/Slime Hurt
   - Enemy/Slime Hurt
@@ -29392,6 +29394,7 @@ MonoBehaviour:
   healthDropRate: -1
   effectIndex: 0
   lastChance: 0
+  deathSound: Enemy/Enemy Explode
 --- !u!114 &2137698927844902424
 MonoBehaviour:
   m_ObjectHideFlags: 0

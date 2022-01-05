@@ -63,7 +63,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 6506153719552787811}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: a047839b8193f5f41bbbc659dfa51201, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -120,13 +120,14 @@ MonoBehaviour:
   currencyToGive: 0
   meterToGive: 0
   shouldAttract: 0
+  shouldDestroy: 0
   attractionSpeed: 10
   attractionRange: 2
   lifeTime: 16
   whatCountsAsPlayer:
     serializedVersion: 2
     m_Bits: 2048
-  pickupSound: PickupEnergy
+  pickupSound: Props/Health Pickup
   pickupEffect: {fileID: 7459617967329291029, guid: 1e86d6f6e9175084e96e6c3ff2b6e091,
     type: 3}
 --- !u!212 &6542115900243436180

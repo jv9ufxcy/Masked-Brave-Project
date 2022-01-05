@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4416640776730492586}
   - component: {fileID: 6167764556433329041}
-  - component: {fileID: 866976271708825162}
-  - component: {fileID: 2728426128949274874}
-  - component: {fileID: 6645088818452296722}
   - component: {fileID: 476840838158514604}
   - component: {fileID: 7447885408590751653}
   - component: {fileID: 7392957442314757607}
@@ -57,15 +54,15 @@ MonoBehaviour:
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
-  bulletHitEffect: {fileID: 7459617967329291029, guid: 9b11ea7cb69bebf4796d5dcbbb673808,
+  bulletHitEffect: {fileID: 7459617967329291029, guid: f8378c6d2fcf1e741815664a2b0e1117,
     type: 3}
   bulletChild: {fileID: 0}
   tagToHit: Enemy
   tagToCollide: Ground
   lifeTime: 1
-  speed: 8
+  speed: 20
   rotation: 0
-  maxJumpHeight: 0.5
+  maxJumpHeight: 0.4
   timeToJumpApex: 0.8
   maxJumpVelocity: 0
   gravity: 0
@@ -88,6 +85,7 @@ MonoBehaviour:
   shakeAmp: 1
   shakeTime: 0.2
   destroyTimer: 0.3
+  isExplosion: 1
   speedDampen: 0.01
   boomerangStartTime: 30
   angle: 0
@@ -95,229 +93,6 @@ MonoBehaviour:
   radius: 1
   boomerangDist: {x: 0, y: 0, z: 0}
   followVel: {x: 0, y: 0, z: 0}
---- !u!114 &866976271708825162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3152041610049941263}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 745e44e1fa77a1f409bc1061840711ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0}
-  gravity: -1
-  aniMoveSpeed: 0
-  direction: 1
-  myRB: {fileID: 0}
-  boxCollider2D: {fileID: 0}
-  controller: {fileID: 0}
-  henshin: {fileID: 0}
-  afterImage: []
-  healthManager: {fileID: 0}
-  audioManager: {fileID: 0}
-  currentState: 0
-  currentStateTime: 0
-  prevStateTime: 0
-  characterObject: {fileID: 866976271708825162}
-  character: {fileID: 0}
-  draw: {fileID: 0}
-  characterAnim: {fileID: 8039970129902997670}
-  formAnims: []
-  spriteRend: {fileID: 0}
-  defaultMat: {fileID: 0}
-  whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
-  kinzecter: {fileID: 0}
-  controlType: 4
-  hitbox: {fileID: 0}
-  canCancel: 0
-  isHit: 0
-  hitConfirm: 0
-  animSpeed: 0
-  hitActive: 0
-  currentAttackIndex: 0
-  maxJumpHeight: 4
-  minJumpHeight: 0.125
-  timeToJumpApex: 0.4
-  accelerationTimeAirborne: 0
-  accelerationTimeGrounded: 0
-  wallJumpClimb: {x: 0, y: 0}
-  wallJumpOff: {x: 0, y: 0}
-  wallLeap: {x: 0, y: 0}
-  wallSlideSpeedMax: 4
-  wallStickTime: 0.06
-  leftStick: {x: 0, y: 0}
-  horizontalAxis: altPs4Horizontal
-  verticalAxis: altPs4Vertical
-  deadzone: 0.2
-  moveSpeed: 7
-  airMod: 1
-  jumpPow: 12
-  currentCommandState: 0
-  currentCommandStep: 0
-  minShotPressure: 30
-  maxShotPressure: 60
-  chargeAttackIndex: 15
-  chargeShotIndex: 21
-  critBusterIndex: 22
-  shotgunIndex: 40
-  missileIndex: 41
-  firstCharge: 0
-  secondCharge: 0
-  chargeIncrement: 1
-  gunChargeParticles: {fileID: 0}
-  jumpChargeParticles: {fileID: 0}
-  flashParticles: {fileID: 0}
-  turboColors: []
-  henshinColors: []
-  primaryGunParticles: []
-  primaryJumpParticles: []
-  secondaryParticles: []
-  bombDashParticle: {fileID: 0}
-  landingParticle: {fileID: 0}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
-  shootAnim: 0
-  shootAnimMax: 0
-  bullets: []
-  isKinzecterOut: 0
-  menuDelay: 12
-  henshinInput: 2
-  dashInput: 4
-  headColl: {fileID: 0}
-  crouchFlag: 0
-  fadeTime: 0.5
-  shortDashInterval: 0.05
-  dashLength: 0.45
-  afterImageParent: {fileID: 0}
-  whatCountsAsGround:
-    serializedVersion: 2
-    m_Bits: 256
-  aerialFlag: 0
-  wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
-  aerialTimer: 0
-  groundDetectHeight: 0.01
-  wallDetectWidth: 0
-  animAerialState: 0
-  animFallSpeed: 0
-  jumps: 0
-  jumpMax: 1
-  dashes: 0
-  dashMax: 1
-  coyoteTimer: 3
-  dashCooldown: 0
-  dashCooldownRate: 1
-  invulCooldown: 0
-  invulFlickerRate: 4
-  specialMeter: 0
-  specialMeterMax: 0
-  nextSpecialMeterUse: 0
-  curHitAnim: {x: 0, y: 0}
-  targetHitAnim: {x: 0, y: 0}
-  lineRend: {fileID: 0}
-  grappleVictim: {fileID: 0}
-  grapplePoint: {fileID: 0}
-  grappleTarget: {fileID: 0}
-  attackStrings:
-  - SwordHit
-  - BulletHit
-  - TakeDamage
-  - TakeDamage
-  hitStunStateIndex: 7
-  deathStateIndex: 36
-  hitStun: 0
-  target: {fileID: 0}
-  spawners: []
-  aggroRange: 0
-  longAttackRange: 0
-  shortAttackRange: 0
-  attackCooldown: 0
-  horiCos: {x: 0, y: 0}
-  vertSign: {x: 0, y: 0}
-  isNearPlayer: 0
-  isLongRange: 0
-  isShortRange: 0
-  closeAttackState: 
-  rangedAttackState: 
-  desperationCAStates: 
-  desperationRAStates: 
-  enemyType: 0
-  desperationTransitionState: 0
-  canDefend: 0
-  defStateIndex: 0
-  defStates: 
---- !u!114 &2728426128949274874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3152041610049941263}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1d0110c1b7eb84fbbf9788fbcc853a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UI: 0
-  maxMeter: 0
-  minMeter: 0
-  maxHealth: 1
-  currentShieldHealth: 0
-  currentHealth: 0
-  desperationHealth: -10
-  maxPoise: 0
-  currentPoise: 0
-  HealthFill: {fileID: 0}
-  DamageFill: {fileID: 0}
-  BarImage: {fileID: 0}
-  showHealthTime: 1
-  fadeOutTime: 0.5
-  damageShowTime: 1
-  damageShowSpeed: 1
-  IsDead: 0
-  shouldSpawnHealth: 1
-  isDesperation: 0
-  HealthColor: {r: 0, g: 0, b: 0, a: 0}
-  DamageColor: {r: 0, g: 0, b: 0, a: 0}
-  BackColor: {r: 0, g: 0, b: 0, a: 0}
-  numOfPickups: 0
-  currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
-    type: 3}
-  healthPickup: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
-    type: 3}
-  effectsAnim: {fileID: 0}
-  charAnim: {fileID: 8039970129902997670}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  dizzyMat: {fileID: 2100000, guid: 469afaba61093c04b87c4450611b6312, type: 2}
-  rend: {fileID: 8883686759823212184}
-  effectsRend: {fileID: 0}
-  healthDropRate: 0
-  effectIndex: 0
---- !u!114 &6645088818452296722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3152041610049941263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6408c2ec11f87454ba6fa656b2a288b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  hiddenLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  IsSpawned: 0
 --- !u!50 &476840838158514604
 Rigidbody2D:
   serializedVersion: 4
@@ -363,7 +138,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
 --- !u!114 &7392957442314757607
 MonoBehaviour:

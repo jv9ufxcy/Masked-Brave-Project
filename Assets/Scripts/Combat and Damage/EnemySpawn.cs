@@ -70,6 +70,7 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     {
         character.character.gameObject.SetActive(true);
         character.FacePlayer();
+        character.OnObjectSpawn();
     }
 
     private void Update()
@@ -111,10 +112,13 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     }
     public void DeSpawn()
     {
-        character.OnObjectSpawn();
-        HideCharacter();
-        enemyHealth.SetMaxHealth();
-        enemyHealth.IsDead = true;
+        if (character != null)
+        {
+            character.OnObjectSpawn();
+            HideCharacter();
+            enemyHealth.SetMaxHealth();
+            enemyHealth.IsDead = true;
+        }
         IsSpawned = false;
         //transform.SetParent(null);
         transform.position = spawnPos;

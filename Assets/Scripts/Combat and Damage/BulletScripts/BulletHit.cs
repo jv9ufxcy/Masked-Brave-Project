@@ -9,7 +9,7 @@ public class BulletHit : MonoBehaviour
     private SpriteRenderer[] bulletSprites;
     private BoxCollider2D[] bulletColls;
     private AudioManager audioManager;
-    [Tooltip("0 - straight, 1 - homing, 2 - target")]
+    [Tooltip("0 - straight, 1 - homing, 2 - target, 3 - nearest enemy, 4 - follow ground, 5 - boomerang, 6 - satellite")]
     public int bulletType;
     public Vector2 direction, bulletVel;
     public CharacterObject target;
@@ -60,48 +60,55 @@ public class BulletHit : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        switch (bulletType)
+        if (!PauseManager.IsGamePaused && GameEngine.hitStop <= 0)
         {
-            case 0://fly straight
-                transform.Translate(velocity * speed * Time.fixedDeltaTime);
-                break;
-            case 1://home in
-                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, (speed/80));
-                break;
-            case 2://fly firectly at target
-                transform.Translate(velocity * Time.fixedDeltaTime);
-                break;
-            case 3://home in on closest enemy
-                closestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetRange);
-                if (closestEnemy!=null)
-                    transform.position = closestEnemy.transform.position;
-                break;
-            case 4: //follow ground
-                Controller2DMovement();
-                //thisBullet.FrontVelocity( speed * transform.localScale.x);
-                break;
-            case 5:
-                if (boomerangStartTime > 0)
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, rotation);
-                    boomerangStartTime--;
-                    direction.y += ((target.transform.position.y + target.transform.position.normalized.y) - transform.position.y) * speedDampen;
-                    transform.Translate(direction * speed * Time.fixedDeltaTime);
-                }
-                else
-                { 
-                    Boomerang(); 
-                }
-                break;
-        }
-        //Countdown to lifetime
-        if (lifeTime > 0)
-        {
-            lifeTime -= Time.fixedDeltaTime;
-        }
-        else if (lifeTime <= 0)
-        {
-            OnDestroyGO();
+            switch (bulletType)
+            {
+                case 0://fly straight
+                    transform.Translate(velocity * speed * Time.fixedDeltaTime);
+                    break;
+                case 1://home in
+                    transform.position = Vector2.MoveTowards(transform.position, target.transform.position, (speed / 80));
+                    break;
+                case 2://fly firectly at target
+                    transform.Translate(velocity * Time.fixedDeltaTime);
+                    break;
+                case 3://home in on closest enemy
+                    closestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetRange);
+                    if (closestEnemy != null)
+                        transform.position = closestEnemy.transform.position;
+                    break;
+                case 4: //follow ground
+                    Controller2DMovement();
+                    //thisBullet.FrontVelocity( speed * transform.localScale.x);
+                    break;
+                case 5:
+                    if (boomerangStartTime > 0)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, rotation);
+                        boomerangStartTime--;
+                        direction.y += ((target.transform.position.y + target.transform.position.normalized.y) - transform.position.y) * speedDampen;
+                        transform.Translate(direction * speed * Time.fixedDeltaTime);
+                    }
+                    else
+                    {
+                        Boomerang();
+                    }
+                    break;
+                case 6:
+                    Satellite();
+                    break;
+
+            }
+            //Countdown to lifetime
+            if (lifeTime > 0)
+            {
+                lifeTime -= Time.fixedDeltaTime;
+            }
+            else if (lifeTime <= 0)
+            {
+                OnDestroyGO();
+            }
         }
     }
 
@@ -173,6 +180,7 @@ public class BulletHit : MonoBehaviour
     }
     private bool isDestroyed = false;
     [SerializeField] private float destroyTimer = .1f;
+    public bool isExplosion = false;
     private void OnDestroyGO()
     {
         if (!isDestroyed)
@@ -188,11 +196,12 @@ public class BulletHit : MonoBehaviour
             }
             bulletRB.isKinematic = true;
             RemoveForce();
-            Instantiate(bulletHitEffect, transform.position, transform.rotation);
-            if (thisBullet !=null)
+            GameObject hitEffect = Instantiate(bulletHitEffect, transform.position, transform.rotation);
+            if (isExplosion)
             {
-                //thisBullet.StartStateFromScript(attackState);
-                //rework explosion
+                BombController bomb = hitEffect.GetComponent<BombController>();
+                bomb.character = character;
+                bomb.StartState();
             }
             Destroy(gameObject, destroyTimer);
         }
@@ -216,6 +225,18 @@ public class BulletHit : MonoBehaviour
         followVel.x = Mathf.Cos(angle) * radius;
         followVel.y = Mathf.Sin(angle) * radius;
         SetVelocity(followVel);
+    }
+    private void Satellite()
+    {
+        angle += speed * Time.deltaTime;
+
+        var offset = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad)) * radius;
+        transform.position = (Vector2)character.transform.position + offset;
+    }
+    public void SetStartingAngle(float iceIndex, float totalSatellites)
+    {
+        float spacing = 360 / totalSatellites;//how much space should be between each block?
+        angle = iceIndex * spacing;//set the angle to be evenly spaced based on which number it is and where it should be on the circle
     }
     private void SetVelocity(Vector3 vel)
     {

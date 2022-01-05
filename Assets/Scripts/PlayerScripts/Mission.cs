@@ -25,14 +25,13 @@ public class Mission : MonoBehaviour
     public float elapsedTime, savedTime;
     public float bestTime, maxTime;
 
-    public float missionPoints, missionPointMax;
+    public int missionPoints, missionPointMax;
 
     public float enemiesKilled, enemyKillReq;
 
     public float damageCount, damageTaken, damageTakenMax, retryCount, retryTaken, retryMax;
 
     public float timeScore, missionScore, enemyScore, damageScore, retryScore, totalScore;
-    private string timeScoreText, missionScoreText, enemyScoreText, damageScoreText, retryScoreText, totalScoreText;
     public string[] scoreText;
 
     public CharacterObject mainChar;
@@ -73,6 +72,10 @@ public class Mission : MonoBehaviour
         //Debug.Log("Start");
         StartCoroutine(InitializeCoRoutine());
     }
+    private void Update()
+    {
+        KillStreakUpdate();
+    }
     private IEnumerator InitializeCoRoutine()
     {
         yield return new WaitForFixedUpdate();
@@ -94,6 +97,14 @@ public class Mission : MonoBehaviour
         menuTimer = PauseManager.pauseManager.pointsText[3];
         currencyText = PauseManager.pauseManager.pointsText[4];
         missionStartText = PauseManager.pauseManager.pointsText[5];
+        scoreMultiplicandText = PauseManager.pauseManager.pointsText[6];
+        scoreMultiplierText = PauseManager.pauseManager.pointsText[7];
+        totalScoreText = PauseManager.pauseManager.pointsText[8];
+        scoreRectTransform = scoreMultiplierText.transform.parent.GetComponent<RectTransform>();
+        scorePos = scoreRectTransform.anchoredPosition;
+        hiddenPos = new Vector3(-128, 0, 0)+scorePos;
+        scoreRectTransform.DOAnchorPos(hiddenPos, 0);
+        ScoreMultiplier = 1;
         //Debug.Log("Initialize");
     }
     private IEnumerator MissionStart()
@@ -131,6 +142,7 @@ public class Mission : MonoBehaviour
     public void EndMission()
     {
         EndTimer();
+        MusicManager.instance.StopReverbZone();
     }
     private void BeginTimer()
     {
@@ -160,21 +172,224 @@ public class Mission : MonoBehaviour
         }
     }
     public int currency;
-    private TextMeshProUGUI currencyText;
+    private RectTransform scoreRectTransform;
+    private TextMeshProUGUI currencyText, scoreMultiplicandText, scoreMultiplierText, totalScoreText;
     public void ChangeCurrency(int val)
     {
         currency += val;
         if (currencyText != null)
             currencyText.text = "x " + currency.ToString();
     }
+    public float maxScoremultiplier = 99.9f;
+    public float _scoreMultiplier = 1, killStreakTimer, maxKillStreakTime = 1f;
+    private int _scoreMultiplicand, killStreak, killStreakBonus = 150;
+    public int ScoreMultiplicand
+    {
+        get { return _scoreMultiplicand; }
+        set
+        {
+            UpdateScoreText(value);
+            _scoreMultiplicand = value;
+        }
+    }
+    public float ScoreMultiplier 
+    {
+        get { return _scoreMultiplier; }
+        set 
+        { 
+            _scoreMultiplier = value;
+            scoreMultiplierText.SetText("x " + _scoreMultiplier.ToString());
+            Math.Round(_scoreMultiplier, 1);
+        } 
+    }
+    public void OnEnemyDamaged(int damage)
+    {
+        if (damage>0)ScoreMultiplicand += damage;
+    }
     public void OnEnemyKilled() 
     {
         enemiesKilled++;
+        ScoreMultiplier += 0.1f;
+        Mathf.Clamp(ScoreMultiplier, 1, maxScoremultiplier);
+        KillStreakBegin();
     }
+    private void KillStreakBegin()
+    {
+        killStreakTimer = maxKillStreakTime;
+        killStreak++;
+    }
+    private void KillStreakUpdate()
+    {
+        if (killStreak > 0)
+        {
+            if (killStreakTimer > 0)
+            {
+                killStreakTimer -= Time.deltaTime;
+            }
+            else
+            {
+                if (killStreak>=2)
+                {
+                    int bonus = 100;
+                    switch (Mathf.Clamp(killStreak,0,8))
+                    {
+                        case 2://double kill
+                            bonus = 100;
+                            PopUpTextQueue("Z-Double\n<color=#FCE945>+" + bonus);
+                            break;
+                        case 3://triple
+                            bonus = 250;
+                            PopUpTextQueue("Z-Triple\n<color=#FCE945>+" + bonus);
+                            break;
+                        case 4://quad
+                            bonus = 400;
+                            PopUpTextQueue("Z-Quadruple\n<color=#FCE945>+" + bonus);
+                            break;
+                        case 5://quint
+                            bonus = 550;
+                            PopUpTextQueue("<i>555</i>\n<color=#FCE945>+" + bonus);
+                            break;
+                        case 6://sex
+                            bonus = 600;
+                            PopUpTextQueue("<i>666</i>\n<color=#FCE945>+" + bonus);
+                            break;
+                        case 7://hept
+                            bonus = 750;
+                            PopUpTextQueue("<i>777</i>\n<color=#FCE945>+" + bonus);
+                            break;
+                        case 8://carnage
+                            bonus = 900;
+                            PopUpTextQueue("<i>CRITICAL DEAD</i>\n<color=#FCE945>+" + bonus);
+                            break;
+                        case 9:
+                            bonus = 900;
+                            PopUpTextQueue("<i>CRITICAL DEAD</i>\n<color=#FCE945>+" + bonus);
+                            break;
+                        default:
+                            bonus = 100;
+                            PopUpTextQueue("Double\n<color=#FCE945>+" + bonus);
+                            break;
+                    }
+                    IncreaseScore(bonus);
+                    //notify double triple etc
+                    ScoreMultiplier += killStreak;
+                    killStreakTimer = 0;
+                    killStreak = 0;
+                }
+                else
+                {
+                    killStreakTimer = 0;
+                    killStreak = 0;
+                }
+            }
+        }
+    }
+    private void PopUpTextQueue(string textToDisplay)
+    {
+        PopupManager.instance.AddToQueue(textToDisplay);
+    }
+    private void IncreaseScore(int points)
+    {
+        ScoreMultiplicand += points;
+        //print score
+    }
+
+    private Coroutine CountingCoroutine;
+    private void UpdateScoreText(int value)
+    {
+        if(CountingCoroutine!=null) { StopCoroutine(CountingCoroutine); }
+        CountingCoroutine = StartCoroutine(CountText(value));
+        ScoreActive = true;
+    }
+    public float Duration = 1f, CountFPS = 60f;
+    public string NumberFormat = "N0", DecimalFormat = "D8", PercentFormat = "P1";
+    private bool _scoreActive = false;
+    public Vector3 scorePos, hiddenPos;
+    public bool ScoreActive
+    { 
+        get => _scoreActive;
+        set
+        {
+            _scoreActive = value;
+            ScoreVisible(value);
+        }
+    }
+    void ScoreVisible(bool isVisible)
+    {
+        if (isVisible)
+            scoreRectTransform.DOAnchorPos(scorePos, .25f);
+        else
+            scoreRectTransform.DOAnchorPos(hiddenPos, .25f).SetDelay(2f);
+    }
+    private IEnumerator CountText(int newVal)
+    {
+        WaitForSeconds Wait = new WaitForSeconds(1 / CountFPS);
+        int prevVal = _scoreMultiplicand;
+        int stepAmt;
+
+        if (newVal - prevVal < 0)
+        {
+            stepAmt = Mathf.FloorToInt((newVal - prevVal) / (CountFPS * Duration));
+        }
+        else
+        {
+            stepAmt = Mathf.CeilToInt((newVal - prevVal) / (CountFPS * Duration));
+        }
+
+        if (prevVal < newVal)
+        {
+            while (prevVal < newVal)
+            {
+                prevVal += stepAmt;
+                if (prevVal > newVal)
+                {
+                    prevVal = newVal;
+                }
+                scoreMultiplicandText.SetText(prevVal.ToString(NumberFormat));
+                yield return Wait;
+            }
+        }
+        else
+        {
+            while (prevVal > newVal)
+            {
+                prevVal += stepAmt;
+                if (prevVal < newVal)
+                {
+                    prevVal = newVal;
+                }
+                scoreMultiplicandText.SetText(prevVal.ToString(NumberFormat));
+                yield return Wait;
+            }
+        }
+    }
+    void CompleteScore()
+    {
+        int score;
+        float multiplicand = ScoreMultiplicand;
+        score = Mathf.RoundToInt(multiplicand * ScoreMultiplier);
+        OnMissionPoint(score);
+
+        ScoreMultiplicand = 0;
+        ScoreMultiplier = 1;
+        ScoreActive = false;
+    }
+    private int strikeCounter = 3, maxStrikeCounter = 3;
     public void OnPlayerDamaged(int damage) 
     {
         damageTaken -= damage;
         damageCount += damage;
+
+        if (damage > 0) CompleteScore();
+
+        //if (strikeCounter>0)
+        //{
+        //    strikeCounter--;
+        //}
+        //else
+        //{
+        //    CompleteScore();
+        //}
     }
     public void OnPlayerContinue() 
     {
@@ -185,7 +400,8 @@ public class Mission : MonoBehaviour
     public void OnMissionPoint(int point) 
     {
         missionPoints += point;
-        Mathf.Clamp(missionPoints, 0, missionPointMax);
+        totalScoreText.SetText(missionPoints.ToString(DecimalFormat));
+        //Mathf.Clamp(missionPoints, 0, missionPointMax);
     }
     private void CalculateGrade()
     {
@@ -250,7 +466,6 @@ public class Mission : MonoBehaviour
         PauseManager.pauseManager.Results();
         LevelChange();
     }
-
     [SerializeField] private string nextLevel = "MainMenu";
     private void LevelChange()
     {

@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public List<EnemySpawn> soloEnemies = new List<EnemySpawn>();
     public Vector2 rand = new Vector2(0, 2);
     public Transform playerChar;
+    private bool battleOn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy")&&!battleOn)
         {
             EnemySpawn E = collision.gameObject.GetComponent<EnemySpawn>();
             if (soloEnemies.Contains(E)&&!E.IsSpawned)
@@ -69,5 +70,13 @@ public class EnemySpawner : MonoBehaviour
     public void DeSpawnEnemy(EnemySpawn enemy)
     {
         enemy.DeSpawn();
+    }
+    public void SetEnemyRoom(bool isInBattle)
+    {
+        battleOn = isInBattle;
+        foreach (EnemySpawn enemy in soloEnemies)
+        {
+            enemy.DeSpawn();
+        }
     }
 }

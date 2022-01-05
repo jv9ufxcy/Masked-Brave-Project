@@ -404,7 +404,7 @@ public class HealthManager : MonoBehaviour
         
     }
 
-    public void RemoveHealth(int amount)
+    public void RemoveHealth(int amount, AttackEvent atk)
     {
 
         switch (UI)
@@ -438,6 +438,8 @@ public class HealthManager : MonoBehaviour
                     damageShowTimer = damageShowTime;//set the timer back to max when injured happens
                     healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
                     currentHealth -= amount;
+                    if (Mission.instance != null)
+                        Mission.instance.OnEnemyDamaged(amount);
                 }
                 if (currentHealth <= desperationHealth&&!isDesperation)
                 {
@@ -460,6 +462,8 @@ public class HealthManager : MonoBehaviour
                     damageShowTimer = damageShowTime;//set the timer back to max when injured happens
                     healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
                     currentHealth -= amount;
+                    if (Mission.instance != null)
+                        Mission.instance.OnEnemyDamaged(amount);
                 }
                 if (currentHealth <= desperationHealth&&!isDesperation)
                 {
@@ -531,6 +535,7 @@ public class HealthManager : MonoBehaviour
     public int healthDropRate = 2, effectIndex;
     public bool lastChance = true;
     public event EventHandler OnLastChance;
+    public string deathSound = "Enemy/Enemy Explode";
     /// <summary>
     /// waits until the death animation is done and then destroys the character
     /// </summary>
@@ -559,7 +564,7 @@ public class HealthManager : MonoBehaviour
                 OnDeath.Invoke();
                 character.GlobalPrefab(5);
                 character.OnDeath();
-                audioManager.PlaySound("Death");
+                audioManager.PlaySound(deathSound);
                 yield return new WaitForFixedUpdate();//get length of death animation        
                 if (Mission.instance != null)
                     Mission.instance.OnEnemyKilled();
@@ -574,7 +579,7 @@ public class HealthManager : MonoBehaviour
                 OnDeath.Invoke();
                 character.GlobalPrefab(5);
                 character.OnDeath();
-                audioManager.PlaySound("Death");
+                audioManager.PlaySound(deathSound);
                 yield return new WaitForFixedUpdate();//get length of death animation        
                 EnemySpawn B = GetComponent<EnemySpawn>();
                 if (B != null)
@@ -596,7 +601,7 @@ public class HealthManager : MonoBehaviour
                     character.OnDeath();
                     //character.StartStateFromScript(36);
                     yield return new WaitForFixedUpdate();//get length of death animation        
-                    audioManager.PlaySound("Defeat");
+                    audioManager.PlaySound(deathSound);
                     Mission.instance.EndMission();
                     lastChance = true;
                 }
@@ -609,7 +614,7 @@ public class HealthManager : MonoBehaviour
                 OnDeath.Invoke();
                 character.GlobalPrefab(effectIndex);
                 character.OnDeath();
-                audioManager.PlaySound("Death");
+                audioManager.PlaySound(deathSound);
                 yield return new WaitForFixedUpdate();//get length of death animation        
                 EnemySpawn O = GetComponent<EnemySpawn>();
                 if (O != null)

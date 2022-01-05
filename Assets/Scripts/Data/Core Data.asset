@@ -923,7 +923,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: TakeDamage
+      - name: Enemy/Enemy Explode
         val: 0
     - start: 0
       end: 0
@@ -2272,8 +2272,8 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 0
-      end: 0
+    - start: 5
+      end: 5
       active: 1
       script: 10
       parameters:
@@ -2304,15 +2304,15 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 0
-      hitStun: 25
+      hitStun: 30
       hitStop: 5
-      damage: 4
+      damage: 2
       meterGain: 5
       comboValue: 1
       poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 10, y: 10, z: 0}
+      knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
@@ -2324,7 +2324,7 @@ MonoBehaviour:
     wallReq: 0
   - stateName: BlastBomb
     index: 0
-    length: 25
+    length: 35
     loop: 0
     blendRate: 0.1
     events:
@@ -2487,17 +2487,17 @@ MonoBehaviour:
       - name: 
         val: 0.5
     attacks:
-    - start: 5
+    - start: 0
       length: 5
       hitStun: 10
       hitStop: 5
-      damage: 1
+      damage: 2
       meterGain: 0
       comboValue: 2
       poiseDamage: 5
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 10, y: 0, z: 0}
+      knockback: {x: 0, y: 5, z: 0}
       hitBoxPos: {x: 0.5, y: 0, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 0
@@ -2505,41 +2505,41 @@ MonoBehaviour:
       length: 5
       hitStun: 10
       hitStop: 5
-      damage: 1
+      damage: 2
       meterGain: 0
       comboValue: 3
       poiseDamage: 5
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 10, y: 0, z: 0}
+      knockback: {x: 0, y: 5, z: 0}
       hitBoxPos: {x: 0, y: -0.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 0
-    - start: 15
+    - start: 20
       length: 5
       hitStun: 10
       hitStop: 5
-      damage: 1
+      damage: 2
       meterGain: 0
       comboValue: 4
       poiseDamage: 5
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 10, y: 0, z: 0}
+      knockback: {x: 0, y: 5, z: 0}
       hitBoxPos: {x: -0.5, y: 0, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 0
-    - start: 25
+    - start: 30
       length: 5
       hitStun: 10
       hitStop: 5
-      damage: 1
+      damage: 2
       meterGain: 0
       comboValue: 5
-      poiseDamage: 5
+      poiseDamage: 10
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 10, y: 0, z: 0}
+      knockback: {x: 10, y: 10, z: 0}
       hitBoxPos: {x: 0, y: 0.5, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 0
@@ -2984,13 +2984,13 @@ MonoBehaviour:
       length: 0
       hitStun: 30
       hitStop: 5
-      damage: 4
+      damage: 2
       meterGain: 5
       comboValue: 4
       poiseDamage: 10
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 20, y: 10, z: 0}
+      knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
@@ -3530,21 +3530,21 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SlimeHop
+      - name: Props/Slime Bounce
         val: 0
-    - start: 30
-      end: 30
+    - start: 15
+      end: 15
       active: 1
       script: 14
       parameters:
-      - name: SlimeHop
+      - name: Enemy/Khris/Khris Drill
         val: 0
     - start: 40
       end: 40
-      active: 1
+      active: 0
       script: 14
       parameters:
-      - name: SlimeDrill
+      - name: Enemy/Khris/Khris Drill
         val: 0
     attacks:
     - start: 45
@@ -3592,21 +3592,14 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SlimeHop
+      - name: Props/Slime Bounce
         val: 0
-    - start: 50
-      end: 50
+    - start: 25
+      end: 25
       active: 1
       script: 14
       parameters:
-      - name: SlimeHop
-        val: 0
-    - start: 55
-      end: 55
-      active: 1
-      script: 14
-      parameters:
-      - name: SlimeDrill
+      - name: Enemy/Khris/Khris Drill
         val: 0
     attacks:
     - start: 55
@@ -3642,7 +3635,7 @@ MonoBehaviour:
       parameters:
       - name: Speed
         val: -10
-    - start: 8.153847
+    - start: 9
       end: 10
       active: 1
       script: 7
@@ -3661,7 +3654,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SlimeHop
+      - name: Props/Slime Bounce
         val: 0
     attacks: []
     jumpReq: 0
@@ -3699,18 +3692,18 @@ MonoBehaviour:
       - name: 
         val: 0
     - start: 0
+      end: 60
+      active: 1
+      script: 1
+      parameters:
+      - name: SlimeElec
+        val: 0
+    - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimeElec
-        val: 0
-    - start: 50
-      end: 50
-      active: 1
-      script: 14
-      parameters:
-      - name: EnemyShoot
+      - name: Enemy/Khris/Khris Elec
         val: 0
     attacks:
     - start: 50
@@ -3742,24 +3735,24 @@ MonoBehaviour:
     - start: 50
       end: 50
       active: 1
-      script: 10
+      script: 23
       parameters:
       - name: 
         val: 2
       - name: 
-        val: 0
+        val: 2
+      - name: 
+        val: 160
       - name: 
         val: 2
       - name: 
-        val: 0
-      - name: 
-        val: 0
+        val: 56
     - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimePsi
+      - name: Enemy/Khris/Khris Arrow
         val: 0
     - start: 50
       end: 50
@@ -3767,6 +3760,13 @@ MonoBehaviour:
       script: 14
       parameters:
       - name: SlimePsi
+        val: 0
+    - start: 0
+      end: 60
+      active: 1
+      script: 1
+      parameters:
+      - name: 
         val: 0
     - start: 0
       end: 60
@@ -3802,8 +3802,8 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 20
-      end: 20
+    - start: 35
+      end: 35
       active: 1
       script: 10
       parameters:
@@ -3817,8 +3817,8 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
-    - start: 20
-      end: 20
+    - start: 35
+      end: 35
       active: 1
       script: 16
       parameters:
@@ -3841,15 +3841,15 @@ MonoBehaviour:
       parameters:
       - name: SlimePsi
         val: 0
-    - start: 25.360825
-      end: 25.360825
+    - start: 20
+      end: 20
       active: 1
       script: 14
       parameters:
-      - name: 
+      - name: Enemy/Khris/Khris Elec
         val: 3
     attacks:
-    - start: 20
+    - start: 35
       length: 5
       hitStun: 15
       hitStop: 5
@@ -3901,7 +3901,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SlimeHop
+      - name: Props/Slime Bounce
         val: 0
     attacks: []
     jumpReq: 0
@@ -3923,12 +3923,12 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 12
-    - start: 30
-      end: 30
+    - start: 0
+      end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimeDrill
+      - name: Enemy/Khris/Khris Drill
         val: 0
     attacks:
     - start: 30
@@ -3991,22 +3991,22 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 20
-      end: 20
-      active: 1
-      script: 14
-      parameters:
-      - name: SlimeDrill
-        val: 0
     - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
+      - name: Enemy/Khris/Khris Drill
+        val: 0
+    - start: 0
+      end: 0
+      active: 0
+      script: 14
+      parameters:
       - name: SlimePsi
         val: 0
     attacks:
-    - start: 25
+    - start: 35
       length: 10
       hitStun: 20
       hitStop: 10
@@ -4046,19 +4046,19 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 10
-      end: 10
+    - start: 0
+      end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimeHop
+      - name: Enemy/Khris/Khris Elec
         val: 0
     - start: 20
       end: 20
-      active: 1
+      active: 0
       script: 14
       parameters:
-      - name: SlimeElec
+      - name: Enemy/Khris/Khris Arrow
         val: 0
     attacks:
     - start: 20
@@ -4108,12 +4108,40 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Enemy/FloatTowards
     index: 0
-    length: 60
+    length: 30
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 29
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: -4
+    - start: 29
+      end: 30
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 29
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 4
+    - start: 29
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -4121,12 +4149,40 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Enemy/FloatAway
     index: 0
-    length: 60
+    length: 30
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 29
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 4
+    - start: 29
+      end: 30
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 29
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: -4
+    - start: 29
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -4154,12 +4210,12 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 35
-      end: 35
+    - start: 10
+      end: 10
       active: 1
       script: 14
       parameters:
-      - name: SlimeDrill
+      - name: Enemy/Khris/Khris Drill
         val: 0
     - start: 0
       end: 5.0000005
@@ -4238,12 +4294,12 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 0
-    - start: 15
-      end: 15
+    - start: 5
+      end: 5
       active: 1
       script: 14
       parameters:
-      - name: SlimeElec
+      - name: Enemy/Khris/Khris Elec
         val: 0
     attacks:
     - start: 15
@@ -4284,7 +4340,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SlimeFrenzy
+      - name: Enemy/Khris/Khris Arrow
         val: 0
     attacks:
     - start: 0
@@ -4347,11 +4403,11 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SlimePsi
+      - name: Enemy/Khris/Khris Arrow
         val: 0
     - start: 65
       end: 65
-      active: 1
+      active: 0
       script: 14
       parameters:
       - name: EnemyShoot
@@ -4436,11 +4492,11 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: SlimePsi
+      - name: Enemy/Khris/Khris Drill
         val: 0
     - start: 55
       end: 55
-      active: 1
+      active: 0
       script: 14
       parameters:
       - name: Vroom
@@ -4479,12 +4535,12 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 40
-      end: 40
+    - start: 0
+      end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimeDrill
+      - name: Enemy/Khris/Khris Arrow
         val: 0
     - start: 45
       end: 45
@@ -4575,12 +4631,27 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
+    - start: 55
+      end: 55
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
     - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimeFrenzy
+      - name: Enemy/Khris/Khris Arrow
         val: 1
     attacks: []
     jumpReq: 0
@@ -4606,12 +4677,27 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
+    - start: 55
+      end: 55
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
     - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimeFrenzy
+      - name: Enemy/Khris/Khris Arrow
         val: 1
     attacks: []
     jumpReq: 0
@@ -4637,12 +4723,27 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
+    - start: 55
+      end: 55
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
     - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
-      - name: SlimeFrenzy
+      - name: Enemy/Khris/Khris Arrow
         val: 1
     attacks: []
     jumpReq: 0
@@ -4710,12 +4811,12 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 10
-      end: 10
+    - start: 5
+      end: 5
       active: 1
       script: 14
       parameters:
-      - name: PunchWoosh
+      - name: Enemy/Roy/Roy ShieldThrow
         val: 0
     - start: 15
       end: 15
@@ -4773,12 +4874,12 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 35
-      end: 35
+    - start: 30
+      end: 30
       active: 1
       script: 14
       parameters:
-      - name: PunchWoosh
+      - name: Enemy/Roy/Roy ShieldThrow
         val: 0
     - start: 10
       end: 15
@@ -4886,12 +4987,12 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 30
-      end: 30
+    - start: 0
+      end: 0
       active: 1
       script: 14
       parameters:
-      - name: ChargingStar
+      - name: Enemy/Roy/Roy BigShield
         val: 0
     attacks:
     - start: 40
@@ -4948,29 +5049,29 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 25
-      end: 35
+    - start: 40
+      end: 45
       active: 1
       script: 0
       parameters:
       - name: 
         val: 20
-    - start: 20
-      end: 30
+    - start: 40
+      end: 45
       active: 1
       script: 1
       parameters:
       - name: 
         val: 8
-    - start: 20
-      end: 20
+    - start: 0
+      end: 0
       active: 1
       script: 14
       parameters:
-      - name: PunchWoosh
+      - name: Enemy/Roy/Roy BigShield
         val: 10
-    - start: 34
-      end: 34
+    - start: 50
+      end: 50
       active: 1
       script: 10
       parameters:
@@ -4984,15 +5085,15 @@ MonoBehaviour:
         val: -0.5
       - name: 
         val: 0
-    - start: 0
-      end: 10
+    - start: 30
+      end: 40
       active: 1
       script: 1
       parameters:
       - name: 
         val: 4
     attacks:
-    - start: 20
+    - start: 50
       length: 10
       hitStun: 20
       hitStop: 5
@@ -5714,6 +5815,19 @@ MonoBehaviour:
   - index: 0
     name: MaintainVel
     parameters: []
+  - index: 0
+    name: SummonSatellite
+    parameters:
+    - name: Index
+      val: 0
+    - name: Orbs
+      val: 3
+    - name: Speed
+      val: 4
+    - name: Radius
+      val: 2
+    - name: Attack Index
+      val: 57
   moveLists:
   - name: Brave
     commandStates:

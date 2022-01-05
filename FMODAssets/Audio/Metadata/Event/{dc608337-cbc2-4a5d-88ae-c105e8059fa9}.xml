@@ -90,6 +90,9 @@
 		<property name="volume">
 			<value>-6.5</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{5b9b01c5-1e79-4e1c-bee4-382585cb820e}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{8c035d84-495f-4f5b-8253-010f8d43780e}</destination>
 		</relationship>
@@ -142,6 +145,35 @@
 			<destination>{247f2fab-9492-4b38-ac90-cda74d4dd152}</destination>
 		</relationship>
 	</object>
+	<object class="ADSRModulator" id="{5b9b01c5-1e79-4e1c-bee4-382585cb820e}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="attackTime">
+			<value>0</value>
+		</property>
+		<property name="holdTime">
+			<value>320</value>
+		</property>
+		<property name="decayTime">
+			<value>2600</value>
+		</property>
+		<property name="decayShape">
+			<value>-0.550516248</value>
+		</property>
+		<property name="sustainValue">
+			<value>-80</value>
+		</property>
+		<property name="releaseTime">
+			<value>0</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{8c035d84-495f-4f5b-8253-010f8d43780e}">
 		<relationship name="effects">
 			<destination>{742bc175-2ab1-49cf-97c4-2879f0e810c7}</destination>
@@ -178,10 +210,12 @@
 		<relationship name="effects">
 			<destination>{cc9b0765-ef01-43f4-98c3-700d231b67dd}</destination>
 			<destination>{e6b42a81-f7d9-4e36-b096-f11ea604779b}</destination>
+			<destination>{4d46787b-55c1-4847-b47a-7102c991c9de}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6cb7d23a-bbaa-4f08-bfc7-b0344341c894}" />
 	<object class="MixerBusFader" id="{742bc175-2ab1-49cf-97c4-2879f0e810c7}" />
 	<object class="MixerBusFader" id="{cc9b0765-ef01-43f4-98c3-700d231b67dd}" />
 	<object class="CompressorEffect" id="{e6b42a81-f7d9-4e36-b096-f11ea604779b}" />
+	<object class="Sidechain" id="{4d46787b-55c1-4847-b47a-7102c991c9de}" />
 </objects>

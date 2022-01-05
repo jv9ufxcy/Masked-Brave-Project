@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hitbox : MonoBehaviour
 {
     private List<Collider2D> enemies = new List<Collider2D>();
-    public int projectileIndex = 0;
+    public int projectileIndex = 0, atkIndex=0;
     public CharacterObject character;
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int stateIndex;
@@ -36,13 +36,13 @@ public class Hitbox : MonoBehaviour
                 if (victim != null)
                 {
                     enemies.Add(collision);
-                    victim.Hit(character, projectileIndex,0);
+                    victim.Hit(character, projectileIndex,atkIndex);
                 }
                 if (collision.gameObject.CompareTag("Shootable"))
                 {
                     HealthManager destructible = collision.transform.root.GetComponent<HealthManager>();
                     enemies.Add(collision);
-                    destructible.RemoveHealth(1);
+                    destructible.RemoveHealth(1,null);
                 }
             }
         }
@@ -54,13 +54,13 @@ public class Hitbox : MonoBehaviour
                 if (victim != null)
                 {
                     enemies.Add(collision);
-                    victim.Hit(character, projectileIndex,0);
+                    victim.Hit(character, projectileIndex,atkIndex);
                 }
                 if (collision.gameObject.CompareTag("Shootable"))
                 {
                     HealthManager destructible = collision.transform.root.GetComponent<HealthManager>();
                     enemies.Add(collision);
-                    destructible.RemoveHealth(1);
+                    destructible.RemoveHealth(1,null);
                 }
             }
         }

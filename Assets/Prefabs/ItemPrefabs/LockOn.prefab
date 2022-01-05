@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6405041189592390215}
   - component: {fileID: 2003077778357803930}
   - component: {fileID: 4115066638306045531}
-  - component: {fileID: 7992567123706509219}
   m_Layer: 0
   m_Name: LockOn
   m_TagString: Untagged
@@ -48,6 +47,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -59,6 +59,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -69,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1480257295
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 89564386464679d4fa3cb7fa5c081bc6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -101,28 +102,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7992567123706509219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6105401075006040434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7d55563ba298304ebe1d3dadbf18395, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalVars: {fileID: 0}
-  UpSlashActive: 0
-  DownSlashActive: 0
-  isImageActive: 0
-  slashAnim: {fileID: 4115066638306045531}
-  slashImage: {fileID: 2003077778357803930}
-  buttonPrompt: {fileID: 2586702988386491247}
-  buttonPromptPS: {fileID: 21300016, guid: aeb0a706b3b287449a0906c7b33a46e5, type: 3}
-  buttonPromptXB: {fileID: 21300020, guid: aeb0a706b3b287449a0906c7b33a46e5, type: 3}
-  buttonPromptPC: {fileID: 21300036, guid: aeb0a706b3b287449a0906c7b33a46e5, type: 3}
 --- !u!1 &7200267180341298163
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +147,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -179,6 +159,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -189,7 +170,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -301589167
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

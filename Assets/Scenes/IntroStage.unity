@@ -307,7 +307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65178144}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14, y: 0, z: 0}
+  m_LocalPosition: {x: 14, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 305544479}
@@ -2066,7 +2066,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305544478}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: -7, z: 0}
+  m_LocalPosition: {x: -3, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 65178145}
@@ -2581,6 +2581,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
@@ -2605,6 +2616,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
   numOfEnemies: {fileID: 1404728386}
   battleFightText: {fileID: 1404728385}
@@ -2802,6 +2824,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
@@ -2819,6 +2852,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1565494205}
         m_MethodName: BeginDialogue
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4257,7 +4301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138573678}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalPosition: {x: 7, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 305544479}
@@ -4492,7 +4536,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227945992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalPosition: {x: 7, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1565494204}
@@ -4848,11 +4892,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4799150547384471484}
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4950,7 +5016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285390846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14, y: 0, z: 0}
+  m_LocalPosition: {x: 14, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1565494204}
@@ -5224,6 +5290,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dfc1bf25d867df48b4b229a5a26513f, type: 3}
+--- !u!114 &1354602881 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1543555867456373831, guid: b288fb180f459894d98cef47d9ec3cf1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1543555868975295564}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1652d60573da83c469679c054e4dd823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1379914053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6500,11 +6578,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 824184237}
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1354602881}
+        m_MethodName: SetEnemyRoom
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6615,7 +6715,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565494203}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: -7, z: 0}
+  m_LocalPosition: {x: -3, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1285390847}
@@ -7819,7 +7919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1580854466, guid: e303b86f182529449ab3ff915b740c04, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.75
+      value: 55.5
       objectReference: {fileID: 0}
     - target: {fileID: 1580854466, guid: e303b86f182529449ab3ff915b740c04, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9620,6 +9720,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: PlayEvent
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: StopEvent
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: EventReference.Path
+      value: snapshot:/City Verb
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: OverrideMinDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -473276205
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1145055258
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 2141535409
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642630635, guid: 0e6be3e3a4476a94686f89950d29b121, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 362781184
+      objectReference: {fileID: 0}
     - target: {fileID: 6662486002328332144, guid: 0e6be3e3a4476a94686f89950d29b121,
         type: 3}
       propertyPath: m_RootOrder
@@ -9744,6 +9880,10 @@ PrefabInstance:
     - target: {fileID: 1154409023079494, guid: 45c29efe324d1a448bcc5765ca2e5a9e, type: 3}
       propertyPath: m_Name
       value: CP
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154409023079494, guid: 45c29efe324d1a448bcc5765ca2e5a9e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4527265501996398, guid: 45c29efe324d1a448bcc5765ca2e5a9e, type: 3}
       propertyPath: m_RootOrder

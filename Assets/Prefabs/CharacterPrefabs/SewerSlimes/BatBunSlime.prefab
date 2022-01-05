@@ -4834,6 +4834,7 @@ MonoBehaviour:
   animSpeed: 0
   hitActive: 0
   currentAttackIndex: 0
+  satellitesCreated: []
   maxJumpHeight: 0
   minJumpHeight: 0
   timeToJumpApex: 0.4
@@ -4848,7 +4849,7 @@ MonoBehaviour:
   horizontalAxis: altPs4Horizontal
   verticalAxis: altPs4Vertical
   deadzone: 0.2
-  moveSpeed: 0.1
+  moveSpeed: 0
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -4921,7 +4922,7 @@ MonoBehaviour:
   grappleTarget: {fileID: 0}
   attackStrings:
   - Enemy/Slime Hurt
-  - BulletHit
+  - Enemy/Slime Hurt
   - Enemy/Slime Hurt
   - Enemy/Slime Hurt
   - Enemy/Slime Hurt
@@ -5003,6 +5004,8 @@ MonoBehaviour:
   effectsRend: {fileID: 4566510888319306693}
   healthDropRate: 1
   effectIndex: 0
+  lastChance: 1
+  deathSound: Enemy/Enemy Explode
 --- !u!114 &5321893039030211628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29476,5 +29479,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileIndex: 0
+  atkIndex: 0
   character: {fileID: 0}
   stateIndex: 58

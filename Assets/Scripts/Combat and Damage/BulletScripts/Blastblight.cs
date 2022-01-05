@@ -45,7 +45,6 @@ public class Blastblight : MonoBehaviour
         GameObject bomb = Instantiate(bombObject, transform.position, Quaternion.identity);
         bomb.transform.parent = transform;
         bomb.GetComponentInChildren<Hitbox>().character = GameEngine.gameEngine.mainCharacter;
-        bomb.GetComponent<BombController>().Detonate();
     }
     private void DeathExplosion()
     {

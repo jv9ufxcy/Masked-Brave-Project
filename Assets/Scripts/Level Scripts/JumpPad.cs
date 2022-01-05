@@ -10,12 +10,15 @@ public class JumpPad : MonoBehaviour
     public InteractableObject charaSpawn;
     public enum ObjectType { LEVEL, CONTACT, TIMED };
     public ObjectType objType;
+    private AudioManager audioManager;
+    public string bounceSound = "Props/Slime Bounce";
     private void Start()
     {
         if (isDestructible)
         {
             charaSpawn = GetComponent<InteractableObject>();
         }
+        audioManager = AudioManager.instance;
     }
     private void FixedUpdate()
     {
@@ -45,6 +48,7 @@ public class JumpPad : MonoBehaviour
                 chara.jumps++;
                 chara.VelocityY(chara.MaxJumpVelocity*jumpPow);
                 //Debug.Log("Jumped at speed of " + chara.MaxJumpVelocity * jumpPow);
+                audioManager.PlaySound(bounceSound);
                 chara.canCancel = true;
                 switch (objType)
                 {
@@ -71,7 +75,8 @@ public class JumpPad : MonoBehaviour
             {
                 chara.jumps++;
                 chara.VelocityY(chara.MaxJumpVelocity * jumpPow);
-                Debug.Log("Jumped at speed of " + chara.MaxJumpVelocity * jumpPow);
+                //Debug.Log("Jumped at speed of " + chara.MaxJumpVelocity * jumpPow);
+                audioManager.PlaySound(bounceSound);
                 chara.canCancel=true;
                 switch (objType)
                 {

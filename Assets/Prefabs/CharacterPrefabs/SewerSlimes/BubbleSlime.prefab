@@ -4834,6 +4834,7 @@ MonoBehaviour:
   animSpeed: 0
   hitActive: 0
   currentAttackIndex: 0
+  satellitesCreated: []
   maxJumpHeight: 0
   minJumpHeight: 0
   timeToJumpApex: 0.4
@@ -4880,7 +4881,7 @@ MonoBehaviour:
   bullets:
   - {fileID: 1946779624007576, guid: 4d44dc666ad645a46a539a483990aaf9, type: 3}
   - {fileID: 1946779624007576, guid: b4ef358abf1f55f43a9e874ccb19b4ad, type: 3}
-  - {fileID: 1946779624007576, guid: 3c0465471e8bee14ea8764fc450febc5, type: 3}
+  - {fileID: 1946779624007576, guid: 106a19ef714f84a4aa21b98f2738ffc4, type: 3}
   - {fileID: 1946779624007576, guid: 5ce40fee1cb5c4549aea1da77c569712, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
@@ -4924,7 +4925,7 @@ MonoBehaviour:
   grappleTarget: {fileID: 0}
   attackStrings:
   - Enemy/Slime Hurt
-  - BulletHit
+  - Enemy/Slime Hurt
   - Enemy/Slime Hurt
   - Enemy/Slime Hurt
   - Enemy/Slime Hurt
@@ -4948,8 +4949,8 @@ MonoBehaviour:
   isNearPlayer: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 37000000
-  rangedAttackState: 38000000380000003900000038000000
+  closeAttackState: 390000003900000042000000
+  rangedAttackState: 410000003800000038000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 1
@@ -5006,6 +5007,8 @@ MonoBehaviour:
   effectsRend: {fileID: 4566510888319306693}
   healthDropRate: 5
   effectIndex: 0
+  lastChance: 1
+  deathSound: Enemy/Enemy Explode
 --- !u!114 &5321893039030211628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29478,5 +29481,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileIndex: 0
+  atkIndex: 0
   character: {fileID: 0}
   stateIndex: 54
