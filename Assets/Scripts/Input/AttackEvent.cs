@@ -23,4 +23,5 @@ public class AttackEvent
     public Vector3 hitBoxScale;
 
     public float cancelWindow;
+    public float killMultiplier;
 }

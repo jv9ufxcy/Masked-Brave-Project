@@ -206,16 +206,23 @@ public class Mission : MonoBehaviour
     {
         if (damage>0)ScoreMultiplicand += damage;
     }
-    public void OnEnemyKilled() 
+    public void OnEnemyKilled(float killMultiplier) 
     {
-        int killPoint = 100;
+        float killPoint = 100;
+        killPoint *= killMultiplier;
 
         enemiesKilled++;
         ScoreMultiplier += 0.1f;
         Mathf.Clamp(ScoreMultiplier, 1, maxScoremultiplier);
         KillStreakBegin();
-
-        OnMissionPoint(killPoint);
+        Debug.Log("multiplier  is " + killMultiplier);
+        if (killMultiplier>=3f)
+        {
+            int finisherBonus = 30;
+            ScoreMultiplicand += finisherBonus;
+            PopUpTextQueue("Z-Finisher\n<color=#FCE945>+" + finisherBonus);
+        }
+        OnMissionPoint(Mathf.RoundToInt(killPoint));
     }
     private void KillStreakBegin()
     {
@@ -396,7 +403,7 @@ public class Mission : MonoBehaviour
         damageTaken -= damage;
         damageCount += damage;
 
-        if (damage > 0) CompleteScore();
+        if (damage > 0 && ScoreActive) CompleteScore();
 
         //if (strikeCounter>0)
         //{

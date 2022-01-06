@@ -1375,7 +1375,6 @@ public class CharacterObject : MonoBehaviour, IHittable
             {
                 timeToWallUnstick = wallStickTime;
                 PlayAudio("Player/Wall Grip");
-                Debug.Log("Wall Gripped");
             }
 
         }

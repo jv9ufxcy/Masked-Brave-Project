@@ -403,10 +403,16 @@ public class HealthManager : MonoBehaviour
         }
         
     }
-
+    private AttackEvent lastHit;
+    private float scoreMult = 1;
     public void RemoveHealth(int amount, AttackEvent atk)
     {
-
+        if (atk!=null)
+        {
+            lastHit = atk;
+            scoreMult = atk.killMultiplier;
+            Debug.Log(lastHit.killMultiplier);
+        }
         switch (UI)
         {
             case UIType.PLAYER:
@@ -438,6 +444,7 @@ public class HealthManager : MonoBehaviour
                     damageShowTimer = damageShowTime;//set the timer back to max when injured happens
                     healthBarFadeTimer = showHealthTime;//reset timer for showing health bar here too
                     currentHealth -= amount;
+                    
                     if (Mission.instance != null)
                         Mission.instance.OnEnemyDamaged(amount);
                 }
@@ -567,7 +574,7 @@ public class HealthManager : MonoBehaviour
                 audioManager.PlaySound(deathSound);
                 yield return new WaitForFixedUpdate();//get length of death animation        
                 if (Mission.instance != null)
-                    Mission.instance.OnEnemyKilled();
+                    Mission.instance.OnEnemyKilled(scoreMult);
 
                 EnemySpawn E = GetComponent<EnemySpawn>();
                 if (E != null)
@@ -581,6 +588,9 @@ public class HealthManager : MonoBehaviour
                 character.OnDeath();
                 audioManager.PlaySound(deathSound);
                 yield return new WaitForFixedUpdate();//get length of death animation        
+                scoreMult *= 100;
+                Mission.instance.OnEnemyKilled(scoreMult);
+
                 EnemySpawn B = GetComponent<EnemySpawn>();
                 if (B != null)
                     B.DeSpawn();
@@ -600,7 +610,8 @@ public class HealthManager : MonoBehaviour
                     OnDeath.Invoke();
                     character.OnDeath();
                     //character.StartStateFromScript(36);
-                    yield return new WaitForFixedUpdate();//get length of death animation        
+                    yield return new WaitForFixedUpdate();//get length of death animation
+                    
                     audioManager.PlaySound(deathSound);
                     Mission.instance.EndMission();
                     lastChance = true;
