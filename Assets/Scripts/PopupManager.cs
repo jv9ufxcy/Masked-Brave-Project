@@ -49,7 +49,7 @@ public class PopupManager : MonoBehaviour
         popupHolder.DOAnchorPos(anchorLocation ,FadeTime);
         yield return new WaitForSeconds(DisplayTime);
         popupHolder.DOAnchorPos(hiddenLocation, FadeTime);
-        yield return new WaitForSeconds(DisplayTime);
+        yield return new WaitForSeconds(FadeTime);
         isPlaying = false;
     }
     private void Update()

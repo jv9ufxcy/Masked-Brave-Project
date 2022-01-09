@@ -115,6 +115,7 @@ MonoBehaviour:
   animSpeed: 0
   hitActive: 0
   currentAttackIndex: 0
+  satellitesCreated: []
   maxJumpHeight: 4
   minJumpHeight: 0.125
   timeToJumpApex: 0.4
@@ -216,13 +217,14 @@ MonoBehaviour:
   hitStun: 0
   target: {fileID: 0}
   spawners: []
-  aggroRange: 10
+  aggroDistance: 8
+  aggroHeight: 4
   longAttackRange: 6
   shortAttackRange: 2
   attackCooldown: 90
   horiCos: {x: 0, y: 0}
   vertSign: {x: 0, y: 0}
-  isNearPlayer: 0
+  isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
   closeAttackState: 3e000000
@@ -753,6 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileIndex: 0
+  atkIndex: 0
   character: {fileID: 0}
   stateIndex: 54
 --- !u!1001 &745503043334823341

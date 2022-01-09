@@ -46,6 +46,7 @@ public class Checkpoint : MonoBehaviour
         transform.localScale = transform.localScale * activatedScale;
         spriteRenderer.color = activatedColor;
         gm.lastCheckpointPos = currentlyActiveCheckpoint.transform.position;
+        Mission.instance.CompleteScore();
         audioManager.PlaySound(checkpointSound);
     }
     private void DeactivateCheckpoint()

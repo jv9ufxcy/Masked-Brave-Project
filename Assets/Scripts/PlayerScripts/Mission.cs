@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System.Runtime.CompilerServices;
@@ -101,6 +102,7 @@ public class Mission : MonoBehaviour
         scoreMultiplierText = PauseManager.pauseManager.pointsText[7];
         totalScoreText = PauseManager.pauseManager.pointsText[8];
         scoreRectTransform = scoreMultiplierText.transform.parent.GetComponent<RectTransform>();
+        kudosHandler = scoreRectTransform.GetComponentInChildren<KudosHandler>();
         scorePos = scoreRectTransform.anchoredPosition;
         hiddenPos = new Vector3(-128, 0, 0)+scorePos;
         scoreRectTransform.DOAnchorPos(hiddenPos, 0);
@@ -172,6 +174,7 @@ public class Mission : MonoBehaviour
         }
     }
     public int currency;
+    private KudosHandler kudosHandler;
     private RectTransform scoreRectTransform;
     private TextMeshProUGUI currencyText, scoreMultiplicandText, scoreMultiplierText, totalScoreText;
     public void ChangeCurrency(int val)
@@ -205,6 +208,11 @@ public class Mission : MonoBehaviour
     public void OnEnemyDamaged(int damage)
     {
         if (damage>0)ScoreMultiplicand += damage;
+        if (ScoreActive == false)
+        {
+            strikeCounter = maxStrikeCounter;
+            kudosHandler.UpdateStrike(strikeCounter);
+        }
     }
     public void OnEnemyKilled(float killMultiplier) 
     {
@@ -340,7 +348,10 @@ public class Mission : MonoBehaviour
     void ScoreVisible(bool isVisible)
     {
         if (isVisible)
+        {
             scoreRectTransform.DOAnchorPos(scorePos, .25f);
+            kudosHandler.SetContainerColor(0);
+        }
         else
             scoreRectTransform.DOAnchorPos(hiddenPos, .25f).SetDelay(2f);
     }
@@ -386,16 +397,32 @@ public class Mission : MonoBehaviour
             }
         }
     }
-    void CompleteScore()
+    public void CompleteScore()
     {
         int score;
         float multiplicand = ScoreMultiplicand;
         score = Mathf.RoundToInt(multiplicand * ScoreMultiplier);
         OnMissionPoint(score);
 
+        kudosHandler.SetContainerColor(2);
+        //play good sound
         ScoreMultiplicand = 0;
         ScoreMultiplier = 1;
         ScoreActive = false;
+
+        strikeCounter = maxStrikeCounter;
+        kudosHandler.UpdateStrike(strikeCounter);
+    }
+    public void FailScore()
+    {
+        kudosHandler.SetContainerColor(1);
+        //play fail sound
+        ScoreMultiplicand = 0;
+        ScoreMultiplier = 1;
+        ScoreActive = false;
+
+        strikeCounter = maxStrikeCounter;
+        kudosHandler.UpdateStrike(strikeCounter);
     }
     private int strikeCounter = 3, maxStrikeCounter = 3;
     public void OnPlayerDamaged(int damage) 
@@ -403,16 +430,18 @@ public class Mission : MonoBehaviour
         damageTaken -= damage;
         damageCount += damage;
 
-        if (damage > 0 && ScoreActive) CompleteScore();
-
-        //if (strikeCounter>0)
-        //{
-        //    strikeCounter--;
-        //}
-        //else
-        //{
-        //    CompleteScore();
-        //}
+        if (damage > 0 && ScoreActive)
+        {
+            if (strikeCounter > 0)
+            {
+                strikeCounter--;
+                kudosHandler.UpdateStrike(strikeCounter);
+            }
+            if (strikeCounter <= 0)
+            {
+                FailScore();
+            }
+        }
     }
     public void OnPlayerContinue() 
     {

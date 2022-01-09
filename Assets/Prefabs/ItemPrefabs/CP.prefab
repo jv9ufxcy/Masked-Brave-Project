@@ -47,6 +47,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -58,6 +59,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -97,6 +99,7 @@ MonoBehaviour:
   deactivatedScale: 1
   activatedColor: {r: 1, g: 1, b: 1, a: 1}
   deactivatedColor: {r: 0.23137257, g: 0.27450982, b: 0.3372549, a: 1}
+  checkpointSound: Props/Checkpoint
 --- !u!61 &3211789064928995059
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -121,5 +124,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 3}
+  m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0

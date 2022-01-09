@@ -41,6 +41,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public GameObject kinzecter;
     public enum ControlType { AI, PLAYER, BOSS, DEAD, OBJECT };
     public ControlType controlType;
+    private CharacterObject playerChar;
 
     [Header("HitCancel")]
     public Hitbox hitbox;
@@ -87,13 +88,19 @@ public class CharacterObject : MonoBehaviour, IHittable
         switch (controlType)
         {
             case ControlType.AI:
-                isNearPlayer = Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroRange;
+                isAggroRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= aggroDistance) &&
+                    (Mathf.Abs(transform.position.y - GameEngine.gameEngine.mainCharacter.transform.position.y) <= aggroHeight);
+
                 isLongRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange &&
-                    (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x)) > shortAttackRange);
-                isShortRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= shortAttackRange);
+                    (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x)) > shortAttackRange)&& 
+                    (Mathf.Abs(transform.position.y - GameEngine.gameEngine.mainCharacter.transform.position.y) <= aggroHeight);
+
+                isShortRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= shortAttackRange) &&
+                    (Mathf.Abs(transform.position.y - GameEngine.gameEngine.mainCharacter.transform.position.y) <= aggroHeight);
+
                 break;
             case ControlType.BOSS:
-                isNearPlayer = Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroRange;
+                isAggroRange = Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroDistance;
                 isLongRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange &&
                     (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x)) > shortAttackRange);
                 isShortRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= shortAttackRange);
@@ -1667,11 +1674,12 @@ public class CharacterObject : MonoBehaviour, IHittable
     [Header("EnemyLogic")]
     public CharacterObject target;
     public InteractableObject[] spawners;
-    public float aggroRange = 30f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
+    private Vector2 visualAggroRange;
+    public float aggroDistance = 30f, aggroHeight = 8f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
     [Tooltip("x = frequency, y = amplitude")]
     public Vector2 horiCos, vertSign;
     //public float amplitude = 1f, frequency = 1f;
-    [SerializeField] private bool isNearPlayer, isLongRange, isShortRange;
+    [SerializeField] private bool isAggroRange, isLongRange, isShortRange;
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
 
     [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction, 3 = Circle")]
@@ -1706,7 +1714,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         if (currentState == 0)//Neutral
         {
-            if (isNearPlayer && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) > longAttackRange))
+            if (isAggroRange && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) > longAttackRange))
             {
                 FaceTarget(target.transform.position);
                 switch (enemyType)
@@ -1728,7 +1736,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 }
             }
 
-            if (dashCooldown <= 0 && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange))
+            if (isAggroRange && dashCooldown <= 0 && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange))
             {
                 FaceTarget(target.transform.position);
                 velocity = Vector2.zero;
@@ -1817,7 +1825,14 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     void OnDrawGizmos()
     {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(transform.position, new Vector3(aggroDistance*2, aggroHeight * 2, 1));
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(this.transform.position, aggroRange);
+        Gizmos.DrawWireCube(transform.position, new Vector3(longAttackRange * 2, aggroHeight * 2, 1));
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, new Vector3(shortAttackRange * 2, aggroHeight * 2, 1));
+
+        //Gizmos.DrawWireSphere(this.transform.position, aggroDistance);
     }
+
 }
