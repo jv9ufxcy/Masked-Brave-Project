@@ -63,7 +63,6 @@ public class Mission : MonoBehaviour
         if (isReload)
         {
             RestartMission();
-            Debug.Log("ReStart");
         }
     }
     private void Start()
@@ -200,7 +199,7 @@ public class Mission : MonoBehaviour
         get { return _scoreMultiplier; }
         set 
         { 
-            _scoreMultiplier = value;
+            _scoreMultiplier = Mathf.Round(value*10)/10;
             scoreMultiplierText.SetText("x " + _scoreMultiplier.ToString());
             Math.Round(_scoreMultiplier, 1);
         } 
@@ -223,7 +222,6 @@ public class Mission : MonoBehaviour
         ScoreMultiplier += 0.1f;
         Mathf.Clamp(ScoreMultiplier, 1, maxScoremultiplier);
         KillStreakBegin();
-        Debug.Log("multiplier  is " + killMultiplier);
         if (killMultiplier>=3f)
         {
             int finisherBonus = 30;
@@ -457,13 +455,14 @@ public class Mission : MonoBehaviour
     }
     private void CalculateScore()
     {
+        CompleteScore();
         timeScore = TimeGrade(elapsedTime, bestTime,2);
         timeScore = Mathf.Clamp(timeScore, 0.5f, 2);
-        scoreText[0] = timeScore.ToString();
+        scoreText[0] = "x"+timeScore.ToString();
 
-        scoreText[1] = MissionPoints.ToString(DecimalFormat);
+        scoreText[1] = MissionPoints.ToString();
 
-        totalScore = (timeScore + missionScore + enemyScore + damageScore + retryScore);
+        totalScore = (Mathf.Round(timeScore * MissionPoints));
         scoreText[5] = totalScore.ToString();
     }
     private void CalculateGrade()

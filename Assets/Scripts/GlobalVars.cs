@@ -66,6 +66,7 @@ public class GlobalVars : MonoBehaviour
     public enum ControllerState { ps4, xbox, keyboard}
     public static ControllerState _controllerState;
     public static int controllerNumber;
+    public static bool visibleEnemyHealth=false;
     public static GlobalVars instance;
 
     public static Save save = new Save();//empty save instance.

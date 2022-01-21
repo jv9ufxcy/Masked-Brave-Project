@@ -12,7 +12,6 @@ public class HazardTile : MonoBehaviour
         IHittable victim = collision.transform.root.GetComponent<IHittable>();
         if (victim != null&& nonInteractableLayer!=(nonInteractableLayer|(1<<collision.gameObject.layer)))
         {
-            Debug.Log(collision.gameObject.layer);
             victim.Hit(character, projectileIndex, 0);
         }
     }

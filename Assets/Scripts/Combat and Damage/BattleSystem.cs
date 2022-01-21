@@ -34,6 +34,9 @@ public class BattleSystem : MonoBehaviour
     void Start()
     {
         battleFightText.DOColor(Color.clear, 0);
+        startingLocation = enemyCounter.anchoredPosition;
+        restingLocation.y = startingLocation.y;
+        midScreen.y = startingLocation.y;
         numOfEnemies.color = Color.clear;
         enemyIcon = enemyCounter.GetComponentInChildren<Image>();
         battleState = State.Idle;
@@ -178,7 +181,10 @@ public class BattleSystem : MonoBehaviour
         foreach (EnemySpawn enemySpawn in waveSpawnEnemyList)
         {
             if (wave.bossBattle)
+            {
                 enemySpawn.Spawn(1);
+                enemyCounter.DOAnchorPos(startingLocation, 0).SetDelay(1f);
+            }
             else
                 enemySpawn.Spawn(0);
         }

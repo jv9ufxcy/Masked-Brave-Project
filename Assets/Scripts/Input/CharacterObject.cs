@@ -395,6 +395,9 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 23:
                 SummonSatellite((int)_params[0].val, (int)_params[1].val, _params[2].val, _params[3].val, _params[4].val);
                 break;
+            case 24:
+                SetInvulCooldown(_params[0].val);
+                break;
 
         }
     }
@@ -1584,7 +1587,6 @@ public class CharacterObject : MonoBehaviour, IHittable
                         StartState(hitStunStateIndex);
                     if (curAtk.attackType == 10&&controlType!= ControlType.OBJECT)
                     {
-                        Debug.Log("Gripped");
                         grappleTarget = attacker.grapplePoint;
                         attacker.grappleVictim = this;
                         attacker.StartStateFromScript((int)curAtk.hitAnim.x);
@@ -1619,6 +1621,11 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
     }
     private bool isInvulnerable;
+    private void SetInvulCooldown(float iFrames)
+    {
+        invulCooldown = iFrames;
+        curComboValue = 99;
+    }
     private void StartInvul(float hitFlash)
     {
         if (invulCooldown <= 0 && (controlType != ControlType.AI && controlType != ControlType.OBJECT))
@@ -1823,7 +1830,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         FaceTarget(GameEngine.gameEngine.mainCharacter.transform.position);
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(transform.position, new Vector3(aggroDistance*2, aggroHeight * 2, 1));

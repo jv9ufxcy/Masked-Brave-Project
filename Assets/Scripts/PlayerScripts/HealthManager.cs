@@ -129,7 +129,7 @@ public class HealthManager : MonoBehaviour
     public Image HealthFill, DamageFill, BarImage;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
-    public bool IsDead = true, shouldSpawnHealth = true, isDesperation;
+    public bool IsDead = true, shouldSpawnHealth = true, isDesperation, enemyHPVis = false;
     public Color HealthColor, DamageColor, BackColor;
     private Color invisible = new Color(0, 0, 0, 0);
     public int numOfPickups = 3;
@@ -253,6 +253,10 @@ public class HealthManager : MonoBehaviour
                 }
                 break;
             case UIType.AI:
+                if (GlobalVars.instance)
+                {
+
+                }
                 break;
             case UIType.BOSS:
                 if (damageShowTimer < 0)//if the timer is up
@@ -273,7 +277,6 @@ public class HealthManager : MonoBehaviour
                     damageShowTimer -= Time.deltaTime;
                     healthBarFadeTimer -= Time.deltaTime;
                 }
-
                 if (healthBarFadeTimer < 0)//if we need to start fading health out
                 {
                     if (!coroutineStarted && healthIsVisible)
@@ -381,8 +384,6 @@ public class HealthManager : MonoBehaviour
 
                 if (currentHealth > maxHealth)
                     currentHealth = maxHealth;
-
-
                 damageShowTimer = damageShowTime;//set the timer back to max when injured happens
 
                 isHealing = true;
@@ -392,8 +393,6 @@ public class HealthManager : MonoBehaviour
 
                 if (currentHealth > maxHealth)
                     currentHealth = maxHealth;
-
-
                 damageShowTimer = damageShowTime;//set the timer back to max when injured happens
 
                 isHealing = true;
@@ -411,7 +410,6 @@ public class HealthManager : MonoBehaviour
         {
             lastHit = atk;
             scoreMult = atk.killMultiplier;
-            Debug.Log(lastHit.killMultiplier);
         }
         switch (UI)
         {
@@ -489,7 +487,6 @@ public class HealthManager : MonoBehaviour
         }
         
     }
-
     private void DesperationTrigger()
     {
         charAnim.SetFloat("aniHealthState", 1);
@@ -644,7 +641,7 @@ public class HealthManager : MonoBehaviour
 
     void LastChanceEvent(object sender, EventArgs e)
     {
-        Debug.Log("Play Loss event");
+        //Debug.Log("Play Loss event");
     }
     private void LastChance()//transform to human
     {
