@@ -79,25 +79,30 @@ public class StartScreenController : MonoBehaviour
     }
     [Header("Video Settings")]
     [SerializeField] private TextMeshProUGUI resDisplayText;
-    [SerializeField] private Toggle toggle;
+    [SerializeField] private Toggle fullScreenToggle, hpToggle;
     [SerializeField] private List<int> resolutionWidths;
     [SerializeField] private List<int> resolutionHeights;
     private int resolutionIndex=3;
     private int chosenWidth, chosenHeight;
-    private bool isFullScreen;
+    private bool isFullScreen,visibleHealth;
     public void ApplyVideoOptions()
     {
         GlobalVars.LoadOptions();
 
         isFullScreen = (Screen.fullScreen);
-        toggle.isOn = isFullScreen;
+        fullScreenToggle.isOn = isFullScreen;
+        hpToggle.isOn = visibleHealth;
         resolutionIndex = 3;
         chosenWidth = resolutionWidths[resolutionIndex];
         chosenHeight = resolutionHeights[resolutionIndex];
     }
     public void ToggleFullScreen()
     {
-        isFullScreen = toggle.isOn;
+        isFullScreen = fullScreenToggle.isOn;
+    }
+    public void ToggleHP()
+    {
+        visibleHealth = hpToggle.isOn;
     }
     private void DisplayChosenRes()
     {
@@ -114,7 +119,7 @@ public class StartScreenController : MonoBehaviour
     }
     public void Apply()
     {
-        GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1);
+        GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1, visibleHealth);
         Screen.SetResolution(chosenWidth, chosenHeight, isFullScreen);
     }
 }

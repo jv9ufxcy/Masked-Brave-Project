@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 95611479683623692}
   - component: {fileID: 50143070742357908}
   - component: {fileID: 61725261980514422}
-  - component: {fileID: 8772878442814017027}
   - component: {fileID: 995338652320179467}
   m_Layer: 13
   m_Name: ThunderBall
@@ -52,10 +51,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: 4
   direction: {x: 0, y: 0}
+  bulletVel: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
-  moveDirection: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
     type: 3}
   bulletChild: {fileID: 0}
@@ -63,7 +63,12 @@ MonoBehaviour:
   tagToCollide: Ground
   lifeTime: 3
   speed: 3
+  rotation: 0
+  maxJumpHeight: 4
+  timeToJumpApex: 0.125
+  maxJumpVelocity: 0
   gravity: -2
+  velocityXSmoothing: 0
   targetRange: 10
   attackState: 0
   whatLayersToHit:
@@ -77,10 +82,19 @@ MonoBehaviour:
   bulletChain: 0
   newBulletSpeed: 0
   character: {fileID: 0}
-  thisBullet: {fileID: 0}
   projectileIndex: 56
   attackIndex: 0
+  shakeAmp: 1
+  shakeTime: 0.2
   destroyTimer: 0.1
+  isExplosion: 0
+  speedDampen: 0.01
+  boomerangStartTime: 30
+  angle: 0
+  boomerSpeed: 10
+  radius: 1
+  boomerangDist: {x: 0, y: 0, z: 0}
+  followVel: {x: 0, y: 0, z: 0}
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -197,53 +211,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9, y: 1.25}
   m_EdgeRadius: 0
---- !u!114 &8772878442814017027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946779624007576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1d0110c1b7eb84fbbf9788fbcc853a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UI: 0
-  maxMeter: 100
-  minMeter: 0
-  maxHealth: 1
-  currentShieldHealth: 0
-  currentHealth: 0
-  desperationHealth: 0
-  maxPoise: 10
-  currentPoise: 10
-  HealthFill: {fileID: 0}
-  DamageFill: {fileID: 0}
-  BarImage: {fileID: 0}
-  showHealthTime: 1
-  fadeOutTime: 0.5
-  damageShowTime: 1
-  damageShowSpeed: 1
-  IsDead: 0
-  shouldSpawnHealth: 1
-  isDesperation: 0
-  HealthColor: {r: 0, g: 0, b: 0, a: 0}
-  DamageColor: {r: 0, g: 0, b: 0, a: 0}
-  BackColor: {r: 0, g: 0, b: 0, a: 0}
-  numOfPickups: 3
-  currencyPickup: {fileID: 0}
-  healthPickup: {fileID: 0}
-  effectsAnim: {fileID: 0}
-  charAnim: {fileID: 0}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  dizzyMat: {fileID: 0}
-  rend: {fileID: 0}
-  effectsRend: {fileID: 0}
-  healthDropRate: 2
-  effectIndex: 0
 --- !u!114 &995338652320179467
 MonoBehaviour:
   m_ObjectHideFlags: 0

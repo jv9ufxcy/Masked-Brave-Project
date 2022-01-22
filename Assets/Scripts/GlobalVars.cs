@@ -9,13 +9,14 @@ using UnityEngine;
 public class Save
 {
     public float SfxMultiplier, MusicMultiplier;
-    public bool fullscreen;
+    public bool fullscreen, hpBars;
     public int resWidth, resHeight;
 
-    public Save CreateSaveGameObject(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier)
+    public Save CreateSaveGameObject(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier, bool visibleHP)
     {
         Save save = new Save();
         save.fullscreen = fullscreen;
+        save.hpBars = visibleHP;
         save.resWidth = resWidth;
         save.resHeight = resHeight;
         save.MusicMultiplier = musicMultiplier;
@@ -71,9 +72,10 @@ public class GlobalVars : MonoBehaviour
 
     public static Save save = new Save();//empty save instance.
 
-    public static void SaveOptions(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier)
+    public static void SaveOptions(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier, bool visibleHP)
     {
-        save = save.CreateSaveGameObject(fullscreen, resWidth, resHeight, musicMultiplier, sfxMultiplier);
+        visibleEnemyHealth = visibleHP;
+        save = save.CreateSaveGameObject(fullscreen, resWidth, resHeight, musicMultiplier, sfxMultiplier, visibleHP);
         save.SaveOptions(save);
     }
 

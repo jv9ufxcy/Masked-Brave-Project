@@ -162,8 +162,8 @@ public class HealthManager : MonoBehaviour
         character = GetComponent<CharacterObject>();
         //effectsRend = effectsAnim.gameObject.GetComponent<SpriteRenderer>();
         //respawner = GameObject.FindGameObjectWithTag("Respawner").GetComponent<PlayerRespawner>();
-        
 
+        enemyHPVis = GlobalVars.visibleEnemyHealth;
         switch (UI)
         {
             case UIType.PLAYER:
@@ -174,6 +174,16 @@ public class HealthManager : MonoBehaviour
                 break;
             case UIType.AI:
                 SetMaxHealth();
+                if (enemyHPVis)
+                {
+                    UpdateHealth();
+                    ShowHealth();
+                    HideHealth();
+                }
+                else
+                {
+                    HideHealth();
+                }
                 break;
             case UIType.BOSS:
                 SetMaxHealth();
@@ -200,7 +210,6 @@ public class HealthManager : MonoBehaviour
         HealthFill.color = invisible;
 
         healthIsVisible = false;
-
     }
 
     private void UpdateMeter()
@@ -253,9 +262,31 @@ public class HealthManager : MonoBehaviour
                 }
                 break;
             case UIType.AI:
-                if (GlobalVars.instance)
+                if (enemyHPVis)
                 {
-
+                    if (damageShowTimer < 0)//if the timer is up
+                    {
+                        if (HealthFill.fillAmount < DamageFill.fillAmount && isHealing)//if the bars aren't equal and it's healing
+                        {
+                            HealthFill.fillAmount += damageShowSpeed * Time.deltaTime;//increase the health bar
+                        }
+                        else if (HealthFill.fillAmount < DamageFill.fillAmount)//if the health amount is smaller than the damage show
+                        {
+                            DamageFill.fillAmount -= damageShowSpeed * Time.deltaTime;//decrease the damage bar 
+                        }
+                        else if (isHealing)//otherwise if the bars are even we're done showing healing so turn the bool off
+                            isHealing = false;
+                    }
+                    else//DECREASE TIMERS
+                    {
+                        damageShowTimer -= Time.deltaTime;
+                        healthBarFadeTimer -= Time.deltaTime;
+                    }
+                    if (healthBarFadeTimer < 0)//if we need to start fading health out
+                    {
+                        if (!coroutineStarted && healthIsVisible)
+                            StartCoroutine(FadeHealth());
+                    }
                 }
                 break;
             case UIType.BOSS:
@@ -360,7 +391,8 @@ public class HealthManager : MonoBehaviour
                     UpdateMeter();
                     break;
                 case UIType.AI:
-                    //UpdateHealth();
+                    if (enemyHPVis)
+                        UpdateHealth();
                     break;
                 case UIType.BOSS:
                     UpdateHealth();
@@ -455,6 +487,10 @@ public class HealthManager : MonoBehaviour
                     currentHealth = 0;
                     if (!IsDead)
                         StartCoroutine(DeathEvent(shouldSpawnHealth));
+                }
+                if (enemyHPVis)
+                {
+                    UpdateHealth();
                 }
                 break;
             case UIType.BOSS:
