@@ -80,6 +80,22 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             Debug.LogError("No Audio Manager in Scene");
         }
+        switch (controlType)
+        {
+            case ControlType.AI:
+                break;
+            case ControlType.PLAYER:
+                chargeLoop = FMODUnity.RuntimeManager.CreateInstance(chargeEvent);
+                break;
+            case ControlType.BOSS:
+                break;
+            case ControlType.DEAD:
+                break;
+            case ControlType.OBJECT:
+                break;
+            default:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -295,11 +311,11 @@ public class CharacterObject : MonoBehaviour, IHittable
             //Whiff Cancel
             if (currentStateTime >= cWindow + whiffWindow)
                 canCancel = true;
-
+            Debug.Log(whiffWindow);
             _cur++;
         }
     }
-    public static float whiffWindow = 8f;
+    public static float whiffWindow = 16f;
     void HitCancel()
     {
         //if (currentStateTime >= _ev.start && currentStateTime <= _ev.end)
@@ -862,8 +878,25 @@ public class CharacterObject : MonoBehaviour, IHittable
     private Color c;
 
     public float chargeIncrement = 1f;
+
+    private FMOD.Studio.EventInstance chargeLoop;
+    private FMOD.Studio.PLAYBACK_STATE chargeState;
+    [SerializeField] private FMODUnity.EventReference chargeEvent;
     void ChargeAttack()
     {
+        chargeLoop.getPlaybackState(out chargeState);
+        if (shotPressure > minShotPressure)
+        {
+            if (chargeState!=FMOD.Studio.PLAYBACK_STATE.PLAYING)
+            {
+                chargeLoop.start();
+            }
+        }
+        else if (shotPressure <= minShotPressure && chargeState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            chargeLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
         switch (GameEngine.gameEngine.globalMovelistIndex)
         {
             case 0://Brave
@@ -1094,6 +1127,8 @@ public class CharacterObject : MonoBehaviour, IHittable
         bullet.character = characterObject;
         int onWall = wallFlag ? -1 : 1;
         bullet.direction.x = direction * onWall;
+        bullet.direction.x *= Mathf.Sign(bulletSpeed);
+
         bullet.velocity.x = direction * onWall;
         bullet.attackIndex = (int)attackIndex;
         bullet.speed = bulletSpeed;
@@ -1345,6 +1380,10 @@ public class CharacterObject : MonoBehaviour, IHittable
         specialMeter += _val;
         specialMeter = Mathf.Clamp(specialMeter, 0f, specialMeterMax);
         healthManager.ChangeMeter((int)_val);
+    }
+    public void FullyHeal()
+    {
+        healthManager.AddHealth(1000);
     }
     float velocityXSmoothing;
     void CalculateGravity()

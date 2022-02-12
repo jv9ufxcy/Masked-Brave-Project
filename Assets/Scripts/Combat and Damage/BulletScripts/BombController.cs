@@ -5,7 +5,13 @@ using UnityEngine;
 public class BombController : MonoBehaviour
 {
     public CharacterObject character;
-   // Start is called before the first frame update
+    private AudioManager audioManager;
+    [SerializeField]private string contactSound = "Player/Bombardier Form/Grenade Land", explosionSound = "Player/Bombardier Form/Genade Explo";
+    private void Awake()
+    {
+        audioManager = AudioManager.instance;
+    }
+    // Start is called before the first frame update
     void Start()
     {
         if (hitbox == null)
@@ -37,12 +43,17 @@ public class BombController : MonoBehaviour
     public void StartState()
     {
         active = true;
+        audioManager.PlaySound(contactSound);
     }
     public void EndState()
     {
         active = false;
         currentStateTime = 0;
         Destroy(gameObject);
+    }
+    private void PlayExplosionSound()
+    {
+        audioManager.PlaySound(explosionSound);
     }
     [Header("CurrentState")]
     bool active;
@@ -65,6 +76,7 @@ public class BombController : MonoBehaviour
                 hitbox.transform.localScale = _atk.hitBoxScale;
                 hitbox.transform.localPosition = _atk.hitBoxPos;
                 currentAttackIndex = _cur;
+                PlayExplosionSound();
             }
             if (currentStateTime == _atk.start + _atk.length)
             {
@@ -73,4 +85,5 @@ public class BombController : MonoBehaviour
             _cur++;
         }
     }
+
 }

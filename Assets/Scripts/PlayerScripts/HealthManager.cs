@@ -491,6 +491,11 @@ public class HealthManager : MonoBehaviour
                 if (enemyHPVis)
                 {
                     UpdateHealth();
+                    if (!healthIsVisible)
+                    {
+                        ShowHealth();
+                    }
+                    HealthFill.color = Color.Lerp(DamageColor, HealthColor, HealthFill.fillAmount);
                 }
                 break;
             case UIType.BOSS:

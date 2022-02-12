@@ -196,12 +196,15 @@ public class BulletHit : MonoBehaviour
             }
             bulletRB.isKinematic = true;
             RemoveForce();
-            GameObject hitEffect = Instantiate(bulletHitEffect, transform.position, transform.rotation);
-            if (isExplosion)
+            if (bulletHitEffect != null)
             {
-                BombController bomb = hitEffect.GetComponent<BombController>();
-                bomb.character = character;
-                bomb.StartState();
+                GameObject hitEffect = Instantiate(bulletHitEffect, transform.position, transform.rotation);
+                if (isExplosion)
+                {
+                    BombController bomb = hitEffect.GetComponent<BombController>();
+                    bomb.character = character;
+                    bomb.StartState();
+                }
             }
             Destroy(gameObject, destroyTimer);
         }

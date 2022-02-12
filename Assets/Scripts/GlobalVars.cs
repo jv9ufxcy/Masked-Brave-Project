@@ -48,6 +48,7 @@ public class Save
             resHeight = save.resHeight;
             SfxMultiplier = save.SfxMultiplier;
             MusicMultiplier = save.MusicMultiplier;
+            hpBars = save.hpBars;
         }
         else//if no saved options, set those to default
         {

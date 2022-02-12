@@ -22,7 +22,7 @@ public class Mission : MonoBehaviour
     [Header("Timer")]
     [Space]
     private TimeSpan timePlaying;
-    [SerializeField]private string timeCounter = "Time: 00:00.00";
+    [SerializeField] private string timeCounter = "Time: 00:00.00";
     public float elapsedTime, savedTime;
     public float bestTime, maxTime;
 
@@ -103,7 +103,7 @@ public class Mission : MonoBehaviour
         scoreRectTransform = scoreMultiplierText.transform.parent.GetComponent<RectTransform>();
         kudosHandler = scoreRectTransform.GetComponentInChildren<KudosHandler>();
         scorePos = scoreRectTransform.anchoredPosition;
-        hiddenPos = new Vector3(-128, 0, 0)+scorePos;
+        hiddenPos = new Vector3(-128, 0, 0) + scorePos;
         scoreRectTransform.DOAnchorPos(hiddenPos, 0);
         ScoreMultiplier = 1;
         //Debug.Log("Initialize");
@@ -194,26 +194,26 @@ public class Mission : MonoBehaviour
             _scoreMultiplicand = value;
         }
     }
-    public float ScoreMultiplier 
+    public float ScoreMultiplier
     {
         get { return _scoreMultiplier; }
-        set 
-        { 
-            _scoreMultiplier = Mathf.Round(value*10)/10;
+        set
+        {
+            _scoreMultiplier = Mathf.Round(value * 10) / 10;
             scoreMultiplierText.SetText("x " + _scoreMultiplier.ToString());
             Math.Round(_scoreMultiplier, 1);
-        } 
+        }
     }
     public void OnEnemyDamaged(int damage)
     {
-        if (damage>0)ScoreMultiplicand += damage;
+        if (damage > 0) ScoreMultiplicand += damage;
         if (ScoreActive == false)
         {
             strikeCounter = maxStrikeCounter;
             kudosHandler.UpdateStrike(strikeCounter);
         }
     }
-    public void OnEnemyKilled(float killMultiplier) 
+    public void OnEnemyKilled(float killMultiplier)
     {
         float killPoint = 100;
         killPoint *= killMultiplier;
@@ -221,14 +221,32 @@ public class Mission : MonoBehaviour
         enemiesKilled++;
         ScoreMultiplier += 0.1f;
         Mathf.Clamp(ScoreMultiplier, 1, maxScoremultiplier);
+        //Quick Chain Kills
+        OnChainKill();
+        //Multi - Killstreak
         KillStreakBegin();
-        if (killMultiplier>=3f)
+        if (killMultiplier >= 3f)
         {
-            int finisherBonus = 30;
+            int finisherBonus = 50;
             ScoreMultiplicand += finisherBonus;
             PopUpTextQueue("Z-Finisher\n<color=#FCE945>+" + finisherBonus);
         }
         OnMissionPoint(Mathf.RoundToInt(killPoint));
+    }
+    private float chainKillTimer, maxChainTime = 5;
+    private void OnChainKill()
+    {
+        if (chainKillTimer>0)
+        {
+            int chainBonus = 30;
+            ScoreMultiplicand += chainBonus;
+            PopUpTextQueue("Quick Kill\n<color=#FCE945>+" + chainBonus);
+            chainKillTimer = maxChainTime;
+        }
+        else
+        {
+            chainKillTimer = maxChainTime;
+        }
     }
     private void KillStreakBegin()
     {
@@ -237,6 +255,10 @@ public class Mission : MonoBehaviour
     }
     private void KillStreakUpdate()
     {
+        if (chainKillTimer > 0)
+        {
+            chainKillTimer -= Time.deltaTime;
+        }
         if (killStreak > 0)
         {
             if (killStreakTimer > 0)
@@ -430,17 +452,23 @@ public class Mission : MonoBehaviour
 
         if (damage > 0 && ScoreActive)
         {
-            if (strikeCounter > 0)
-            {
-                strikeCounter--;
-                kudosHandler.UpdateStrike(strikeCounter);
-            }
-            if (strikeCounter <= 0)
-            {
-                FailScore();
-            }
+            HandleFailureStrike();
         }
     }
+
+    private void HandleFailureStrike()
+    {
+        if (strikeCounter > 0)
+        {
+            strikeCounter--;
+            kudosHandler.UpdateStrike(strikeCounter);
+        }
+        if (strikeCounter <= 0)
+        {
+            FailScore();
+        }
+    }
+
     public void OnPlayerContinue() 
     {
         retryTaken--;

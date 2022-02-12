@@ -9813,6 +9813,13 @@ MonoBehaviour:
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
+  chargeEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   gunChargeParticles: {fileID: 4242849837941866003}
   jumpChargeParticles: {fileID: 5291049045850072587}
   flashParticles: {fileID: 6659671516285037511}
@@ -9828,7 +9835,7 @@ MonoBehaviour:
   shootAnim: 0
   shootAnimMax: 0
   bullets:
-  - {fileID: 3152041610049941263, guid: f5373294e7ef98c48b119bffe5714008, type: 3}
+  - {fileID: 3152041610049941263, guid: 789020d04672f9f4494017497c7e9c89, type: 3}
   - {fileID: 1946779624007576, guid: c5ac5e1e6106f8440a1d7e08e969103f, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
@@ -9899,8 +9906,8 @@ MonoBehaviour:
   isShortRange: 0
   closeAttackState: 4400000043000000
   rangedAttackState: 3b00000044000000
-  desperationCAStates: 4300000047000000
-  desperationRAStates: 3b0000004400000046000000
+  desperationCAStates: 370000004300000047000000
+  desperationRAStates: 3b0000004c00000046000000
   enemyType: 2
   desperationTransitionState: 69
   canDefend: 0
@@ -9937,6 +9944,7 @@ MonoBehaviour:
   IsDead: 0
   shouldSpawnHealth: 1
   isDesperation: 0
+  enemyHPVis: 0
   HealthColor: {r: 0.16862746, g: 0.52156866, b: 0.63529414, a: 1}
   DamageColor: {r: 0.6313726, g: 0.79215693, b: 0.8117648, a: 1}
   BackColor: {r: 0.12941177, g: 0.30588236, b: 0.4784314, a: 1}

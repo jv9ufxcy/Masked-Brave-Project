@@ -46,6 +46,8 @@ public class Checkpoint : MonoBehaviour
         transform.localScale = transform.localScale * activatedScale;
         spriteRenderer.color = activatedColor;
         gm.lastCheckpointPos = currentlyActiveCheckpoint.transform.position;
+
+        GameEngine.gameEngine.mainCharacter.FullyHeal();
         Mission.instance.CompleteScore();
         audioManager.PlaySound(checkpointSound);
     }
