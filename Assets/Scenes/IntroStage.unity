@@ -1006,7 +1006,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305544478}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: -8, z: 0}
+  m_LocalPosition: {x: -3, y: -7.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 65178145}
@@ -3926,8 +3926,8 @@ MonoBehaviour:
   currency: 0
   maxScoremultiplier: 99.9
   _scoreMultiplier: 1
-  killStreakTimer: 0
-  maxKillStreakTime: 1
+  multiKillTimer: 0
+  maxMKTime: 1
   Duration: 1
   CountFPS: 60
   NumberFormat: N0
@@ -3935,6 +3935,21 @@ MonoBehaviour:
   PercentFormat: P1
   scorePos: {x: 0, y: 0, z: 0}
   hiddenPos: {x: 0, y: 0, z: 0}
+  rankingGrades:
+  - Score: 250000
+    Rank: Z
+  - Score: 125000
+    Rank: S
+  - Score: 90000
+    Rank: A
+  - Score: 60000
+    Rank: B
+  - Score: 30000
+    Rank: C
+  - Score: 150000
+    Rank: D
+  - Score: 0
+    Rank: F
   nextLevel: SewerStage
 --- !u!4 &1273356926
 Transform:
@@ -5070,7 +5085,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 16, y: 12}
+  m_Size: {x: 14, y: 12}
   m_EdgeRadius: 0
 --- !u!4 &1527025823 stripped
 Transform:
@@ -5281,7 +5296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565494203}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: -8, z: 0}
+  m_LocalPosition: {x: -3, y: -7.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1285390847}

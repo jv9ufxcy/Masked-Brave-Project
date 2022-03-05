@@ -616,7 +616,7 @@ public class HealthManager : MonoBehaviour
 
                 EnemySpawn E = GetComponent<EnemySpawn>();
                 if (E != null)
-                    E.DeSpawn();
+                    E.Kill();
                 break;
             case CharacterObject.ControlType.BOSS:
                 DeathStates();
@@ -676,7 +676,7 @@ public class HealthManager : MonoBehaviour
     {
         deathCoroutineStarted = true;
         IsDead = true;
-        charAnim.SetFloat("aniHealthState", 0);
+        //charAnim.SetFloat("aniHealthState", 0);
         isDesperation = false;
     }
 

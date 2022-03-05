@@ -60,7 +60,7 @@ public class Kinzecter : MonoBehaviour
         this.transform.position = player.transform.position + throwDir * returnDistance;
         kzRB.isKinematic = false;
         kzRB.AddForce(throwDir * kzSpeed, ForceMode2D.Impulse);
-        audioManager.PlaySound(flightSound);
+        //audioManager.PlaySound(flightSound);
         kState = ThrowingState.Thrown;
     }
     private void TryGrabKinzecter()
@@ -250,7 +250,7 @@ public class Kinzecter : MonoBehaviour
 
         kzRB.velocity = nextTargetDir * kzSpeed;
 
-        audioManager.PlaySound(flightSound);
+        //audioManager.PlaySound(flightSound);
         SpendStamina(staminaCost);
         SpriteDirectionChange();
     }

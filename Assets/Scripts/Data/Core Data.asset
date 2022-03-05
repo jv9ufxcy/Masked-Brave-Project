@@ -169,7 +169,7 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
-    - start: 20
+    - start: 15
       end: 25
       active: 1
       script: 6
@@ -218,7 +218,7 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 20
+    - start: 15
       end: 25
       active: 1
       script: 6
@@ -232,13 +232,20 @@ MonoBehaviour:
       parameters:
       - name: Player/Sword Swing
         val: 0
+    - start: 0
+      end: 10
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 1
     attacks:
     - start: 5
       length: 10
       hitStun: 30
       hitStop: 5
       damage: 2
-      meterGain: 5
+      meterGain: 3
       comboValue: 2
       poiseDamage: 1
       attackType: 0
@@ -342,7 +349,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: RiderPunch
+      - name: Player/Brave Strike
         val: 0
     - start: 35
       end: 35
@@ -367,6 +374,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -1
+    - start: 74
+      end: 75
+      active: 1
+      script: 25
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 35
       length: 15
@@ -420,7 +434,7 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
-    - start: 0
+    - start: 15
       end: 25
       active: 1
       script: 6
@@ -490,6 +504,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 16
+    - start: 15
+      end: 25
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
     attacks:
     - start: 5
       length: 15
@@ -736,7 +757,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Player/Dash
+      - name: Player/Kinzecter Call
         val: 0
     - start: 0
       end: 0
@@ -763,7 +784,7 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 10
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -863,7 +884,7 @@ MonoBehaviour:
       hitStun: 30
       hitStop: 5
       damage: 4
-      meterGain: 4
+      meterGain: 5
       comboValue: 5
       poiseDamage: 3
       attackType: 0
@@ -980,6 +1001,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -1
+    - start: 24
+      end: 25
+      active: 1
+      script: 25
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 5
       length: 15
@@ -2118,7 +2146,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Vroom
+      - name: Player/Pursuer Form/Redline
         val: 0
     - start: 15
       end: 15
@@ -2154,6 +2182,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 70
+    - start: 69
+      end: 70
+      active: 1
+      script: 25
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 10
       length: 25
@@ -2261,7 +2296,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: BraveDash
+      - name: Player/Bombardier Form/Slide Kick
         val: 0
     - start: 0
       end: 0
@@ -2303,8 +2338,8 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 1
-      meterGain: 3
-      comboValue: 1
+      meterGain: 5
+      comboValue: 2
       poiseDamage: 5
       attackType: 0
       hitAnim: {x: 1, y: 0}
@@ -2344,7 +2379,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: BombSpawn
+      - name: Player/Bombardier Form/Gravity Bomb
         val: 0
     - start: 5
       end: 5
@@ -2394,8 +2429,8 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
-    dashCooldownReq: 40
+    meterReq: 20
+    dashCooldownReq: 10
     groundedReq: 0
     wallReq: 0
   - stateName: Bombardier/TossBomb
@@ -2451,7 +2486,7 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 15
     dashCooldownReq: 60
     groundedReq: 0
     wallReq: 0
@@ -2925,7 +2960,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Vroom
+      - name: Player/Pursuer Form/Streak
         val: 0
     - start: 0
       end: 0
@@ -2972,7 +3007,7 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 5
     dashCooldownReq: 30
     groundedReq: 0
     wallReq: 0
@@ -2994,16 +3029,9 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Vroom
+      - name: Player/Pursuer Form/Spin
         val: 0
-    - start: 15
-      end: 15
-      active: 1
-      script: 14
-      parameters:
-      - name: Vroom2
-        val: 0
-    - start: 20.103092
+    - start: 20
       end: 50
       active: 1
       script: 9
@@ -3043,7 +3071,7 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 5
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -3065,7 +3093,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: 
+      - name: Player/Pursuer Form/Shotgun
         val: 0
     attacks:
     - start: 5
@@ -3115,7 +3143,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: 
+      - name: Player/Pursuer Form/Launcher
         val: 0
     - start: 0
       end: 0
@@ -3288,6 +3316,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 59
+      end: 60
+      active: 1
+      script: 25
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 15
       length: 4
@@ -3442,6 +3477,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -2
+    - start: 39
+      end: 40
+      active: 1
+      script: 25
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 20
       length: 15
@@ -3644,6 +3686,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 90
+    - start: 89
+      end: 90
+      active: 1
+      script: 25
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 60
       length: 5
@@ -4015,7 +4064,7 @@ MonoBehaviour:
       - name: Props/Slime Bounce
         val: 0
     - start: 15
-      end: 34.84536
+      end: 35
       active: 1
       script: 13
       parameters:
@@ -4024,7 +4073,7 @@ MonoBehaviour:
     - start: 40
       end: 50
       active: 1
-      script: 6
+      script: 0
       parameters:
       - name: 
         val: -16
@@ -4072,6 +4121,13 @@ MonoBehaviour:
       - name: 
         val: -0.5
       - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Air Spark
         val: 0
     attacks:
     - start: 0
@@ -4758,23 +4814,16 @@ MonoBehaviour:
     blendRate: 0.1
     events:
     - start: 0
-      end: 100
-      active: 1
-      script: 13
-      parameters:
-      - name: 
-        val: 0
-    - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
-      - name: Enemy/Khris/Khris Arrow
+      - name: Enemy/Khris/Big Air Spark
         val: 0
     attacks:
-    - start: 0
-      length: 50
-      hitStun: 30
+    - start: 10
+      length: 5
+      hitStun: 10
       hitStop: 5
       damage: 0
       meterGain: 0
@@ -4784,22 +4833,22 @@ MonoBehaviour:
       hitAnim: {x: 0, y: 0}
       knockback: {x: 30, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 6, y: 6, z: 1}
+      hitBoxScale: {x: 4, y: 4, z: 1}
       cancelWindow: 0
       killMultiplier: 1
     - start: 50
-      length: 50
-      hitStun: 30
+      length: 15
+      hitStun: 20
       hitStop: 5
-      damage: 0
+      damage: 6
       meterGain: 0
       comboValue: 0
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 30, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 6, y: 6, z: 1}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: -1, z: 0}
+      hitBoxScale: {x: 12, y: 2, z: 1}
       cancelWindow: 0
       killMultiplier: 1
     jumpReq: 0
@@ -4890,7 +4939,7 @@ MonoBehaviour:
       hitAnim: {x: 0, y: 0}
       knockback: {x: 20, y: 0, z: 0}
       hitBoxPos: {x: 3, y: 0, z: 0}
-      hitBoxScale: {x: 5, y: 3, z: 1}
+      hitBoxScale: {x: 5, y: 2, z: 1}
       cancelWindow: 0
       killMultiplier: 1
     jumpReq: 0
@@ -5050,13 +5099,13 @@ MonoBehaviour:
     wallReq: 0
   - stateName: Khris/SummonA
     index: 0
-    length: 60
+    length: 120
     loop: 0
     blendRate: 0.1
     events:
     - start: 55
       end: 55
-      active: 1
+      active: 0
       script: 15
       parameters:
       - name: 
@@ -5065,8 +5114,8 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
-    - start: 55
-      end: 55
+    - start: 90
+      end: 90
       active: 1
       script: 10
       parameters:
@@ -5075,9 +5124,39 @@ MonoBehaviour:
       - name: 
         val: 16
       - name: 
-        val: 1
+        val: 0.75
+      - name: 
+        val: 2.5
+      - name: 
+        val: 0
+    - start: 75
+      end: 75
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 16
+      - name: 
+        val: 1.75
       - name: 
         val: 1
+      - name: 
+        val: 0
+    - start: 60
+      end: 60
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 16
+      - name: 
+        val: 2.5
+      - name: 
+        val: -1
       - name: 
         val: 0
     - start: 0
@@ -5199,8 +5278,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 10
-      end: 10
+    - start: 20
+      end: 20
       active: 1
       script: 10
       parameters:
@@ -5228,6 +5307,20 @@ MonoBehaviour:
       - name: 
         val: 0
       - name: 
+        val: 0
+    - start: 10
+      end: 10
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Khris Elec
+        val: 0
+    - start: 40
+      end: 40
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Khris Elec
         val: 0
     attacks:
     - start: 0
@@ -5288,7 +5381,7 @@ MonoBehaviour:
     - start: 40
       end: 50
       active: 1
-      script: 6
+      script: 0
       parameters:
       - name: 
         val: -16
@@ -5298,6 +5391,13 @@ MonoBehaviour:
       script: 14
       parameters:
       - name: Props/Slime Bounce
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Big Air Spark
         val: 0
     attacks:
     - start: 50
@@ -5312,7 +5412,7 @@ MonoBehaviour:
       hitAnim: {x: 0, y: 0}
       knockback: {x: 10, y: 0, z: 0}
       hitBoxPos: {x: 0, y: -1, z: 0}
-      hitBoxScale: {x: 10, y: 2, z: 0}
+      hitBoxScale: {x: 13, y: 2, z: 0}
       cancelWindow: 0
       killMultiplier: 0
     jumpReq: 0
@@ -5634,13 +5734,20 @@ MonoBehaviour:
         val: -0.5
       - name: 
         val: 0
-    - start: 30
-      end: 40
+    - start: 34.858246
+      end: 40.27062
       active: 1
       script: 1
       parameters:
       - name: 
         val: 4
+    - start: 60.077316
+      end: 74.96134
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 50
       length: 10
@@ -5674,7 +5781,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Block
+      - name: Enemy/Roy/Block
         val: 0
     attacks:
     - start: 5
@@ -6657,6 +6764,11 @@ MonoBehaviour:
     parameters:
     - name: Frames
       val: 60
+  - index: 0
+    name: SkillUsed
+    parameters:
+    - name: Action
+      val: 0
   moveLists:
   - name: Brave
     commandStates:
@@ -8313,7 +8425,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 2
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8347,5 +8459,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 2
+  currentMovelistIndex: 1
   currentControllerIndex: 0

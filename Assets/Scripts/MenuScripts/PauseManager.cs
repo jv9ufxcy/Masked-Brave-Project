@@ -55,9 +55,9 @@ public class PauseManager : MonoBehaviour
     private void DisplayResults()
     {
         missionResults = Mission.instance.scoreText;
-        pointsText[0].text = ($"{Mission.instance.menuTimer.text}\r\n {Mission.instance.missionScore * 5}%\r\n {Mission.instance.enemiesKilled}\r\n {Mission.instance.damageCount}\r\n {Mission.instance.retryCount}");//stats
-        pointsText[1].text = ($"{missionResults[0]}p\r\n {missionResults[1]}p\r\n {missionResults[2]}p\r\n {missionResults[3]}p\r\n {missionResults[4]}p");
-        pointsText[2].text = ($"{missionResults[5]}p");
+        //pointsText[0].text = ($"{Mission.instance.menuTimer.text}\r\n {Mission.instance.missionScore * 5}%\r\n {Mission.instance.enemiesKilled}\r\n {Mission.instance.damageCount}\r\n {Mission.instance.retryCount}");//stats
+        pointsText[1].text = ($"{missionResults[0]}\r\n {missionResults[1]}\r\n\r\n {missionResults[3]}p");
+        pointsText[2].text = ($"{missionResults[5]}");
     }
     public void LoadMenu()
     {

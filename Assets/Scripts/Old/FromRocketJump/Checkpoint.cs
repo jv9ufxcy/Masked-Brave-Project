@@ -49,6 +49,7 @@ public class Checkpoint : MonoBehaviour
 
         GameEngine.gameEngine.mainCharacter.FullyHeal();
         Mission.instance.CompleteScore();
+        Mission.instance.CheckpointTime();
         audioManager.PlaySound(checkpointSound);
     }
     private void DeactivateCheckpoint()

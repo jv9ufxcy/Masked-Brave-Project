@@ -74,7 +74,13 @@ public class Mission : MonoBehaviour
     }
     private void Update()
     {
-        KillStreakUpdate();
+        if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
+        {
+            if (GameEngine.hitStop <= 0)
+            {
+                MultiKillUpdate();
+            }
+        }  
     }
     private IEnumerator InitializeCoRoutine()
     {
@@ -153,10 +159,16 @@ public class Mission : MonoBehaviour
     }
     private void EndTimer()
     {
-        savedTime = elapsedTime;
+        //CheckpointTimer();
         MusicManager.instance.StopMusic();
         isMissionActive = false;
     }
+
+    public void CheckpointTime()
+    {
+        savedTime = elapsedTime;
+    }
+
     private IEnumerator UpdateTimer()
     {
         while (isMissionActive)
@@ -165,8 +177,9 @@ public class Mission : MonoBehaviour
             {
                 elapsedTime += Time.deltaTime;
                 timePlaying = TimeSpan.FromSeconds(elapsedTime);
-                string timePlayingStr = /*"Time: " +*/ timePlaying.ToString("mm' : 'ss'.'ff");
-                timeCounter = timePlayingStr;
+                var output = $"{(int)timePlaying.TotalMinutes}:{timePlaying.Seconds:00}";
+                //string timePlayingStr = timePlaying.ToString("mm' : 'ss'.'ff");
+                timeCounter = output;
                 menuTimer.text = timeCounter;
             }
             yield return null;
@@ -183,8 +196,8 @@ public class Mission : MonoBehaviour
             currencyText.text = "x " + currency.ToString();
     }
     public float maxScoremultiplier = 99.9f;
-    public float _scoreMultiplier = 1, killStreakTimer, maxKillStreakTime = 1f;
-    private int _scoreMultiplicand, killStreak, killStreakBonus = 150;
+    public float _scoreMultiplier = 1, multiKillTimer, maxMKTime = 1f;
+    private int _scoreMultiplicand, multiKill, killStreakBonus = 150;
     public int ScoreMultiplicand
     {
         get { return _scoreMultiplicand; }
@@ -206,7 +219,7 @@ public class Mission : MonoBehaviour
     }
     public void OnEnemyDamaged(int damage)
     {
-        if (damage > 0) ScoreMultiplicand += damage;
+        if (damage > 0) IncreaseScore(damage);
         if (ScoreActive == false)
         {
             strikeCounter = maxStrikeCounter;
@@ -224,101 +237,75 @@ public class Mission : MonoBehaviour
         //Quick Chain Kills
         OnChainKill();
         //Multi - Killstreak
-        KillStreakBegin();
-        if (killMultiplier >= 3f)
+        if (killMultiplier == 3f || killMultiplier==300)//skill kill or boss skill kill
         {
-            int finisherBonus = 50;
-            ScoreMultiplicand += finisherBonus;
-            PopUpTextQueue("Z-Finisher\n<color=#FCE945>+" + finisherBonus);
+            MultiKillInit();
+            //int finisherBonus = 50;
+            //ScoreMultiplicand += finisherBonus;
+            //PopUpTextQueue("Z-Finisher\n<color=#FCE945>+" + finisherBonus);
         }
         OnMissionPoint(Mathf.RoundToInt(killPoint));
     }
     private float chainKillTimer, maxChainTime = 5;
+    private int chainCount, maxChainCount = 5;
     private void OnChainKill()
     {
         if (chainKillTimer>0)
         {
-            int chainBonus = 30;
-            ScoreMultiplicand += chainBonus;
-            PopUpTextQueue("Quick Kill\n<color=#FCE945>+" + chainBonus);
+            chainCount++;
+            int chainBonus = 20;
+            chainBonus *= Mathf.Min(5,chainCount);
+            IncreaseScore(chainBonus);
+            PopUpTextQueue("Quick Kill-"+chainCount+" \n<color=#FCE945>+" + chainBonus);
             chainKillTimer = maxChainTime;
         }
         else
         {
+            chainCount = 1;
             chainKillTimer = maxChainTime;
         }
     }
-    private void KillStreakBegin()
+    private void MultiKillInit()
     {
-        killStreakTimer = maxKillStreakTime;
-        killStreak++;
+        multiKillTimer = maxMKTime;
+        multiKill++;
     }
-    private void KillStreakUpdate()
+    private void MultiKillUpdate()
     {
         if (chainKillTimer > 0)
         {
             chainKillTimer -= Time.deltaTime;
+            kudosHandler.UpdateTimer(chainKillTimer / maxChainTime);
         }
-        if (killStreak > 0)
+        if (multiKill > 0)
         {
-            if (killStreakTimer > 0)
+            if (multiKillTimer > 0)
             {
-                killStreakTimer -= Time.deltaTime;
+                multiKillTimer -= Time.deltaTime;
             }
             else
             {
-                if (killStreak>=2)
+                if (multiKill>=2)
                 {
-                    int bonus = 100;
-                    switch (Mathf.Clamp(killStreak,0,8))
-                    {
-                        case 2://double kill
-                            bonus = 100;
-                            PopUpTextQueue("Z-Double\n<color=#FCE945>+" + bonus);
-                            break;
-                        case 3://triple
-                            bonus = 250;
-                            PopUpTextQueue("Z-Triple\n<color=#FCE945>+" + bonus);
-                            break;
-                        case 4://quad
-                            bonus = 400;
-                            PopUpTextQueue("Z-Quadruple\n<color=#FCE945>+" + bonus);
-                            break;
-                        case 5://quint
-                            bonus = 550;
-                            PopUpTextQueue("<i>555</i>\n<color=#FCE945>+" + bonus);
-                            break;
-                        case 6://sex
-                            bonus = 600;
-                            PopUpTextQueue("<i>666</i>\n<color=#FCE945>+" + bonus);
-                            break;
-                        case 7://hept
-                            bonus = 750;
-                            PopUpTextQueue("<i>777</i>\n<color=#FCE945>+" + bonus);
-                            break;
-                        case 8://carnage
-                            bonus = 900;
-                            PopUpTextQueue("<i>CRITICAL DEAD</i>\n<color=#FCE945>+" + bonus);
-                            break;
-                        case 9:
-                            bonus = 900;
-                            PopUpTextQueue("<i>CRITICAL DEAD</i>\n<color=#FCE945>+" + bonus);
-                            break;
-                        default:
-                            bonus = 100;
-                            PopUpTextQueue("Double\n<color=#FCE945>+" + bonus);
-                            break;
-                    }
-                    IncreaseScore(bonus);
-                    //notify double triple etc
-                    ScoreMultiplier += killStreak;
-                    killStreakTimer = 0;
-                    killStreak = 0;
+                    int finisherBonus=50;
+                    finisherBonus *= multiKill;
+                    PopUpTextQueue("Z-Finish\n<color=#FCE945>+" + finisherBonus);
+                    IncreaseScore(finisherBonus);
+
+                    ScoreMultiplier += multiKill;
+                    multiKillTimer = 0;
+                    multiKill = 0;
+                    OnSkillUsed();
                 }
                 else
                 {
-                    killStreakTimer = 0;
-                    killStreak = 0;
+                    int finisherBonus = 50;
+                    finisherBonus *= multiKill;
+                    PopUpTextQueue("Z-Finish\n<color=#FCE945>+" + finisherBonus);
+                    IncreaseScore(finisherBonus);
+                    multiKillTimer = 0;
+                    multiKill = 0;
+                    OnSkillUsed();
                 }
             }
         }
@@ -330,6 +317,7 @@ public class Mission : MonoBehaviour
     private void IncreaseScore(int points)
     {
         ScoreMultiplicand += points;
+        ScoreMultiplier += points / 100;
         //print score
     }
 
@@ -426,23 +414,26 @@ public class Mission : MonoBehaviour
 
         kudosHandler.SetContainerColor(2);
         //play good sound
-        ScoreMultiplicand = 0;
-        ScoreMultiplier = 1;
-        ScoreActive = false;
-
-        strikeCounter = maxStrikeCounter;
-        kudosHandler.UpdateStrike(strikeCounter);
+        DefaultScore();
     }
     public void FailScore()
     {
         kudosHandler.SetContainerColor(1);
         //play fail sound
+        DefaultScore();
+    }
+    private void DefaultScore()
+    {
         ScoreMultiplicand = 0;
         ScoreMultiplier = 1;
         ScoreActive = false;
 
+        chainKillTimer = 0;
+        chainCount = 0;
+
         strikeCounter = maxStrikeCounter;
         kudosHandler.UpdateStrike(strikeCounter);
+        kudosHandler.UpdateTimer(chainKillTimer);
     }
     private int strikeCounter = 3, maxStrikeCounter = 3;
     public void OnPlayerDamaged(int damage) 
@@ -468,7 +459,10 @@ public class Mission : MonoBehaviour
             FailScore();
         }
     }
-
+    public void OnSkillUsed()
+    {
+        if(ScoreActive)CompleteScore();
+    }
     public void OnPlayerContinue() 
     {
         retryTaken--;
@@ -486,12 +480,42 @@ public class Mission : MonoBehaviour
         CompleteScore();
         timeScore = TimeGrade(elapsedTime, bestTime,2);
         timeScore = Mathf.Clamp(timeScore, 0.5f, 2);
-        scoreText[0] = "x"+timeScore.ToString();
+        var output = $"{(int)timePlaying.TotalMinutes}:{timePlaying.Seconds:00}";
+        scoreText[0] = output.ToString();
+        
+        scoreText[1] = "x"+timeScore.ToString();
 
-        scoreText[1] = MissionPoints.ToString();
+        //scoreText[2] = MissionPoints.ToString();
 
         totalScore = (Mathf.Round(timeScore * MissionPoints));
-        scoreText[5] = totalScore.ToString();
+        scoreText[3] = totalScore.ToString();
+        Ranking();
+        scoreText[5] = missionGrade;
+    }
+    [System.Serializable]
+    public struct Rankings
+    {
+        public int Score;
+        public string Rank;
+        public Rankings(int s,string r)
+        {
+            Score = s;
+            Rank = r;
+        }
+    }
+    [SerializeField]
+    private Rankings[] rankingGrades = new Rankings[7] { new Rankings(150000, "Z"), new Rankings(100000, "S"), new Rankings(80000, "A"), new Rankings(60000, "B"), new Rankings(30000, "C"), new Rankings(150000, "D"), new Rankings(0, "F") };
+    private string missionGrade;
+    private void Ranking()
+    {
+        for (int i = 0; i < rankingGrades.Length; i++)
+        {
+            if (totalScore> rankingGrades[i].Score)
+            {
+                missionGrade = rankingGrades[i].Rank;
+                break;
+            }
+        }
     }
     private void CalculateGrade()
     {

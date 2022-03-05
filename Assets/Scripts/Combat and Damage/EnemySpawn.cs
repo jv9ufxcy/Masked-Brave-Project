@@ -7,6 +7,7 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     public LayerMask defaultLayer, hiddenLayer;
     private HealthManager enemyHealth;
     private CharacterObject character;
+    private EnemySpawner eSpawner;
     public bool IsSpawned;
     private Vector3 spawnPos;
     public static EnemySpawn GetClosestEnemy(Vector3 position, float maxRange)
@@ -41,10 +42,12 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
         character = GetComponent<CharacterObject>();
         enemyHealth = GetComponent<HealthManager>();
         spawnPos = transform.position;
+        
     }
     // Start is called before the first frame update
     void Start()
     {
+        eSpawner = EnemySpawner.spawnerInstance;
         //if (defaultLayer == 0)
         //{
         //    defaultLayer = gameObject.layer;
@@ -75,10 +78,10 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
 
     private void Update()
     {
-        if (!IsAlive()&&IsSpawned==true)
-        {
-            IsSpawned = false;
-        }
+        //if (!IsAlive()&&IsSpawned==true)
+        //{
+        //    IsSpawned = false;
+        //}
     }
     public void Spawn(int type)
     {
@@ -109,6 +112,11 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
         }
         transform.SetParent(null);
         transform.position = spawnPos;
+    }
+    public void Kill()
+    {
+        eSpawner.RemoveEnemyFromList(this);
+        DeSpawn();
     }
     public void DeSpawn()
     {

@@ -14,7 +14,7 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     public float gravity = -0.01f;
     public float aniMoveSpeed;
-    [SerializeField] private float direction = 1;
+    [SerializeField] private float _direction = 1;
 
     [HideInInspector] public Rigidbody2D myRB;
     [HideInInspector] public BoxCollider2D boxCollider2D;
@@ -135,6 +135,14 @@ public class CharacterObject : MonoBehaviour, IHittable
                     DashCut();
                     ChargeAttack();
                 }
+                ChargeAttackAudio();
+                //else
+                //{
+                //    chargeLoop.getPlaybackState(out chargeState);
+                //    if (chargeState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
+                //        chargeLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                //}
+
                 leftStick = new Vector2(Input.GetAxis(GameEngine.coreData.rawInputs[13].name), Input.GetAxis(GameEngine.coreData.rawInputs[14].name));
                 break;
             default:
@@ -215,10 +223,10 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     void FaceStick()
     {
-        if (CheckVelocityDeadZone())
+        //if (CheckVelocityDeadZone())
         {
-            if (leftStick.x > 0) { direction = 1; transform.localScale = new Vector3(1f, 1f, 1f); }
-            else if (leftStick.x < 0) { direction = -1; transform.localScale = new Vector3(-1f, 1f, 1f); }
+            if (leftStick.x > 0) { Direction = 1; transform.localScale = new Vector3(1f, 1f, 1f); }
+            else if (leftStick.x < 0) { Direction = -1; transform.localScale = new Vector3(-1f, 1f, 1f); }
             if (Mathf.Abs(airMod) == 2)
             {
                 //ShowAfterImage();
@@ -311,7 +319,6 @@ public class CharacterObject : MonoBehaviour, IHittable
             //Whiff Cancel
             if (currentStateTime >= cWindow + whiffWindow)
                 canCancel = true;
-            Debug.Log(whiffWindow);
             _cur++;
         }
     }
@@ -413,6 +420,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
             case 24:
                 SetInvulCooldown(_params[0].val);
+                break;
+            case 25:
+                OnSkillUsed();
                 break;
 
         }
@@ -549,7 +559,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         Vector2 dir = new Vector2(leftStick.x, leftStick.y);
         if (dir == Vector2.zero)
         {
-            dir.x = direction;
+            dir.x = Direction;
         }
         if (!isOnGround && dir.y == 0)
         {
@@ -650,7 +660,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public void FrontVelocity(float _pow)
     {
-        velocity.x = _pow * direction;
+        velocity.x = _pow * Direction;
     }
     [Header("MovementVectors")]
     public Vector2 leftStick;
@@ -884,19 +894,6 @@ public class CharacterObject : MonoBehaviour, IHittable
     [SerializeField] private FMODUnity.EventReference chargeEvent;
     void ChargeAttack()
     {
-        chargeLoop.getPlaybackState(out chargeState);
-        if (shotPressure > minShotPressure)
-        {
-            if (chargeState!=FMOD.Studio.PLAYBACK_STATE.PLAYING)
-            {
-                chargeLoop.start();
-            }
-        }
-        else if (shotPressure <= minShotPressure && chargeState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
-        {
-            chargeLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
-
         switch (GameEngine.gameEngine.globalMovelistIndex)
         {
             case 0://Brave
@@ -1001,16 +998,27 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 4:
                 break;
         }
-
-
-
     }
-    //[Header("Charged Buster")]
-
-    //private bool hasReleasedShot = false;
-    //private bool hasShotChargingStarted = false;
-    //private bool hasReachedMaxShotCharge = false;
-
+    private void ChargeAttackAudio()
+    {
+        chargeLoop.getPlaybackState(out chargeState);
+        if (shotPressure > minShotPressure)
+        {
+            if (chargeState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+            {
+                chargeLoop.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                chargeLoop.start();
+                Debug.Log("Start Charge Loop");
+            }
+        }
+        else
+        {
+            if (chargeState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
+            {
+                chargeLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            }
+        }
+    }
     [Space]
     [Header("ParticleGroups")]
     public Transform gunChargeParticles;
@@ -1059,38 +1067,41 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             if (kinzecter.GetComponent<Kinzecter>().isWithPlayer())
             {
-                kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction * onWall, 0, 0));
+                kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(Direction * onWall, 0, 0));
             }
             else
             kinzecter.GetComponent<Kinzecter>().AttackClosestEnemy();
         }
     }
-    private List<GameObject> summons = new List<GameObject>();
+    private int summonIndex = 0;
     private void SpawnTurret( int minionIndex, Vector3 pos)
     {
-        if (/*spawners[minionIndex].gameObject.activeInHierarchy && */spawners[minionIndex].IsSpawned)
+        minionIndex = summonIndex;
+        if (spawners[minionIndex].IsSpawned)
         {
-            if (spawners[minionIndex].GetComponentInChildren<MinionSpawner>().summonID==0)
+            if (spawners[minionIndex].GetComponentInChildren<MinionSpawner>().summonID==0)//already summoned
             {
                 spawners[minionIndex].GetComponentInChildren<MinionSpawner>().UpgradeHouse();
-                audioManager.PlaySound("SlimePsi");
             }
         }
         else
         {
-            //spawners[minionIndex].gameObject.SetActive(true);
             spawners[minionIndex].Spawn(0);
-            audioManager.PlaySound("SlimeHop");
+        }
+        summonIndex++;
+        if (summonIndex>spawners.Length-1)
+        {
+            summonIndex = 0;
         }
     }
     private void SpawnKinzecter(float offsetX, float offsetY)
     {
-        var offset = new Vector3(offsetX * direction, offsetY, 0);
+        var offset = new Vector3(offsetX * Direction, offsetY, 0);
         GameObject newbullet = Instantiate(bullets[5], transform.position + offset, Quaternion.identity);
         kinzecter = newbullet;
         //kinzecter.transform.localScale = new Vector3(direction, 1, 1);
         int onWall = wallFlag ? -1 : 1;
-        kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(direction*onWall, 0, 0));
+        kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(Direction*onWall, 0, 0));
         kinzecter.GetComponent<BulletHit>().character = characterObject;
         kinzecter.GetComponent<Hitbox>().character = characterObject;
         isKinzecterOut = true;
@@ -1121,20 +1132,20 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void FireBullet(float bulletType, float bulletSpeed, float offsetX, float offsetY, float attackIndex, float bulletRot)
     {
         shootAnim = shootAnimMax;
-        var offset = new Vector3(offsetX * direction, offsetY, 0);
+        var offset = new Vector3(offsetX * Direction, offsetY, 0);
         GameObject newbullet = Instantiate(bullets[(int)bulletType], transform.position + offset, Quaternion.identity);
         BulletHit bullet = newbullet.GetComponent<BulletHit>();
         bullet.character = characterObject;
         int onWall = wallFlag ? -1 : 1;
-        bullet.direction.x = direction * onWall;
+        bullet.direction.x = Direction * onWall;
         bullet.direction.x *= Mathf.Sign(bulletSpeed);
 
-        bullet.velocity.x = direction * onWall;
+        bullet.velocity.x = Direction * onWall;
         bullet.attackIndex = (int)attackIndex;
         bullet.speed = bulletSpeed;
-        bullet.rotation = bulletRot*direction;
+        bullet.rotation = bulletRot*Direction;
         //newbullet.GetComponent<Hitbox>().character = characterObject;
-        newbullet.transform.localScale = new Vector3(direction * onWall, 1, 1);
+        newbullet.transform.localScale = new Vector3(Direction * onWall, 1, 1);
     }
     public void SpecialFireCheck(float bulletType)
     {
@@ -1331,7 +1342,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             Transform currentGhost = afterImageParent.GetChild(i);
             s.AppendCallback(() => currentGhost.position = draw.transform.position);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = direction != 1);
+            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = Direction != 1);
             s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().sprite = spriteRend.sprite);
             s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(henshinColors[GameEngine.gameEngine.globalMovelistIndex], 0));
             s.AppendCallback(() => FadeSprite(currentGhost, henshinColors[6]));
@@ -1380,6 +1391,11 @@ public class CharacterObject : MonoBehaviour, IHittable
         specialMeter += _val;
         specialMeter = Mathf.Clamp(specialMeter, 0f, specialMeterMax);
         healthManager.ChangeMeter((int)_val);
+    }
+    public void OnSkillUsed()
+    {
+        if (Mission.instance != null)
+            Mission.instance.OnSkillUsed();
     }
     public void FullyHeal()
     {
@@ -1542,7 +1558,7 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     public bool CanBeHit(AttackEvent curAtk)
     {
-        if (controlType == ControlType.DEAD)
+        if (controlType == ControlType.DEAD||DialogueManager.instance.isDialogueActive)
             return false;
         if (invulCooldown > 0)
         {
@@ -1584,7 +1600,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[atkIndex];
         }
         
-        if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f && attacker.direction==-direction)
+        if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f && attacker.Direction==-Direction)
         {
             //parry sound
             StartStateFromScript(defStateIndex);
@@ -1750,7 +1766,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public int[] defStates;
 
     public float MaxJumpVelocity { get => maxJumpVelocity; set => maxJumpVelocity = value; }
-    public float Direction { get => direction; set => direction = value; }
+    public float Direction { get => _direction; set => _direction = value; }
 
     private void UpdateAI()
     {
@@ -1856,13 +1872,13 @@ public class CharacterObject : MonoBehaviour, IHittable
     void FaceTarget(Vector3 tarPos)
     {
         Vector3 tarOffset = (tarPos - transform.position);
-        direction = Mathf.Sign(tarOffset.x);
-        transform.localScale = new Vector3(direction, 1f, 1f);
+        Direction = Mathf.Sign(tarOffset.x);
+        transform.localScale = new Vector3(Direction, 1f, 1f);
     }
     public void FaceDir(float dir)
     {
-        direction = Mathf.Sign(dir);
-        transform.localScale = new Vector3(direction, 1f, 1f);
+        Direction = Mathf.Sign(dir);
+        transform.localScale = new Vector3(Direction, 1f, 1f);
     }
     public void FacePlayer()
     {

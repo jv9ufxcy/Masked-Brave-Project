@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9085396923403853065
+--- !u!114 &-9208955586438813720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,14 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Bombardier Form/Genade Toss
+  m_Name: event:/Music/Weapons Factory
   m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Bombardier Form/Genade Toss
+  Path: event:/Music/Weapons Factory
   Guid:
-    Data1: 1595145892
-    Data2: 1087685291
-    Data3: -1161488255
-    Data4: 835591761
+    Data1: 1729377491
+    Data2: 1258386827
+    Data3: -2091954281
+    Data4: -1350409495
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 118460
+--- !u!114 &-8652669358314256668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Bombardier Form/Bombardier Shot
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Bombardier Form/Bombardier Shot
+  Guid:
+    Data1: -273935912
+    Data2: 1206026165
+    Data3: 1756236984
+    Data4: -1972265478
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
@@ -26,7 +53,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 724
+  Length: 405
 --- !u!114 &-8563831862857057574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,7 +81,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 97342
---- !u!114 &-7456008603379740181
+--- !u!114 &-7355131594959509307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,41 +91,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Charge
+  m_Name: event:/Sound Effects/Player/Pursuer Form/Launcher
   m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Charge
+  Path: event:/Sound Effects/Player/Pursuer Form/Launcher
   Guid:
-    Data1: -1429146040
-    Data2: 1271092122
-    Data3: 714740892
-    Data4: 530063446
-  Banks:
-  - {fileID: 7128486934407018347}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2878
---- !u!114 &-7293106763094966399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Bombardier Form/Bombardier Shot
-  m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Bombardier Form/Bombardier Shot
-  Guid:
-    Data1: -273935912
-    Data2: 1206026165
-    Data3: 1756236984
-    Data4: -1972265478
+    Data1: -1105635787
+    Data2: 1168809650
+    Data3: 11344045
+    Data4: -1358080932
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 405
+  Length: 1955
 --- !u!114 &-7088921865465976268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +135,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1035
+--- !u!114 &-6304380010633953298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/City Verb
+  m_EditorClassIdentifier: 
+  Path: snapshot:/City Verb
+  Guid:
+    Data1: -473276205
+    Data2: 1145055258
+    Data3: 2141535409
+    Data4: 362781184
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &-5902521388725576309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +189,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-4580898267427444548
+--- !u!114 &-5819515946395053589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,23 +199,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: snapshot:/City Verb
+  m_Name: event:/Sound Effects/Player/Pursuer Form/Triple Shot
   m_EditorClassIdentifier: 
-  Path: snapshot:/City Verb
+  Path: event:/Sound Effects/Player/Pursuer Form/Triple Shot
   Guid:
-    Data1: -473276205
-    Data2: 1145055258
-    Data3: 2141535409
-    Data4: 362781184
+    Data1: -631538786
+    Data2: 1302841971
+    Data3: -2075830860
+    Data4: -1014061929
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 0
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1798
 --- !u!114 &-4465918976727446828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +297,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1524
---- !u!114 &-3275588744354401129
+--- !u!114 &-3258834655942467822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,14 +307,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Enemy/Roy/Roy ShieldThrow
+  m_Name: event:/Sound Effects/Enemy/Roy/Roy BigShield
   m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Enemy/Roy/Roy ShieldThrow
+  Path: event:/Sound Effects/Enemy/Roy/Roy BigShield
   Guid:
-    Data1: 146985324
-    Data2: 1088179542
-    Data3: -918085232
-    Data4: 1820358580
+    Data1: 959497905
+    Data2: 1120585012
+    Data3: -337361277
+    Data4: 373260259
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
@@ -296,7 +323,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1444
+  Length: 2229
 --- !u!114 &-2750507923603992548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,11 +420,92 @@ MonoBehaviour:
   Path: FMODAssets/Audio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637786431304786043
+  lastModified: 637812419440915068
   FileSizes:
   - Name: Desktop
-    Value: 2896
+    Value: 3348
   Exists: 1
+--- !u!114 &-1714298945543725982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Pursuer Form/Redline
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Pursuer Form/Redline
+  Guid:
+    Data1: 299160308
+    Data2: 1190112005
+    Data3: 1604409502
+    Data4: 861110898
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 142
+--- !u!114 &-1681562867001805454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Sewer Verb
+  m_EditorClassIdentifier: 
+  Path: snapshot:/Sewer Verb
+  Guid:
+    Data1: -1567915898
+    Data2: 1311857305
+    Data3: -993485438
+    Data4: 1389635329
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &-1549224906362529831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Pursuer Form/Streak
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Pursuer Form/Streak
+  Guid:
+    Data1: -531162669
+    Data2: 1123214913
+    Data3: -1164470598
+    Data4: 790477353
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 142
 --- !u!114 &-1542788569700395028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,24 +603,34 @@ MonoBehaviour:
   - {fileID: 462253394866518528}
   - {fileID: -4465918976727446828}
   - {fileID: -8563831862857057574}
-  - {fileID: 5655024781100170345}
-  - {fileID: -7456008603379740181}
-  - {fileID: -3275588744354401129}
-  - {fileID: 6490218850890964966}
-  - {fileID: 2758661719049766658}
-  - {fileID: 8797281849031600352}
-  - {fileID: -9085396923403853065}
-  - {fileID: 7382161997402597163}
-  - {fileID: 7749719421568915999}
-  - {fileID: -4580898267427444548}
-  - {fileID: -7293106763094966399}
-  - {fileID: 742182329397339869}
+  - {fileID: 3177694748239991825}
+  - {fileID: -7355131594959509307}
+  - {fileID: 713957650221055081}
+  - {fileID: 5597771836504623269}
+  - {fileID: -1681562867001805454}
+  - {fileID: -5819515946395053589}
+  - {fileID: 1015978710730264033}
+  - {fileID: -3258834655942467822}
+  - {fileID: -9208955586438813720}
+  - {fileID: -6304380010633953298}
+  - {fileID: -8652669358314256668}
+  - {fileID: 1923505188245118519}
+  - {fileID: 2556724355273936611}
+  - {fileID: 5772798921678139662}
+  - {fileID: 5324771145030808630}
+  - {fileID: 5041058728755207168}
+  - {fileID: -1549224906362529831}
+  - {fileID: 3733586815126075699}
+  - {fileID: -1714298945543725982}
+  - {fileID: 6839458712181035219}
+  - {fileID: 863395398121708482}
+  - {fileID: 1650446274728230859}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7128486934407018347}
   StringsBanks:
   - {fileID: -2083915565812884157}
-  cacheTime: 637786431304786043
+  cacheTime: 637812419440915068
   cacheVersion: 10
 --- !u!114 &370113885453968072
 MonoBehaviour:
@@ -595,7 +713,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 652
---- !u!114 &742182329397339869
+--- !u!114 &713957650221055081
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -605,14 +723,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Bombardier Form/Grenade Land
+  m_Name: event:/Sound Effects/Player/Charge
   m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Bombardier Form/Grenade Land
+  Path: event:/Sound Effects/Player/Charge
   Guid:
-    Data1: 236616434
-    Data2: 1291120796
-    Data3: -1108378194
-    Data4: 1734570994
+    Data1: -1429146040
+    Data2: 1271092122
+    Data3: 714740892
+    Data4: 530063446
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2878
+--- !u!114 &863395398121708482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Brave Strike
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Brave Strike
+  Guid:
+    Data1: 911753724
+    Data2: 1160574051
+    Data3: -1530499673
+    Data4: -298180578
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
@@ -621,7 +766,34 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 240
+  Length: 2262
+--- !u!114 &1015978710730264033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Bombardier Form/Genade Toss
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Bombardier Form/Genade Toss
+  Guid:
+    Data1: 1595145892
+    Data2: 1087685291
+    Data3: -1161488255
+    Data4: 835591761
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 724
 --- !u!114 &1444549692376275170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,6 +848,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 40
+--- !u!114 &1650446274728230859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Bombardier Grenade
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Bombardier Grenade
+  Guid:
+    Data1: 987980939
+    Data2: 1110244399
+    Data3: 1321811866
+    Data4: -742631046
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2722
+--- !u!114 &1923505188245118519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Bombardier Form/Grenade Land
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Bombardier Form/Grenade Land
+  Guid:
+    Data1: 236616434
+    Data2: 1291120796
+    Data3: -1108378194
+    Data4: 1734570994
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 240
 --- !u!114 &1945882665048080172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,7 +929,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &2758661719049766658
+--- !u!114 &2556724355273936611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -713,14 +939,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Bombardier Grenade
+  m_Name: event:/Sound Effects/Player/Pursuer Form/Spin
   m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Bombardier Grenade
+  Path: event:/Sound Effects/Player/Pursuer Form/Spin
   Guid:
-    Data1: 987980939
-    Data2: 1110244399
-    Data3: 1321811866
-    Data4: -742631046
+    Data1: -1802764761
+    Data2: 1333292514
+    Data3: -1497861735
+    Data4: -578318682
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
@@ -729,7 +955,34 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 2722
+  Length: 142
+--- !u!114 &3177694748239991825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Bombardier Form/Genade Explo
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Bombardier Form/Genade Explo
+  Guid:
+    Data1: 1944858394
+    Data2: 1225121114
+    Data3: 406135947
+    Data4: -1276969456
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1250
 --- !u!114 &3339245984621525233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,6 +1037,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1060
+--- !u!114 &3733586815126075699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Kinzecter Call
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Kinzecter Call
+  Guid:
+    Data1: 1834139113
+    Data2: 1255666530
+    Data3: 1746412177
+    Data4: -1971471544
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1702
 --- !u!114 &4521406394741501741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,7 +1118,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2477
---- !u!114 &5655024781100170345
+--- !u!114 &5041058728755207168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -848,14 +1128,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Bombardier Form/Genade Explo
+  m_Name: event:/Sound Effects/Player/Pursuer Form/Shotgun
   m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Bombardier Form/Genade Explo
+  Path: event:/Sound Effects/Player/Pursuer Form/Shotgun
   Guid:
-    Data1: 1944858394
-    Data2: 1225121114
-    Data3: 406135947
-    Data4: -1276969456
+    Data1: -1905286060
+    Data2: 1336545161
+    Data3: 1149846946
+    Data4: 519824201
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
@@ -864,8 +1144,8 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1250
---- !u!114 &6490218850890964966
+  Length: 142
+--- !u!114 &5324771145030808630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -875,23 +1155,77 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: snapshot:/Sewer Verb
+  m_Name: event:/Sound Effects/Enemy/Khris/Air Spark
   m_EditorClassIdentifier: 
-  Path: snapshot:/Sewer Verb
+  Path: event:/Sound Effects/Enemy/Khris/Air Spark
   Guid:
-    Data1: -1567915898
-    Data2: 1311857305
-    Data3: -993485438
-    Data4: 1389635329
+    Data1: -1507511994
+    Data2: 1096715514
+    Data3: -655895887
+    Data4: 86487096
   Banks:
   - {fileID: 7128486934407018347}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 0
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 142
+--- !u!114 &5597771836504623269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Enemy/Roy/Roy ShieldThrow
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Enemy/Roy/Roy ShieldThrow
+  Guid:
+    Data1: 146985324
+    Data2: 1088179542
+    Data3: -918085232
+    Data4: 1820358580
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1444
+--- !u!114 &5772798921678139662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Enemy/Khris/Big Air Spark
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Enemy/Khris/Big Air Spark
+  Guid:
+    Data1: -677548754
+    Data2: 1301045852
+    Data3: -230203226
+    Data4: -462296062
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 142
 --- !u!114 &6658548394664982364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,6 +1253,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1209
+--- !u!114 &6839458712181035219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Enemy/Roy/Block
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Enemy/Roy/Block
+  Guid:
+    Data1: -312453125
+    Data2: 1074920592
+    Data3: 54802864
+    Data4: -45050843
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 142
 --- !u!114 &7128486934407018347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,38 +1295,11 @@ MonoBehaviour:
   Path: FMODAssets/Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637786431304736044
+  lastModified: 637812419440875073
   FileSizes:
   - Name: Desktop
-    Value: 8537664
+    Value: 8626432
   Exists: 1
---- !u!114 &7382161997402597163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Enemy/Roy/Roy BigShield
-  m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Enemy/Roy/Roy BigShield
-  Guid:
-    Data1: 959497905
-    Data2: 1120585012
-    Data3: -337361277
-    Data4: 373260259
-  Banks:
-  - {fileID: 7128486934407018347}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2229
 --- !u!114 &7412763911496929789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,60 +1381,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1933
---- !u!114 &7749719421568915999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/Weapons Factory
-  m_EditorClassIdentifier: 
-  Path: event:/Music/Weapons Factory
-  Guid:
-    Data1: 1729377491
-    Data2: 1258386827
-    Data3: -2091954281
-    Data4: -1350409495
-  Banks:
-  - {fileID: 7128486934407018347}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 118460
---- !u!114 &8797281849031600352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Pursuer Form/Triple Shot
-  m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Pursuer Form/Triple Shot
-  Guid:
-    Data1: -631538786
-    Data2: 1302841971
-    Data3: -2075830860
-    Data4: -1014061929
-  Banks:
-  - {fileID: 7128486934407018347}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1798
 --- !u!114 &8845403548657687208
 MonoBehaviour:
   m_ObjectHideFlags: 0

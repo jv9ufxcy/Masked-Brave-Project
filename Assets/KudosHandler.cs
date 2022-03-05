@@ -26,7 +26,7 @@ public class KudosHandler : MonoBehaviour
                 scoreContainer.DOColor(Color.red, 0.25f);
                 break;
             case 2:
-                scoreContainer.DOColor(Color.yellow, 0.25f);
+                scoreContainer.DOColor(Color.cyan, 0.25f);
                 break;
             default:
                 scoreContainer.DOColor(defaultColor, 0);
@@ -60,5 +60,11 @@ public class KudosHandler : MonoBehaviour
             else
                 strikes[i].enabled = false;
         }
+    }
+    [Header("Timer")]
+    public Image chainTimer;
+    public void UpdateTimer(float fill)
+    {
+        chainTimer.fillAmount = fill;
     }
 }

@@ -10,10 +10,27 @@ public class EnemySpawner : MonoBehaviour
     public Vector2 rand = new Vector2(0, 2);
     public Transform playerChar;
     private bool battleOn = false;
+    public static EnemySpawner spawnerInstance;
+
+    private void Awake()
+    {
+        if (spawnerInstance == null)
+        {
+            spawnerInstance = this;
+            DontDestroyOnLoad(spawnerInstance);
+        }
+        else
+        {
+            Destroy(gameObject);
+            //Debug.LogError("More than one EnemyManager in the scene.");
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SetPlayerCoRoutine());
+        
     }
     private void FixedUpdate()
     {
@@ -39,6 +56,13 @@ public class EnemySpawner : MonoBehaviour
             EnemySpawn enemySpawn = transform.GetComponent<EnemySpawn>();
             if (enemySpawn != null)
                 soloEnemies.Add(enemySpawn);
+        }
+    }
+    public void RemoveEnemyFromList(EnemySpawn e)
+    {
+        if (soloEnemies.Contains(e))
+        {
+            soloEnemies.Remove(e);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
