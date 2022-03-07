@@ -17,7 +17,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Vector2 restingLocation, startingLocation, midScreen;
     private Image enemyIcon;
     [SerializeField] private string battleStartText="TATAKAE!", battleEndText="FINISH!", battleStartAudio = "SlimePsi", battleEndAudio = "Victory";
-
+    [SerializeField] private int spawnIndex;
     public int activeWaveCount;
     private enum State { Idle, Active, Conclusion}
     [SerializeField] private State battleState;
@@ -62,6 +62,11 @@ public class BattleSystem : MonoBehaviour
             case State.Active:
                 foreach (Wave wave in waveArray)
                 {
+                    wave.spawnFXIndex = spawnIndex;
+                    if (!wave.bossBattle&&wave.timer>=2)
+                    {
+                        wave.SpawnPortals();
+                    }
                     wave.timer -= Time.deltaTime;
                     if (wave.timer <= 0f)
                     {
@@ -186,7 +191,10 @@ public class BattleSystem : MonoBehaviour
                 enemyCounter.DOAnchorPos(startingLocation, 0).SetDelay(1f);
             }
             else
+            {
                 enemySpawn.Spawn(0);
+
+            }
         }
     }
     private void TestBattleOver()
@@ -232,7 +240,18 @@ public class BattleSystem : MonoBehaviour
         public bool alreadySpawned=false;
         public bool listAlreadyChecked=false;
         public bool bossBattle = false;
+        public int spawnFXIndex;
 
+        public void SpawnPortals()
+        {
+            if (spawnFXIndex > 0)
+            {
+                foreach (EnemySpawn enemySpawn in enemySpawnArray)
+                {
+                    GameEngine.GlobalPrefab(spawnFXIndex, enemySpawn.gameObject, -1, -1);
+                }
+            }
+        }
         public bool IsWaveOver()
         {
             foreach (EnemySpawn enemySpawn in enemySpawnArray)

@@ -15,7 +15,7 @@ public class BombController : MonoBehaviour
     void Start()
     {
         if (hitbox == null)
-            hitbox = GetComponentInChildren<Hitbox>();
+            hitbox = GetComponentInChildren<BulletHitbox>();
         hitbox.character = character;
     }
 
@@ -63,7 +63,7 @@ public class BombController : MonoBehaviour
     [Header("CurrentAttack")]
     public float hitActive;
     public int currentAttackIndex;
-    public Hitbox hitbox;
+    public BulletHitbox hitbox;
     void UpdateStateAttacks()
     {
         int _cur = 0;

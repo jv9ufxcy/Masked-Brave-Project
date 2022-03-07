@@ -1853,6 +1853,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void OnEnemySpawn()
     {
         controlType = ControlType.AI;
+        dashCooldown = 60;
         StartStateFromScript(0);
     }
     public void OnObjectSpawn()

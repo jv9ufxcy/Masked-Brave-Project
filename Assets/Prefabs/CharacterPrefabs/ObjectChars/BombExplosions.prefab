@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7196908909243246338}
-  - component: {fileID: 4036584432088342016}
+  - component: {fileID: 6405525702359818958}
   - component: {fileID: 6368522621725845980}
   m_Layer: 12
   m_Name: Hitbox
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 7459617967329291024}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4036584432088342016
+--- !u!114 &6405525702359818958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 419407613605290793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e2bef508af07542ac0cc21ac4757a2, type: 3}
+  m_Script: {fileID: 11500000, guid: b857e755946cc544d9899be6febc5be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projectileIndex: 33
@@ -121,13 +121,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  contactName: Player/Bombardier Grenade
-  explosionEventName: Player/Bombardier Form/Genade Explo
+  contactSound: Player/Bombardier Form/Grenade Land
+  explosionSound: Player/Bombardier Form/Genade Explo
   currentState: 33
   currentStateTime: 0
   hitActive: 0
   currentAttackIndex: 0
-  hitbox: {fileID: 4036584432088342016}
+  hitbox: {fileID: 0}
 --- !u!198 &7459617967329291031
 ParticleSystem:
   m_ObjectHideFlags: 0

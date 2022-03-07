@@ -587,6 +587,7 @@ public class Mission : MonoBehaviour
     private void LevelChange()
     {
         SceneTransitionController.instance.LoadScene(nextLevel);
+        Destroy(EnemySpawner.spawnerInstance.gameObject);
         Destroy(gameObject);
         Destroy(GameManager.instance.gameObject);
     }

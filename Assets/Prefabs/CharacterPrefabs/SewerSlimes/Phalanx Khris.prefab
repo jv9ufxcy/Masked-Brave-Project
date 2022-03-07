@@ -4871,11 +4871,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3705489587784396807}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4217467170511189530}
+  m_Father: {fileID: 7373688278644007593}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4769912499743263696
@@ -9823,7 +9823,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 23279855908828480}
-  - {fileID: 4704411960889746219}
   m_Father: {fileID: 4620460539107160002}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29176,6 +29175,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3314678896992989575}
+  - {fileID: 4704411960889746219}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29277,6 +29277,7 @@ MonoBehaviour:
   - {fileID: 1946779624007576, guid: a3a3077bfe70242439758ebb1d4c4bc7, type: 3}
   - {fileID: 1946779624007576, guid: c5ac5e1e6106f8440a1d7e08e969103f, type: 3}
   - {fileID: 1946779624007576, guid: 4d44dc666ad645a46a539a483990aaf9, type: 3}
+  - {fileID: 3152041610049941263, guid: 1acd1e477b50c254ca9bd61f80d65b43, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -29348,11 +29349,11 @@ MonoBehaviour:
   isLongRange: 0
   isShortRange: 0
   closeAttackState: 4800000049000000
-  rangedAttackState: 4600000049000000
-  desperationCAStates: 4600000048000000
-  desperationRAStates: 480000004900000046000000
+  rangedAttackState: 4a00000049000000
+  desperationCAStates: 4b0000004800000049000000
+  desperationRAStates: 4b000000490000004a000000
   enemyType: 0
-  desperationTransitionState: 0
+  desperationTransitionState: 75
   canDefend: 0
   defStateIndex: 0
   defStates: 
@@ -29371,7 +29372,7 @@ MonoBehaviour:
   UI: 2
   maxMeter: 100
   minMeter: 0
-  maxHealth: 96
+  maxHealth: 64
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: 32

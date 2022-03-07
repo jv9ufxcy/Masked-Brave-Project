@@ -1265,7 +1265,7 @@ MonoBehaviour:
       length: 5
       hitStun: 10
       hitStop: 0
-      damage: 3
+      damage: 4
       meterGain: 2
       comboValue: 1
       poiseDamage: 2
@@ -1338,7 +1338,7 @@ MonoBehaviour:
       length: 5
       hitStun: 25
       hitStop: 10
-      damage: 5
+      damage: 8
       meterGain: 4
       comboValue: 1
       poiseDamage: 5
@@ -4511,15 +4511,15 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 20
-      end: 20
+    - start: 30
+      end: 30
       active: 1
       script: 1
       parameters:
       - name: 
         val: 10
-    - start: 30
-      end: 30
+    - start: 40
+      end: 40
       active: 1
       script: 1
       parameters:
@@ -4532,17 +4532,17 @@ MonoBehaviour:
       parameters:
       - name: Enemy/Khris/Khris Elec
         val: 0
-    - start: 20
-      end: 20
+    - start: 0
+      end: 0
       active: 0
       script: 14
       parameters:
       - name: Enemy/Khris/Khris Arrow
         val: 0
     attacks:
-    - start: 20
+    - start: 30
       length: 10
-      hitStun: 40
+      hitStun: 30
       hitStop: 10
       damage: 4
       meterGain: 0
@@ -4885,13 +4885,6 @@ MonoBehaviour:
       parameters:
       - name: Enemy/Khris/Khris Arrow
         val: 0
-    - start: 65
-      end: 65
-      active: 0
-      script: 14
-      parameters:
-      - name: EnemyShoot
-        val: 0
     - start: 60
       end: 60
       active: 1
@@ -5173,36 +5166,40 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Khris/SummonB
+  - stateName: Khris/DoubleGreatArrow
     index: 0
-    length: 60
+    length: 120
     loop: 0
     blendRate: 0.1
     events:
-    - start: 55
-      end: 55
-      active: 1
-      script: 15
-      parameters:
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-    - start: 55
-      end: 55
+    - start: 50
+      end: 50
       active: 1
       script: 10
       parameters:
       - name: 
-        val: 2
+        val: 1
       - name: 
-        val: 16
+        val: 24
       - name: 
         val: 1
       - name: 
+        val: 0.75
+      - name: 
+        val: 0
+    - start: 100
+      end: 100
+      active: 1
+      script: 10
+      parameters:
+      - name: 
         val: 1
+      - name: 
+        val: 24
+      - name: 
+        val: 1
+      - name: 
+        val: 0
       - name: 
         val: 0
     - start: 0
@@ -5212,6 +5209,67 @@ MonoBehaviour:
       parameters:
       - name: Enemy/Khris/Khris Arrow
         val: 1
+    - start: 50
+      end: 50
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Khris Arrow
+        val: 1
+    - start: 50
+      end: 50
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 11
+    - start: 100
+      end: 100
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 11
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -5219,45 +5277,393 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Khris/SummonC
+  - stateName: Khris/SummonSpikes
     index: 0
-    length: 60
+    length: 280
     loop: 0
     blendRate: 0.1
     events:
-    - start: 55
-      end: 55
-      active: 1
-      script: 15
-      parameters:
-      - name: 
-        val: 2
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-    - start: 55
-      end: 55
-      active: 1
-      script: 10
-      parameters:
-      - name: 
-        val: 2
-      - name: 
-        val: 16
-      - name: 
-        val: 1
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-    - start: 0
-      end: 0
+    - start: 30
+      end: 30
       active: 1
       script: 14
       parameters:
       - name: Enemy/Khris/Khris Arrow
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
         val: 1
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 4
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 7
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 10
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 13
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 19
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Khris Arrow
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 2
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 5
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 8
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 11
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 14
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 17
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 20
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Khris Arrow
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 3
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 5
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 7
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 11
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 13
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 15
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 17
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 19
+      - name: 
+        val: -3
+      - name: 
+        val: 0
+    - start: 210
+      end: 210
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+      - name: 
+        val: 15
+      - name: 
+        val: -3
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -5421,13 +5827,28 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Khris/NEWSTATE
+  - stateName: Khris/SpikeAttack
     index: 0
-    length: 60
+    length: 90
     loop: 0
     blendRate: 0.1
     events: []
-    attacks: []
+    attacks:
+    - start: 60
+      length: 20
+      hitStun: 20
+      hitStop: 5
+      damage: 0
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 8, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 5, z: 0}
+      hitBoxScale: {x: 1, y: 10, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -8256,6 +8677,7 @@ MonoBehaviour:
   - {fileID: 7459617967329291029, guid: 6a7f9c1b9adee0f4aa460733e6cfe5b9, type: 3}
   - {fileID: 7459617967329291029, guid: e80d730a461e1be4fa6621db5313f6a1, type: 3}
   - {fileID: 7459617967329291029, guid: 26e68182d6c5cac489b92f826c888646, type: 3}
+  - {fileID: 7459617967329291029, guid: bcc38bf62871c6b4592766e50624ae68, type: 3}
   rawInputs:
   - inputType: 0
     name: Ps4X
@@ -8405,7 +8827,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8415,7 +8837,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8425,7 +8847,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8435,7 +8857,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8445,7 +8867,7 @@ MonoBehaviour:
     commands: 000000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8455,7 +8877,7 @@ MonoBehaviour:
     commands: 00000000030000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
