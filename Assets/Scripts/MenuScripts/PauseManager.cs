@@ -66,6 +66,7 @@ public class PauseManager : MonoBehaviour
         Destroy(Mission.instance.gameObject);
         MusicManager.instance.StopMusic();
         GM.RestoreCheckpointStart();
+        Destroy(EnemySpawner.spawnerInstance.gameObject);
         Destroy(GameManager.instance.gameObject);
         SceneTransitionController.instance.LoadScene(sceneToLoad);
     }
