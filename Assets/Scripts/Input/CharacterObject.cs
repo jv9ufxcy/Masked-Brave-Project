@@ -25,9 +25,9 @@ public class CharacterObject : MonoBehaviour, IHittable
     [HideInInspector] public AudioManager audioManager;
 
     [Header("CurrentState")]
-    [HideInInspector] public int currentState;
-    [HideInInspector] public float currentStateTime;
-    [HideInInspector] public float prevStateTime;
+    public int currentState;
+    public float currentStateTime;
+    public float prevStateTime;
 
     [Header("CharacterModel")]
     public CharacterObject characterObject;
@@ -1137,15 +1137,14 @@ public class CharacterObject : MonoBehaviour, IHittable
         BulletHit bullet = newbullet.GetComponent<BulletHit>();
         bullet.character = characterObject;
         int onWall = wallFlag ? -1 : 1;
-        bullet.direction.x = Direction * onWall;
-        bullet.direction.x *= Mathf.Sign(bulletSpeed);
+        bullet.direction.x = (Direction* onWall);
 
-        bullet.velocity.x = Direction * onWall;
+        bullet.velocity.x = (Direction * onWall) * Mathf.Sign(bulletSpeed);
         bullet.attackIndex = (int)attackIndex;
-        bullet.speed = bulletSpeed;
-        bullet.rotation = bulletRot*Direction;
+        bullet.speed = Mathf.Abs(bulletSpeed);
+        bullet.rotation = bulletRot * (Direction * onWall);
         //newbullet.GetComponent<Hitbox>().character = characterObject;
-        newbullet.transform.localScale = new Vector3(Direction * onWall, 1, 1);
+        newbullet.transform.localScale = new Vector3((Direction * onWall) * Mathf.Sign(bulletSpeed), 1, 1);
     }
     public void SpecialFireCheck(float bulletType)
     {
@@ -1400,6 +1399,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void FullyHeal()
     {
         healthManager.AddHealth(1000);
+        ChangeMeter(100);
     }
     float velocityXSmoothing;
     void CalculateGravity()
@@ -1825,7 +1825,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         rangedAttackState = desperationRAStates;
         StartStateFromScript(desperationTransitionState);
         dashCooldown += 100;
-        attackCooldown *= 0.5f;
+        //attackCooldown *= 0.5f;
     }
     public void OnDeath()
     {

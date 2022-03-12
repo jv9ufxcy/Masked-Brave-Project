@@ -420,7 +420,7 @@ MonoBehaviour:
   Path: FMODAssets/Audio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637821127193394589
+  lastModified: 637825276736599072
   FileSizes:
   - Name: Desktop
     Value: 3348
@@ -624,13 +624,13 @@ MonoBehaviour:
   - {fileID: -1714298945543725982}
   - {fileID: 6839458712181035219}
   - {fileID: 863395398121708482}
-  - {fileID: 5906816305740519508}
+  - {fileID: 1793829443552010002}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7128486934407018347}
   StringsBanks:
   - {fileID: -2083915565812884157}
-  cacheTime: 637821127193394589
+  cacheTime: 637825276736599072
   cacheVersion: 10
 --- !u!114 &370113885453968072
 MonoBehaviour:
@@ -848,6 +848,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 40
+--- !u!114 &1793829443552010002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sound Effects/Player/Bombardier Grenade
+  m_EditorClassIdentifier: 
+  Path: event:/Sound Effects/Player/Bombardier Grenade
+  Guid:
+    Data1: 987980939
+    Data2: 1110244399
+    Data3: 1321811866
+    Data4: -742631046
+  Banks:
+  - {fileID: 7128486934407018347}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2722
 --- !u!114 &1923505188245118519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,7 +1171,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 142
+  Length: 2843
 --- !u!114 &5597771836504623269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1198,34 +1225,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 142
---- !u!114 &5906816305740519508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound Effects/Player/Bombardier Grenade
-  m_EditorClassIdentifier: 
-  Path: event:/Sound Effects/Player/Bombardier Grenade
-  Guid:
-    Data1: 987980939
-    Data2: 1110244399
-    Data3: 1321811866
-    Data4: -742631046
-  Banks:
-  - {fileID: 7128486934407018347}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2722
+  Length: 2843
 --- !u!114 &6658548394664982364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1295,10 +1295,10 @@ MonoBehaviour:
   Path: FMODAssets/Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637821127193354588
+  lastModified: 637825276736549076
   FileSizes:
   - Name: Desktop
-    Value: 8722720
+    Value: 8761728
   Exists: 1
 --- !u!114 &7412763911496929789
 MonoBehaviour:

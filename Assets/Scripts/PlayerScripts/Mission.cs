@@ -26,7 +26,7 @@ public class Mission : MonoBehaviour
     public float elapsedTime, savedTime;
     public float bestTime, maxTime;
 
-    public int missionPointMax;
+    public int savedScore;
 
     public float enemiesKilled, enemyKillReq;
 
@@ -92,6 +92,7 @@ public class Mission : MonoBehaviour
     {
         StartCoroutine(InitializeCoRoutine());
         elapsedTime = savedTime;
+        MissionPoints = savedScore;
         mainChar.controlType = CharacterObject.ControlType.PLAYER;
         BeginTimer();
         MusicManager.instance.StartBGM(stageTheme);
@@ -167,6 +168,7 @@ public class Mission : MonoBehaviour
     public void CheckpointTime()
     {
         savedTime = elapsedTime;
+        savedScore = MissionPoints;
     }
 
     private IEnumerator UpdateTimer()
@@ -522,7 +524,7 @@ public class Mission : MonoBehaviour
         timeScore = TimeGrade(elapsedTime, bestTime,20f);
         scoreText[0] = timeScore.ToString();
 
-        missionScore = Grade(MissionPoints, missionPointMax);
+        //missionScore = Grade(MissionPoints, missionPointMax);
         scoreText[1] = missionScore.ToString();
 
         enemyScore = Grade(enemiesKilled, enemyKillReq);

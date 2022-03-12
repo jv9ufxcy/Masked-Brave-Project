@@ -4107,21 +4107,6 @@ MonoBehaviour:
         val: -0.5
       - name: 
         val: 0
-    - start: 50
-      end: 50
-      active: 1
-      script: 10
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 16
-      - name: 
-        val: 1
-      - name: 
-        val: -0.5
-      - name: 
-        val: 0
     - start: 0
       end: 0
       active: 1
@@ -4130,19 +4115,19 @@ MonoBehaviour:
       - name: Enemy/Khris/Air Spark
         val: 0
     attacks:
-    - start: 0
-      length: 0
+    - start: 15
+      length: 15
       hitStun: 10
       hitStop: 5
-      damage: 0
+      damage: 2
       meterGain: 0
       comboValue: 2
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 5, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: -0.5, y: 1.5, z: 0}
+      hitBoxScale: {x: 1, y: 1, z: 1}
       cancelWindow: 0
       killMultiplier: 0
     jumpReq: 0
@@ -4820,6 +4805,13 @@ MonoBehaviour:
       parameters:
       - name: Enemy/Khris/Big Air Spark
         val: 0
+    - start: 0
+      end: 85
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: -8
     attacks:
     - start: 10
       length: 5
@@ -5664,7 +5656,22 @@ MonoBehaviour:
         val: -3
       - name: 
         val: 0
-    attacks: []
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 0
+      hitStop: 0
+      damage: 6
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -5838,7 +5845,7 @@ MonoBehaviour:
       length: 20
       hitStun: 20
       hitStop: 5
-      damage: 0
+      damage: 6
       meterGain: 0
       comboValue: 0
       poiseDamage: 0
@@ -6063,42 +6070,12 @@ MonoBehaviour:
         val: 0
     attacks:
     - start: 40
-      length: 10
+      length: 30
       hitStun: 10
       hitStop: 5
       damage: 2
       meterGain: 0
       comboValue: 1
-      poiseDamage: 0
-      attackType: 0
-      hitAnim: {x: 0, y: 0}
-      knockback: {x: 30, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: 0.5, z: 0}
-      hitBoxScale: {x: 4, y: 3, z: 1}
-      cancelWindow: 0
-      killMultiplier: 1
-    - start: 50
-      length: 10
-      hitStun: 10
-      hitStop: 5
-      damage: 2
-      meterGain: 0
-      comboValue: 2
-      poiseDamage: 0
-      attackType: 0
-      hitAnim: {x: 0, y: 0}
-      knockback: {x: 30, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: 0.5, z: 0}
-      hitBoxScale: {x: 4, y: 3, z: 1}
-      cancelWindow: 0
-      killMultiplier: 1
-    - start: 60
-      length: 10
-      hitStun: 20
-      hitStop: 5
-      damage: 2
-      meterGain: 0
-      comboValue: 3
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
@@ -8827,7 +8804,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 3
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8837,7 +8814,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8847,7 +8824,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8857,7 +8834,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8867,7 +8844,7 @@ MonoBehaviour:
     commands: 000000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -8877,7 +8854,7 @@ MonoBehaviour:
     commands: 00000000030000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0
