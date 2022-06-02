@@ -12,6 +12,8 @@ public class VCAController : MonoBehaviour, ISelectHandler, IDeselectHandler
     [SerializeField] private float vcaVolume;
     private Slider audioSlider;
     [SerializeField]private TextMeshProUGUI sliderDesc;
+    private AudioManager audioManager;
+    private string uiCursorSound = "UI/Move Cursor";
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +21,14 @@ public class VCAController : MonoBehaviour, ISelectHandler, IDeselectHandler
         audioSlider = GetComponent<Slider>();
         vcaController.getVolume(out vcaVolume);
         sliderDesc = GetComponentInChildren<TextMeshProUGUI>();
+        audioManager = AudioManager.instance;
     }
 
     public void SetVolume(float volume)
     {
         vcaController.setVolume(volume/10);
         vcaController.getVolume(out vcaVolume);
+        audioManager.PlaySound(uiCursorSound);
     }
     public void OnDeselect(BaseEventData eventData)
     {
@@ -32,6 +36,7 @@ public class VCAController : MonoBehaviour, ISelectHandler, IDeselectHandler
     }
     public void OnSelect(BaseEventData eventData)
     {
-        sliderDesc.color = Color.green;
+        audioManager.PlaySound(uiCursorSound);
+        sliderDesc.color = Color.yellow;
     }
 }

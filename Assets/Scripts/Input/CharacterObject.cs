@@ -1600,13 +1600,20 @@ public class CharacterObject : MonoBehaviour, IHittable
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[atkIndex];
         }
         
-        if (canDefend && IsDefendingInState() && curAtk.poiseDamage < 20f && attacker.Direction==-Direction)
+        if (IsDefendingInState() && attacker.Direction==-Direction)
         {
-            //parry sound
-            StartStateFromScript(defStateIndex);
-            dashCooldown = 0;
-            FaceTarget(target.transform.position);
-            if (projectileIndex == 0) attacker.FrontVelocity(-10f);
+            if (curAtk.poiseDamage < 20f)
+            {
+                //parry sound
+                StartStateFromScript(defStateIndex);
+                dashCooldown = 0;
+                FaceTarget(target.transform.position);
+                if (projectileIndex == 0) attacker.FrontVelocity(-10f);
+            }
+            else
+            {
+                PoiseBreak();
+            }
         }
         else
         {
@@ -1627,7 +1634,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                     curComboValue = curAtk.comboValue;
                     StartInvul(curAtk.hitStop);
 
-                    healthManager.PoiseDamage(curAtk.poiseDamage);
+                    bool shouldBreakPoise = false;
+                    if (healthManager.currentPoise > 0 && curAtk.poiseDamage>healthManager.currentPoise){shouldBreakPoise = true;}
+
+                    healthManager.PoiseDamage(curAtk.poiseDamage); 
                     if (healthManager.currentPoise <= 0)
                     {
                         SetVelocity(nextKnockback * 0.7f);//dampen a bit
@@ -1637,15 +1647,19 @@ public class CharacterObject : MonoBehaviour, IHittable
                         //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
                         //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
                         curHitAnim = targetHitAnim * .25f;
-
                         hitStun = curAtk.hitStun;
+
+                        if (shouldBreakPoise)
+                        {
+                            PoiseBreak();
+                        }
                         StartState(hitStunStateIndex);
-                    if (curAtk.attackType == 10&&controlType!= ControlType.OBJECT)
-                    {
-                        grappleTarget = attacker.grapplePoint;
-                        attacker.grappleVictim = this;
-                        attacker.StartStateFromScript((int)curAtk.hitAnim.x);
-                    }
+                        if (curAtk.attackType == 10 && controlType != ControlType.OBJECT)
+                        {
+                            grappleTarget = attacker.grapplePoint;
+                            attacker.grappleVictim = this;
+                            attacker.StartStateFromScript((int)curAtk.hitAnim.x);
+                        }
                     }
 
                     GameEngine.SetHitPause(curAtk.hitStop);
@@ -1675,6 +1689,13 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
         }
     }
+
+    private void PoiseBreak()
+    {
+        float stunned = 30f;
+        hitStun += stunned;
+    }
+
     private bool isInvulnerable;
     private void SetInvulCooldown(float iFrames)
     {
@@ -1753,14 +1774,22 @@ public class CharacterObject : MonoBehaviour, IHittable
     public bool canDefend = false;
     public bool IsDefendingInState()
     {
-        for (int i = 0; i < defStates.Length; i++)
+        if (canDefend)//can block attacks
         {
-            if (currentState==defStates[i])
+            if (hitStun <= 0)//is not stunned
             {
-                return true;
+                for (int i = 0; i < defStates.Length; i++)//go through blocking state array
+                {
+                    if (currentState == defStates[i])
+                    {
+                        return true;//is in a blocking state
+                    }
+                }
+                return false;//has no blocking states
             }
+            else return false;//is stunned
         }
-        return false;
+        else return false;//cannot block
     }
     public int defStateIndex;
     public int[] defStates;

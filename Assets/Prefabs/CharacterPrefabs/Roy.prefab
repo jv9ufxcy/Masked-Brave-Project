@@ -24130,7 +24130,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   gravity: -2
   aniMoveSpeed: 0
-  direction: 1
+  _direction: 1
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
@@ -24188,6 +24188,13 @@ MonoBehaviour:
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
+  chargeEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   gunChargeParticles: {fileID: 704560625117093105}
   jumpChargeParticles: {fileID: 7322117377702348069}
   flashParticles: {fileID: 8960277874835720502}
@@ -24262,8 +24269,8 @@ MonoBehaviour:
   hitStun: 0
   target: {fileID: 0}
   spawners: []
-  aggroDistance: 60
-  aggroHeight: 30
+  aggroDistance: 30
+  aggroHeight: 20
   longAttackRange: 10
   shortAttackRange: 5
   attackCooldown: 60
@@ -24312,6 +24319,7 @@ MonoBehaviour:
   IsDead: 0
   shouldSpawnHealth: 1
   isDesperation: 0
+  enemyHPVis: 0
   HealthColor: {r: 0.6666667, g: 0.26666668, b: 0.36862746, a: 1}
   DamageColor: {r: 0.9333334, g: 0.627451, b: 0.41960788, a: 1}
   BackColor: {r: 0.65882355, g: 0.18823531, b: 0.35686275, a: 1}

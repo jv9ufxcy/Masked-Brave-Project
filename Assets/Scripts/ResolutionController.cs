@@ -11,15 +11,17 @@ public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHand
     private StartScreenController startController;
     [SerializeField] private TextMeshProUGUI sliderDesc;
     public int resolutionIndex;
+    private AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
         resSlider = GetComponent<Slider>();
         startController = GetComponentInParent<StartScreenController>();
         sliderDesc = GetComponentInChildren<TextMeshProUGUI>();
+        audioManager = AudioManager.instance;
     }
 
-    public void SetResolutionSlider(float index)
+    public void SetResolutionSlider(float index)//unity event
     {
         resolutionIndex = (int)index;
         startController.SetResolution(resolutionIndex);
@@ -30,6 +32,7 @@ public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHand
     }
     public void OnSelect(BaseEventData eventData)
     {
-        sliderDesc.color = Color.green;
+        sliderDesc.color = Color.yellow;
+        //audioManager.PlaySound("UI/Move Cursor");
     }
 }

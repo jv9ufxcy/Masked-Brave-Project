@@ -151,6 +151,7 @@ public class Mission : MonoBehaviour
     {
         EndTimer();
         MusicManager.instance.StopReverbZone();
+        GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.OBJECT;
     }
     private void BeginTimer()
     {
@@ -579,7 +580,7 @@ public class Mission : MonoBehaviour
         missionStartText.DOColor(Color.clear, 0.25f);
 
         yield return new WaitForSeconds(missionStartSeconds);
-
+        GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.PLAYER;
         PauseManager.pauseManager.Results();
         LevelChange();
     }

@@ -20,10 +20,13 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Sprite[] spriteList;
     [SerializeField] private Image eyeCon;
     public TextMeshProUGUI menuTimer, battleUI;
+    private AudioManager audioManager;
+    private string uiSelectSound = "UI/Select", uiCancelSound = "UI/Cancel", uiCursorSound = "UI/Move Cursor";
     private void Start()
     {
         pauseManager = this;
         GM = GameManager.instance;
+        audioManager = AudioManager.instance;
     }
     public void PauseButtonPressed()
     {
@@ -35,12 +38,14 @@ public class PauseManager : MonoBehaviour
 
     public void Resume()
     {
+        PlaySelectSound(0);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         IsGamePaused = false;
     }
     private void Pause()
     {
+        PlaySelectSound(0);
         pauseMenuUI.SetActive(true);
         Time.timeScale=0f;
         IsGamePaused = true;
@@ -61,6 +66,8 @@ public class PauseManager : MonoBehaviour
     }
     public void LoadMenu()
     {
+        PlaySelectSound(0);
+
         IsGamePaused = false;
         Time.timeScale = 1f;
         Destroy(Mission.instance.gameObject);
@@ -114,6 +121,21 @@ public class PauseManager : MonoBehaviour
 
                 break;
             default:
+                break;
+        }
+    }
+    public void PlaySelectSound(int sound)
+    {
+        switch (sound)
+        {
+            case 0:
+                audioManager.PlaySound(uiSelectSound);
+                break;
+            case 1:
+                audioManager.PlaySound(uiCancelSound);
+                break;
+            case 2:
+                audioManager.PlaySound(uiCursorSound);
                 break;
         }
     }

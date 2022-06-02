@@ -18,10 +18,26 @@ public class CameraController : MonoBehaviour {
         vCam = GetComponent<CinemachineVirtualCamera>();
         confiner = GetComponent<CinemachineConfiner>();
 	}
-	
+    //private void Update()
+    //{
+    //    if (confiner.m_Damping > 0)
+    //    {
+    //        confiner.m_Damping = Mathf.MoveTowards(confiner.m_Damping, 0, dampenTimer*Time.deltaTime);
+    //    }
+    //}
+    float dampenTimer=1;
     public void ChangeConfiner(int index)
     {
+        //confiner.m_Damping = dampenTimer;
+        StartCoroutine(DampingTimer());
+
         confiner.InvalidatePathCache();
         confiner.m_BoundingShape2D = boundingBoxes[index];
+    }
+    IEnumerator DampingTimer()
+    {
+        confiner.m_Damping = dampenTimer;
+        yield return new WaitForSeconds(1f);
+        confiner.m_Damping = 0;
     }
 }

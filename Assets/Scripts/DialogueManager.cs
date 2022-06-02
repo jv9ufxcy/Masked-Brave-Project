@@ -96,7 +96,7 @@ public class DialogueManager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(Type(sentence));
     }
-    public string charSound = "Cutscene/Dialogue Scroll";
+    public string charSound = "Cutscene/Dialogue Scroll", radioSound = "Cutscene/Radio Over";
     IEnumerator Type(string sentence)
     {
         dialogueText.text = "";
@@ -113,6 +113,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = false;
         dialogueParent.DOScaleY(0f, tweenSpeed);
         currentDialogue.EndDialogue();
+        audioManager.PlaySound(radioSound);
     }
     public void BossRoomMusic()
     {
