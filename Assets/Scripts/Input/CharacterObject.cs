@@ -135,6 +135,8 @@ public class CharacterObject : MonoBehaviour, IHittable
                     DashCut();
                     ChargeAttack();
                 }
+                else
+                    StopChargeAttack();
                 ChargeAttackAudio();
                 //else
                 //{
@@ -904,17 +906,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 }
                 if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
                 {
-                    if (shotPressure > maxShotPressure)
-                    {
-                        StartStateFromScript(chargeAttackIndex);
-                    }
-                    firstCharge = false; secondCharge = false;
-                    foreach (ParticleSystem p in primaryGunParticles)
-                    {
-                        p.startColor = Color.clear;
-                        p.Stop();
-                    }
-                    shotPressure = 0;
+                    ReleaseChargeSlash();
                 }
                 break;
             case 1://Bombadier
@@ -929,30 +921,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 }
                 if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
                 {
-                    if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
-                    {
-                        BusterShooting();
-                        shotPressure = 0f;
-                        firstCharge = false; secondCharge = false;
-                    }
-                    else if (shotPressure >= maxShotPressure)
-                    {
-                        CriticalBusterShooting();
-                        shotPressure = 0f;
-                        firstCharge = false; secondCharge = false;
-                    }
-                    if (shotPressure != 0f)
-                    {
-                        //hasReleasedShot = true;
-                        shotPressure = 0f;
-                        firstCharge = false; secondCharge = false;
-                    }
-                    foreach (ParticleSystem p in primaryGunParticles)
-                    {
-                        p.startColor = Color.clear;
-                        p.Stop();
-                    }
-                    //shotPressure = 0;
+                    ReleaseChargedBuster();
                 }
                 break;
             case 2://Pursuer
@@ -967,30 +936,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 }
                 if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
                 {
-                    if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
-                    {
-                        StartStateFromScript(shotgunIndex);
-                        shotPressure = 0f;
-                        firstCharge = false; secondCharge = false;
-                    }
-                    else if (shotPressure >= maxShotPressure)
-                    {
-                        StartStateFromScript(missileIndex);
-                        shotPressure = 0f;
-                        firstCharge = false; secondCharge = false;
-                    }
-                    if (shotPressure != 0f)
-                    {
-                        //hasReleasedShot = true;
-                        shotPressure = 0f;
-                        firstCharge = false; secondCharge = false;
-                    }
-                    foreach (ParticleSystem p in primaryGunParticles)
-                    {
-                        p.startColor = Color.clear;
-                        p.Stop();
-                    }
-                    //shotPressure = 0;
+                    ReleaseChargedArsenal();
                 }
                 break;
             case 3:
@@ -999,6 +945,64 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
         }
     }
+
+    private void ReleaseChargedArsenal()
+    {
+        if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
+        {
+            StartStateFromScript(shotgunIndex);
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        else if (shotPressure >= maxShotPressure)
+        {
+            StartStateFromScript(missileIndex);
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        StopChargeAttack();
+    }
+    private void ReleaseChargedBuster()
+    {
+        if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
+        {
+            BusterShooting();
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        else if (shotPressure >= maxShotPressure)
+        {
+            CriticalBusterShooting();
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        StopChargeAttack();
+        //shotPressure = 0;
+    }
+    private void ReleaseChargeSlash()
+    {
+        if (shotPressure > maxShotPressure)
+        {
+            StartStateFromScript(chargeAttackIndex);
+        }
+        StopChargeAttack();
+    }
+    public void StopChargeAttack()
+    {
+        if (shotPressure != 0f)
+        {
+            //hasReleasedShot = true;
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        foreach (ParticleSystem p in primaryGunParticles)
+        {
+            p.startColor = Color.clear;
+            p.Stop();
+        }
+    }
+
+
     private void ChargeAttackAudio()
     {
         chargeLoop.getPlaybackState(out chargeState);
@@ -1497,6 +1501,11 @@ public class CharacterObject : MonoBehaviour, IHittable
 
         }
     }
+    public void CutsceneUpdatePhysics()
+    {
+        UpdatePhysics();
+        UpdateAnimator();
+    }
     public void Move(Vector2 velocity)
     {
         //myRB.velocity = velocity;
@@ -1899,7 +1908,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         target = GameEngine.gameEngine.mainCharacter;
     }
-    void FaceTarget(Vector3 tarPos)
+    public void FaceTarget(Vector3 tarPos)
     {
         Vector3 tarOffset = (tarPos - transform.position);
         Direction = Mathf.Sign(tarOffset.x);

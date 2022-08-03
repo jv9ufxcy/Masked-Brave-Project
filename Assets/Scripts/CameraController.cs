@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using DG.Tweening;
 
 public class CameraController : MonoBehaviour {
     
@@ -28,16 +29,14 @@ public class CameraController : MonoBehaviour {
     float dampenTimer=1;
     public void ChangeConfiner(int index)
     {
-        //confiner.m_Damping = dampenTimer;
-        StartCoroutine(DampingTimer());
+        DOVirtual.Float(dampenTimer, 0, .5f, ConfinerDamping);
+        //StartCoroutine(DampingTimer());
 
         confiner.InvalidatePathCache();
         confiner.m_BoundingShape2D = boundingBoxes[index];
     }
-    IEnumerator DampingTimer()
+    void ConfinerDamping(float x)
     {
-        confiner.m_Damping = dampenTimer;
-        yield return new WaitForSeconds(1f);
-        confiner.m_Damping = 0;
+        confiner.m_Damping = x;
     }
 }
