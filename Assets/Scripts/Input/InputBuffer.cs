@@ -43,8 +43,6 @@ public class InputBuffer
             InitializeBuffer();
         }
 
-
-
         for (int i = 0; i < buffer.Count - 1; i++)
         {
             for (int r = 0; r < buffer[i].rawInputs.Count; r++)
@@ -87,12 +85,15 @@ public class InputBuffer
 
     
 
-    public void UseInput(int _i)
+    public void UseInput(int _i, int _m)
     {
         
         buffer[buttonCommandCheck[_i]].rawInputs[_i].used = true;
         //Debug.Log("USED UP!!!> : " + buttonCommandCheck[_i].ToString());
         buttonCommandCheck[_i] = -1;
+        Debug.Log("before: " + motionCommandCheck[_m]);
+        motionCommandCheck[_m] = -1;
+        Debug.Log("after: " + motionCommandCheck[_m]);
         //buffer[buttonCommandCheck[_i]].rawInputs[_i].hold = -2;
 
     }

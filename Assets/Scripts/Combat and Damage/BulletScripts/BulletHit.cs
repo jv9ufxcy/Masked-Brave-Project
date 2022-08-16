@@ -18,10 +18,10 @@ public class BulletHit : MonoBehaviour
     [SerializeField] private GameObject bulletHitEffect, bulletChild;
     [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
     public float lifeTime = 2f, speed, rotation,maxJumpHeight = 4f, timeToJumpApex=0.125f,maxJumpVelocity, gravity,velocityXSmoothing, targetRange=10f;
-    [SerializeField] private int attackState = 0;
-    [SerializeField] private LayerMask whatLayersToHit;
+    //[SerializeField] private int attackState = 0;
+    //[SerializeField] private LayerMask whatLayersToHit;
 
-    [SerializeField] private string bulletCollisionSound;
+    //[SerializeField] private string bulletCollisionSound;
     [SerializeField] private bool shouldScreenshakeOnHit = false, shouldStopOnHit = true, canReflect = true, parabolicArc = false;
     public int bulletChain = 0, newBulletSpeed = 0;
     public CharacterObject character;

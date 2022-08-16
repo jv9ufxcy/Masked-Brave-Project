@@ -242,7 +242,7 @@ public class Kinzecter : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         essenceAdded = false;
     }
-    [SerializeField] private string flightSound = "Fly";
+    //[SerializeField] private string flightSound = "Fly";
     private void TargetNextEnemy()
     {
         kState = ThrowingState.Thrown;

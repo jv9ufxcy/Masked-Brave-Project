@@ -856,7 +856,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             CommandStep nextStep = comState.commandSteps[comState.commandSteps[cancelStepList[finalS]].followUps[finalF]];
             InputCommand nextCommand = nextStep.command;
-            inputBuffer.UseInput(nextCommand.input);
+            inputBuffer.UseInput(nextCommand.input, nextCommand.motionCommand);
             if (nextStep.followUps.Count > 0) { currentCommandStep = nextStep.idIndex; }
             else { currentCommandStep = 0; }
             StartState(nextCommand.state);
