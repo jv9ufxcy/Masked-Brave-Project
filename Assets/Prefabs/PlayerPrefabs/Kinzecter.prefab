@@ -19265,7 +19265,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5628300968279044801}
   - component: {fileID: 5628300968279044803}
-  - component: {fileID: 3370682605297422044}
   - component: {fileID: 1818449918886540405}
   - component: {fileID: 4117978204118455134}
   - component: {fileID: 5628300968279044862}
@@ -19310,12 +19309,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrower: {fileID: 0}
-  kzSpeed: 20
+  kzSpeed: 60
   kzRecallSpeed: 40
   returnDistance: 2
   maxDistance: 20
   targetNextEnemyDistance: 15
   minLethalSpeed: 7
+  followSpeedDampen: 10
   maxStamina: 50
   currentStamina: 50
   staminaCost: 10
@@ -19324,69 +19324,13 @@ MonoBehaviour:
   hpPS: {fileID: 4747566093107809968}
   buffedZecterPS: {fileID: 9045359851771263061}
   energyPS: {fileID: 131751676203763660}
+  offset: {x: 2, y: 2, z: 1}
   kState: 2
   hpStock: 0
   eStock: 0
   ammoStock: 0
-  flightSound: Fly
   shakeAmp: 1
   shakeTime: 0.2
---- !u!114 &3370682605297422044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628300968279044858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletType: -1
-  direction: {x: 0, y: 0}
-  bulletVel: {x: 0, y: 0}
-  target: {fileID: 0}
-  closestEnemy: {fileID: 0}
-  targetPos: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  bulletHitEffect: {fileID: 0}
-  bulletChild: {fileID: 0}
-  tagToHit: Enemy
-  tagToCollide: Ground
-  lifeTime: 1000
-  speed: 0
-  rotation: 0
-  maxJumpHeight: 4
-  timeToJumpApex: 0.125
-  maxJumpVelocity: 0
-  gravity: -2
-  velocityXSmoothing: 0
-  targetRange: 10
-  attackState: 0
-  whatLayersToHit:
-    serializedVersion: 2
-    m_Bits: 8704
-  bulletCollisionSound: 
-  shouldScreenshakeOnHit: 0
-  shouldStopOnHit: 0
-  canReflect: 0
-  parabolicArc: 0
-  bulletChain: 0
-  newBulletSpeed: 0
-  character: {fileID: 0}
-  projectileIndex: 0
-  attackIndex: 0
-  shakeAmp: 1
-  shakeTime: 0.2
-  destroyTimer: 0.1
-  speedDampen: 0.01
-  boomerangStartTime: 30
-  angle: 0
-  boomerSpeed: 1.2566371
-  radius: 5
-  boomerangDist: {x: 0, y: 0, z: 0}
-  followVel: {x: 0, y: 0, z: 0}
 --- !u!61 &1818449918886540405
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19426,6 +19370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileIndex: 12
+  atkIndex: 0
   character: {fileID: 0}
   stateIndex: 0
 --- !u!212 &5628300968279044862
@@ -19510,7 +19455,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 8
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

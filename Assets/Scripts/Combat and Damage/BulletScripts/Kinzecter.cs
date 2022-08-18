@@ -14,22 +14,22 @@ public class Kinzecter : MonoBehaviour
     private Hitbox hitbox;
 
     [Header("Kinzecter Stats")]
-    [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance=25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f, followSpeedDampen=10f;
+    [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance = 25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f, followSpeedDampen = 10f;
     [SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
     [SerializeField] private ParticleSystem kinzecterParticles, hpPS, buffedZecterPS, energyPS;
     [SerializeField] private Vector3 offset = new Vector3(2, 2, 1);
     private AudioManager audioManager;
     private EnemySpawn enemy;
 
-[SerializeField] private ThrowingState kState;
-    private bool essenceAdded=false;
+    [SerializeField] private ThrowingState kState;
+    private bool essenceAdded = false;
     private float startScale, flightSpeed;
     [SerializeField] private int hpStock, eStock, ammoStock;
 
     private bool isTooSlow;
     Vector3 nextTargetDir;
 
-    private enum ThrowingState 
+    private enum ThrowingState
     {
         WithPlayer, Thrown, Recalling,
     }
@@ -76,7 +76,7 @@ public class Kinzecter : MonoBehaviour
 
     private void Update()
     {
-        
+
         flightSpeed = kzRB.velocity.magnitude;
 
         if (flightSpeed < minLethalSpeed)
@@ -93,7 +93,7 @@ public class Kinzecter : MonoBehaviour
                 //if (isTooSlow)
                 //    TryGrabKinzecter();
 
-                if (currentStamina<=0f|| (Vector3.Distance(transform.position, thrower.transform.position) >= maxDistance))
+                if (currentStamina <= 0f || (Vector3.Distance(transform.position, thrower.transform.position) >= maxDistance))
                 {
                     //TODO: count down in update
                     ReturnToPlayer();
@@ -150,27 +150,31 @@ public class Kinzecter : MonoBehaviour
             case ThrowingState.WithPlayer:
                 currentStamina = maxStamina;
                 kinzecterParticles.Stop();
-                //hpPS.Stop();
-                //ammoPS.Stop();
-                //energyPS.Stop();
-                //shouldFly = true;
+
                 kzColl.enabled = false;
-                //kzSprite.enabled = false;
-                offset.x = thrower.Direction*-2;
+
+                offset.x = thrower.Direction * -2;
                 transform.localScale = new Vector2(thrower.Direction, transform.localScale.y);
 
-                //transform.position = thrower.transform.position + offset;
-                kzRB.velocity= ((thrower.transform.position + offset) - transform.position) * followSpeedDampen;
+                kzRB.velocity = ((thrower.transform.position + offset) - transform.position) * followSpeedDampen;
+                RemoveSavedEnemy();
                 break;
             case ThrowingState.Thrown:
                 kinzecterParticles.Play();
 
-                if (isTooSlow)
+                if (isTooSlow||SavedEnemy())
                     kzColl.enabled = false;
                 else
                     kzColl.enabled = true;
 
                 kzSprite.enabled = true;
+                if (SavedEnemy())
+                {
+                    offset.x = SavedEnemy().Direction * -2;
+                    transform.localScale = new Vector2(SavedEnemy().Direction, transform.localScale.y);
+
+                    kzRB.velocity = ((SavedEnemy().transform.position + offset) - transform.position) * followSpeedDampen;
+                }
                 break;
             case ThrowingState.Recalling:
                 kinzecterParticles.Play();
@@ -181,19 +185,25 @@ public class Kinzecter : MonoBehaviour
                 break;
         }
     }
+
+    public void RemoveSavedEnemy()
+    {
+        _savedEnemy = null;
+    }
+
     private void CollectEssence()
     {
-        if (ammoStock>0)
+        if (ammoStock > 0)
         {
             //player.AddAmmo(ammoStock);
             ammoStock = 0;
         }
-        if (eStock>0)
+        if (eStock > 0)
         {
             //player.AddMeter(eStock);
             eStock = 0;
         }
-        if (hpStock>0)
+        if (hpStock > 0)
         {
             //player.AddRecovery(hpStock);
             hpStock = 0;
@@ -203,9 +213,13 @@ public class Kinzecter : MonoBehaviour
     {
         return kState == ThrowingState.WithPlayer;
     }
-    private void OnTriggerEnter2D(Collider2D enemyColl)
+
+    string tagToHit = "Enemy";
+    CharacterObject _savedEnemy;
+    int projectileIndex = 12, attackIndex;
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        enemy = enemyColl.gameObject.GetComponentInParent<EnemySpawn>();
+        enemy = other.gameObject.GetComponentInParent<EnemySpawn>();
         if (enemy != null)
         {
             if (flightSpeed > minLethalSpeed)
@@ -216,8 +230,33 @@ public class Kinzecter : MonoBehaviour
                 }
             }
         }
+        if (other.CompareTag(tagToHit) && other.gameObject != thrower.gameObject)
+        {
+            IHittable victim = other.transform.root.GetComponent<IHittable>();
+            if (victim != null && projectileIndex > 0)
+            {
+                //save enemy
+                if (other.transform.root.TryGetComponent(out CharacterObject characterObject))
+                {
+                    _savedEnemy = other.transform.root.GetComponent<CharacterObject>();
+                }
+                victim.Hit(thrower, projectileIndex, attackIndex);
+            }
+        }
     }
 
+    public CharacterObject SavedEnemy()
+    {
+        if (_savedEnemy != null && (_savedEnemy.controlType == CharacterObject.ControlType.AI || _savedEnemy.controlType == CharacterObject.ControlType.BOSS))
+        {
+            return _savedEnemy;
+        }
+        else
+        {
+            RemoveSavedEnemy();
+            return null;
+        }
+    }
     public void AttackClosestEnemy()
     {
         hitbox.RestoreGetHitBools();

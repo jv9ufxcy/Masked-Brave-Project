@@ -26,6 +26,8 @@ public class CharacterState
     public float dashCooldownReq;
     public bool groundedReq;
     public bool wallReq;
+    public bool uncrouchReq;
+    public bool activeTargetReq;
 
     public bool ConditionsMet(CharacterObject character)
     {
@@ -46,10 +48,24 @@ public class CharacterState
             if (character.dashCooldown > 0) { return false; }
             else { character.dashCooldown = dashCooldownReq; }
         }
-
+        if (uncrouchReq)
+        {
+            if (!character.CanUnCrouch()) { return false; }
+        }
         if (character.specialMeter < meterReq) { return false; }
         else { character.nextSpecialMeterUse = meterReq; }
-
+        if (activeTargetReq)
+        {
+            if (character.isKinzecterOut)
+            {
+                if (character.kinzecter.GetComponent<Kinzecter>().SavedEnemy()!=null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else { return false; }
+        }
         //if (!playerSkills.IsSkillUnlocked(stateName){ return false; }
 
         return true;

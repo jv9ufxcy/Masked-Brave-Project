@@ -489,7 +489,11 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         GameEngine.gameEngine.ChangeMovelist(index);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
-
+        PlayFlashParticle(henshinColors[GameEngine.gameEngine.globalMovelistIndex]);
+        if (GameEngine.gameEngine.globalMovelistIndex == 1)//bomb
+            SetCrouchFlag(true);
+        else
+            SetCrouchFlag(false);
         if (isKinzecterOut)
         {
             kinzecter.GetComponent<Kinzecter>().RemoveKinzecter();
@@ -526,18 +530,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 velocity += (playerDir * speed);
                 break;
             case ControlType.PLAYER:
-                EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, range);
-                if (nextClosestEnemy != null && Vector2.Distance(transform.position, nextClosestEnemy.transform.position) > 2f)
-                {
-                    Vector2 nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
-                    velocity = (nextTargetDir * speed);
-                    //transform.position = Vector2.MoveTowards(transform.position, nextClosestEnemy.transform.position, speed);
-                    //Debug.Log("enemy at " + nextClosestEnemy.transform.position);
-                }
-                else
-                {
-                    //Debug.Log("no one nearby");
-                }
+                
                 break;
             default:
                 break;
@@ -1050,7 +1043,12 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 1://TryRecall
                 TryKinzecterRecall();
                 break;
-            case 2:
+            case 2://WarpSlash
+                CharacterObject savedEnemy = kinzecter.GetComponent<Kinzecter>().SavedEnemy();
+                Vector3 offsetDir = new Vector3(offsetX * Direction, offsetY,0) ;
+                transform.DOMove(savedEnemy.transform.position+(offsetDir), 0.06f);
+                savedEnemy.Hit(this, currentState, 0);
+
                 break;
             case 3:
                 break;
@@ -1106,7 +1104,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         //kinzecter.transform.localScale = new Vector3(direction, 1, 1);
         int onWall = wallFlag ? -1 : 1;
         kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(Direction*onWall, 0, 0));
-        kinzecter.GetComponent<BulletHit>().character = characterObject;
+        //kinzecter.GetComponent<BulletHit>().character = characterObject;
         kinzecter.GetComponent<Hitbox>().character = characterObject;
         isKinzecterOut = true;
     }
@@ -1115,17 +1113,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         if (!isKinzecterOut)
         {
-            if (specialMeter >= 100)
-            {
-                SpawnKinzecter(1, 0);
-                kinzecter.GetComponent<Kinzecter>().KinzecterInstall();
-                UseMeter(100f);
-            }
-            else
-            {
-                SpawnKinzecter(1, 0);
-            }
-
+            SpawnKinzecter(1, 0);
         }
         else
         {

@@ -40,6 +40,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Jump
     index: 0
     length: 5
@@ -81,6 +83,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Dash
     index: 0
     length: 30
@@ -149,7 +153,9 @@ MonoBehaviour:
     dashCooldownReq: 10
     groundedReq: 0
     wallReq: 0
-  - stateName: Slash1
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/Slash1
     index: 0
     length: 25
     loop: 0
@@ -205,7 +211,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
-  - stateName: Slash2
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/Slash2
     index: 0
     length: 25
     loop: 0
@@ -261,7 +269,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
-  - stateName: Slash3
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/Slash3
     index: 0
     length: 25
     loop: 0
@@ -310,7 +320,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
-  - stateName: BraveStrike
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/BraveStrike
     index: 0
     length: 75
     loop: 0
@@ -403,6 +415,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: HitStun
     index: 0
     length: 10
@@ -421,7 +435,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: AirSlash1
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/AirSlash1
     index: 0
     length: 25
     loop: 0
@@ -470,7 +486,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: AirSlash2
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/AirSlash2
     index: 0
     length: 25
     loop: 0
@@ -533,7 +551,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: AirSlash3
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/AirSlash3
     index: 0
     length: 25
     loop: 0
@@ -582,7 +602,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: SpinSlash
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/SpinSlash
     index: 0
     length: 35
     loop: 0
@@ -721,7 +743,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: BraveFlourish
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/BraveFlourish
     index: 0
     length: 30
     loop: 0
@@ -771,8 +795,8 @@ MonoBehaviour:
       length: 10
       hitStun: 30
       hitStop: 5
-      damage: 2
-      meterGain: 1
+      damage: 1
+      meterGain: 5
       comboValue: 0
       poiseDamage: 2
       attackType: 0
@@ -788,7 +812,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: BraveLauncher
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/BraveLauncher
     index: 0
     length: 24
     loop: 0
@@ -844,7 +870,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
-  - stateName: BraveKick
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/BraveKick
     index: 0
     length: 25
     loop: 0
@@ -876,7 +904,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: BraveDash
+      - name: Player/Dash
         val: 0
     attacks:
     - start: 10
@@ -900,7 +928,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: ChargeSlash
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/ChargeSlash
     index: 0
     length: 30
     loop: 0
@@ -958,7 +988,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: BraveBurst
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/BraveBurst
     index: 0
     length: 25
     loop: 0
@@ -1030,6 +1062,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: DashJump
     index: 0
     length: 45
@@ -1071,6 +1105,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: WallJump
     index: 0
     length: 20
@@ -1119,7 +1155,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 1
-  - stateName: WallSlash
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/WallSlash
     index: 0
     length: 20
     loop: 0
@@ -1154,6 +1192,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 1
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/FireBullet
     index: 0
     length: 15
@@ -1218,6 +1258,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/FireBuster
     index: 0
     length: 15
@@ -1282,6 +1324,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/CritBuster
     index: 0
     length: 15
@@ -1355,6 +1399,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/Boost
     index: 0
     length: 20
@@ -1438,6 +1484,8 @@ MonoBehaviour:
     dashCooldownReq: 30
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/Magnum1
     index: 0
     length: 25
@@ -1452,7 +1500,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 30
       - name: 
         val: 1
       - name: 
@@ -1467,7 +1515,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 30
       - name: 
         val: 1
       - name: 
@@ -1482,7 +1530,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 30
       - name: 
         val: 1
       - name: 
@@ -1562,6 +1610,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/Magnum2
     index: 0
     length: 25
@@ -1693,6 +1743,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/Magnum3
     index: 0
     length: 25
@@ -1831,6 +1883,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/Magnum4
     index: 0
     length: 25
@@ -1955,6 +2009,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/Magnum5
     index: 0
     length: 30
@@ -2093,6 +2149,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Redline
     index: 0
     length: 70
@@ -2271,6 +2329,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/SlideKick
     index: 0
     length: 30
@@ -2354,6 +2414,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/GravityBomb
     index: 0
     length: 20
@@ -2433,6 +2495,8 @@ MonoBehaviour:
     dashCooldownReq: 10
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/TossBomb
     index: 0
     length: 25
@@ -2490,6 +2554,8 @@ MonoBehaviour:
     dashCooldownReq: 60
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/BlastBomb
     index: 0
     length: 35
@@ -2721,7 +2787,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: BraveRecall
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/BraveTarget
     index: 0
     length: 30
     loop: 0
@@ -2733,11 +2801,11 @@ MonoBehaviour:
       script: 12
       parameters:
       - name: 
-        val: 1
+        val: 2
       - name: 
         val: 0
       - name: 
-        val: 0
+        val: 0.5
     - start: 0
       end: 0
       active: 1
@@ -2745,15 +2813,29 @@ MonoBehaviour:
       parameters:
       - name: Cutscene/Sword Brandish
         val: 0
+    - start: 5
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 24
+      parameters:
+      - name: 
+        val: 30
     attacks:
     - start: 0
       length: 0
       hitStun: 20
-      hitStop: 3
-      damage: 3
-      meterGain: 2
-      comboValue: 0
-      poiseDamage: 1
+      hitStop: 20
+      damage: 4
+      meterGain: 10
+      comboValue: 6
+      poiseDamage: 20
       attackType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 15, y: 25, z: 0}
@@ -2767,7 +2849,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: BraveStinger
+    uncrouchReq: 0
+    activeTargetReq: 1
+  - stateName: Brave/BraveStinger
     index: 0
     length: 20
     loop: 0
@@ -2853,6 +2937,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Defeat
     index: 0
     length: 300
@@ -2887,6 +2973,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Henshin
     index: 0
     length: 120
@@ -2935,6 +3023,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Streak
     index: 0
     length: 30
@@ -3011,6 +3101,8 @@ MonoBehaviour:
     dashCooldownReq: 30
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: WheelSpin
     index: 0
     length: 50
@@ -3075,6 +3167,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: ShotgunFire
     index: 0
     length: 35
@@ -3117,6 +3211,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: MissileFire
     index: 0
     length: 40
@@ -3174,6 +3270,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/BikeA
     index: 0
     length: 60
@@ -3187,6 +3285,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/BikeB
     index: 0
     length: 60
@@ -3200,6 +3300,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/BikeC
     index: 0
     length: 60
@@ -3213,6 +3315,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/AirBikeA
     index: 0
     length: 60
@@ -3226,6 +3330,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/AirBikeB
     index: 0
     length: 60
@@ -3239,6 +3345,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Pursuer/WheelSaw
     index: 0
     length: 60
@@ -3450,6 +3558,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/BurstGrab
     index: 0
     length: 40
@@ -3506,6 +3616,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: WGRush
     index: 0
     length: 30
@@ -3548,6 +3660,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/BurstGrapple
     index: 0
     length: 90
@@ -3715,6 +3829,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: WGIzuna
     index: 0
     length: 70
@@ -3853,6 +3969,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Shuriken
     index: 0
     length: 30
@@ -3896,6 +4014,8 @@ MonoBehaviour:
     dashCooldownReq: 120
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/SmallJumpAttack
     index: 0
     length: 105
@@ -3973,6 +4093,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/JumpAttack
     index: 0
     length: 105
@@ -4029,6 +4151,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/TwinElecSlam
     index: 0
     length: 80
@@ -4136,6 +4260,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/ElecBall
     index: 0
     length: 60
@@ -4200,6 +4326,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/SlimeBall
     index: 0
     length: 60
@@ -4271,6 +4399,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/SlimeBullet
     index: 0
     length: 80
@@ -4330,6 +4460,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/JumpForward
     index: 0
     length: 30
@@ -4371,6 +4503,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 1
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/RushAttack
     index: 0
     length: 60
@@ -4413,6 +4547,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/Spike
     index: 0
     length: 60
@@ -4441,6 +4577,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/Skewer
     index: 0
     length: 90
@@ -4490,6 +4628,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/BruteFist
     index: 0
     length: 60
@@ -4546,6 +4686,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/Laser
     index: 0
     length: 60
@@ -4574,6 +4716,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/FloatTowards
     index: 0
     length: 30
@@ -4615,6 +4759,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Enemy/FloatAway
     index: 0
     length: 30
@@ -4656,6 +4802,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/StabArm
     index: 0
     length: 75
@@ -4742,6 +4890,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/ThrowSlime
     index: 0
     length: 40
@@ -4792,6 +4942,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/Frenzy
     index: 0
     length: 85
@@ -4856,6 +5008,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/GreatArrow
     index: 0
     length: 95
@@ -4940,6 +5094,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/GiantFist
     index: 0
     length: 95
@@ -5003,6 +5159,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/TriArrow
     index: 0
     length: 60
@@ -5089,6 +5247,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/SummonA
     index: 0
     length: 120
@@ -5165,6 +5325,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/DoubleGreatArrow
     index: 0
     length: 120
@@ -5276,6 +5438,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/SummonSpikes
     index: 0
     length: 280
@@ -5625,6 +5789,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/DoubleElecBall
     index: 0
     length: 70
@@ -5704,6 +5870,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/ThunderCrash
     index: 0
     length: 80
@@ -5781,6 +5949,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Khris/SpikeAttack
     index: 0
     length: 90
@@ -5809,6 +5979,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Roy/Strike
     index: 0
     length: 80
@@ -5873,6 +6045,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Roy/PunchCombo
     index: 0
     length: 115
@@ -5988,6 +6162,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Roy/ChargingStar
     index: 0
     length: 120
@@ -6037,6 +6213,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Roy/DragonPunch
     index: 0
     length: 105
@@ -6115,6 +6293,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Roy/Guard
     index: 0
     length: 20
@@ -6150,6 +6330,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/Guard
     index: 0
     length: 20
@@ -6170,6 +6352,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/VespSting
     index: 0
     length: 110
@@ -6247,6 +6431,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/VespBirth
     index: 0
     length: 0
@@ -6260,6 +6446,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/MotoRush
     index: 0
     length: 70
@@ -6363,6 +6551,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/HornetShooting
     index: 0
     length: 75
@@ -6442,6 +6632,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/RetreatShooting
     index: 0
     length: 160
@@ -6591,6 +6783,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/WaspCharge
     index: 0
     length: 90
@@ -6633,6 +6827,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/TrooperBlast
     index: 0
     length: 60
@@ -6683,6 +6879,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -6696,6 +6894,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -6709,6 +6909,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -6722,6 +6924,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -6735,6 +6939,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -6748,6 +6954,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -6761,6 +6969,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/BugHole
     index: 0
     length: 95
@@ -6849,6 +7059,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/NEWSTATE
     index: 0
     length: 0
@@ -6862,6 +7074,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/NEWSTATE
     index: 0
     length: 0
@@ -6875,6 +7089,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   - stateName: Bombardier/NEWSTATE
     index: 0
     length: 0
@@ -6888,7 +7104,86 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Bombardier/NEWSTATE
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/Sweep
+    index: 0
+    length: 25
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 5
+      end: 8
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 12
+    - start: 10
+      end: 10
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 4
+    attacks:
+    - start: 5
+      length: 10
+      hitStun: 20
+      hitStop: 5
+      damage: 3
+      meterGain: 5
+      comboValue: 3
+      poiseDamage: 5
+      attackType: 0
+      hitAnim: {x: 0, y: 1}
+      knockback: {x: 5, y: 20, z: 0}
+      hitBoxPos: {x: 1, y: 0, z: 0}
+      hitBoxScale: {x: 2, y: 1, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/KinzecterRecall
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 12
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Kinzecter Call
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/NEWSTATE
     index: 0
     length: 0
     loop: 0
@@ -6901,7 +7196,9 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Bombardier/NEWSTATE
+    uncrouchReq: 0
+    activeTargetReq: 0
+  - stateName: Brave/NEWSTATE
     index: 0
     length: 0
     loop: 0
@@ -6914,19 +7211,8 @@ MonoBehaviour:
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
-  - stateName: Bombardier/NEWSTATE
-    index: 0
-    length: 0
-    loop: 0
-    blendRate: 0.1
-    events: []
-    attacks: []
-    jumpReq: 0
-    dashReq: 0
-    meterReq: 0
-    dashCooldownReq: 0
-    groundedReq: 0
-    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
   characterScripts:
   - index: 0
     name: VelocityY
@@ -7128,7 +7414,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000040000000700000008000000090000000a000000
+        followUps: 010000000200000003000000040000000700000008000000090000000c000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -7176,7 +7462,7 @@ MonoBehaviour:
           input: 4
           state: 2
           inputs: 
-        followUps: 0b000000
+        followUps: 0b0000000a000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -7284,7 +7570,7 @@ MonoBehaviour:
         priority: 2
       - idIndex: 10
         command:
-          motionCommand: 5
+          motionCommand: 0
           input: 3
           state: 34
           inputs: 
@@ -7292,8 +7578,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 577
-          y: 304
+          x: 331
+          y: 313
           width: 175
           height: 50
         activated: 1
@@ -7314,8 +7600,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 1
-      omitList: 050000000b00000006000000
-      nextFollowups: 010000000200000003000000040000000700000008000000090000000a000000
+      - idIndex: 12
+        command:
+          motionCommand: 4
+          input: 1
+          state: 102
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 541
+          y: 242
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      omitList: 050000000b0000000a00000006000000
+      nextFollowups: 010000000200000003000000040000000700000008000000090000000c000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -7327,7 +7629,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000400000005000000060000000700000008000000090000000a0000000b000000
+        followUps: 010000000400000005000000060000000700000008000000090000000a0000000c000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -7387,7 +7689,7 @@ MonoBehaviour:
         priority: 1
       - idIndex: 4
         command:
-          motionCommand: 5
+          motionCommand: 3
           input: 1
           state: 11
           inputs: 
@@ -7499,22 +7801,6 @@ MonoBehaviour:
         priority: 0
       - idIndex: 11
         command:
-          motionCommand: 5
-          input: 3
-          state: 34
-          inputs: 
-        followUps: 
-        strict: 0
-        myRect:
-          serializedVersion: 2
-          x: 649
-          y: 219
-          width: 175
-          height: 50
-        activated: 1
-        priority: 0
-      - idIndex: 12
-        command:
           motionCommand: 0
           input: 3
           state: 34
@@ -7523,14 +7809,30 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 743
-          y: 136
+          x: 677
+          y: 213
           width: 175
           height: 50
-        activated: 0
+        activated: 1
         priority: 1
-      omitList: 0200000003000000
-      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000b000000
+      - idIndex: 12
+        command:
+          motionCommand: 0
+          input: 4
+          state: 0
+          inputs: 
+        followUps: 0b000000
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 668
+          y: 138
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      omitList: 02000000030000000b000000
+      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000c000000
   - name: Bombadier
     commandStates:
     - stateName: Grounded
@@ -8805,5 +9107,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 1
+  currentMovelistIndex: 0
   currentControllerIndex: 0
