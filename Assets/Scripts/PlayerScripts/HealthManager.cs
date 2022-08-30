@@ -624,7 +624,8 @@ public class HealthManager : MonoBehaviour
                 OnDeath.Invoke();
                 character.GlobalPrefab(5);
                 character.OnDeath();
-                GameEngine.SetHitPause(60);
+                GameEngine.SetHitPause(60f);
+                CinemachineShake.instance.ShakeCamera(3f, 2f);
                 audioManager.PlaySound(deathSound);
                 yield return new WaitForFixedUpdate();//get length of death animation        
                 scoreMult *= 100;
@@ -650,7 +651,8 @@ public class HealthManager : MonoBehaviour
                     character.OnDeath();
                     //character.StartStateFromScript(36);
                     yield return new WaitForFixedUpdate();//get length of death animation
-                    
+                    GameEngine.SetHitPause(60);
+                    CinemachineShake.instance.ShakeCamera(3f, 2f);
                     audioManager.PlaySound(deathSound);
                     Mission.instance.EndMission();
                     lastChance = true;
@@ -687,6 +689,9 @@ public class HealthManager : MonoBehaviour
     }
     private void LastChance()//transform to human
     {
+        GameEngine.SetHitPause(30f);
+        CinemachineShake.instance.ShakeCamera(0.5f, 1f);
+
         character.DOChangeMovelist(4);
         AddHealth(2);
         character.hitStun = 30f;

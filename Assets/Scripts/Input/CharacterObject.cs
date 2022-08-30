@@ -64,12 +64,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         defaultMat = spriteRend.material;
         hasLanded = true;
-        if (lineRend!=null)
-        {
-            lineRend.transform.SetParent(null);
-            lineRend.transform.position = Vector3.zero;
-            lineRend.enabled = false;
-        }
+        RendererCheck();
 
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -95,6 +90,20 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
             default:
                 break;
+        }
+    }
+
+    private void RendererCheck()
+    {
+        if (lineRend != null)
+        {
+            lineRend.transform.SetParent(null);
+            lineRend.transform.position = Vector3.zero;
+            lineRend.enabled = false;
+        }
+        if (trailRend != null)
+        {
+            trailRend.time = 0;
         }
     }
 
@@ -1046,9 +1055,19 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 2://WarpSlash
                 CharacterObject savedEnemy = kinzecter.GetComponent<Kinzecter>().SavedEnemy();
                 Vector3 offsetDir = new Vector3(offsetX * Direction, offsetY,0) ;
-                transform.DOMove(savedEnemy.transform.position+(offsetDir), 0.06f);
-                savedEnemy.Hit(this, currentState, 0);
-
+                if (savedEnemy)
+                {
+                    FaceTarget(savedEnemy.transform.position);
+                    if (trailRend != null)
+                    {
+                        TrailTime(.5f);
+                        DOVirtual.Float(0.5f, 0, 0.5f, TrailTime).SetDelay(1f);
+                    }
+                    transform.DOMove(savedEnemy.transform.position + (offsetDir), 0.0833f);//5 frames
+                    savedEnemy.Hit(this, currentState, 0);
+                    jumps=jumpMax;
+                }
+                TryKinzecterRecall();
                 break;
             case 3:
                 break;
@@ -1057,7 +1076,10 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
 
     }
-
+    void TrailTime(float x)
+    {
+        trailRend.time = x;
+    }
     private void TryKinzecterThrow(float offsetX, float offsetY)
     {
         int onWall = wallFlag ? -1 : 1;
@@ -1101,10 +1123,10 @@ public class CharacterObject : MonoBehaviour, IHittable
         var offset = new Vector3(offsetX * Direction, offsetY, 0);
         GameObject newbullet = Instantiate(bullets[5], transform.position + offset, Quaternion.identity);
         kinzecter = newbullet;
-        //kinzecter.transform.localScale = new Vector3(direction, 1, 1);
+
         int onWall = wallFlag ? -1 : 1;
         kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(Direction*onWall, 0, 0));
-        //kinzecter.GetComponent<BulletHit>().character = characterObject;
+
         kinzecter.GetComponent<Hitbox>().character = characterObject;
         isKinzecterOut = true;
     }
@@ -1573,6 +1595,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public static float grappleDampen = 20f;
     public LineRenderer lineRend;
+    public TrailRenderer trailRend;
     public void Grappled()
     {
         hitStun = 4;
@@ -1855,6 +1878,8 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public void OnDeath()
     {
+        hitStun = 0;
+        SetInvulCooldown(360f);
         StartStateFromScript(deathStateIndex);
         controlType = ControlType.DEAD;
         invulCooldown = 0f;

@@ -369,7 +369,7 @@ MonoBehaviour:
       script: 18
       parameters:
       - name: 
-        val: 2
+        val: 3
       - name: 
         val: 0.5
     - start: 0
@@ -801,7 +801,7 @@ MonoBehaviour:
       poiseDamage: 2
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 15, y: 0, z: 0}
+      knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
@@ -1016,7 +1016,7 @@ MonoBehaviour:
       script: 18
       parameters:
       - name: 
-        val: 2
+        val: 3
       - name: 
         val: 0.5
     - start: 0
@@ -2795,8 +2795,8 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 0
-      end: 0
+    - start: 1
+      end: 1
       active: 1
       script: 12
       parameters:
@@ -2827,6 +2827,29 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 30
+    - start: 5
+      end: 30
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: -100
+    - start: 0
+      end: 0
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0.5
     attacks:
     - start: 0
       length: 0
@@ -2835,7 +2858,7 @@ MonoBehaviour:
       damage: 4
       meterGain: 10
       comboValue: 6
-      poiseDamage: 20
+      poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
       knockback: {x: 15, y: 25, z: 0}
@@ -2845,7 +2868,7 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 15
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -3079,6 +3102,51 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 7
+    - start: 16
+      end: 16
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: 1
+      - name: 
+        val: 0.8
+      - name: 
+        val: 0
+    - start: 19
+      end: 19
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+    - start: 23
+      end: 23
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: 1
+      - name: 
+        val: 1.2
+      - name: 
+        val: 2
     attacks:
     - start: 5
       length: 20
@@ -3086,7 +3154,7 @@ MonoBehaviour:
       hitStop: 5
       damage: 2
       meterGain: 4
-      comboValue: 3
+      comboValue: 0
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
@@ -3095,9 +3163,54 @@ MonoBehaviour:
       hitBoxScale: {x: 3, y: 2, z: 1}
       cancelWindow: 0
       killMultiplier: 1
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 1
+      damage: 1
+      meterGain: 2
+      comboValue: 1
+      poiseDamage: 2
+      attackType: 0
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 1
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 1
+      damage: 1
+      meterGain: 2
+      comboValue: 2
+      poiseDamage: 2
+      attackType: 0
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 1
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 1
+      damage: 1
+      meterGain: 2
+      comboValue: 3
+      poiseDamage: 2
+      attackType: 0
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 5
+    meterReq: 10
     dashCooldownReq: 30
     groundedReq: 0
     wallReq: 0
@@ -3130,6 +3243,108 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 10
+      end: 10
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+    - start: 13
+      end: 13
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: -15
+    - start: 15
+      end: 15
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: -1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: -180
+    - start: 18
+      end: 18
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: -1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: -165
+    - start: 20
+      end: 20
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: 1
+      - name: 
+        val: 0.5
+      - name: 
+        val: 0
+      - name: 
+        val: -15
+    - start: 25
+      end: 25
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 30
+      - name: 
+        val: -1
+      - name: 
+        val: 0.5
+      - name: 
+        val: 0
+      - name: 
+        val: -165
     attacks:
     - start: 10
       length: 5
@@ -3151,7 +3366,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 3
-      meterGain: 4
+      meterGain: 3
       comboValue: 5
       poiseDamage: 1
       attackType: 0
@@ -3163,7 +3378,7 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 5
+    meterReq: 10
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -6956,13 +7171,107 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Weapon/NEWSTATE
+  - stateName: Khris/SpikeBall
     index: 0
-    length: 0
+    length: 200
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 50
+      end: 50
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 16
+    - start: 80
+      end: 120
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 20
+    - start: 130
+      end: 130
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 0
+    - start: 150
+      end: 180
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 20
+    - start: 185
+      end: 185
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 0
+    - start: 120
+      end: 120
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 16
+    - start: 120
+      end: 130
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    attacks:
+    - start: 20
+      length: 5
+      hitStun: 10
+      hitStop: 5
+      damage: 4
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: -1, z: 0}
+      hitBoxScale: {x: 4, y: 3, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 50
+      length: 60
+      hitStun: 20
+      hitStop: 5
+      damage: 3
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 15, y: 10, z: 0}
+      hitBoxPos: {x: 0, y: -1, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 130
+      length: 60
+      hitStun: 20
+      hitStop: 5
+      damage: 3
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 15, y: 10, z: 0}
+      hitBoxPos: {x: 0, y: -1, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -7132,7 +7441,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 3
-      meterGain: 5
+      meterGain: 500
       comboValue: 3
       poiseDamage: 5
       attackType: 0
@@ -7152,7 +7461,7 @@ MonoBehaviour:
     activeTargetReq: 0
   - stateName: Brave/KinzecterRecall
     index: 0
-    length: 0
+    length: 15
     loop: 0
     blendRate: 0.1
     events:
@@ -7183,12 +7492,26 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Brave/NEWSTATE
+  - stateName: Brave/AirHike
     index: 0
-    length: 0
+    length: 15
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 30
+      active: 1
+      script: 3
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 30
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -7414,7 +7737,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000040000000700000008000000090000000c000000
+        followUps: 010000000200000003000000040000000700000008000000090000000c0000000d000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -7616,8 +7939,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 1
+      - idIndex: 13
+        command:
+          motionCommand: 4
+          input: 3
+          state: 103
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 753
+          y: 255
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
       omitList: 050000000b0000000a00000006000000
-      nextFollowups: 010000000200000003000000040000000700000008000000090000000c000000
+      nextFollowups: 010000000200000003000000040000000700000008000000090000000c0000000d000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -7629,7 +7968,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000400000005000000060000000700000008000000090000000a0000000c000000
+        followUps: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -7782,7 +8121,7 @@ MonoBehaviour:
           width: 175
           height: 50
         activated: 1
-        priority: 0
+        priority: 1
       - idIndex: 10
         command:
           motionCommand: 0
@@ -7814,12 +8153,12 @@ MonoBehaviour:
           width: 175
           height: 50
         activated: 1
-        priority: 1
+        priority: 2
       - idIndex: 12
         command:
           motionCommand: 0
           input: 4
-          state: 0
+          state: 104
           inputs: 
         followUps: 0b000000
         strict: 0
@@ -7831,8 +8170,40 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 13
+        command:
+          motionCommand: 4
+          input: 3
+          state: 103
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 374
+          y: 354
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 14
+        command:
+          motionCommand: 0
+          input: 0
+          state: 104
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 50
+          y: 50
+          width: 175
+          height: 50
+        activated: 0
+        priority: 2
       omitList: 02000000030000000b000000
-      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000c000000
+      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d000000
   - name: Bombadier
     commandStates:
     - stateName: Grounded

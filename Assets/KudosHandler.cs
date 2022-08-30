@@ -53,7 +53,7 @@ public class KudosHandler : MonoBehaviour
             else
                 strikes[i].sprite = emptyStrike;
 
-            if (i<numOfStrikes&&strikes!=null)
+            if (i<numOfStrikes&&strikes[i]!=null)
             {
                 strikes[i].enabled=true;
             }

@@ -23,7 +23,7 @@ public class Kinzecter : MonoBehaviour
 
     [SerializeField] private ThrowingState kState;
     private bool essenceAdded = false;
-    private float startScale, flightSpeed;
+    private float startScale = 1, flightSpeed;
     [SerializeField] private int hpStock, eStock, ammoStock;
 
     private bool isTooSlow;
@@ -55,22 +55,32 @@ public class Kinzecter : MonoBehaviour
     }
     public void ThrowKinzecter(CharacterObject player, Vector3 throwDir)
     {
-        //thrower = player;
-        //hasBeenThrown = true;
+        //throws if no target
         this.transform.position = player.transform.position + throwDir * returnDistance;
         kzRB.isKinematic = false;
         kzRB.AddForce(throwDir * kzSpeed, ForceMode2D.Impulse);
-        //audioManager.PlaySound(flightSound);
         kState = ThrowingState.Thrown;
+        EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(thrower.transform.position, targetNextEnemyDistance);
+        if (nextClosestEnemy != null)
+        {
+            if (SavedEnemy()!=null)
+            {
+                nextTargetDir=(SavedEnemy().transform.position - transform.position).normalized;
+            }
+            else
+            {
+                nextTargetDir = (nextClosestEnemy.transform.position - transform.position).normalized;
+            }
+            TargetNextEnemy();
+        }
     }
     private void TryGrabKinzecter()
     {
         if (Vector3.Distance(transform.position, thrower.transform.position) <= returnDistance)
         {
             kState = ThrowingState.WithPlayer;
-            //velocity = Vector2.zero;
+
             kzRB.isKinematic = true;
-            //hasBeenThrown = false;
         }
     }
 
@@ -93,14 +103,10 @@ public class Kinzecter : MonoBehaviour
                 //if (isTooSlow)
                 //    TryGrabKinzecter();
 
-                if (currentStamina <= 0f || (Vector3.Distance(transform.position, thrower.transform.position) >= maxDistance))
+                if (Vector3.Distance(transform.position, thrower.transform.position) >= maxDistance)
                 {
                     //TODO: count down in update
                     ReturnToPlayer();
-                }
-                else
-                {
-                    SpendStamina(0.01f);
                 }
                 break;
             case ThrowingState.Recalling:
@@ -136,7 +142,8 @@ public class Kinzecter : MonoBehaviour
                 break;
             case ThrowingState.Recalling:
                 Vector3 dirToPlayer = (thrower.transform.position - transform.position).normalized;
-                kzRB.velocity = dirToPlayer * kzRecallSpeed;
+                //kzRB.velocity = dirToPlayer * kzRecallSpeed;
+                transform.position = Vector3.MoveTowards(transform.position, thrower.transform.position, kzRecallSpeed*Time.fixedDeltaTime);
 
 
                 break;
@@ -148,7 +155,7 @@ public class Kinzecter : MonoBehaviour
         switch (kState)
         {
             case ThrowingState.WithPlayer:
-                currentStamina = maxStamina;
+                //currentStamina = maxStamina;
                 kinzecterParticles.Stop();
 
                 kzColl.enabled = false;
@@ -259,6 +266,8 @@ public class Kinzecter : MonoBehaviour
     }
     public void AttackClosestEnemy()
     {
+        RemoveSavedEnemy();
+
         hitbox.RestoreGetHitBools();
         EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetNextEnemyDistance);
         if (nextClosestEnemy != null)
@@ -290,7 +299,7 @@ public class Kinzecter : MonoBehaviour
         kzRB.velocity = nextTargetDir * kzSpeed;
 
         //audioManager.PlaySound(flightSound);
-        SpendStamina(staminaCost);
+        //SpendStamina(staminaCost);
         SpriteDirectionChange();
     }
     public void ReturnToPlayer()

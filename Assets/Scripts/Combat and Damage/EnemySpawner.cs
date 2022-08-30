@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
         if (spawnerInstance == null)
         {
             spawnerInstance = this;
-            DontDestroyOnLoad(spawnerInstance);
+            //DontDestroyOnLoad(spawnerInstance);
         }
         else
         {
