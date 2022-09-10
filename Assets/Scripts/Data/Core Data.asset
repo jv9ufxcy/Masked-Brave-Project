@@ -162,16 +162,9 @@ MonoBehaviour:
     blendRate: 0.05
     events:
     - start: 0
-      end: 1
-      active: 1
-      script: 1
-      parameters:
-      - name: 
-        val: 0
-    - start: 1
       end: 25
       active: 1
-      script: 8
+      script: 3
       parameters:
       - name: 
         val: 1
@@ -5186,6 +5179,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 24
+      parameters:
+      - name: 
+        val: 80
     attacks:
     - start: 10
       length: 5
@@ -7441,7 +7441,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 3
-      meterGain: 500
+      meterGain: 5
       comboValue: 3
       poiseDamage: 5
       attackType: 0
