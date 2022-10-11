@@ -4024,6 +4024,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1400466971}
+        m_MethodName: ChangeActiveCamera
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
@@ -4041,6 +4052,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1354602881}
         m_MethodName: SetEnemyRoom
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1400466971}
+        m_MethodName: DefaultCam
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4526,10 +4548,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 74322559, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
     - target: {fileID: 960696238, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
       propertyPath: OnPlayerEnterTrigger.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 1206906480}
+    - target: {fileID: 1203985912, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 1581101496, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 1861599249, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
     - target: {fileID: 2113000455, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
       propertyPath: m_Follow
       value: 
@@ -4582,8 +4620,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5152100651986045413, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
+        type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27, type: 3}
+--- !u!114 &1400466971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2916370724505034287, guid: 3216a4ab32b95cb4a9fa0f1d856a1d27,
+    type: 3}
+  m_PrefabInstance: {fileID: 1400466965}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7c6b464da1c8b409802d3d29d87e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1404728383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5154,6 +5209,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1400466971}
+        m_MethodName: ChangeConfiner
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
@@ -5171,6 +5237,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1354602881}
         m_MethodName: SetEnemyRoom
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1400466971}
+        m_MethodName: DefaultCam
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

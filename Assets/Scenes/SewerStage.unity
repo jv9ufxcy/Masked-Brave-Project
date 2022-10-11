@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1424,8 +1424,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1400466966}
-        m_MethodName: ChangeConfiner
+      - m_Target: {fileID: 1400466968}
+        m_MethodName: ChangeActiveCamera
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5802,6 +5802,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 91403642, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 91403642, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 273671603, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 273671603, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 277596392, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 277596392, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 962510900, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 962510900, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 2139544072, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 616907624}
+    - target: {fileID: 2139544072, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 616907624}
     - target: {fileID: 1318757226192241926, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47,
         type: 3}
       propertyPath: m_Name
@@ -5874,9 +5914,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47, type: 3}
---- !u!114 &1400466966 stripped
+--- !u!114 &1400466968 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1262695484, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47,
+  m_CorrespondingSourceObject: {fileID: 6702225155066700494, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47,
     type: 3}
   m_PrefabInstance: {fileID: 1400466965}
   m_PrefabAsset: {fileID: 0}

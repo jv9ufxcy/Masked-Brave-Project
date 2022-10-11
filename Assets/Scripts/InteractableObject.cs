@@ -247,7 +247,7 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
                 SpawnPickup(pickup[1]);
             }
         }
-        audioManager.PlaySound("Death");
+        //audioManager.PlaySound("Enemy/Enemy Explode");
         yield return new WaitForFixedUpdate();//get length of death animation        
         DeSpawn();
     }

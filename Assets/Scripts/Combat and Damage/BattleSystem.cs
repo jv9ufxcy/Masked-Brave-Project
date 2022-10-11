@@ -16,7 +16,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private RectTransform enemyCounter;
     [SerializeField] private Vector2 restingLocation, startingLocation, midScreen;
     private Image enemyIcon;
-    [SerializeField] private string battleStartText="TATAKAE!", battleEndText="FINISH!", battleStartAudio = "SlimePsi", battleEndAudio = "Victory";
+    [SerializeField] private string battleStartText="TATAKAE!", battleEndText="FINISH!", battleStartAudio = "Enemy/Spawn", battleEndAudio = "Cutscene/Sword Brandish";
     [SerializeField] private int spawnIndex;
     public int activeWaveCount;
     private enum State { Idle, Active, Conclusion}

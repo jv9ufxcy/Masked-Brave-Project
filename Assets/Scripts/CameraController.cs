@@ -8,32 +8,52 @@ public class CameraController : MonoBehaviour {
     
     [SerializeField]
     Transform objectToFollow;
-
-    CinemachineVirtualCamera vCam;
+    [SerializeField] private int defaultCamIndex;
+    CinemachineVirtualCamera currentVCam;
     CinemachineConfiner confiner;
     [SerializeField] private Collider2D[] boundingBoxes;
-
+    public static CameraController instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     // Use this for initialization
     void Start ()
     {
-        vCam = GetComponent<CinemachineVirtualCamera>();
+        currentVCam = vCams[0];
         confiner = GetComponent<CinemachineConfiner>();
 	}
-    //private void Update()
-    //{
-    //    if (confiner.m_Damping > 0)
-    //    {
-    //        confiner.m_Damping = Mathf.MoveTowards(confiner.m_Damping, 0, dampenTimer*Time.deltaTime);
-    //    }
-    //}
+    public CinemachineVirtualCamera GetCurrentVCAM()
+    {
+        return currentVCam;
+    }
+    [SerializeField] private CinemachineVirtualCamera[] vCams;
+    public void DefaultCam()
+    {
+        ChangeActiveCamera(defaultCamIndex);
+    }
+    public void ChangeActiveCamera(int index)
+    {
+        for (int i = 0; i < vCams.Length; i++)
+        {
+            if (i == index)
+            {
+                vCams[i].Priority = 1;
+                currentVCam = vCams[i];
+            }
+            else
+                vCams[i].Priority = 0;
+        }
+    }
     float dampenTimer=1;
     public void ChangeConfiner(int index)
     {
-        DOVirtual.Float(dampenTimer, 0, .5f, ConfinerDamping);
-        //StartCoroutine(DampingTimer());
+        ChangeActiveCamera(index);
+        //DOVirtual.Float(dampenTimer, 0, .5f, ConfinerDamping);
+        ////StartCoroutine(DampingTimer());
 
-        confiner.InvalidatePathCache();
-        confiner.m_BoundingShape2D = boundingBoxes[index];
+        //confiner.InvalidatePathCache();
+        //confiner.m_BoundingShape2D = boundingBoxes[index];
     }
     void ConfinerDamping(float x)
     {

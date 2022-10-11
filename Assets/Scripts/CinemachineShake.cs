@@ -12,11 +12,15 @@ public class CinemachineShake : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        vCam = GetComponent<CinemachineVirtualCamera>();
+    }
+    void GetActiveCinemachineCamera()
+    {
+        vCam = CameraController.instance.GetCurrentVCAM();
         perlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
     public void ShakeCamera(float intensity, float time)
     {
+        GetActiveCinemachineCamera();
         perlin.m_AmplitudeGain = intensity;
         shakeTimer = time;
     }
