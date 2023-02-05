@@ -18,6 +18,7 @@
 		<relationship name="effects">
 			<destination>{13325e6c-7175-4c1b-97ef-c10973ceab3d}</destination>
 			<destination>{86ff3930-6178-44e4-952e-bb2ec8ff6bfe}</destination>
+			<destination>{20405e9c-7ee0-4db7-81df-f4dc1699e19e}</destination>
 			<destination>{bff9550a-ed57-421b-8f7d-d508a502b4e3}</destination>
 		</relationship>
 	</object>
@@ -25,42 +26,53 @@
 	<object class="MixerBusFader" id="{13325e6c-7175-4c1b-97ef-c10973ceab3d}" />
 	<object class="MultibandEqEffect" id="{86ff3930-6178-44e4-952e-bb2ec8ff6bfe}">
 		<property name="filterTypeA">
-			<value>9</value>
+			<value>6</value>
 		</property>
 		<property name="filterTypeB">
-			<value>5</value>
+			<value>9</value>
 		</property>
 		<property name="filterTypeC">
 			<value>8</value>
 		</property>
 		<property name="frequencyA">
-			<value>240.333511</value>
+			<value>52.9597054</value>
 		</property>
 		<property name="frequencyB">
-			<value>46.7688141</value>
+			<value>321.210083</value>
 		</property>
 		<property name="frequencyC">
-			<value>1046.37341</value>
+			<value>4370.81787</value>
 		</property>
 		<property name="qualityA">
-			<value>4.80000019</value>
+			<value>0.549824476</value>
 		</property>
 		<property name="qualityB">
-			<value>0.697135448</value>
+			<value>5.5999999</value>
 		</property>
 		<property name="gainA">
 			<value>-8</value>
 		</property>
 		<property name="gainB">
-			<value>9.19826698</value>
+			<value>-9.52329445</value>
 		</property>
 		<property name="gainC">
-			<value>2.5</value>
+			<value>5.55796242</value>
+		</property>
+	</object>
+	<object class="CompressorEffect" id="{20405e9c-7ee0-4db7-81df-f4dc1699e19e}">
+		<property name="threshold">
+			<value>-10</value>
+		</property>
+		<property name="attackTime">
+			<value>38</value>
+		</property>
+		<property name="releaseTime">
+			<value>36</value>
 		</property>
 	</object>
 	<object class="LimiterEffect" id="{bff9550a-ed57-421b-8f7d-d508a502b4e3}">
-		<property name="ceiling">
-			<value>-0.699999988</value>
+		<property name="release">
+			<value>8.19999981</value>
 		</property>
 	</object>
 </objects>
