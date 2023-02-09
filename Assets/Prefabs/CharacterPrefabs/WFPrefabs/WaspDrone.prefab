@@ -5311,7 +5311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
-  gravity: 0
+  gravity: -1.8
   aniMoveSpeed: 0
   _direction: 1
   myRB: {fileID: 0}
@@ -5342,8 +5342,8 @@ MonoBehaviour:
   hitActive: 0
   currentAttackIndex: 0
   satellitesCreated: []
-  maxJumpHeight: 0
-  minJumpHeight: 0
+  maxJumpHeight: 4
+  minJumpHeight: 0.125
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
@@ -5460,8 +5460,6 @@ MonoBehaviour:
   longAttackRange: 4
   shortAttackRange: 4
   attackCooldown: 30
-  horiCos: {x: 6, y: 12}
-  vertSign: {x: 6, y: 12}
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
@@ -5471,6 +5469,8 @@ MonoBehaviour:
   desperationRAStates: 
   enemyType: 3
   desperationTransitionState: 58
+  floatHeight: 2
+  floatTime: 0.25
   canDefend: 0
   defStateIndex: 0
   defStates: 

@@ -5254,7 +5254,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   gravity: -2
   aniMoveSpeed: 0
-  direction: 1
+  _direction: 1
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
@@ -5312,6 +5312,13 @@ MonoBehaviour:
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
+  chargeEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   gunChargeParticles: {fileID: 5515971396480089868}
   jumpChargeParticles: {fileID: 3083187141837657328}
   flashParticles: {fileID: 3283645635370570964}
@@ -5364,6 +5371,7 @@ MonoBehaviour:
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
   lineRend: {fileID: 0}
+  trailRend: {fileID: 0}
   grappleVictim: {fileID: 0}
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
@@ -5388,17 +5396,17 @@ MonoBehaviour:
   aggroHeight: 3
   longAttackRange: 3
   shortAttackRange: 3
-  attackCooldown: 30
+  attackCooldown: 15
   horiCos: {x: 0, y: 0}
   vertSign: {x: 0, y: 0}
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
   closeAttackState: 35000000
-  rangedAttackState: 
+  rangedAttackState: 3b000000
   desperationCAStates: 
   desperationRAStates: 
-  enemyType: 0
+  enemyType: 2
   desperationTransitionState: 0
   canDefend: 0
   defStateIndex: 0

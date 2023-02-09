@@ -4804,9 +4804,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
-  gravity: 0
+  gravity: -1.8
   aniMoveSpeed: 0
-  direction: 1
+  _direction: 1
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
@@ -4835,8 +4835,8 @@ MonoBehaviour:
   hitActive: 0
   currentAttackIndex: 0
   satellitesCreated: []
-  maxJumpHeight: 0
-  minJumpHeight: 0
+  maxJumpHeight: 4
+  minJumpHeight: 0.125
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
@@ -4864,6 +4864,13 @@ MonoBehaviour:
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
+  chargeEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   gunChargeParticles: {fileID: 3484078535717594377}
   jumpChargeParticles: {fileID: 7258344723646222817}
   flashParticles: {fileID: 7124457850091672005}
@@ -4917,6 +4924,7 @@ MonoBehaviour:
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
   lineRend: {fileID: 0}
+  trailRend: {fileID: 0}
   grappleVictim: {fileID: 0}
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
@@ -4942,8 +4950,6 @@ MonoBehaviour:
   longAttackRange: 6
   shortAttackRange: 0
   attackCooldown: 60
-  horiCos: {x: 0, y: 0}
-  vertSign: {x: 0, y: 0}
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
@@ -4951,8 +4957,10 @@ MonoBehaviour:
   rangedAttackState: 3a000000
   desperationCAStates: 
   desperationRAStates: 
-  enemyType: 1
+  enemyType: 3
   desperationTransitionState: 58
+  floatHeight: 2
+  floatTime: 0.25
   canDefend: 0
   defStateIndex: 0
   defStates: 

@@ -1420,7 +1420,19 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         //float targetVelocityX = leftStick.x * moveSpeed;
         //velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.fixedDeltaTime;
+        if (enemyType == 3 && currentState!=hitStunStateIndex)
+        {
+            Vector3 newPos = transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
+            if (hit)
+            {
+                newPos.y = (hit.point + Vector2.up * floatHeight).y;
+                //newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * floatHeight).y ,floatTime);
+                Debug.Log(hit.point.y);
+            }
+        }
+        else
+            velocity.y += gravity * Time.fixedDeltaTime;
     }
     void HandleWallSliding()
     {
@@ -1779,15 +1791,16 @@ public class CharacterObject : MonoBehaviour, IHittable
     public InteractableObject[] spawners;
     private Vector2 visualAggroRange;
     public float aggroDistance = 30f, aggroHeight = 8f, longAttackRange = 10f, shortAttackRange = 5f, attackCooldown = 180f;
-    [Tooltip("x = frequency, y = amplitude")]
-    public Vector2 horiCos, vertSign;
+    
     //public float amplitude = 1f, frequency = 1f;
     [SerializeField] private bool isAggroRange, isLongRange, isShortRange;
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
 
-    [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction, 3 = Circle")]
+    [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction, 3 = Float")]
     public int enemyType;
     public int desperationTransitionState;
+    [Header("enemyType 3 Only")]
+    public float floatHeight = 2, floatTime=0.25f;
 
     [Space]
     [Header("Blocking States")]
@@ -1840,13 +1853,11 @@ public class CharacterObject : MonoBehaviour, IHittable
                         StartStateFromScript(rangedAttackState[0]);
                         break;
                     case 3:
-                        //FrontVelocity(moveSpeed);
-                        FrontVelocity(Mathf.Cos(Time.time * horiCos.x) * horiCos.y);
-                        VelocityY(Mathf.Sin(Time.time * vertSign.x) * vertSign.y);
+                        //flying code
                         break;
                 }
             }
-
+            
             if (isAggroRange && dashCooldown <= 0 && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange))
             {
                 FaceTarget(target.transform.position);

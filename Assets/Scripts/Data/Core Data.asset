@@ -2349,7 +2349,7 @@ MonoBehaviour:
       active: 1
       script: 14
       parameters:
-      - name: Player/Bombardier Form/Slide Kick
+      - name: Player/Dash
         val: 0
     - start: 0
       end: 0
@@ -4240,7 +4240,7 @@ MonoBehaviour:
     activeTargetReq: 0
   - stateName: Enemy/SmallJumpAttack
     index: 0
-    length: 105
+    length: 75
     loop: 0
     blendRate: 0.1
     events:
@@ -4286,13 +4286,6 @@ MonoBehaviour:
       parameters:
       - name: Enemy/Khris/Khris Drill
         val: 0
-    - start: 40
-      end: 40
-      active: 1
-      script: 14
-      parameters:
-      - name: Enemy/Khris/Khris Drill
-        val: 0
     attacks:
     - start: 45
       length: 5
@@ -4317,7 +4310,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Enemy/JumpAttack
+  - stateName: Enemy/ChompAttack
     index: 0
     length: 105
     loop: 0
@@ -4343,13 +4336,6 @@ MonoBehaviour:
       script: 14
       parameters:
       - name: Props/Slime Bounce
-        val: 0
-    - start: 25
-      end: 25
-      active: 1
-      script: 14
-      parameters:
-      - name: Enemy/Khris/Khris Drill
         val: 0
     attacks:
     - start: 55
@@ -4578,13 +4564,6 @@ MonoBehaviour:
       parameters:
       - name: Enemy/Khris/Khris Arrow
         val: 0
-    - start: 50
-      end: 50
-      active: 1
-      script: 14
-      parameters:
-      - name: SlimePsi
-        val: 0
     - start: 0
       end: 60
       active: 1
@@ -4646,13 +4625,6 @@ MonoBehaviour:
         val: 0
       - name: 
         val: -30
-    - start: 0
-      end: 0
-      active: 1
-      script: 14
-      parameters:
-      - name: SlimePsi
-        val: 0
     - start: 20
       end: 20
       active: 1
@@ -4698,25 +4670,25 @@ MonoBehaviour:
       - name: 
         val: 0.8
     - start: 5
-      end: 29
+      end: 30.270618
       active: 1
       script: 1
       parameters:
       - name: 
-        val: 10
-    - start: 30
-      end: 30
-      active: 1
-      script: 1
-      parameters:
-      - name: 
-        val: 0
+        val: 8
     - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
       - name: Props/Slime Bounce
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
         val: 0
     attacks: []
     jumpReq: 0
