@@ -1420,16 +1420,21 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         //float targetVelocityX = leftStick.x * moveSpeed;
         //velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        if (enemyType == 3 && currentState!=hitStunStateIndex)
+        if (enemyType == 3)//flying enemy type
         {
-            Vector3 newPos = transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
-            if (hit)
+            if (currentState != hitStunStateIndex)
             {
-                newPos.y = (hit.point + Vector2.up * floatHeight).y;
-                //newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * floatHeight).y ,floatTime);
-                Debug.Log(hit.point.y);
+                Vector3 newPos = transform.position;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
+                if (hit)
+                {
+                    //newPos.y = (hit.point + Vector2.up * floatHeight).y;
+                    newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * floatHeight).y, floatTime);
+                }
+                transform.position = newPos;
             }
+            else
+                velocity.y += gravity * Time.fixedDeltaTime;
         }
         else
             velocity.y += gravity * Time.fixedDeltaTime;
