@@ -14485,7 +14485,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748216599477787475}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 25, y: -27.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -14588,7 +14588,7 @@ MonoBehaviour:
   shootAnim: 0
   shootAnimMax: 0
   bullets:
-  - {fileID: 1946779624007576, guid: 0b58cd32371f5324c991edc456837057, type: 3}
+  - {fileID: 1946779624007576, guid: 9c981afac7978224d96ca0a3845da30d, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -14647,10 +14647,10 @@ MonoBehaviour:
   hitStun: 0
   target: {fileID: 0}
   spawners: []
-  aggroDistance: 10
-  aggroHeight: 2
-  longAttackRange: 10
-  shortAttackRange: 0
+  aggroDistance: 18
+  aggroHeight: 8
+  longAttackRange: 18
+  shortAttackRange: 4
   attackCooldown: 60
   isAggroRange: 0
   isLongRange: 0
@@ -14678,19 +14678,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1d0110c1b7eb84fbbf9788fbcc853a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI: 0
+  UI: 2
   maxMeter: 100
   minMeter: 0
   maxHealth: 64
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 16
-  currentPoise: 16
-  HealthFill: {fileID: 1748216600034733654}
-  DamageFill: {fileID: 1748216599522727254}
-  BarImage: {fileID: 1748216600560376882}
-  showHealthTime: 8
+  maxPoise: 24
+  currentPoise: 24
+  HealthFill: {fileID: 0}
+  DamageFill: {fileID: 0}
+  BarImage: {fileID: 0}
+  showHealthTime: 999
   fadeOutTime: 0.5
   damageShowTime: 1
   damageShowSpeed: 1
@@ -14698,9 +14698,9 @@ MonoBehaviour:
   shouldSpawnHealth: 1
   isDesperation: 0
   enemyHPVis: 0
-  HealthColor: {r: 1, g: 0.98823535, b: 0.18039216, a: 1}
-  DamageColor: {r: 0.5411765, g: 0.043137256, b: 0.25490198, a: 1}
-  BackColor: {r: 0, g: 0, b: 0, a: 1}
+  HealthColor: {r: 0.9960785, g: 0.8470589, b: 0, a: 1}
+  DamageColor: {r: 0.70980394, g: 0.21176472, b: 0.44705886, a: 1}
+  BackColor: {r: 0.8980393, g: 0.38823533, b: 0.20392159, a: 1}
   numOfPickups: 0
   currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
     type: 3}
@@ -14716,7 +14716,7 @@ MonoBehaviour:
   effectsRend: {fileID: 1748216600334783755}
   healthDropRate: 1
   effectIndex: 0
-  lastChance: 1
+  lastChance: 0
   deathSound: Enemy/Enemy Explode
 --- !u!114 &1748216599477787487
 MonoBehaviour:
@@ -14771,7 +14771,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -29715,7 +29715,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748216601043270916}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1748216600334783764}
@@ -29809,7 +29809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1748216601176790967
 RectTransform:
   m_ObjectHideFlags: 0

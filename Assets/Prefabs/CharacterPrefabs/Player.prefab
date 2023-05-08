@@ -775,8 +775,6 @@ MonoBehaviour:
   longAttackRange: 1
   shortAttackRange: 0.5
   attackCooldown: 180
-  horiCos: {x: 0, y: 0}
-  vertSign: {x: 0, y: 0}
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
@@ -786,6 +784,8 @@ MonoBehaviour:
   desperationRAStates: 
   enemyType: 0
   desperationTransitionState: 0
+  floatHeight: 2
+  floatTime: 0.25
   canDefend: 0
   defStateIndex: 0
   defStates: 
@@ -1838,6 +1838,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Trail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002313955510705137, guid: 735e451830d8c7341a9dc141feb71d22,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002313955510705137, guid: 735e451830d8c7341a9dc141feb71d22,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 949614169
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 735e451830d8c7341a9dc141feb71d22, type: 3}
