@@ -194,8 +194,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 0.8, y: 0.8, z: 0}
-      hitBoxScale: {x: 3.8, y: 1.8, z: 1}
+      hitBoxPos: {x: 1, y: 0.5, z: 0}
+      hitBoxScale: {x: 5, y: 3.5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -226,8 +226,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
-    - start: 0
-      end: 0
+    - start: 5
+      end: 5
       active: 1
       script: 14
       parameters:
@@ -252,8 +252,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 0.8, y: 0.8, z: 0}
-      hitBoxScale: {x: 3.8, y: 3.8, z: 1}
+      hitBoxPos: {x: 1, y: 0.5, z: 0}
+      hitBoxScale: {x: 6, y: 3, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -284,15 +284,15 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
-    - start: 2
-      end: 2
+    - start: 5
+      end: 5
       active: 1
       script: 14
       parameters:
       - name: Player/Sword Swing
         val: 0
     attacks:
-    - start: 5
+    - start: 10
       length: 10
       hitStun: 30
       hitStop: 5
@@ -303,8 +303,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 15, y: 5, z: 0}
-      hitBoxPos: {x: 0.8, y: 0.8, z: 0}
-      hitBoxScale: {x: 3.8, y: 3.8, z: 1}
+      hitBoxPos: {x: 1, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 4, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -7747,12 +7747,19 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Brave/NEWSTATE
+  - stateName: Brave/Henshin
     index: 0
     length: 0
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -7762,12 +7769,19 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Brave/NEWSTATE
+  - stateName: Bombardier/Henshin
     index: 0
     length: 0
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 1
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -7777,12 +7791,19 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Brave/NEWSTATE
+  - stateName: Pursuer/Henshin
     index: 0
     length: 0
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 2
     attacks: []
     jumpReq: 0
     dashReq: 0

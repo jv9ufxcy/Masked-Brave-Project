@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileIndex: 58
+  atkIndex: 0
   character: {fileID: 0}
   stateIndex: 0
 --- !u!114 &114135425130313622
@@ -65,29 +66,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 2
+  direction: {x: 0, y: 0}
+  bulletVel: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
-  moveDirection: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
     type: 3}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
+  bulletChild: {fileID: 0}
   tagToHit: Player
   tagToCollide: Ground
   lifeTime: 2
   speed: 20
+  rotation: 0
+  maxJumpHeight: 4
+  timeToJumpApex: 0.125
+  maxJumpVelocity: 0
+  gravity: 0
+  velocityXSmoothing: 0
   targetRange: 10
-  blastBlight: 0
-  whatLayersToHit:
-    serializedVersion: 2
-    m_Bits: 9728
-  bulletCollisionSound: 
   shouldScreenshakeOnHit: 0
   shouldStopOnHit: 1
   canReflect: 1
+  parabolicArc: 0
+  bulletChain: 0
+  newBulletSpeed: 0
   character: {fileID: 0}
   projectileIndex: 58
+  attackIndex: 0
+  shakeAmp: 1
+  shakeTime: 0.2
+  destroyTimer: 0.1
+  isExplosion: 0
+  speedDampen: 0.01
+  boomerangStartTime: 30
+  angle: 0
+  boomerSpeed: 10
+  radius: 1
+  boomerangDist: {x: 0, y: 0, z: 0}
+  followVel: {x: 0, y: 0, z: 0}
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -102,6 +120,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -113,6 +132,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -200,7 +220,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 0.75}
+  m_Size: {x: 2, y: 0.5}
   m_EdgeRadius: 0
 --- !u!1 &61445353783769308
 GameObject:
@@ -1562,6 +1582,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 0
     mode: 0
     timeMode: 0
@@ -1679,7 +1700,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 0}
     flipU: 0
@@ -2490,8 +2511,61 @@ ParticleSystem:
     inWorldSpace: 0
     randomizePerFrame: 0
   ExternalForcesModule:
+    serializedVersion: 2
     enabled: 0
-    multiplier: 1
+    multiplierCurve:
+      serializedVersion: 2
+      minMaxState: 0
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     influenceFilter: 0
     influenceMask:
       serializedVersion: 2
@@ -4853,6 +4927,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4865,6 +4940,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
