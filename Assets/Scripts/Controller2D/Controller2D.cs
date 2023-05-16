@@ -202,7 +202,6 @@ public class Controller2D : RaycastController
 
 	void DescendSlope(ref Vector2 moveAmount)
 	{
-
 		RaycastHit2D maxSlopeHitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, Mathf.Abs(moveAmount.y) + skinWidth, collisionMask);
 		RaycastHit2D maxSlopeHitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, Mathf.Abs(moveAmount.y) + skinWidth, collisionMask);
 		if (maxSlopeHitLeft ^ maxSlopeHitRight)

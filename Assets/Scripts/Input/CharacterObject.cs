@@ -15,6 +15,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public float gravity = -0.01f;
     public float aniMoveSpeed;
     [SerializeField] private float _direction = 1;
+    [SerializeField] private Vector2 lastDir;
 
     [HideInInspector] public Rigidbody2D myRB;
     [HideInInspector] public BoxCollider2D boxCollider2D;
@@ -238,10 +239,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             if (leftStick.x > 0) { Direction = 1; transform.localScale = new Vector3(1f, 1f, 1f); }
             else if (leftStick.x < 0) { Direction = -1; transform.localScale = new Vector3(-1f, 1f, 1f); }
-            if (Mathf.Abs(airMod) == 2)
-            {
-                //ShowAfterImage();
-            }
+            lastDir = leftStick.normalized;
         }
         if (controlType==ControlType.AI || controlType == ControlType.BOSS)
         {
@@ -560,7 +558,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     private void Dash(float dashSpeed)
     {
         //velocity = Vector2.zero;
-        Vector2 dir = new Vector2(leftStick.x, leftStick.y);
+        Vector2 dir = new Vector2(lastDir.x, lastDir.y);
         if (dir == Vector2.zero)
         {
             dir.x = Direction;
@@ -1283,17 +1281,29 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
     }
     [SerializeField] private int dashInput = 4;
-    public Collider2D headColl;
+    public BoxCollider2D headColl;
     public bool crouchFlag;
 
     private void SetCrouchFlag(bool crouch)
     {
         crouchFlag = crouch;
         headColl.enabled = !crouchFlag;
+        if (headColl.enabled)
+            controller.CalculateRaySpacing(headColl);
+        else
+            controller.CalculateRaySpacing(controller.defaultColl);
     }
     public bool CanUnCrouch()
     {
-        return !Physics2D.OverlapCircle(transform.position + Vector3.up, 0.5f, whatCountsAsGround);
+        bool hitAbove = Physics2D.OverlapCircle(transform.position + Vector3.up, 0.51f, whatCountsAsGround);
+        bool hitBelow = Physics2D.OverlapCircle(transform.position + Vector3.down, 0.49f, whatCountsAsGround);
+        if (hitAbove&&hitBelow)
+        {
+            return false;
+        }
+        else return true;
+        //return !hitAbove || !hitBelow;
+        
     }
     private void UnCrouch()
     {
@@ -1895,6 +1905,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void OnDeath()
     {
         hitStun = 0;
+        StopChargeAttack();
         SetInvulCooldown(360f);
         StartStateFromScript(deathStateIndex);
         controlType = ControlType.DEAD;
@@ -1962,7 +1973,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, new Vector3(shortAttackRange * 2, aggroHeight * 2, 1));
 
-        //Gizmos.DrawWireSphere(this.transform.position, aggroDistance);
+        Gizmos.DrawWireSphere(transform.position+Vector3.down, .49f);
     }
 
 }

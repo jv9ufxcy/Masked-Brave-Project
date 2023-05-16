@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -127,6 +128,7 @@ public class HealthManager : MonoBehaviour
     public float maxHealth = 100, currentShieldHealth = 0, currentHealth, desperationHealth;
     public int maxPoise = 10, currentPoise = 10;
     public Image HealthFill, DamageFill, BarImage;
+    public TextMeshProUGUI meterPercent;
 
     public float showHealthTime = 1, fadeOutTime = .5f, damageShowTime = 1, damageShowSpeed = 1f;
     public bool IsDead = true, shouldSpawnHealth = true, isDesperation, enemyHPVis = false;
@@ -160,6 +162,7 @@ public class HealthManager : MonoBehaviour
             Debug.LogError("No Audio Manager in Scene");
         }
         character = GetComponent<CharacterObject>();
+        meterPercent = BarImage.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         //effectsRend = effectsAnim.gameObject.GetComponent<SpriteRenderer>();
         //respawner = GameObject.FindGameObjectWithTag("Respawner").GetComponent<PlayerRespawner>();
 
@@ -215,6 +218,8 @@ public class HealthManager : MonoBehaviour
     private void UpdateMeter()
     {
         HealthFill.fillAmount = currentMeter / maxMeter;
+        if (meterPercent!=null)
+            meterPercent.text=currentMeter.ToString()+"%";
     }
 
     private void UpdateGainMeter()

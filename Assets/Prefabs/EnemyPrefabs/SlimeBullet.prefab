@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 61725261980514422}
   m_Layer: 13
   m_Name: SlimeBullet
-  m_TagString: Shootable
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,11 +68,6 @@ MonoBehaviour:
   gravity: -2
   velocityXSmoothing: 0
   targetRange: 10
-  attackState: 0
-  whatLayersToHit:
-    serializedVersion: 2
-    m_Bits: 12032
-  bulletCollisionSound: 
   shouldScreenshakeOnHit: 0
   shouldStopOnHit: 1
   canReflect: 1

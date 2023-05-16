@@ -7,8 +7,11 @@ using UnityEngine.EventSystems;
 public class SkillListItem : MonoBehaviour, ISelectHandler
 {
     private SkillListMenu skillMenu;
-    [SerializeField] private string skillDescription, controlDesc;
+    [SerializeField] private string skillDescription, controlDesc,statDesc;
     [SerializeField] private string psControls, xboxControls, keyboardControls;
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
+    public int stateIndex;
+    private AttackEvent curAtk;
     private TextMeshProUGUI description;
     private AudioManager audioManager;
     private string uiCursorSound = "UI/Move Cursor";
@@ -31,6 +34,7 @@ public class SkillListItem : MonoBehaviour, ISelectHandler
             default:
                 break;
         }
+        SkillStats();
     }
     private void OnEnable()
     {
@@ -39,8 +43,21 @@ public class SkillListItem : MonoBehaviour, ISelectHandler
     public void OnSelect(BaseEventData eventData)
     {
         skillMenu = GetComponentInParent<SkillListMenu>();
-        skillMenu.UpdateDescriptionAreaText(skillDescription, controlDesc);
+        skillMenu.UpdateDescriptionAreaText(skillDescription+statDesc, controlDesc);
         if (audioManager!=null)
             audioManager.PlaySound(uiCursorSound);
+    }
+    private int damage, comboVal;
+    private void SkillStats()
+    {
+
+        if (stateIndex>0)
+            curAtk = GameEngine.coreData.characterStates[stateIndex].attacks[0];
+        if (curAtk != null)
+        {
+            damage = curAtk.damage;
+            comboVal = curAtk.comboValue;
+            statDesc = "\n DMG:  " + damage + "\n COMBO: " + comboVal;
+        }
     }
 }

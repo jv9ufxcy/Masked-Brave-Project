@@ -98,13 +98,6 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 16
-    - start: 0
-      end: 20
-      active: 1
-      script: 8
-      parameters:
-      - name: 
-        val: 1
     - start: 1
       end: 30
       active: 1
@@ -146,6 +139,13 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 7
+    - start: 0
+      end: 30
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -299,7 +299,7 @@ MonoBehaviour:
       damage: 4
       meterGain: 10
       comboValue: 3
-      poiseDamage: 3
+      poiseDamage: 2
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 15, y: 5, z: 0}
@@ -530,7 +530,7 @@ MonoBehaviour:
       damage: 3
       meterGain: 5
       comboValue: 2
-      poiseDamage: 2
+      poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 6, z: 0}
@@ -581,7 +581,7 @@ MonoBehaviour:
       damage: 6
       meterGain: 10
       comboValue: 3
-      poiseDamage: 3
+      poiseDamage: 2
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 15, y: -10, z: 0}
@@ -849,7 +849,7 @@ MonoBehaviour:
       damage: 4
       meterGain: 5
       comboValue: 4
-      poiseDamage: 3
+      poiseDamage: 2
       attackType: 0
       hitAnim: {x: 0, y: 1}
       knockback: {x: 0, y: 30, z: 0}
@@ -907,7 +907,7 @@ MonoBehaviour:
       damage: 4
       meterGain: 5
       comboValue: 5
-      poiseDamage: 3
+      poiseDamage: 2
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 25, y: 25, z: 0}
@@ -1407,13 +1407,6 @@ MonoBehaviour:
       parameters:
       - name: Speed
         val: 16
-    - start: 0
-      end: 20
-      active: 1
-      script: 8
-      parameters:
-      - name: 
-        val: 1
     - start: 0
       end: 0
       active: 1

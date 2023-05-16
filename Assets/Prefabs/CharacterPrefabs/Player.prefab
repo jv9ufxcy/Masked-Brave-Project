@@ -605,6 +605,7 @@ MonoBehaviour:
   gravity: -1.8
   aniMoveSpeed: 0
   _direction: 1
+  lastDir: {x: 0, y: 0}
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
@@ -814,6 +815,7 @@ MonoBehaviour:
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
+  meterPercent: {fileID: 0}
   showHealthTime: 99
   fadeOutTime: 0.5
   damageShowTime: 1
@@ -871,7 +873,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2833465963085331510}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
