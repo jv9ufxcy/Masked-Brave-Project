@@ -43,6 +43,10 @@ public class BombController : MonoBehaviour
     public void StartState()
     {
         active = true;
+        if (audioManager==null)
+        {
+            audioManager=AudioManager.instance;
+        }
         audioManager.PlaySound(contactSound);
     }
     public void EndState()
@@ -56,7 +60,7 @@ public class BombController : MonoBehaviour
         audioManager.PlaySound(explosionSound);
     }
     [Header("CurrentState")]
-    bool active;
+    bool active = false;
     public int currentState;
     public float currentStateTime;
 

@@ -1601,8 +1601,16 @@ public class CharacterObject : MonoBehaviour, IHittable
     public Vector2 curHitAnim;
     public Vector2 targetHitAnim;
     private int curComboValue;
+    public int GetComboValue()
+    {
+        return curComboValue;
+    }
+    public bool GetIsInvulnerable()
+    {
+        return isInvulnerable;
+    }
 
-    public bool CanBeHit(AttackEvent curAtk)
+    public bool CanBeHit(AttackEvent curAtk, bool isInvulnerable)
     {
         if (controlType == ControlType.DEAD||DialogueManager.instance.isDialogueActive)
             return false;
@@ -1672,7 +1680,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
             else
             {
-                if (CanBeHit(curAtk))
+                if (CanBeHit(curAtk, GetIsInvulnerable()))
                 {
                     Vector3 nextKnockback = curAtk.knockback;
                     Vector3 knockOrientation = transform.position - attacker.transform.position;
@@ -1976,4 +1984,8 @@ public class CharacterObject : MonoBehaviour, IHittable
         Gizmos.DrawWireSphere(transform.position+Vector3.down, .49f);
     }
 
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }

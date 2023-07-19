@@ -426,4 +426,9 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
             velocity.y += gravity * Time.fixedDeltaTime;
         }
     }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }

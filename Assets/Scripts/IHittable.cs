@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IHittable
 {
     void Hit(CharacterObject attacker, int projectileIndex, int atkIndex);
+    GameObject GetGameObject();
 }
 public interface ISpawnable
 {

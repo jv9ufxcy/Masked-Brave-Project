@@ -43,6 +43,7 @@ public class BulletHit : MonoBehaviour
     }
     void Start()
     {
+        audioManager = AudioManager.instance;
         if (bulletType!=0)
         {
             target = GameEngine.gameEngine.mainCharacter;
@@ -152,15 +153,39 @@ public class BulletHit : MonoBehaviour
     {
         if (other.CompareTag(tagToHit)&&other.gameObject!=character.gameObject)
         {
-            IHittable victim = other.transform.root.GetComponent<IHittable>();
-            if (victim != null&&projectileIndex>0)
-                victim.Hit(character, projectileIndex, attackIndex);
+            CharacterObject victimCO;
+            IHittable victim;
+            victim = other.GetComponent<IHittable>();
+            if (victim == null)
+                victim = other.transform.root.GetComponent<IHittable>();
 
-            if (shouldScreenshakeOnHit)
-                Screenshake(shakeAmp,shakeTime);
-            if (shouldStopOnHit)
+            GameObject victimGO = victim.GetGameObject();
+            victimCO = victimGO.GetComponent<CharacterObject>();
+            if (victimCO != null)
             {
-                OnDestroyGO();
+                if (victimCO.IsDefendingInState())//if enemy blocking
+                {
+                    ReflectBullet();
+                }
+                else
+                {
+                    if (victimCO.GetIsInvulnerable())//if invul
+                    {
+                        if (victimCO.GetComboValue() >= GameEngine.coreData.characterStates[projectileIndex].attacks[attackIndex].comboValue)//check invul level
+                        {
+                            ReflectBullet();
+                        }                        
+                    }
+                    else
+                    {
+                        HitEffects();
+                    }
+                }
+            }
+            if (victimGO != null)
+            {
+                victim.Hit(character, projectileIndex, attackIndex);
+                if (victimCO==null) HitEffects();
             }
         }
         if (other.gameObject.CompareTag(tagToCollide))
@@ -170,7 +195,7 @@ public class BulletHit : MonoBehaviour
                 OnDestroyGO();
             }
         }
-        if (bulletType == 5)
+        if (bulletType == 5)//if boomer
         {
             if (boomerangStartTime <=0 && other.CompareTag(tagToCollide))
             {
@@ -178,6 +203,23 @@ public class BulletHit : MonoBehaviour
             }
         }
     }
+
+    private bool CheckInvul(CharacterObject victimCO)
+    {
+        return victimCO.GetIsInvulnerable() && 
+            victimCO.GetComboValue() >= GameEngine.coreData.characterStates[projectileIndex].attacks[attackIndex].comboValue;            
+    }
+
+    private void HitEffects()
+    {
+        if (shouldScreenshakeOnHit)
+            Screenshake(shakeAmp, shakeTime);
+        if (shouldStopOnHit)
+        {
+            OnDestroyGO();
+        }
+    }
+
     private bool isDestroyed = false;
     [SerializeField] private float destroyTimer = .1f;
     public bool isExplosion = false;
@@ -244,6 +286,17 @@ public class BulletHit : MonoBehaviour
     private void SetVelocity(Vector3 vel)
     {
         transform.Translate(vel);
+    }
+    [SerializeField] private string deflectSound = "Enemy/Roy/Block";
+    private void ReflectBullet()
+    {
+        //Debug.Log("bulletReflected");
+        transform.rotation = Quaternion.Euler(0, 0, rotation+135);
+        //velocity *= -1;
+        //velocity += Vector3.up;
+        //bulletVel*= -1;
+        audioManager.PlaySound(deflectSound);
+        //play sound effect
     }
     public void ReverseForce()
     {
