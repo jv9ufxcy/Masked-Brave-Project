@@ -115,13 +115,14 @@ public class Mission : MonoBehaviour
         ScoreMultiplier = 1;
         //Debug.Log("Initialize");
     }
+    [SerializeField] private int henshinState = 37;
     private IEnumerator MissionStart()
     {
         missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
         missionStartText.text = missionStart;
         mainChar.controlType = CharacterObject.ControlType.OBJECT;
         yield return new WaitForSeconds(missionStartSeconds / 2);
-        mainChar.StartStateFromScript(37);
+        mainChar.StartStateFromScript(henshinState);
 
         yield return new WaitForSeconds(missionStartSeconds / 2);
         missionStartText.DOColor(Color.white, missionStartSeconds / 4);

@@ -8,7 +8,7 @@ public class HealthVisualManager : MonoBehaviour
 {
     public static HealthSystem healthSystemStatic;
 
-    public int maxHealth=40;
+    public int maxHealth = 18;
     public float heartOffset = 4f, heartAnchor = -60f;
     [SerializeField] private Vector2 sizeDelta = new Vector2(64,64);
     [SerializeField] private Sprite healthSprite0;
@@ -24,9 +24,15 @@ public class HealthVisualManager : MonoBehaviour
     }
     private void Start()
     {
-        HealthSystem healthSys = new HealthSystem(maxHealth/2);//num of hearts
+        SetMaxHealth(0);
+    }
+
+    public void SetMaxHealth(int newMaxHealth)
+    {
+        HealthSystem healthSys = new HealthSystem((maxHealth + newMaxHealth) / 2);//num of hearts
         SetHealthSystem(healthSys);
     }
+
     public void SetHealthSystem(HealthSystem healthSystem)
     {
         this.healthSystem = healthSystem;
@@ -43,6 +49,7 @@ public class HealthVisualManager : MonoBehaviour
         healthSystem.OnDamaged += HealthSystem_OnDamaged;
         healthSystem.OnHealed += HealthSystem_OnHealed;
         healthSystem.OnDead += HealthSystem_OnDead;
+        healthSystem.OnUpgrade += HealthSystem_OnUpgrade;
     }
     private void HealthSystem_OnDamaged(object sender, System.EventArgs e)
     {
@@ -54,6 +61,9 @@ public class HealthVisualManager : MonoBehaviour
         RefereshAllHearts();
     }
     private void HealthSystem_OnDead(object sender, System.EventArgs e)
+    {
+        RefereshAllHearts();
+    }private void HealthSystem_OnUpgrade(object sender, System.EventArgs e)
     {
         RefereshAllHearts();
     }

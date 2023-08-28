@@ -24407,6 +24407,7 @@ MonoBehaviour:
   gravity: -1.8
   aniMoveSpeed: 0
   _direction: 1
+  lastDir: {x: 0, y: 0}
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
@@ -24481,8 +24482,6 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 7343953619865073519}
   landingParticle: {fileID: 1367701522295119782}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
   shootAnim: 0
   shootAnimMax: 0
   bullets:
@@ -24591,6 +24590,7 @@ MonoBehaviour:
   HealthFill: {fileID: 3717915349170568901}
   DamageFill: {fileID: 7270305921206227494}
   BarImage: {fileID: 4001168514364923852}
+  meterPercent: {fileID: 0}
   showHealthTime: 8
   fadeOutTime: 0.5
   damageShowTime: 1
@@ -24619,6 +24619,8 @@ MonoBehaviour:
   effectIndex: 0
   lastChance: 0
   deathSound: Enemy/Enemy Explode
+  deathEffect: {fileID: 7459617967329291029, guid: bf5c767ee2e2a3a4490183b06da31d7a,
+    type: 3}
 --- !u!114 &214390542630930461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24705,6 +24707,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  defaultColl: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}
 --- !u!1 &6141977390562226028

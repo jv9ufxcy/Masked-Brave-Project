@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class HealthSystem
 {
     public const int MAX_FRAGMENTS = 2;
-    public event EventHandler OnDamaged, OnHealed, OnDead;
+    public event EventHandler OnDamaged, OnHealed, OnDead, OnUpgrade;
     private List<Heart> heartList;
     public HealthSystem(int healthAmount)
     {
@@ -75,6 +75,19 @@ public class HealthSystem
         if (OnHealed != null)
         {
             OnHealed(this, EventArgs.Empty);
+        }
+    }
+    public void Upgrade(int upgradeAmt)
+    {
+        for (int i = 0; i < upgradeAmt; i++)
+        {
+            Heart heart = new Heart(2);
+            heartList.Add(heart);
+        }
+        Heal(upgradeAmt);
+        if (OnUpgrade != null)
+        {
+            OnUpgrade(this, EventArgs.Empty);
         }
     }
     public bool IsDead()
@@ -407,6 +420,10 @@ public class HealthManager : MonoBehaviour
             }
         }
     }
+    public void HealthUpgrade(int amount)
+    {
+        HealthVisualManager.healthSystemStatic.Upgrade(amount);
+    }
     public void AddHealth(int amount)
     {
         
@@ -463,7 +480,7 @@ public class HealthManager : MonoBehaviour
 
                     if (Dead())
                     {
-                        FinisherDeath();
+                        FinisherDeath(shouldSpawnHealth);
                     } 
                 }
                 
@@ -576,16 +593,17 @@ public class HealthManager : MonoBehaviour
         healthIsVisible = true;
     }
 
-    public void FinisherDeath()
+    public void FinisherDeath(bool shouldDropHealth)
     {
         if (!deathCoroutineStarted)
-            StartCoroutine(DeathEvent(shouldSpawnHealth));
+            StartCoroutine(DeathEvent(shouldDropHealth));
         //GameEngine.gameEngine.Screenshake();
     }
     public int healthDropRate = 2, effectIndex;
     public bool lastChance = true;
     public event EventHandler OnLastChance;
     public string deathSound = "Enemy/Enemy Explode";
+    [SerializeField] private GameObject deathEffect;
     /// <summary>
     /// waits until the death animation is done and then destroys the character
     /// </summary>
@@ -612,7 +630,14 @@ public class HealthManager : MonoBehaviour
                 DeathStates();
 
                 OnDeath.Invoke();
-                character.GlobalPrefab(5);
+                if (deathEffect!=null)
+                {
+                    GameObject deathFX = Instantiate(deathEffect, transform.position, Quaternion.identity);
+                    deathFX.transform.SetParent(null);
+                }
+                else
+                    character.GlobalPrefab(5);
+
                 character.OnDeath();
                 audioManager.PlaySound(deathSound);
                 yield return new WaitForFixedUpdate();//get length of death animation        
@@ -627,7 +652,13 @@ public class HealthManager : MonoBehaviour
                 DeathStates();
 
                 OnDeath.Invoke();
-                character.GlobalPrefab(5);
+                if (deathEffect != null)
+                {
+                    GameObject deathFX = Instantiate(deathEffect, transform.position, Quaternion.identity);
+                    deathFX.transform.SetParent(null);
+                }
+                else
+                    character.GlobalPrefab(5);
                 character.OnDeath();
                 GameEngine.SetHitPause(60f);
                 CinemachineShake.instance.ShakeCamera(3f, 2f);

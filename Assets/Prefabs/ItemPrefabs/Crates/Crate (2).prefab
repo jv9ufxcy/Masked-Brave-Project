@@ -235,12 +235,19 @@ MonoBehaviour:
   hitSound: Props/Box Break
   destroyEffect: {fileID: 7459617967329291029, guid: 5862d435ae13e994e9864eb395c5ea93,
     type: 3}
+  droppedItem: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
+    type: 3}
+  currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
+    type: 3}
   playerLayer:
     serializedVersion: 2
     m_Bits: 2048
   collisionHeight: 0.1
   projectileIndex: 61
-  character: {fileID: 0}
+  isExplosion: 0
+  lifeTime: 0.1
+  dropRate: 1
+  numOfPickups: 3
 --- !u!1 &5723599562991898971
 GameObject:
   m_ObjectHideFlags: 0

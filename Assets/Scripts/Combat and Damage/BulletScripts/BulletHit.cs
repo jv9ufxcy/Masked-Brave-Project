@@ -295,7 +295,10 @@ public class BulletHit : MonoBehaviour
         //velocity *= -1;
         //velocity += Vector3.up;
         //bulletVel*= -1;
-        audioManager.PlaySound(deflectSound);
+        if (audioManager!=null)
+        {
+            audioManager.PlaySound(deflectSound);
+        }
         //play sound effect
     }
     public void ReverseForce()

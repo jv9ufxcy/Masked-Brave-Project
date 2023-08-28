@@ -87,7 +87,7 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         else
         {
             nextKnockback.x = movementSpeed * knockOrientation.x;
-            Debug.Log(nextKnockback.x);
+            //Debug.Log(nextKnockback.x);
         }
         SetVelocity(nextKnockback);
         targetHitAnim.x = curAtk.hitAnim.x;

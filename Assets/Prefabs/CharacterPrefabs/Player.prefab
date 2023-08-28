@@ -699,8 +699,6 @@ MonoBehaviour:
   - {fileID: 7260824534339020851}
   bombDashParticle: {fileID: 5161662143498770481}
   landingParticle: {fileID: 3335091273977227493}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
   shootAnim: 0
   shootAnimMax: 1
   bullets:
@@ -714,6 +712,7 @@ MonoBehaviour:
   - {fileID: 3152041610049941263, guid: d22fe345e7809fb4c8c6a1b20ab6f7df, type: 3}
   - {fileID: 1946779624007576, guid: 23d9efd7eb747444c9b6aadb650dbbd0, type: 3}
   - {fileID: 3152041610049941263, guid: 19a81000b4fa8374f94804fee3d0ff15, type: 3}
+  - {fileID: 1946779624007576, guid: 8cabce124c9781f46b6e1ff6d09f3e19, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -853,6 +852,7 @@ MonoBehaviour:
   effectIndex: 0
   lastChance: 0
   deathSound: Player/Death
+  deathEffect: {fileID: 0}
 --- !u!114 &83875697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,6 +932,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  defaultColl: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}
 --- !u!61 &7483764649046599055

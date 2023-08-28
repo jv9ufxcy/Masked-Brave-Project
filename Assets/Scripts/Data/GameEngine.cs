@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using DG.Tweening;
 
 
-public class GameEngine : MonoBehaviour
+public class GameEngine : MonoBehaviour,IDataPersistence
 {
 
     public CoreData coreDataObject;
@@ -18,7 +18,7 @@ public class GameEngine : MonoBehaviour
 
     public float deadZone = 0.2f;
 
-    
+    public List<string> unlockedSkillsList;
 
     public CharacterObject mainCharacter;
 
@@ -75,6 +75,10 @@ public class GameEngine : MonoBehaviour
             hitStop--;
         }
 	}
+    public bool IsSkillUnlocked(string stateName)
+    {
+        return unlockedSkillsList.Contains(stateName);
+    }
     public void EndLevel()
     {
         Mission.instance.EndMission();
@@ -108,6 +112,15 @@ public class GameEngine : MonoBehaviour
         //}
     }
 
+    public void LoadData(GameData data)
+    {
+        this.unlockedSkillsList = data.unlockedSkillsData;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.unlockedSkillsData = this.unlockedSkillsList;
+    }
 
     public InputBuffer playerInputBuffer;
     //void OnGUI()

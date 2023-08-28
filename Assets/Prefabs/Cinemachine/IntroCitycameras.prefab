@@ -395,6 +395,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &885329257
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +504,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1080234009
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +962,7 @@ MonoBehaviour:
   m_ScreenY: 0.5
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0.25
+  m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 1
@@ -1445,7 +1451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045776904309000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 77, y: -14, z: 0}
+  m_LocalPosition: {x: 77, y: -14.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4732078921268522}
@@ -1472,19 +1478,19 @@ CompositeCollider2D:
   - m_Collider: {fileID: 61563552838010150}
     m_ColliderPaths:
     - - X: 109999707
-        Y: -80000000
+        Y: -75000000
       - X: 109999707
-        Y: 40000000
+        Y: 35000000
       - X: -110000000
-        Y: 39999707
+        Y: 34999707
       - X: -109999707
-        Y: -80000000
+        Y: -75000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 10.999942, y: -8}
-      - {x: 10.999942, y: 4}
-      - {x: -11, y: 3.9999416}
-      - {x: -10.999942, y: -8}
+    - - {x: 10.999942, y: -7.5}
+      - {x: 10.999942, y: 3.5}
+      - {x: -11, y: 3.4999416}
+      - {x: -10.999942, y: -7.5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!61 &61563552838010150
@@ -1511,7 +1517,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 22, y: 12}
+  m_Size: {x: 22, y: 11}
   m_EdgeRadius: 0
 --- !u!50 &50516357123348786
 Rigidbody2D:
@@ -1691,6 +1697,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1494666148867500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,6 +1806,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1684251288491916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,7 +1873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778115836508380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 179, y: -16, z: 0}
+  m_LocalPosition: {x: 179, y: -15.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4732078921268522}
@@ -1888,19 +1900,19 @@ CompositeCollider2D:
   - m_Collider: {fileID: 61726815671358032}
     m_ColliderPaths:
     - - X: 99999707
-        Y: -80000000
+        Y: -75000000
       - X: 99999707
-        Y: 40000000
+        Y: 35000000
       - X: -100000000
-        Y: 39999707
+        Y: 34999707
       - X: -99999707
-        Y: -80000000
+        Y: -75000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 9.999942, y: -8}
-      - {x: 9.999942, y: 4}
-      - {x: -10, y: 3.9999416}
-      - {x: -9.999942, y: -8}
+    - - {x: 9.999942, y: -7.5}
+      - {x: 9.999942, y: 3.5}
+      - {x: -10, y: 3.4999416}
+      - {x: -9.999942, y: -7.5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!61 &61726815671358032
@@ -1927,7 +1939,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 12}
+  m_Size: {x: 20, y: 11}
   m_EdgeRadius: 0
 --- !u!50 &50534496051187824
 Rigidbody2D:
@@ -2075,6 +2087,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1887666795026586
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,6 +2196,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1910538291616750
 GameObject:
   m_ObjectHideFlags: 0
@@ -2287,6 +2305,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1947247067094708
 GameObject:
   m_ObjectHideFlags: 0
@@ -2393,6 +2414,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1892521900016764136
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,7 +2484,7 @@ MonoBehaviour:
   m_ScreenY: 0.5
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0.25
+  m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 1
@@ -2803,7 +2827,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2520001590543347159}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 155, y: -7.5, z: 0}
+  m_LocalPosition: {x: 155, y: -5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4732078921268522}
@@ -2998,6 +3022,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6656890920883163400
 GameObject:
   m_ObjectHideFlags: 0
@@ -3220,3 +3247,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnPlayerExitTrigger:
+    m_PersistentCalls:
+      m_Calls: []

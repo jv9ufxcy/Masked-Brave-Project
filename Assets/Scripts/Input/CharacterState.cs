@@ -28,6 +28,7 @@ public class CharacterState
     public bool wallReq;
     public bool uncrouchReq;
     public bool activeTargetReq;
+    public bool lockedMoveCheck;
 
     public bool ConditionsMet(CharacterObject character)
     {
@@ -66,7 +67,14 @@ public class CharacterState
             }
             else { return false; }
         }
-        //if (!playerSkills.IsSkillUnlocked(stateName){ return false; }
+        if (lockedMoveCheck)
+        {
+            if (GameEngine.gameEngine.IsSkillUnlocked(stateName))
+            {
+                return true;
+            }
+            return false;
+        }
 
         return true;
     }

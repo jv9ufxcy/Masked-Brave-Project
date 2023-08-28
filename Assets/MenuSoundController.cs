@@ -15,6 +15,10 @@ public class MenuSoundController : MonoBehaviour, ISelectHandler, IDeselectHandl
         uiText = GetComponentInChildren<TextMeshProUGUI>();
         audioManager = AudioManager.instance;
     }
+    private void OnEnable()
+    {
+        audioManager = AudioManager.instance;
+    }
     public void OnDeselect(BaseEventData eventData)
     {
         if (uiText != null)

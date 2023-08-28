@@ -13,9 +13,9 @@ public class DialogueManager : MonoBehaviour
     private AudioManager audioManager;
     private MusicManager musicManager;
     public FMODUnity.EventReference dialogueTheme;
-    public TextMeshProUGUI nameText, dialogueText;
-    public Image profileImage;
-    public RectTransform dialogueParent;
+    public TextMeshProUGUI nameText, dialogueText, tooltipText;
+    public Image profileImage,cutsceneImage,borderImage;
+    public RectTransform dialogueParent, tooltipParent;
 
     public Vector3 dialoguePos, offScreenPos;
     public float tweenSpeed = 0.5f;
@@ -37,7 +37,14 @@ public class DialogueManager : MonoBehaviour
     {
         audioManager = AudioManager.instance;
         musicManager = MusicManager.instance;
+
         dialogueParent.DOScaleY(0f, 0f);
+        tooltipParent.DOScaleY(0f, 0f);
+
+        cutsceneImage.sprite = null;
+        borderImage.DOFade(0, 0);
+        cutsceneImage.DOFade(0, 0);
+
         sentences = new Queue<Dialogue>();
     }
     private void Update()
@@ -69,7 +76,6 @@ public class DialogueManager : MonoBehaviour
             dialogueParent.DOScaleY(1f, tweenSpeed);
         }
         isDialogueActive = true;
-        //PauseManager.IsGamePaused = true;
         currentDialogue = trigger;
 
         sentences.Clear();
@@ -91,11 +97,29 @@ public class DialogueManager : MonoBehaviour
 
         nameText.text = dialogue.name;
         profileImage.sprite = dialogue.profile;
+        if (dialogue.cutscene!=null)
+        {
+            cutsceneImage.sprite = dialogue.cutscene;
+            borderImage.DOFade(1, tweenSpeed);
+            cutsceneImage.DOFade(1, tweenSpeed);
+        }
+        else
+        {
+            FadeCutscene();
+        }
         //dialogueText.text = sentence;
         string sentence = dialogue.sentences;
         StopAllCoroutines();
         StartCoroutine(Type(sentence));
     }
+
+    private void FadeCutscene()
+    {
+        cutsceneImage.sprite = null;
+        borderImage.DOFade(0, tweenSpeed);
+        cutsceneImage.DOFade(0, tweenSpeed);
+    }
+
     public string charSound = "Cutscene/Dialogue Scroll", radioSound = "Cutscene/Radio Over";
     IEnumerator Type(string sentence)
     {
@@ -109,7 +133,7 @@ public class DialogueManager : MonoBehaviour
     }
     private void EndDialogue()
     {
-        //PauseManager.IsGamePaused = false;
+        FadeCutscene();
         isDialogueActive = false;
         dialogueParent.DOScaleY(0f, tweenSpeed);
         currentDialogue.EndDialogue();
@@ -118,5 +142,15 @@ public class DialogueManager : MonoBehaviour
     public void BossRoomMusic()
     {
         musicManager.StartBGM(dialogueTheme);
+    }
+    public void ShowTooltip(string sentence)
+    {
+        tooltipParent.DOScaleY(1f, tweenSpeed);
+        tooltipText.SetText(sentence);
+    }
+    public void HideTooltip()
+    {
+        tooltipParent.DOScaleY(0f, tweenSpeed);
+        tooltipText.SetText(string.Empty);
     }
 }

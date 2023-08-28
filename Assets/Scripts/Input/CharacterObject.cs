@@ -136,8 +136,8 @@ public class CharacterObject : MonoBehaviour, IHittable
                 if (!DialogueManager.instance.isDialogueActive)
                     PauseMenu();
 
-                if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4)
-                    Henshin();
+                //if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4)
+                //    Henshin();
 
                 if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
                 {
@@ -239,7 +239,24 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             if (leftStick.x > 0) { Direction = 1; transform.localScale = new Vector3(1f, 1f, 1f); }
             else if (leftStick.x < 0) { Direction = -1; transform.localScale = new Vector3(-1f, 1f, 1f); }
-            lastDir = leftStick.normalized;
+            
+            switch (controlType)
+            {
+                case ControlType.AI:
+                    lastDir = (target.transform.position - transform.position).normalized;
+                    break;
+                case ControlType.PLAYER:
+                    lastDir = leftStick.normalized;
+                    break;
+                case ControlType.BOSS:
+                    break;
+                case ControlType.DEAD:
+                    break;
+                case ControlType.OBJECT:
+                    break;
+                default:
+                    break;
+            }
         }
         if (controlType==ControlType.AI || controlType == ControlType.BOSS)
         {
@@ -433,8 +450,40 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 25:
                 OnSkillUsed();
                 break;
+            case 26:
+                SelfDestruct((int)_params[0].val);
+                break;
 
         }
+    }
+    public void SelfDestruct(int index)
+    {
+        switch (index)
+        {
+            case 0://instantDeath
+                Explode();
+                break;
+            case 1://onCollision
+                if (IsGrounded() || HitCeiling() || IsOnWall())
+                    Explode();
+                break;
+            case 2://hitConfirm
+                if (hitConfirm >= 1)
+                    Explode();
+                break;
+            case 3://hurt
+                if (hitStun > 0)
+                    Explode();
+                break;
+        }
+    }
+    void Explode()
+    {
+        GameObject bombGO = Instantiate(bullets[0], transform.position, transform.rotation);
+        BombController bomb = bombGO.GetComponent<BombController>();
+        bomb.character = GameEngine.gameEngine.mainCharacter;
+        bomb.StartState();
+        healthManager.FinisherDeath(false);
     }
     private GameObject satelliteInstance;
     public List<GameObject> satellitesCreated;
@@ -1012,7 +1061,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             {
                 chargeLoop.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                 chargeLoop.start();
-                Debug.Log("Start Charge Loop");
+                //Debug.Log("Start Charge Loop");
             }
         }
         else
@@ -1036,7 +1085,6 @@ public class CharacterObject : MonoBehaviour, IHittable
     public ParticleSystem bombDashParticle, landingParticle;
     [Space]
     [Header("Shooting Stats")]
-    public GameObject blastBlightGO;
     public float shootAnim, shootAnimMax;
     public GameObject[] bullets;
     [HideInInspector] public bool isKinzecterOut;
@@ -1170,7 +1218,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         //{
         //FireBullet(bulletType, critBusterVelocity.x,bulletSpawnPos.x, bulletSpawnPos.y);
         //}
-
+        //TODO: add variable stored bullets to state execution check instead
     }
     public void BusterShooting()
     {
@@ -1314,27 +1362,17 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     void DashCut()
     {
-        if (currentState == 2 || currentState == 23)//dash and airdashState
+        if (currentState == 2 || currentState == 23||currentState==139)//dash and airdashState
         {
-            SetCrouchFlag(true);
+            //SetCrouchFlag(true);
             if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name))
             {
-                if (!CanUnCrouch())//ceiling collision
-                {
-                    StartStateFromScript(currentState);
-                }
-                else
-                {
-                    dashCooldown = 0;
-                    StartStateFromScript(0);
-                    UnCrouch();
-                }
+                dashCooldown = 0;
+                StartStateFromScript(0);
             }
             DashJump();
         }
-        else if (crouchFlag)
-            UnCrouch();
-        //else if (!aerialFlag)
+        //if (currentState==0&&!aerialFlag)
         //{
         //    airMod = 1f;
         //}
@@ -1432,19 +1470,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         //velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         if (enemyType == 3)//flying enemy type
         {
-            if (currentState != hitStunStateIndex)
-            {
-                Vector3 newPos = transform.position;
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
-                if (hit)
-                {
-                    //newPos.y = (hit.point + Vector2.up * floatHeight).y;
-                    newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * floatHeight).y, floatTime);
-                }
-                transform.position = newPos;
-            }
-            else
-                velocity.y += gravity * Time.fixedDeltaTime;
+            
         }
         else
             velocity.y += gravity * Time.fixedDeltaTime;
@@ -1709,14 +1735,17 @@ public class CharacterObject : MonoBehaviour, IHittable
                             PoiseBreak();
                         }
                         StartState(hitStunStateIndex);
-                        if (curAtk.attackType == 10 && controlType != ControlType.OBJECT)
+                        if (curAtk.attackType == 10 && controlType != ControlType.OBJECT)//grappling code
                         {
                             grappleTarget = attacker.grapplePoint;
                             attacker.grappleVictim = this;
                             attacker.StartStateFromScript((int)curAtk.hitAnim.x);
                         }
                     }
-
+                    if (curAtk.attackType == 9)//auto combo
+                    {
+                        attacker.StartStateFromScript((int)curAtk.hitAnim.x);
+                    }
                     GameEngine.SetHitPause(curAtk.hitStop);
                     attacker.hitConfirm += 1;
                     attacker.BuildMeter(curAtk.meterGain);
@@ -1880,6 +1909,22 @@ public class CharacterObject : MonoBehaviour, IHittable
                         break;
                 }
             }
+            if (enemyType==3)
+            {
+                if (currentState != hitStunStateIndex)
+                {
+                    Vector3 newPos = transform.position;
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
+                    if (hit)
+                    {
+                        //newPos.y = (hit.point + Vector2.up * floatHeight).y;
+                        newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * floatHeight).y, floatTime);
+                    }
+                    transform.position = newPos;
+                }
+                else
+                    velocity.y += gravity * Time.fixedDeltaTime;
+            }
             
             if (isAggroRange && dashCooldown <= 0 && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange))
             {
@@ -1922,20 +1967,25 @@ public class CharacterObject : MonoBehaviour, IHittable
         spriteRend.material = defaultMat;
         Screenshake(2, .4f);
         SetVelocity(Vector2.zero);
+        KillMinions();
+    }
 
-        if (spawners.Length>0)
+    private void KillMinions()
+    {
+        if (spawners.Length > 0)
         {
             foreach (InteractableObject spawner in spawners)
             {
                 MinionSpawner mSpawn = spawner.gameObject.GetComponentInChildren<MinionSpawner>();
 
-                if(mSpawn!=null)
+                if (mSpawn != null)
                     mSpawn.KillThemAll();
 
                 spawner.DeSpawn();
             }
         }
     }
+
     public void OnEnemySpawn()
     {
         controlType = ControlType.AI;

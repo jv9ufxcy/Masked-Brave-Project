@@ -235,6 +235,10 @@ MonoBehaviour:
   hitSound: 
   destroyEffect: {fileID: 7459617967329291029, guid: b81017e0055c9e74ca7c6ca940f7ae8e,
     type: 3}
+  droppedItem: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
+    type: 3}
+  currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
+    type: 3}
   playerLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -242,6 +246,8 @@ MonoBehaviour:
   projectileIndex: 61
   isExplosion: 1
   lifeTime: 0.1
+  dropRate: 1
+  numOfPickups: 2
 --- !u!1 &6079800262201691182
 GameObject:
   m_ObjectHideFlags: 0

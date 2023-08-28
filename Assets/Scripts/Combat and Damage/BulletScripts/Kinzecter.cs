@@ -50,7 +50,7 @@ public class Kinzecter : MonoBehaviour
     }
     private void Start()
     {
-        hitbox = GetComponent<Hitbox>();
+        //hitbox = GetComponent<Hitbox>();
         startScale = transform.localScale.x;
     }
     public void ThrowKinzecter(CharacterObject player, Vector3 throwDir)
@@ -268,7 +268,7 @@ public class Kinzecter : MonoBehaviour
     {
         RemoveSavedEnemy();
 
-        hitbox.RestoreGetHitBools();
+        //hitbox.RestoreGetHitBools();
         EnemySpawn nextClosestEnemy = EnemySpawn.GetClosestEnemy(transform.position, targetNextEnemyDistance);
         if (nextClosestEnemy != null)
         {
@@ -304,7 +304,7 @@ public class Kinzecter : MonoBehaviour
     }
     public void ReturnToPlayer()
     {
-        hitbox.RestoreGetHitBools();
+        //hitbox.RestoreGetHitBools();
         if (kState == ThrowingState.Thrown)
         {
             kState = ThrowingState.Recalling;
@@ -312,7 +312,7 @@ public class Kinzecter : MonoBehaviour
     }
     public void RemoveKinzecter()
     {
-        hitbox.RestoreGetHitBools();
+        //hitbox.RestoreGetHitBools();
         kState = ThrowingState.WithPlayer;
         thrower.isKinzecterOut = false;
         Destroy(gameObject, .2f);

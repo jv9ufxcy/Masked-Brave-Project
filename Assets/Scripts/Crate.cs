@@ -10,7 +10,7 @@ public class Crate : MonoBehaviour, IHittable
     public SpriteRenderer spriteRend;
     public Material defaultMat, whiteMat;
     [SerializeField] private string hitSound = "Props/Box Break";
-    [SerializeField] private GameObject destroyEffect;
+    [SerializeField] private GameObject destroyEffect,droppedItem,currencyPickup;
     AudioManager audioManager;
     Rigidbody2D rb;
     BoxCollider2D boxCollider;
@@ -36,8 +36,8 @@ public class Crate : MonoBehaviour, IHittable
 
     private void GetHit(CharacterObject attacker, AttackEvent curAtk)
     {
-        RemoveHealth(curAtk.damage);
-        StartCoroutine(FlashWhiteDamage(curAtk.hitStop));
+        RemoveHealth(curAtk);
+       
         GameEngine.SetHitPause(curAtk.hitStop);
         attacker.hitConfirm += 1;
         attacker.BuildMeter(curAtk.meterGain);
@@ -70,23 +70,25 @@ public class Crate : MonoBehaviour, IHittable
             {
                 IHittable victim = rayCastHit.transform.GetComponent<IHittable>();
                 victim.Hit(GameEngine.gameEngine.mainCharacter, projectileIndex, 0);
-                RemoveHealth(currentHealth);
+                DestroyCrate();
             }
         }
     }
     [SerializeField] private bool isExplosion = false;
     [SerializeField] private float lifeTime = 0.1f;
-    void RemoveHealth(int damage)
+    void RemoveHealth(AttackEvent curAtk)
     {
-        currentHealth -= damage;
+        currentHealth -= curAtk.damage;
         audioManager.PlaySound(hitSound);
 
         if (currentHealth <= 0)
-            OnDestroy();
+            DestroyCrate();
+        else
+            StartCoroutine(FlashWhiteDamage(curAtk.hitStop));
 
     }
 
-    private void OnDestroy()
+    private void DestroyCrate()
     {
         GameObject destroyedEffect = Instantiate(destroyEffect, transform.position, transform.rotation);
         if (isExplosion)
@@ -95,7 +97,36 @@ public class Crate : MonoBehaviour, IHittable
             bomb.character = GameEngine.gameEngine.mainCharacter;
             bomb.StartState();
         }
-        Destroy(gameObject, lifeTime);
+        DropItem();
+        gameObject.SetActive(false);
+    }
+    [SerializeField] int dropRate = 2,numOfPickups;
+    private void DropItem()
+    {
+        if (dropRate>0)
+        {
+            for (int i = 0; i < numOfPickups; i++)
+            {
+                SpawnPickup(currencyPickup);
+            }
+            int randNum = UnityEngine.Random.Range(0, 100);
+            if (randNum <= dropRate)
+            {
+                SpawnPickup(droppedItem);
+            }
+        }
+    }
+    private void SpawnPickup(GameObject pickup)
+    {
+        if (pickup != null)
+        {
+            int randNumX = UnityEngine.Random.Range(-20, 20);
+            int randNumY = UnityEngine.Random.Range(15, 35);
+            Vector2 offsetDir = new Vector2(randNumX, randNumY);
+            GameObject effect = Instantiate(pickup, transform.position, transform.rotation);
+            effect.GetComponentInChildren<Rigidbody2D>().AddForce(offsetDir, ForceMode2D.Impulse);
+            effect.transform.SetParent(null);
+        }
     }
 
     private IEnumerator FlashWhiteDamage(float hitFlash)

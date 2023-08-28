@@ -21,25 +21,28 @@ public class LaserHazard : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.DrawRay(firePoint.position, -Vector2.up * maxDist, Color.red);
-        if (timer <= 0)
+        if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
         {
-            FireRay();
-        }
-        else
-        {
-            timer -= Time.fixedDeltaTime;
-            if (timer < .5f && timer > 0.12f)
+            Debug.DrawRay(firePoint.position, -Vector2.up * maxDist, Color.red);
+            if (timer <= 0)
             {
-                DisplayLaser();
-                lineRend.startWidth = 0.2f;
-                lineRend.endWidth = 0.2f;
+                FireRay();
             }
             else
             {
-                lineRend.startWidth = 1f;
-                lineRend.endWidth = 1f;
-                lineRend.enabled = false;
+                timer -= Time.fixedDeltaTime;
+                if (timer < .5f && timer > 0.12f)
+                {
+                    DisplayLaser();
+                    lineRend.startWidth = 0.2f;
+                    lineRend.endWidth = 0.2f;
+                }
+                else
+                {
+                    lineRend.startWidth = 1f;
+                    lineRend.endWidth = 1f;
+                    lineRend.enabled = false;
+                }
             }
         }
     }

@@ -19383,7 +19383,8 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   gravity: -1.8
   aniMoveSpeed: 0
-  direction: 1
+  _direction: 1
+  lastDir: {x: 0, y: 0}
   myRB: {fileID: 0}
   boxCollider2D: {fileID: 0}
   controller: {fileID: 0}
@@ -19441,6 +19442,13 @@ MonoBehaviour:
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
+  chargeEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   gunChargeParticles: {fileID: 19149184}
   jumpChargeParticles: {fileID: 384914704}
   flashParticles: {fileID: 1032007166}
@@ -19451,8 +19459,6 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 98951954}
   landingParticle: {fileID: 1587091126}
-  blastBlightGO: {fileID: 7829054406326658196, guid: 80c01980bd0d4ee4499321539396fad2,
-    type: 3}
   shootAnim: 0
   shootAnimMax: 0
   bullets:
@@ -19494,6 +19500,7 @@ MonoBehaviour:
   curHitAnim: {x: 0, y: 0}
   targetHitAnim: {x: 0, y: 0}
   lineRend: {fileID: 0}
+  trailRend: {fileID: 0}
   grappleVictim: {fileID: 0}
   grapplePoint: {fileID: 0}
   grappleTarget: {fileID: 0}
@@ -19519,8 +19526,6 @@ MonoBehaviour:
   longAttackRange: 10
   shortAttackRange: 4
   attackCooldown: 30
-  horiCos: {x: 0, y: 0}
-  vertSign: {x: 0, y: 0}
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
@@ -19530,6 +19535,8 @@ MonoBehaviour:
   desperationRAStates: 
   enemyType: 2
   desperationTransitionState: 0
+  floatHeight: 2
+  floatTime: 0.25
   canDefend: 0
   defStateIndex: 0
   defStates: 
@@ -19557,6 +19564,7 @@ MonoBehaviour:
   HealthFill: {fileID: 7900149090346874292}
   DamageFill: {fileID: 6066429691478068190}
   BarImage: {fileID: 878745835992632091}
+  meterPercent: {fileID: 0}
   showHealthTime: 8
   fadeOutTime: 0.5
   damageShowTime: 1
@@ -19585,6 +19593,8 @@ MonoBehaviour:
   effectIndex: 0
   lastChance: 1
   deathSound: Enemy/Enemy Explode
+  deathEffect: {fileID: 7459617967329291029, guid: 11265b37290e7164f99dfd27aa53fd75,
+    type: 3}
 --- !u!114 &6645088818452296722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19671,6 +19681,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  defaultColl: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}
 --- !u!1 &1587091123

@@ -42,6 +42,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Jump
     index: 0
     length: 5
@@ -85,6 +86,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Dash
     index: 0
     length: 30
@@ -105,8 +107,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
-    - start: 0
-      end: 0
+    - start: 1
+      end: 1
       active: 1
       script: 14
       parameters:
@@ -155,6 +157,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/Slash1
     index: 0
     length: 25
@@ -206,6 +209,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/Slash2
     index: 0
     length: 25
@@ -264,6 +268,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/Slash3
     index: 0
     length: 25
@@ -315,6 +320,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/BraveStrike
     index: 0
     length: 75
@@ -410,6 +416,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: HitStun
     index: 0
     length: 10
@@ -430,6 +437,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/AirSlash1
     index: 0
     length: 25
@@ -481,6 +489,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/AirSlash2
     index: 0
     length: 25
@@ -546,6 +555,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/AirSlash3
     index: 0
     length: 25
@@ -597,6 +607,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/SpinSlash
     index: 0
     length: 35
@@ -738,6 +749,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/BraveFlourish
     index: 0
     length: 30
@@ -807,6 +819,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/BraveLauncher
     index: 0
     length: 24
@@ -865,6 +878,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/BraveKick
     index: 0
     length: 25
@@ -923,6 +937,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/ChargeSlash
     index: 0
     length: 30
@@ -983,6 +998,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/BraveBurst
     index: 0
     length: 25
@@ -1057,6 +1073,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: DashJump
     index: 0
     length: 45
@@ -1100,6 +1117,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: WallJump
     index: 0
     length: 20
@@ -1150,6 +1168,7 @@ MonoBehaviour:
     wallReq: 1
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/WallSlash
     index: 0
     length: 20
@@ -1187,6 +1206,7 @@ MonoBehaviour:
     wallReq: 1
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/FireBullet
     index: 0
     length: 15
@@ -1253,6 +1273,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/FireBuster
     index: 0
     length: 15
@@ -1319,6 +1340,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/CritBuster
     index: 0
     length: 15
@@ -1394,6 +1416,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/Boost
     index: 0
     length: 20
@@ -1472,6 +1495,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/Magnum1
     index: 0
     length: 25
@@ -1598,6 +1622,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/Magnum2
     index: 0
     length: 25
@@ -1731,6 +1756,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/Magnum3
     index: 0
     length: 25
@@ -1871,6 +1897,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/Magnum4
     index: 0
     length: 25
@@ -1997,6 +2024,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/Magnum5
     index: 0
     length: 30
@@ -2137,6 +2165,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Redline
     index: 0
     length: 70
@@ -2317,6 +2346,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/SlideKick
     index: 0
     length: 30
@@ -2384,7 +2414,7 @@ MonoBehaviour:
       hitStun: 20
       hitStop: 5
       damage: 1
-      meterGain: 5
+      meterGain: 2
       comboValue: 2
       poiseDamage: 5
       attackType: 0
@@ -2402,6 +2432,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/GravityBomb
     index: 0
     length: 20
@@ -2477,12 +2508,13 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 20
+    meterReq: 25
     dashCooldownReq: 10
     groundedReq: 0
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/TossBomb
     index: 0
     length: 25
@@ -2536,12 +2568,13 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 15
+    meterReq: 25
     dashCooldownReq: 60
     groundedReq: 0
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/BlastBomb
     index: 0
     length: 35
@@ -2775,6 +2808,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/BraveTarget
     index: 0
     length: 30
@@ -2860,6 +2894,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 1
+    lockedMoveCheck: 0
   - stateName: Brave/BraveStinger
     index: 0
     length: 20
@@ -2948,6 +2983,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Defeat
     index: 0
     length: 300
@@ -2991,6 +3027,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Henshin
     index: 0
     length: 120
@@ -3041,6 +3078,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Streak
     index: 0
     length: 30
@@ -3209,6 +3247,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: WheelSpin
     index: 0
     length: 50
@@ -3377,6 +3416,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: ShotgunFire
     index: 0
     length: 35
@@ -3428,6 +3468,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: MissileFire
     index: 0
     length: 40
@@ -3487,6 +3528,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/BikeA
     index: 0
     length: 60
@@ -3502,6 +3544,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/BikeB
     index: 0
     length: 60
@@ -3517,6 +3560,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/BikeC
     index: 0
     length: 60
@@ -3532,6 +3576,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/AirBikeA
     index: 0
     length: 60
@@ -3547,6 +3592,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/AirBikeB
     index: 0
     length: 60
@@ -3562,6 +3608,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/WheelSaw
     index: 0
     length: 60
@@ -3775,6 +3822,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/BurstGrab
     index: 0
     length: 40
@@ -3833,6 +3881,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: WGRush
     index: 0
     length: 30
@@ -3877,6 +3926,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/BurstGrapple
     index: 0
     length: 90
@@ -4046,6 +4096,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: WGIzuna
     index: 0
     length: 70
@@ -4162,6 +4213,13 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 10
+    - start: 50.15464
+      end: 70
+      active: 1
+      script: 3
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 0
       length: 0
@@ -4186,14 +4244,15 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Shuriken
     index: 0
-    length: 30
+    length: 5
     loop: 0
     blendRate: 0.1
     events:
-    - start: 5
-      end: 5
+    - start: 0
+      end: 0
       active: 1
       script: 10
       parameters:
@@ -4211,8 +4270,8 @@ MonoBehaviour:
     - start: 0
       length: 0
       hitStun: 20
-      hitStop: 5
-      damage: 0
+      hitStop: 2
+      damage: 1
       meterGain: 2
       comboValue: 0
       poiseDamage: 2
@@ -4231,6 +4290,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/SmallJumpAttack
     index: 0
     length: 75
@@ -4303,6 +4363,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/ChompAttack
     index: 0
     length: 105
@@ -4354,6 +4415,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/TwinElecSlam
     index: 0
     length: 80
@@ -4463,6 +4525,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/ElecBall
     index: 0
     length: 60
@@ -4529,27 +4592,28 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Enemy/SlimeBall
+    lockedMoveCheck: 0
+  - stateName: Bombardier/Satellite
     index: 0
-    length: 60
+    length: 20
     loop: 0
     blendRate: 0.1
     events:
-    - start: 50
-      end: 50
+    - start: 5
+      end: 5
       active: 1
       script: 23
       parameters:
       - name: 
-        val: 2
+        val: 10
+      - name: 
+        val: 3
+      - name: 
+        val: 240
       - name: 
         val: 2
       - name: 
-        val: 160
-      - name: 
-        val: 2
-      - name: 
-        val: 56
+        val: 57
     - start: 0
       end: 0
       active: 1
@@ -4558,43 +4622,44 @@ MonoBehaviour:
       - name: Enemy/Khris/Khris Arrow
         val: 0
     - start: 0
-      end: 60
+      end: 20
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
     - start: 0
-      end: 60
+      end: 20
       active: 1
       script: 0
       parameters:
       - name: 
         val: 0
     attacks:
-    - start: 50
+    - start: 0
       length: 0
       hitStun: 30
       hitStop: 5
       damage: 3
-      meterGain: 0
+      meterGain: 2
       comboValue: 0
-      poiseDamage: 0
+      poiseDamage: 3
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 0, y: 0, z: 0}
+      knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
-    dashCooldownReq: 0
+    meterReq: 25
+    dashCooldownReq: 60
     groundedReq: 0
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/SlimeBullet
     index: 0
     length: 80
@@ -4649,6 +4714,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/JumpForward
     index: 0
     length: 30
@@ -4692,6 +4758,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/RushAttack
     index: 0
     length: 60
@@ -4736,6 +4803,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/Spike
     index: 0
     length: 60
@@ -4766,6 +4834,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/Skewer
     index: 0
     length: 90
@@ -4817,6 +4886,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/BruteFist
     index: 0
     length: 60
@@ -4875,6 +4945,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/Laser
     index: 0
     length: 60
@@ -4905,9 +4976,10 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/FloatTowards
     index: 0
-    length: 30
+    length: 90
     loop: 0
     blendRate: 0.1
     events:
@@ -4917,9 +4989,9 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: -4
+        val: 0
     - start: 29
-      end: 30
+      end: 90
       active: 1
       script: 0
       parameters:
@@ -4931,15 +5003,52 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 4
+        val: 6
     - start: 29
-      end: 30
+      end: 90
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
-    attacks: []
+    - start: 80
+      end: 80
+      active: 1
+      script: 23
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 2
+      - name: 
+        val: 160
+      - name: 
+        val: 2
+      - name: 
+        val: 65
+    - start: 25
+      end: 25
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Khris Arrow
+        val: 0
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 3
+      damage: 3
+      meterGain: 0
+      comboValue: 10
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -4948,9 +5057,10 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/FloatAway
     index: 0
-    length: 30
+    length: 90
     loop: 0
     blendRate: 0.1
     events:
@@ -4960,9 +5070,9 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: 4
+        val: 0
     - start: 29
-      end: 30
+      end: 90
       active: 1
       script: 0
       parameters:
@@ -4974,15 +5084,52 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: -4
+        val: -6
     - start: 29
-      end: 30
+      end: 90
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
-    attacks: []
+    - start: 80
+      end: 80
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 14
+      parameters:
+      - name: Enemy/Khris/Khris Elec
+        val: 0
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 3
+      damage: 3
+      meterGain: 0
+      comboValue: 10
+      poiseDamage: 0
+      attackType: 2
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -4991,6 +5138,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/StabArm
     index: 0
     length: 75
@@ -5079,6 +5227,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/ThrowSlime
     index: 0
     length: 40
@@ -5131,6 +5280,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/Frenzy
     index: 0
     length: 85
@@ -5204,6 +5354,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/GreatArrow
     index: 0
     length: 95
@@ -5290,6 +5441,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/GiantFist
     index: 0
     length: 95
@@ -5355,6 +5507,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/TriArrow
     index: 0
     length: 60
@@ -5443,6 +5596,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/SummonA
     index: 0
     length: 120
@@ -5521,6 +5675,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/DoubleGreatArrow
     index: 0
     length: 120
@@ -5634,6 +5789,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/SummonSpikes
     index: 0
     length: 280
@@ -5999,6 +6155,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/DoubleElecBall
     index: 0
     length: 70
@@ -6080,6 +6237,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/ThunderCrash
     index: 0
     length: 80
@@ -6159,6 +6317,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/SpikeAttack
     index: 0
     length: 90
@@ -6189,6 +6348,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Roy/Strike
     index: 0
     length: 80
@@ -6255,6 +6415,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Roy/PunchCombo
     index: 0
     length: 115
@@ -6372,6 +6533,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Roy/ChargingStar
     index: 0
     length: 120
@@ -6423,6 +6585,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Roy/DragonPunch
     index: 0
     length: 105
@@ -6503,6 +6666,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Roy/Guard
     index: 0
     length: 20
@@ -6540,6 +6704,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/Guard
     index: 0
     length: 20
@@ -6562,6 +6727,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/VespSting
     index: 0
     length: 110
@@ -6641,9 +6807,10 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Weapon/DroneCrash
+    lockedMoveCheck: 0
+  - stateName: Weapon/DroneExplode
     index: 0
-    length: 90
+    length: 15
     loop: 0
     blendRate: 0.1
     events:
@@ -6704,18 +6871,18 @@ MonoBehaviour:
       - name: Enemy/Bug Drone
         val: 0
     attacks:
-    - start: 15
-      length: 20
-      hitStun: 20
-      hitStop: 5
-      damage: 3
+    - start: 5
+      length: 5
+      hitStun: 10
+      hitStop: 4
+      damage: 2
       meterGain: 0
-      comboValue: 0
-      poiseDamage: 0
-      attackType: 0
-      hitAnim: {x: 0, y: 0}
-      knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: -1, z: 0}
+      comboValue: 1
+      poiseDamage: 20
+      attackType: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 5, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 0
       killMultiplier: 1
@@ -6727,6 +6894,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/MotoRush
     index: 0
     length: 70
@@ -6832,6 +7000,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/HornetShooting
     index: 0
     length: 75
@@ -6920,6 +7089,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/RetreatShooting
     index: 0
     length: 160
@@ -7078,6 +7248,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/WaspCharge
     index: 0
     length: 90
@@ -7122,6 +7293,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/TrooperBlast
     index: 0
     length: 60
@@ -7181,6 +7353,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/GeneratorShotgun
     index: 0
     length: 60
@@ -7330,6 +7503,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -7345,6 +7519,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -7360,6 +7535,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -7375,6 +7551,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Weapon/NEWSTATE
     index: 0
     length: 0
@@ -7390,6 +7567,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Khris/SpikeBall
     index: 0
     length: 200
@@ -7499,6 +7677,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/BugHole
     index: 0
     length: 95
@@ -7589,6 +7768,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/NEWSTATE
     index: 0
     length: 0
@@ -7604,6 +7784,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/NEWSTATE
     index: 0
     length: 0
@@ -7619,6 +7800,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/NEWSTATE
     index: 0
     length: 0
@@ -7634,6 +7816,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/Sweep
     index: 0
     length: 25
@@ -7678,6 +7861,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/KinzecterRecall
     index: 0
     length: 15
@@ -7711,6 +7895,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/AirHike
     index: 0
     length: 15
@@ -7740,6 +7925,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Brave/Henshin
     index: 0
     length: 0
@@ -7762,6 +7948,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Bombardier/Henshin
     index: 0
     length: 0
@@ -7784,6 +7971,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Pursuer/Henshin
     index: 0
     length: 0
@@ -7806,6 +7994,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Godsteed/Gallop
     index: 0
     length: 60
@@ -7877,6 +8066,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Godsteed/Skyburst
     index: 0
     length: 50
@@ -7914,6 +8104,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Godsteed/Spin
     index: 0
     length: 60
@@ -7980,6 +8171,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Godsteed/SuperAED
     index: 0
     length: 160
@@ -8144,6 +8336,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Godsteed/NEWSTATE
     index: 0
     length: 0
@@ -8159,6 +8352,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Godsteed/NEWSTATE
     index: 0
     length: 0
@@ -8174,6 +8368,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/BombCrate
     index: 0
     length: 15
@@ -8204,6 +8399,148 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Enemy/BombAttack
+    index: 0
+    length: 80
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 45
+      end: 45
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 6
+    - start: 45
+      end: 45
+      active: 1
+      script: 26
+      parameters:
+      - name: 
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Enemy/Crash
+    index: 0
+    length: 60
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 30
+      end: 60
+      active: 1
+      script: 11
+      parameters:
+      - name: 
+        val: 16
+    - start: 29.84536
+      end: 60
+      active: 1
+      script: 26
+      parameters:
+      - name: 
+        val: 1
+    - start: 29.690722
+      end: 120
+      active: 1
+      script: 26
+      parameters:
+      - name: 
+        val: 2
+    - start: 0
+      end: 4.9484534
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 30
+      active: 1
+      script: 13
+      parameters:
+      - name: 
+        val: -2
+    - start: 20
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: -2
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Enemy/BombLance
+    index: 0
+    length: 120
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 30
+      end: 30
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: -0.5
+      - name: 
+        val: 0
+      - name: 
+        val: -45
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/NEWSTATE
     index: 0
     length: 0
@@ -8219,6 +8556,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/NEWSTATE
     index: 0
     length: 0
@@ -8234,6 +8572,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/NEWSTATE
     index: 0
     length: 0
@@ -8249,6 +8588,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/NEWSTATE
     index: 0
     length: 0
@@ -8264,6 +8604,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/NEWSTATE
     index: 0
     length: 0
@@ -8279,6 +8620,7 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
   - stateName: Enemy/NEWSTATE
     index: 0
     length: 0
@@ -8294,7 +8636,207 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Enemy/NEWSTATE
+    lockedMoveCheck: 0
+  - stateName: Zoe/Knee
+    index: 0
+    length: 15
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 10
+      end: 15
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    attacks:
+    - start: 5
+      length: 5
+      hitStun: 5
+      hitStop: 5
+      damage: 1
+      meterGain: 2
+      comboValue: 0
+      poiseDamage: 1
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 1.5, y: 0.5, z: 0}
+      hitBoxScale: {x: 1, y: 1, z: 1}
+      cancelWindow: 0
+      killMultiplier: 1
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 1
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Zoe/Kick
+    index: 0
+    length: 15
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 10
+      end: 15
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
+    attacks:
+    - start: 5
+      length: 5
+      hitStun: 5
+      hitStop: 5
+      damage: 1
+      meterGain: 2
+      comboValue: 1
+      poiseDamage: 1
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 1.75, y: 0.75, z: 0}
+      hitBoxScale: {x: 1.5, y: 1.5, z: 1}
+      cancelWindow: 0
+      killMultiplier: 1
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Zoe/Stomp
+    index: 0
+    length: 25
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 8
+    - start: 10
+      end: 10
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    attacks:
+    - start: 10
+      length: 5
+      hitStun: 5
+      hitStop: 5
+      damage: 1
+      meterGain: 2
+      comboValue: 2
+      poiseDamage: 1
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 0, y: 0, z: 0}
+      hitBoxPos: {x: 1.75, y: 0.75, z: 0}
+      hitBoxScale: {x: 1.5, y: 1.5, z: 1}
+      cancelWindow: 0
+      killMultiplier: 1
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 1
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Zoe/Run
+    index: 0
+    length: 30
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 12
+    - start: 0
+      end: 30
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: -1.5
+      - name: 
+        val: 1.5
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 7
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Jump
+        val: 0
+    - start: 0
+      end: 30
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 1
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Zoe/NEWSTATE
     index: 0
     length: 0
     loop: 0
@@ -8309,7 +8851,8 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Enemy/NEWSTATE
+    lockedMoveCheck: 0
+  - stateName: Zoe/NEWSTATE
     index: 0
     length: 0
     loop: 0
@@ -8324,7 +8867,8 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Enemy/NEWSTATE
+    lockedMoveCheck: 0
+  - stateName: Zoe/NEWSTATE
     index: 0
     length: 0
     loop: 0
@@ -8339,7 +8883,8 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
-  - stateName: Enemy/NEWSTATE
+    lockedMoveCheck: 0
+  - stateName: Zoe/NEWSTATE
     index: 0
     length: 0
     loop: 0
@@ -8354,6 +8899,446 @@ MonoBehaviour:
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Zoe/NEWSTATE
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events: []
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Zoe/NEWSTATE
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events: []
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Zoe/BraveHenshin
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0.2
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 1
+    activeTargetReq: 0
+    lockedMoveCheck: 1
+  - stateName: Zoe/BombHenshin
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: 
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 1
+    activeTargetReq: 0
+    lockedMoveCheck: 1
+  - stateName: Zoe/BikeHenshin
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 2
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: 
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 1
+    activeTargetReq: 0
+    lockedMoveCheck: 1
+  - stateName: Zoe/NinjaHenshin
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 3
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: 
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 1
+    activeTargetReq: 0
+    lockedMoveCheck: 1
+  - stateName: Zoe/DeHenshin
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 17
+      parameters:
+      - name: 
+        val: 4
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: 
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 1
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Pursuer/Slide
+    index: 0
+    length: 20
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 20
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 16
+    - start: 0
+      end: 20
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Dash
+        val: 0
+    attacks:
+    - start: 0
+      length: 20
+      hitStun: 20
+      hitStop: 5
+      damage: 1
+      meterGain: 2
+      comboValue: 0
+      poiseDamage: 2
+      attackType: 9
+      hitAnim: {x: 140, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 1, y: 0, z: 0}
+      hitBoxScale: {x: 2, y: 1, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Pursuer/KickBack
+    index: 0
+    length: 20
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 10.463918
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: -12
+    - start: 0
+      end: 10
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 16
+    - start: 10
+      end: 20
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
+    - start: 10.360825
+      end: 20
+      active: 1
+      script: 9
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Streak
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Pursuer/AirMagnum
+    index: 0
+    length: 15
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 24
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: -45
+    - start: 2
+      end: 2
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 24
+      - name: 
+        val: 0.6
+      - name: 
+        val: 1.3
+      - name: 
+        val: 1
+      - name: 
+        val: -40
+    - start: 4
+      end: 4
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 4
+      - name: 
+        val: 24
+      - name: 
+        val: 1.25
+      - name: 
+        val: 0.8
+      - name: 
+        val: 2
+      - name: 
+        val: -50
+    - start: 0
+      end: 5
+      active: 1
+      script: 13
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Triple Shot
+        val: 0
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Pursuer/NEWSTATE
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events: []
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Pursuer/NEWSTATE
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events: []
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Pursuer/NEWSTATE
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events: []
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+  - stateName: Pursuer/NEWSTATE
+    index: 0
+    length: 0
+    loop: 0
+    blendRate: 0.1
+    events: []
+    attacks: []
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
   characterScripts:
   - index: 0
     name: VelocityY
@@ -8453,7 +9438,7 @@ MonoBehaviour:
   - index: 0
     name: AirStill
     parameters:
-    - name: Power
+    - name: Ground Float
       val: 0
   - index: 0
     name: PlayAudio
@@ -8541,6 +9526,11 @@ MonoBehaviour:
     parameters:
     - name: Action
       val: 0
+  - index: 0
+    name: SelfDestruct
+    parameters:
+    - name: 0=Inst,1=Contact,2=Hit,3=Hurt
+      val: 0
   moveLists:
   - name: Brave
     commandStates:
@@ -8555,7 +9545,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000040000000700000008000000090000000c0000000d000000
+        followUps: 010000000200000003000000040000000700000008000000090000000c0000000d0000000e0000000f0000001000000011000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -8773,8 +9763,72 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 1
+      - idIndex: 14
+        command:
+          motionCommand: 3
+          input: 2
+          state: 135
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 530
+          y: 322
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 15
+        command:
+          motionCommand: 4
+          input: 2
+          state: 136
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 532
+          y: 408
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 16
+        command:
+          motionCommand: 2
+          input: 2
+          state: 137
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 696
+          y: 363
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 17
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 534
+          y: 366
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 050000000b0000000a00000006000000
-      nextFollowups: 010000000200000003000000040000000700000008000000090000000c0000000d000000
+      nextFollowups: 010000000200000003000000040000000700000008000000090000000c0000000d0000000e0000000f0000001000000011000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -8786,7 +9840,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d000000
+        followUps: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d0000000e0000000f0000001000000011000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -8806,8 +9860,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 59
-          y: 134
+          x: 62
+          y: 52
           width: 175
           height: 50
         activated: 1
@@ -8822,8 +9876,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 255
-          y: 132
+          x: 253
+          y: 48
           width: 175
           height: 50
         activated: 1
@@ -8838,8 +9892,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 445
-          y: 132
+          x: 446
+          y: 56
           width: 175
           height: 50
         activated: 1
@@ -8854,8 +9908,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 52
-          y: 220
+          x: 481
+          y: 119
           width: 175
           height: 50
         activated: 1
@@ -8870,8 +9924,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 235
-          y: 216
+          x: 277
+          y: 116
           width: 175
           height: 50
         activated: 1
@@ -8886,8 +9940,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 46
-          y: 297
+          x: 78
+          y: 247
           width: 175
           height: 50
         activated: 1
@@ -8902,8 +9956,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 247
-          y: 296
+          x: 284
+          y: 238
           width: 175
           height: 50
         activated: 1
@@ -8918,8 +9972,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 556
-          y: 316
+          x: 70
+          y: 114
           width: 175
           height: 50
         activated: 1
@@ -8934,8 +9988,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 753
-          y: 315
+          x: 69
+          y: 185
           width: 175
           height: 50
         activated: 1
@@ -8950,8 +10004,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 444
-          y: 216
+          x: 282
+          y: 180
           width: 175
           height: 50
         activated: 1
@@ -8966,8 +10020,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 677
-          y: 213
+          x: 672
+          y: 175
           width: 175
           height: 50
         activated: 1
@@ -8982,8 +10036,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 668
-          y: 138
+          x: 674
+          y: 58
           width: 175
           height: 50
         activated: 1
@@ -8998,30 +10052,78 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 374
-          y: 354
+          x: 476
+          y: 180
           width: 175
           height: 50
         activated: 1
         priority: 1
       - idIndex: 14
         command:
-          motionCommand: 0
-          input: 0
-          state: 104
+          motionCommand: 3
+          input: 2
+          state: 135
           inputs: 
         followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 50
-          y: 50
+          x: 580
+          y: 346
           width: 175
           height: 50
-        activated: 0
-        priority: 2
+        activated: 1
+        priority: 1
+      - idIndex: 15
+        command:
+          motionCommand: 4
+          input: 2
+          state: 136
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 574
+          y: 453
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 16
+        command:
+          motionCommand: 2
+          input: 2
+          state: 137
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 755
+          y: 398
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 17
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 583
+          y: 397
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 02000000030000000b000000
-      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d000000
+      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d0000000e0000000f0000001000000011000000
   - name: Bombadier
     commandStates:
     - stateName: Grounded
@@ -9035,7 +10137,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 0100000002000000030000000400000005000000060000000700000008000000
+        followUps: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9127,7 +10229,7 @@ MonoBehaviour:
         priority: 1
       - idIndex: 6
         command:
-          motionCommand: 0
+          motionCommand: 3
           input: 3
           state: 32
           inputs: 
@@ -9173,8 +10275,88 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 9
+        command:
+          motionCommand: 0
+          input: 3
+          state: 57
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 504
+          y: 118
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 10
+        command:
+          motionCommand: 3
+          input: 2
+          state: 134
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 239
+          y: 340
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 11
+        command:
+          motionCommand: 4
+          input: 2
+          state: 136
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 229
+          y: 450
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 12
+        command:
+          motionCommand: 2
+          input: 2
+          state: 137
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 419
+          y: 400
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 13
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 237
+          y: 395
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000
+      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -9186,7 +10368,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000040000000500000006000000
+        followUps: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9206,8 +10388,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 50
-          y: 50
+          x: 748
+          y: 143
           width: 175
           height: 50
         activated: 1
@@ -9262,7 +10444,7 @@ MonoBehaviour:
         priority: 0
       - idIndex: 5
         command:
-          motionCommand: 0
+          motionCommand: 3
           input: 3
           state: 32
           inputs: 
@@ -9292,8 +10474,88 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 1
+      - idIndex: 7
+        command:
+          motionCommand: 0
+          input: 3
+          state: 57
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 486
+          y: 37
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      - idIndex: 8
+        command:
+          motionCommand: 3
+          input: 2
+          state: 134
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 74
+          y: 284
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 9
+        command:
+          motionCommand: 4
+          input: 2
+          state: 136
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 76
+          y: 390
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 10
+        command:
+          motionCommand: 2
+          input: 2
+          state: 137
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 265
+          y: 333
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 11
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 78
+          y: 331
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 010000000200000003000000040000000500000006000000
+      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
   - name: Pursuer
     commandStates:
     - stateName: Grounded
@@ -9307,7 +10569,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000020000000300000008000000090000000b000000
+        followUps: 01000000020000000300000008000000090000000b0000000c0000000d0000000e0000000f000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9337,7 +10599,7 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 4
-          state: 2
+          state: 139
           inputs: 
         followUps: 
         strict: 0
@@ -9493,8 +10755,72 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 2
+      - idIndex: 12
+        command:
+          motionCommand: 3
+          input: 2
+          state: 135
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 84
+          y: 370
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 13
+        command:
+          motionCommand: 4
+          input: 2
+          state: 134
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 89
+          y: 457
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 14
+        command:
+          motionCommand: 2
+          input: 2
+          state: 137
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 265
+          y: 417
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 15
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 86
+          y: 417
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 040000000500000006000000070000000a000000
-      nextFollowups: 01000000020000000300000008000000090000000b000000
+      nextFollowups: 01000000020000000300000008000000090000000b0000000c0000000d0000000e0000000f000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -9506,7 +10832,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000040000000500000006000000
+        followUps: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9520,7 +10846,7 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 1
-          state: 25
+          state: 141
           inputs: 
         followUps: 
         strict: 0
@@ -9542,8 +10868,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 50
-          y: 50
+          x: 120
+          y: 185
           width: 175
           height: 50
         activated: 1
@@ -9612,8 +10938,72 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 2
+      - idIndex: 7
+        command:
+          motionCommand: 0
+          input: 2
+          state: 135
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 92
+          y: 373
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 8
+        command:
+          motionCommand: 0
+          input: 2
+          state: 134
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 92
+          y: 458
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 9
+        command:
+          motionCommand: 0
+          input: 2
+          state: 137
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 279
+          y: 419
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 10
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 95
+          y: 415
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 010000000200000003000000040000000500000006000000
+      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
   - name: WindGod
     commandStates:
     - stateName: Grounded
@@ -9627,7 +11017,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000040000000500000006000000
+        followUps: 0100000002000000030000000400000005000000060000000700000008000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9647,8 +11037,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 58
-          y: 115
+          x: 52
+          y: 143
           width: 175
           height: 50
         activated: 1
@@ -9663,15 +11053,15 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 50
-          y: 50
+          x: 467
+          y: 108
           width: 175
           height: 50
         activated: 1
         priority: 0
       - idIndex: 3
         command:
-          motionCommand: 6
+          motionCommand: 0
           input: 3
           state: 49
           inputs: 
@@ -9703,38 +11093,70 @@ MonoBehaviour:
         priority: 0
       - idIndex: 5
         command:
-          motionCommand: 0
-          input: 1
-          state: 11
+          motionCommand: 3
+          input: 2
+          state: 135
           inputs: 
         followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 447
-          y: 168
+          x: 43
+          y: 315
           width: 175
           height: 50
-        activated: 0
-        priority: 0
+        activated: 1
+        priority: 1
       - idIndex: 6
         command:
-          motionCommand: 0
-          input: 1
-          state: 15
+          motionCommand: 4
+          input: 2
+          state: 136
           inputs: 
         followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 637
-          y: 171
+          x: 47
+          y: 406
           width: 175
           height: 50
-        activated: 0
+        activated: 1
+        priority: 1
+      - idIndex: 7
+        command:
+          motionCommand: 2
+          input: 2
+          state: 134
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 236
+          y: 363
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 8
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 44
+          y: 360
+          width: 175
+          height: 50
+        activated: 1
         priority: 0
       omitList: 
-      nextFollowups: 010000000200000003000000040000000500000006000000
+      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -9746,7 +11168,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000020000000300000004000000
+        followUps: 0100000002000000030000000400000005000000060000000700000008000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9766,8 +11188,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 50
-          y: 50
+          x: 334
+          y: 144
           width: 175
           height: 50
         activated: 1
@@ -9820,8 +11242,72 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 5
+        command:
+          motionCommand: 3
+          input: 2
+          state: 135
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 138
+          y: 320
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 6
+        command:
+          motionCommand: 4
+          input: 2
+          state: 136
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 130
+          y: 405
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 7
+        command:
+          motionCommand: 2
+          input: 2
+          state: 134
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 317
+          y: 367
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 8
+        command:
+          motionCommand: 0
+          input: 2
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 138
+          y: 362
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 01000000020000000300000004000000
+      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000
   - name: Zoe
     commandStates:
     - stateName: Grounded
@@ -9835,7 +11321,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000200000003000000
+        followUps: 01000000020000000300000006000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9865,7 +11351,7 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 2
-          state: 37
+          state: 105
           inputs: 
         followUps: 
         strict: 0
@@ -9879,22 +11365,70 @@ MonoBehaviour:
         priority: 0
       - idIndex: 3
         command:
-          motionCommand: 6
-          input: 3
-          state: 0
+          motionCommand: 0
+          input: 1
+          state: 124
+          inputs: 
+        followUps: 04000000
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 381
+          y: 81
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      - idIndex: 4
+        command:
+          motionCommand: 0
+          input: 1
+          state: 125
+          inputs: 
+        followUps: 05000000
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 385
+          y: 146
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 5
+        command:
+          motionCommand: 0
+          input: 1
+          state: 126
           inputs: 
         followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 406
-          y: 80
+          x: 389
+          y: 196
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 6
+        command:
+          motionCommand: 0
+          input: 4
+          state: 127
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 53
+          y: 201
           width: 175
           height: 50
         activated: 1
         priority: 0
-      omitList: 
-      nextFollowups: 010000000200000003000000
+      omitList: 0400000005000000
+      nextFollowups: 01000000020000000300000006000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -9906,7 +11440,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000
+        followUps: 0100000002000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -9932,8 +11466,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
+      - idIndex: 2
+        command:
+          motionCommand: 0
+          input: 1
+          state: 125
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 259
+          y: 74
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
       omitList: 
-      nextFollowups: 01000000
+      nextFollowups: 0100000002000000
   - name: PursuerMajin
     commandStates:
     - stateName: Grounded
@@ -10242,7 +11792,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -10252,7 +11802,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -10262,7 +11812,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -10272,7 +11822,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -10282,7 +11832,7 @@ MonoBehaviour:
     commands: 000000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -10292,9 +11842,9 @@ MonoBehaviour:
     commands: 00000000030000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 0
+  currentMovelistIndex: 2
   currentControllerIndex: 0
