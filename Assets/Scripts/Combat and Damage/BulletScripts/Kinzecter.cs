@@ -237,7 +237,7 @@ public class Kinzecter : MonoBehaviour
                 }
             }
         }
-        if (other.CompareTag(tagToHit) && other.gameObject != thrower.gameObject)
+        if (other.CompareTag(tagToHit) && other.transform.root.gameObject != thrower.gameObject)
         {
             IHittable victim = other.transform.root.GetComponent<IHittable>();
             if (victim != null && projectileIndex > 0)

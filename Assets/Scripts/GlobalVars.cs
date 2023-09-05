@@ -9,13 +9,14 @@ using UnityEngine;
 public class Save
 {
     public float SfxMultiplier, MusicMultiplier;
-    public bool fullscreen, hpBars;
+    public bool fullscreen, vSync, hpBars;
     public int resWidth, resHeight;
 
-    public Save CreateSaveGameObject(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier, bool visibleHP)
+    public Save CreateSaveGameObject(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier, bool visibleHP, bool vSync)
     {
         Save save = new Save();
         save.fullscreen = fullscreen;
+        save.vSync = vSync;
         save.hpBars = visibleHP;
         save.resWidth = resWidth;
         save.resHeight = resHeight;
@@ -49,10 +50,13 @@ public class Save
             SfxMultiplier = save.SfxMultiplier;
             MusicMultiplier = save.MusicMultiplier;
             hpBars = save.hpBars;
+            vSync = save.vSync;
         }
         else//if no saved options, set those to default
         {
             fullscreen = true;
+            vSync = true;
+            hpBars = false;
             resWidth = 1920;
             resHeight = 1080;
             SfxMultiplier = 1;
@@ -73,10 +77,10 @@ public class GlobalVars : MonoBehaviour
 
     public static Save save = new Save();//empty save instance.
 
-    public static void SaveOptions(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier, bool visibleHP)
+    public static void SaveOptions(bool fullscreen, int resWidth, int resHeight, float musicMultiplier, float sfxMultiplier, bool visibleHP, bool vSync)
     {
         visibleEnemyHealth = visibleHP;
-        save = save.CreateSaveGameObject(fullscreen, resWidth, resHeight, musicMultiplier, sfxMultiplier, visibleHP);
+        save = save.CreateSaveGameObject(fullscreen, resWidth, resHeight, musicMultiplier, sfxMultiplier, visibleHP,vSync);
         save.SaveOptions(save);
     }
 

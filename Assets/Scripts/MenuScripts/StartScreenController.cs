@@ -16,11 +16,13 @@ public class StartScreenController : MonoBehaviour
     private string uiSelectSound = "UI/Select", uiCancelSound = "UI/Cancel", uiCursorSound = "UI/Move Cursor";
     [SerializeField] Button newGameButton,loadGameButton, continueGameButton;
     [SerializeField] SaveSlotsMenu saveMenu;
+    
     // Start is called before the first frame update
     void Start()
     {
         DisableButtonsWithoutData();
         //ApplyVideoOptions();
+        
         audioManager = AudioManager.instance;
     }
 
@@ -164,18 +166,23 @@ public class StartScreenController : MonoBehaviour
     }
     [Header("Video Settings")]
     [SerializeField] private TextMeshProUGUI resDisplayText;
-    [SerializeField] private Toggle fullScreenToggle, hpToggle;
+    [SerializeField] private Toggle fullScreenToggle,vSyncToggle, hpToggle;
     [SerializeField] private List<int> resolutionWidths;
     [SerializeField] private List<int> resolutionHeights;
     private int resolutionIndex=3;
     private int chosenWidth, chosenHeight;
-    private bool isFullScreen,visibleHealth;
+    private bool isFullScreen,visibleHealth,isVSync;
     public void ApplyVideoOptions()
     {
         GlobalVars.LoadOptions();
 
         isFullScreen = (Screen.fullScreen);
         fullScreenToggle.isOn = isFullScreen;
+        vSyncToggle.isOn = isVSync;
+        if (isVSync)
+            QualitySettings.vSyncCount = 1;
+        else
+            QualitySettings.vSyncCount = 0;
         hpToggle.isOn = visibleHealth;
         resolutionIndex = 3;
         chosenWidth = resolutionWidths[resolutionIndex];
@@ -184,6 +191,11 @@ public class StartScreenController : MonoBehaviour
     public void ToggleFullScreen()
     {
         isFullScreen = fullScreenToggle.isOn;
+        PlaySelectSound(0);
+    }
+    public void ToggleVSync()
+    {
+        isVSync = vSyncToggle.isOn;
         PlaySelectSound(0);
     }
     public void ToggleHP()
@@ -206,7 +218,7 @@ public class StartScreenController : MonoBehaviour
     }
     public void Apply()
     {
-        GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1, visibleHealth);
+        GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1, visibleHealth, isVSync);
         Screen.SetResolution(chosenWidth, chosenHeight, isFullScreen);
         PlaySelectSound(0);
         ReturnToLevelSelectMenu();

@@ -7,7 +7,8 @@ public class GameData
 {
     public long lastUpdated;
     public int deathCount;
-    public int maxHealth;
+    public int healthBoost;
+    public int levelUnlocked;
     public List<string> unlockedSkillsData;
     public SerializableDictionary<string, bool> upgradesCollected;
     
@@ -15,9 +16,10 @@ public class GameData
     public GameData()
     {
         this.deathCount = 0;
-        this.maxHealth = 18;
+        this.healthBoost = 0;
+        this.levelUnlocked = 0;
         this.unlockedSkillsData = new List<string>();
-        upgradesCollected = new SerializableDictionary<string, bool>();
+        this.upgradesCollected = new SerializableDictionary<string, bool>();
     }
     public int GetPercentageUnlocked()
     {

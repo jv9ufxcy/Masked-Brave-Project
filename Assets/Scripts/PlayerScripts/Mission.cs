@@ -7,6 +7,7 @@ using DG.Tweening;
 using TMPro;
 using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Mission : MonoBehaviour
 {
@@ -559,9 +560,14 @@ public class Mission : MonoBehaviour
         EndMission();
         StartCoroutine(MissionComplete());
     }
-
+    public UnityEvent OnMissionComplete;
+    private void UnlockLevels()
+    {
+        GameEngine.gameEngine.UnlockLevel(3);
+    }
     private IEnumerator MissionComplete()
     {
+        OnMissionComplete.Invoke();
         missionStartText = PauseManager.pauseManager.battleUI;
         menuTimer = PauseManager.pauseManager.menuTimer;
         CalculateScore();

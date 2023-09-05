@@ -72,7 +72,6 @@ public class PickupRecoveryItem : MonoBehaviour
     }
     private void MoveTowardsPlayer()
     {
-        //TODO: Add a state machine loop that counts down between standing still to shoot and then moving
         isPlayerInRange = Physics2D.OverlapCircle(transform.position, attractionRange, whatCountsAsPlayer);
         if (isPlayerInRange)
         {

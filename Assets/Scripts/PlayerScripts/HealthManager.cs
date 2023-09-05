@@ -616,7 +616,7 @@ public class HealthManager : MonoBehaviour
             {
                 SpawnPickup(currencyPickup);
             }
-            int randNum = UnityEngine.Random.Range(0, 10);
+            int randNum = UnityEngine.Random.Range(0, 100);
             if (randNum<=healthDropRate)
             {
                 SpawnPickup(healthPickup);

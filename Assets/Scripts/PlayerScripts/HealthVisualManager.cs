@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthVisualManager : MonoBehaviour
+public class HealthVisualManager : MonoBehaviour, IDataPersistence
 {
     public static HealthSystem healthSystemStatic;
-
+    public int healthBoost;
     public int maxHealth = 18;
     public float heartOffset = 4f, heartAnchor = -60f;
     [SerializeField] private Vector2 sizeDelta = new Vector2(64,64);
@@ -24,7 +24,7 @@ public class HealthVisualManager : MonoBehaviour
     }
     private void Start()
     {
-        SetMaxHealth(0);
+        SetMaxHealth(healthBoost);
     }
 
     public void SetMaxHealth(int newMaxHealth)
@@ -63,8 +63,17 @@ public class HealthVisualManager : MonoBehaviour
     private void HealthSystem_OnDead(object sender, System.EventArgs e)
     {
         RefereshAllHearts();
-    }private void HealthSystem_OnUpgrade(object sender, System.EventArgs e)
+    }
+    private void HealthSystem_OnUpgrade(object sender, System.EventArgs e)
     {
+        //foreach (KeyValuePair<string, bool> pair in data.upgradesCollected)
+        //{
+        //    if (pair.Value)
+        //    {
+        //        healthBoost++;
+        //        healthBoost++;
+        //    }
+        //}
         RefereshAllHearts();
     }
     private void RefereshAllHearts()
@@ -98,6 +107,24 @@ public class HealthVisualManager : MonoBehaviour
         healthImageList.Add(healthImage);
         return healthImage;//???
     }
+
+    public void LoadData(GameData data)
+    {
+        foreach (KeyValuePair<string,bool> pair in data.upgradesCollected)
+        {
+            if (pair.Value)
+            {
+                healthBoost++;
+                healthBoost++;
+            }
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        //nothing to save
+    }
+
     public class HealthImage
     {
         private int fragments;

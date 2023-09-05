@@ -1173,7 +1173,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         int onWall = wallFlag ? -1 : 1;
         kinzecter.GetComponent<Kinzecter>().ThrowKinzecter(characterObject, new Vector3(Direction*onWall, 0, 0));
 
-        kinzecter.GetComponent<Hitbox>().character = characterObject;
+        //kinzecter.GetComponent<Hitbox>().character = characterObject;
         isKinzecterOut = true;
     }
 

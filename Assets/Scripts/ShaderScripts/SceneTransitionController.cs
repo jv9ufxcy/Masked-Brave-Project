@@ -59,6 +59,7 @@ public class SceneTransitionController : MonoBehaviour
     }
     public void LoadScene(string sceneToLoad)
     {
+        DataPersistenceManager.instance.SaveGame();
         SceneToLoad = sceneToLoad;
         shouldReveal = false;
         PlayTransitionAudio();

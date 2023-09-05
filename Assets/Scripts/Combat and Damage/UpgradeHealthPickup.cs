@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
     AudioManager audioManager;
     [SerializeField]private int upgradeAmt = 2;
     [SerializeField]private string pickupSound;
+    [SerializeField] private string unlockedMoveName;
     [SerializeField]private GameObject pickupEffect;
     private bool collected = false;
     // Start is called before the first frame update
@@ -27,17 +29,59 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
             Debug.LogError("No Audio Manager in Scene");
         }
     }
+    private void Update()
+    {
+        if (collected)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         playerHP = collision.gameObject.GetComponent<HealthManager>();
         player = collision.gameObject.GetComponent<CharacterObject>();
-        if (collision.CompareTag("Player")&&!collected)
+        if (collision.CompareTag("Player") && !collected)
         {
-            playerHP.HealthUpgrade(upgradeAmt);
-            audioManager.PlaySound(pickupSound);
-            GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
-            collected = true;
-            gameObject.SetActive(false);
+            if (upgradeAmt > 0)
+            {
+                playerHP.HealthUpgrade(upgradeAmt);
+            }
+            if (unlockedMoveName != null)
+            {
+                GameEngine.gameEngine.UnlockMove(unlockedMoveName);
+            }
+            Pickup();
+        }
+    }
+
+    private void Pickup()
+    {
+        audioManager.PlaySound(pickupSound);
+        GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
+        collected = true;
+        gameObject.SetActive(false);
+    }
+    [Header("Magnet")]
+    [SerializeField] private bool shouldAttract = false;
+    [SerializeField]
+    private float attractionSpeed = 8f, attractionRange = 16f;
+    [SerializeField] private LayerMask whatCountsAsPlayer;
+    private void FixedUpdate()
+    {
+        if (shouldAttract)
+            MoveTowardsPlayer();
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, attractionRange);
+    }
+    private void MoveTowardsPlayer()
+    {
+        bool isPlayerInRange = Physics2D.OverlapCircle(transform.position, attractionRange, whatCountsAsPlayer);
+        if (isPlayerInRange)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, GameEngine.gameEngine.mainCharacter.transform.position, attractionSpeed * Time.fixedDeltaTime);
         }
     }
 

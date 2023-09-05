@@ -47,18 +47,19 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         }
         OnFormChange.Invoke();
     }
+    public void UnlockMove(string moveName)
+    {
+        if (!unlockedSkillsList.Contains(moveName))
+        {
+            unlockedSkillsList.Add(moveName);
+        }
+    }
     
     // Use this for initialization
     void Start ()
     {
         coreData = coreDataObject;
         gameEngine = this;
-        //if (mainCharacter==null)
-        //{
-        //    mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterObject>();
-        //}
-        //if(Mission.instance!=null)
-        //    Mission.instance.StartMission();
     }
     public static void SetHitPause(float _pow)
     {
@@ -78,6 +79,11 @@ public class GameEngine : MonoBehaviour,IDataPersistence
     public bool IsSkillUnlocked(string stateName)
     {
         return unlockedSkillsList.Contains(stateName);
+    }
+    private int unlockedLevels = 0;
+    public void UnlockLevel(int level)
+    {
+        unlockedLevels = level;
     }
     public void EndLevel()
     {
@@ -115,11 +121,13 @@ public class GameEngine : MonoBehaviour,IDataPersistence
     public void LoadData(GameData data)
     {
         this.unlockedSkillsList = data.unlockedSkillsData;
+        this.unlockedLevels = data.levelUnlocked;
     }
 
     public void SaveData(GameData data)
     {
         data.unlockedSkillsData = this.unlockedSkillsList;
+        data.levelUnlocked = this.unlockedLevels;
     }
 
     public InputBuffer playerInputBuffer;
