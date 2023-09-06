@@ -24,17 +24,21 @@ public class GameData
     public int GetPercentageUnlocked()
     {
         int totalUnlocked = 0;
-        foreach (bool collected in upgradesCollected.Values)
+        foreach (string form in unlockedSkillsData)
         {
-            if (collected)
-            {
-                totalUnlocked++;
-            }
+            totalUnlocked++;
         }
+        //foreach (bool collected in upgradesCollected.Values)
+        //{
+        //    if (collected)
+        //    {
+        //        totalUnlocked++;
+        //    }
+        //}
         int percentUnlocked = -1;
         if (upgradesCollected.Count!=0)
         {
-            percentUnlocked = totalUnlocked * 100/ upgradesCollected.Count;
+            percentUnlocked = totalUnlocked * 100/ 5;
         }
         return percentUnlocked;
     }

@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     private Slider resSlider;
-    private StartScreenController startController;
+    private OptionsMenuController optionsController;
     [SerializeField] private TextMeshProUGUI sliderDesc;
     public int resolutionIndex;
     private AudioManager audioManager;
@@ -16,7 +16,7 @@ public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHand
     void Start()
     {
         resSlider = GetComponent<Slider>();
-        startController = GetComponentInParent<StartScreenController>();
+        optionsController = GetComponentInParent<OptionsMenuController>();
         sliderDesc = GetComponentInChildren<TextMeshProUGUI>();
         audioManager = AudioManager.instance;
     }
@@ -24,7 +24,7 @@ public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHand
     public void SetResolutionSlider(float index)//unity event
     {
         resolutionIndex = (int)index;
-        startController.SetResolution(resolutionIndex);
+        optionsController.SetResolution(resolutionIndex);
     }
     public void OnDeselect(BaseEventData eventData)
     {

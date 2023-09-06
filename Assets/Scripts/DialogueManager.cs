@@ -100,8 +100,8 @@ public class DialogueManager : MonoBehaviour
         if (dialogue.cutscene!=null)
         {
             cutsceneImage.sprite = dialogue.cutscene;
-            borderImage.DOFade(1, tweenSpeed);
-            cutsceneImage.DOFade(1, tweenSpeed);
+            borderImage.DOFade(1, 1f);
+            cutsceneImage.DOFade(1, 1f);
         }
         else
         {

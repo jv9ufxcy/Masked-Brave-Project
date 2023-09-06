@@ -591,7 +591,7 @@ public class Mission : MonoBehaviour
         PauseManager.pauseManager.Results();
         LevelChange();
     }
-    [SerializeField] private string nextLevel = "MainMenu";
+    [SerializeField] private string nextLevel = "LevelSelectScene";
     private int missionPoints;
 
     private void LevelChange()

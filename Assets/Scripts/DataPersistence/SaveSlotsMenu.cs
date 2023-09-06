@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class SaveSlotsMenu : MonoBehaviour
 {
     private SaveSlot[] saveSlots;
     private bool isLoadingGame = false;
+    public UnityEvent OnNewGameClicked, OnLoadGameClicked;
     private void Awake()
     {
         saveSlots=this.GetComponentsInChildren<SaveSlot>();
@@ -14,8 +16,15 @@ public class SaveSlotsMenu : MonoBehaviour
     public void OnSaveSlotClicked(SaveSlot saveSlot)
     {
         DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
-        if(!isLoadingGame)
+        if (!isLoadingGame)
+        {
             DataPersistenceManager.instance.NewGame();
+            OnNewGameClicked.Invoke();
+        }
+        else
+        {
+            OnLoadGameClicked.Invoke();
+        }
     }
     public void OnDeleteDataClicked(SaveSlot saveSlot)
     {

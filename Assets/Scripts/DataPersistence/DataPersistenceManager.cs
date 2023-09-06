@@ -99,7 +99,7 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObj.LoadData(gameData);
         }
-        Debug.Log("Loaded skillList = " + gameData.unlockedSkillsData);
+        //Debug.Log("Loaded skillList = " + gameData.unlockedSkillsData);
     }
     public void SaveGame()
     {
@@ -117,7 +117,7 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.SaveData(gameData);
         }
         gameData.lastUpdated = System.DateTime.Now.ToBinary();
-        Debug.Log("Saved skillList = " + gameData.unlockedSkillsData);
+        //Debug.Log("Saved skillList = " + gameData.unlockedSkillsData);
         dataHandler.Save(gameData, selectedProfileID);
     }
     private void OnApplicationQuit()
