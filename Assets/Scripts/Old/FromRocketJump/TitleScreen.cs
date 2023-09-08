@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using static UnityEngine.EventSystems.StandaloneInputModule;
 
 
 public class TitleScreen : MonoBehaviour,IDataPersistence
@@ -11,6 +12,7 @@ public class TitleScreen : MonoBehaviour,IDataPersistence
     private bool areControlsSet = false;
     private int value;
     public EventSystem eventSystem;
+    public StandaloneInputModule inputModule;
     public GameObject selectedObject;
     private AudioManager audioManager;
     private string uiSelectSound = "UI/Select", uiCancelSound = "UI/Cancel", uiCursorSound = "UI/Move Cursor";
@@ -21,6 +23,13 @@ public class TitleScreen : MonoBehaviour,IDataPersistence
     {
         audioManager = AudioManager.instance;
         DisableButtonsWithoutData();
+    }
+    private void SetMenuInput()
+    {
+        inputModule.horizontalAxis = GameEngine.coreData.rawInputs[13].name;
+        inputModule.verticalAxis = GameEngine.coreData.rawInputs[14].name;
+        inputModule.submitButton = GameEngine.coreData.rawInputs[0].name;
+        inputModule.cancelButton = GameEngine.coreData.rawInputs[2].name;
     }
     private void Update()
     {
@@ -74,6 +83,7 @@ public class TitleScreen : MonoBehaviour,IDataPersistence
     }
     void ActivateDataMenu()//set controls and activate start data menu
     {
+        SetMenuInput();
         startPanel.SetActive(false);
         GlobalVars.instance.PassControllerValue(value);
         areControlsSet = true;

@@ -299,7 +299,7 @@ public class BulletHit : MonoBehaviour
         {
             audioManager.PlaySound(deflectSound);
         }
-        //play sound effect
+
     }
     public void ReverseForce()
     {

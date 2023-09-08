@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -21,12 +22,21 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Image eyeCon;
     public TextMeshProUGUI menuTimer, battleUI;
     private AudioManager audioManager;
+    [SerializeField] private StandaloneInputModule inputModule;
     private string uiSelectSound = "UI/Select", uiCancelSound = "UI/Cancel", uiCursorSound = "UI/Move Cursor";
     private void Start()
     {
         pauseManager = this;
         GM = GameManager.instance;
         audioManager = AudioManager.instance;
+        SetMenuInput();
+    }
+    private void SetMenuInput()
+    {
+        inputModule.horizontalAxis = GameEngine.coreData.rawInputs[13].name;
+        inputModule.verticalAxis = GameEngine.coreData.rawInputs[14].name;
+        inputModule.submitButton = GameEngine.coreData.rawInputs[0].name;
+        inputModule.cancelButton = GameEngine.coreData.rawInputs[2].name;
     }
     public void PauseButtonPressed()
     {

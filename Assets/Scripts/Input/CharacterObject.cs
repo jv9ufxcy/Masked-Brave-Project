@@ -453,6 +453,9 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 26:
                 SelfDestruct((int)_params[0].val);
                 break;
+            case 27:
+                JumpCut();
+                break;
 
         }
     }
@@ -1320,7 +1323,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         //if (currentState==1)//jump state
         if (aerialFlag)//jump state
         {
-            if (velocity.y > 0 && Input.GetButtonUp(GameEngine.coreData.rawInputs[0].name))
+            if (velocity.y > 0 && !Input.GetButton(GameEngine.coreData.rawInputs[0].name))
             {
                 VelocityY(-2);
                 if (IsGrounded())

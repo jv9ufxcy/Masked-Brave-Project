@@ -58,6 +58,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
     // Use this for initialization
     void Start ()
     {
+        Application.targetFrameRate = 60;
         coreData = coreDataObject;
         gameEngine = this;
     }

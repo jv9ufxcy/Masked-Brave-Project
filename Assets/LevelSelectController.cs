@@ -10,6 +10,7 @@ public class LevelSelectController : MonoBehaviour, IDataPersistence
 {
     public GameObject levelSelectMenuPanel, optionsPanel;
     public EventSystem eventSystem;
+    [SerializeField] StandaloneInputModule inputModule;
     public GameObject selectedObject;
     private AudioManager audioManager;
     private string uiSelectSound = "UI/Select", uiCancelSound = "UI/Cancel", uiCursorSound = "UI/Move Cursor";
@@ -25,8 +26,15 @@ public class LevelSelectController : MonoBehaviour, IDataPersistence
                 levelButtons[i].interactable = false;
         }
         audioManager = AudioManager.instance;
+        SetMenuInput();
     }
-
+    private void SetMenuInput()
+    {
+        inputModule.horizontalAxis = GameEngine.coreData.rawInputs[13].name;
+        inputModule.verticalAxis = GameEngine.coreData.rawInputs[14].name;
+        inputModule.submitButton = GameEngine.coreData.rawInputs[0].name;
+        inputModule.cancelButton = GameEngine.coreData.rawInputs[2].name;
+    }
     // Update is called once per frame
     void Update()
     {

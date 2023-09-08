@@ -33,6 +33,11 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 60
+      active: 1
+      script: 27
+      parameters: []
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -49,8 +54,8 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 2
-      end: 2
+    - start: 0
+      end: 0
       active: 1
       script: 7
       parameters:
@@ -76,6 +81,13 @@ MonoBehaviour:
       script: 14
       parameters:
       - name: Player/Jump
+        val: 0
+    - start: 0
+      end: 5
+      active: 1
+      script: 27
+      parameters:
+      - name: 
         val: 0
     attacks: []
     jumpReq: 1
@@ -827,12 +839,12 @@ MonoBehaviour:
     blendRate: 0
     events:
     - start: 5
-      end: 5
+      end: 7
       active: 1
-      script: 7
+      script: 0
       parameters:
       - name: 
-        val: 1
+        val: 25
     - start: 5
       end: 15
       active: 1
@@ -1159,6 +1171,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 20
+      active: 1
+      script: 27
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -8380,7 +8399,7 @@ MonoBehaviour:
       length: 5
       hitStun: 10
       hitStop: 4
-      damage: 3
+      damage: 2
       meterGain: 0
       comboValue: 2
       poiseDamage: 20
@@ -8640,7 +8659,7 @@ MonoBehaviour:
       length: 0
       hitStun: 10
       hitStop: 2
-      damage: 1
+      damage: 0
       meterGain: 0
       comboValue: 1
       poiseDamage: 5
@@ -8906,6 +8925,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 15
+      active: 1
+      script: 9
+      parameters:
+      - name: 
+        val: 1
     attacks:
     - start: 5
       length: 5
@@ -8941,6 +8967,13 @@ MonoBehaviour:
       end: 15
       active: 1
       script: 6
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 15
+      active: 1
+      script: 9
       parameters:
       - name: 
         val: 1
@@ -9779,6 +9812,11 @@ MonoBehaviour:
     name: SelfDestruct
     parameters:
     - name: 0=Inst,1=Contact,2=Hit,3=Hurt
+      val: 0
+  - index: 0
+    name: JumpCut
+    parameters:
+    - name: 
       val: 0
   moveLists:
   - name: Brave
