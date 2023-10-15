@@ -727,9 +727,9 @@ public class HealthManager : MonoBehaviour
     {
         GameEngine.SetHitPause(30f);
         CinemachineShake.instance.ShakeCamera(0.5f, 1f);
-
+        character.StopChargeAttack();
         character.DOChangeMovelist(4);
-        AddHealth(2);
+        AddHealth(1);
         character.hitStun = 30f;
         character.GlobalPrefab(6);
         OnLastChance?.Invoke(this, EventArgs.Empty);

@@ -93,10 +93,16 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
+        //if (dialogueText.text!=sentences)
+        //{
+            //dialogueText.text = sentence;
+
+        //}
         Dialogue dialogue = sentences.Dequeue();
 
         nameText.text = dialogue.name;
         profileImage.sprite = dialogue.profile;
+
         if (dialogue.cutscene!=null)
         {
             cutsceneImage.sprite = dialogue.cutscene;
@@ -107,7 +113,7 @@ public class DialogueManager : MonoBehaviour
         {
             FadeCutscene();
         }
-        //dialogueText.text = sentence;
+
         string sentence = dialogue.sentences;
         StopAllCoroutines();
         StartCoroutine(Type(sentence));

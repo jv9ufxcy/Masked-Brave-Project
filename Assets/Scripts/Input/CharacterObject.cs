@@ -454,7 +454,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                 SelfDestruct((int)_params[0].val);
                 break;
             case 27:
-                JumpCut();
+                JumpStateCut();
+                break;
+            case 28:
+                DashJump();
                 break;
 
         }
@@ -1052,6 +1055,10 @@ public class CharacterObject : MonoBehaviour, IHittable
             p.startColor = Color.clear;
             p.Stop();
         }
+        if (chargeState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            chargeLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
     }
 
 
@@ -1323,6 +1330,19 @@ public class CharacterObject : MonoBehaviour, IHittable
         //if (currentState==1)//jump state
         if (aerialFlag)//jump state
         {
+            if (velocity.y > 0 && Input.GetButtonUp(GameEngine.coreData.rawInputs[0].name))
+            {
+                VelocityY(-2);
+                if (IsGrounded())
+                    StartStateFromScript(0);
+            }
+        }
+    }
+    void JumpStateCut()
+    {
+        //if (currentState==1)//jump state
+        if (aerialFlag)//jump state
+        {
             if (velocity.y > 0 && !Input.GetButton(GameEngine.coreData.rawInputs[0].name))
             {
                 VelocityY(-2);
@@ -1373,7 +1393,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 dashCooldown = 0;
                 StartStateFromScript(0);
             }
-            DashJump();
+            //DashJump();
         }
         //if (currentState==0&&!aerialFlag)
         //{

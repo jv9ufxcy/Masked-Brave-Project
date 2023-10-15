@@ -37,7 +37,9 @@ MonoBehaviour:
       end: 60
       active: 1
       script: 27
-      parameters: []
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -62,7 +64,7 @@ MonoBehaviour:
       - name: Pow
         val: 1
     - start: 0
-      end: 60
+      end: 5
       active: 1
       script: 3
       parameters:
@@ -514,7 +516,7 @@ MonoBehaviour:
       script: 3
       parameters:
       - name: 
-        val: 1
+        val: 0.5
     - start: 10
       end: 12
       active: 1
@@ -562,7 +564,7 @@ MonoBehaviour:
     jumpReq: 0
     dashReq: 0
     meterReq: 0
-    dashCooldownReq: 0
+    dashCooldownReq: 20
     groundedReq: 0
     wallReq: 0
     uncrouchReq: 0
@@ -844,7 +846,7 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: 25
+        val: 20
     - start: 5
       end: 15
       active: 1
@@ -1088,38 +1090,79 @@ MonoBehaviour:
     lockedMoveCheck: 0
   - stateName: DashJump
     index: 0
-    length: 45
+    length: 5
     loop: 0
     blendRate: 0.05
     events:
     - start: 0
-      end: 45
+      end: 5
       active: 1
       script: 3
       parameters:
       - name: 
-        val: 16
+        val: 1
     - start: 0
-      end: 45
+      end: 5
       active: 1
       script: 6
       parameters:
       - name: 
         val: 1
-    - start: 2
-      end: 2
+    - start: 0
+      end: 0
       active: 1
-      script: 0
+      script: 7
       parameters:
       - name: 
-        val: 30
+        val: 1
     - start: 0
       end: 0
       active: 1
       script: 14
       parameters:
-      - name: Jump
+      - name: Player/Dash
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Jump
+        val: 0
+    - start: 0
+      end: 5
+      active: 1
+      script: 28
+      parameters:
+      - name: 
+        val: 2
+    - start: 0
+      end: 0
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: -1.5
+      - name: 
+        val: 1.5
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 7
     attacks: []
     jumpReq: 1
     dashReq: 0
@@ -8596,23 +8639,6 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -16
-    - start: 20
-      end: 20
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 1
-      - name: 
-        val: 12
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: -30
     - start: 25
       end: 25
       active: 1
@@ -8630,23 +8656,6 @@ MonoBehaviour:
         val: 0
       - name: 
         val: -55
-    - start: 30
-      end: 30
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 1
-      - name: 
-        val: 12
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: -80
     - start: 25.360825
       end: 60
       active: 1
@@ -8857,23 +8866,6 @@ MonoBehaviour:
       - name: 
         val: 1
       - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: 30
-    - start: 25
-      end: 25
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 1
-      - name: 
-        val: 12
-      - name: 
-        val: 1
-      - name: 
         val: 1.5
       - name: 
         val: 0
@@ -8889,13 +8881,76 @@ MonoBehaviour:
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
-  - stateName: Bomber/NEWSTATE
+  - stateName: Bomber/BlastFist
     index: 0
-    length: 0
+    length: 80
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 0
+      end: 0
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 30
+      end: 40
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 16
+    - start: 40
+      end: 40
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 40
+      end: 40
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: -1
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 8
+    attacks:
+    - start: 35
+      length: 20
+      hitStun: 20
+      hitStop: 4
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 20, y: 0, z: 0}
+      hitBoxPos: {x: 1.5, y: -1, z: 0}
+      hitBoxScale: {x: 2, y: 2, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -9818,6 +9873,11 @@ MonoBehaviour:
     parameters:
     - name: 
       val: 0
+  - index: 0
+    name: DashJump
+    parameters:
+    - name: AirMod
+      val: 2
   moveLists:
   - name: Brave
     commandStates:
@@ -9880,7 +9940,7 @@ MonoBehaviour:
           input: 4
           state: 2
           inputs: 
-        followUps: 0b0000000a000000
+        followUps: 0b0000000a00000012000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -10114,7 +10174,23 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
-      omitList: 050000000b0000000a00000006000000
+      - idIndex: 18
+        command:
+          motionCommand: 0
+          input: 0
+          state: 17
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 328
+          y: 371
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      omitList: 050000000b0000000a0000001200000006000000
       nextFollowups: 010000000200000003000000040000000700000008000000090000000c0000000d0000000e0000000f0000001000000011000000
     - stateName: Aerial
       aerial: 1
@@ -10127,7 +10203,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d0000000e0000000f0000001000000011000000
+        followUps: 010000000200000005000000060000000700000008000000090000000a0000000c0000000d0000000e0000000f0000001000000011000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -10143,7 +10219,7 @@ MonoBehaviour:
           input: 1
           state: 8
           inputs: 
-        followUps: 02000000
+        followUps: 03000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -10155,7 +10231,7 @@ MonoBehaviour:
         priority: 0
       - idIndex: 2
         command:
-          motionCommand: 0
+          motionCommand: 3
           input: 1
           state: 9
           inputs: 
@@ -10163,12 +10239,12 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 253
-          y: 48
+          x: 258
+          y: -2
           width: 175
           height: 50
         activated: 1
-        priority: 1
+        priority: 2
       - idIndex: 3
         command:
           motionCommand: 0
@@ -10187,7 +10263,7 @@ MonoBehaviour:
         priority: 1
       - idIndex: 4
         command:
-          motionCommand: 3
+          motionCommand: 0
           input: 1
           state: 11
           inputs: 
@@ -10195,8 +10271,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 481
-          y: 119
+          x: 856
+          y: 162
           width: 175
           height: 50
         activated: 1
@@ -10319,7 +10395,7 @@ MonoBehaviour:
           input: 4
           state: 104
           inputs: 
-        followUps: 0b000000
+        followUps: 0b00000004000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -10409,8 +10485,8 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
-      omitList: 02000000030000000b000000
-      nextFollowups: 010000000400000005000000060000000700000008000000090000000a0000000c0000000d0000000e0000000f0000001000000011000000
+      omitList: 03000000030000000b00000004000000
+      nextFollowups: 010000000200000005000000060000000700000008000000090000000a0000000c0000000d0000000e0000000f0000001000000011000000
   - name: Bombadier
     commandStates:
     - stateName: Grounded
@@ -10456,11 +10532,11 @@ MonoBehaviour:
           input: 4
           state: 23
           inputs: 
-        followUps: 
+        followUps: 0e000000
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 83
+          x: 52
           y: 182
           width: 175
           height: 50
@@ -10508,8 +10584,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 72
-          y: 262
+          x: 56
+          y: 306
           width: 175
           height: 50
         activated: 1
@@ -10642,7 +10718,23 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
-      omitList: 
+      - idIndex: 14
+        command:
+          motionCommand: 0
+          input: 0
+          state: 17
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 46
+          y: 251
+          width: 175
+          height: 50
+        activated: 1
+        priority: 2
+      omitList: 0e000000
       nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
     - stateName: Aerial
       aerial: 1
@@ -10888,7 +10980,7 @@ MonoBehaviour:
           input: 4
           state: 139
           inputs: 
-        followUps: 
+        followUps: 10000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -11106,7 +11198,23 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
-      omitList: 040000000500000006000000070000000a000000
+      - idIndex: 16
+        command:
+          motionCommand: 0
+          input: 0
+          state: 17
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 460
+          y: 224
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      omitList: 10000000040000000500000006000000070000000a000000
       nextFollowups: 01000000020000000300000008000000090000000b0000000c0000000d0000000e0000000f000000
     - stateName: Aerial
       aerial: 1
