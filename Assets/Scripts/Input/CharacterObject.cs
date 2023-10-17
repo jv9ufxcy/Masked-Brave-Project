@@ -1901,7 +1901,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public int defStateIndex;
     public int[] defStates;
-
+    private int attackStep = 0;
     public float MaxJumpVelocity { get => maxJumpVelocity; set => maxJumpVelocity = value; }
     public float Direction { get => _direction; set => _direction = value; }
 
@@ -1955,13 +1955,23 @@ public class CharacterObject : MonoBehaviour, IHittable
                 velocity = Vector2.zero;
                 if (isLongRange && rangedAttackState.Length > 0)
                 {
-                    int randNum = UnityEngine.Random.Range(0, rangedAttackState.Length);
-                    StartStateFromScript(rangedAttackState[randNum]);
+                    //int randNum = UnityEngine.Random.Range(0, rangedAttackState.Length);
+                    if (attackStep>=rangedAttackState.Length)
+                    {
+                        attackStep = 0;
+                    }
+                    StartStateFromScript(rangedAttackState[attackStep]);
+                    attackStep++;
                 }
                 if (isShortRange && closeAttackState.Length > 0)
                 {
-                    int randNum = UnityEngine.Random.Range(0, closeAttackState.Length);
-                    StartStateFromScript(closeAttackState[randNum]);
+                    //int randNum = UnityEngine.Random.Range(0, closeAttackState.Length);
+                    if (attackStep >= closeAttackState.Length)
+                    {
+                        attackStep = 0;
+                    }
+                    StartStateFromScript(closeAttackState[attackStep]);
+                    attackStep++;
                 }
             }
         }
