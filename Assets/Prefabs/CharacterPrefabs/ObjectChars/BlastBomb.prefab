@@ -54,9 +54,10 @@ MonoBehaviour:
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
-  bulletHitEffect: {fileID: 7459617967329291029, guid: f8378c6d2fcf1e741815664a2b0e1117,
+  bulletHitEffect: {fileID: 7459617967329291029, guid: 18c42084590b867449c3aceeec42a9de,
     type: 3}
-  bulletChild: {fileID: 0}
+  explosionEffect: {fileID: 7459617967329291029, guid: f8378c6d2fcf1e741815664a2b0e1117,
+    type: 3}
   tagToHit: Enemy
   tagToCollide: Ground
   lifeTime: 1
@@ -68,11 +69,6 @@ MonoBehaviour:
   gravity: 0
   velocityXSmoothing: 0
   targetRange: 10
-  attackState: 33
-  whatLayersToHit:
-    serializedVersion: 2
-    m_Bits: 141056
-  bulletCollisionSound: 
   shouldScreenshakeOnHit: 0
   shouldStopOnHit: 1
   canReflect: 0
@@ -93,6 +89,7 @@ MonoBehaviour:
   radius: 1
   boomerangDist: {x: 0, y: 0, z: 0}
   followVel: {x: 0, y: 0, z: 0}
+  deflectSound: Enemy/Roy/Block
 --- !u!50 &476840838158514604
 Rigidbody2D:
   serializedVersion: 4
@@ -160,6 +157,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  defaultColl: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}
 --- !u!1 &4499256447364090959

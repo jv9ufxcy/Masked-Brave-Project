@@ -58,7 +58,7 @@ MonoBehaviour:
   bulletChild: {fileID: 0}
   tagToHit: Player
   tagToCollide: Ground
-  lifeTime: 0.35
+  lifeTime: 0.2
   speed: 0
   rotation: 0
   maxJumpHeight: 4
@@ -87,6 +87,7 @@ MonoBehaviour:
   radius: 1
   boomerangDist: {x: 0, y: 0, z: 0}
   followVel: {x: 0, y: 0, z: 0}
+  deflectSound: Enemy/Roy/Block
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -191,7 +192,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -202,5 +203,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2.5}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0

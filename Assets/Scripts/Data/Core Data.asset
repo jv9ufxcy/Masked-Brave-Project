@@ -337,7 +337,7 @@ MonoBehaviour:
     lockedMoveCheck: 0
   - stateName: Brave/BraveStrike
     index: 0
-    length: 75
+    length: 65
     loop: 0
     blendRate: 0.05
     events:
@@ -349,21 +349,21 @@ MonoBehaviour:
       - name: 
         val: 20
     - start: 25
-      end: 60
+      end: 45
       active: 1
       script: 0
       parameters:
       - name: 
         val: -10
     - start: 1
-      end: 45
+      end: 30
       active: 1
       script: 1
       parameters:
       - name: 
         val: 8
-    - start: 45
-      end: 60
+    - start: 30
+      end: 45
       active: 1
       script: 1
       parameters:
@@ -391,33 +391,48 @@ MonoBehaviour:
       script: 24
       parameters:
       - name: 
-        val: 75
+        val: 65
     - start: 0
-      end: 75
+      end: 65
       active: 1
       script: 6
       parameters:
       - name: 
         val: -1
-    - start: 74
-      end: 75
+    - start: 64
+      end: 65
       active: 1
       script: 25
       parameters:
       - name: 
         val: 0
     attacks:
-    - start: 35
+    - start: 5
+      length: 10
+      hitStun: 30
+      hitStop: 5
+      damage: 1
+      meterGain: 5
+      comboValue: 9
+      poiseDamage: 20
+      attackType: 1
+      hitAnim: {x: 0, y: 1}
+      knockback: {x: 10, y: 20, z: 0}
+      hitBoxPos: {x: 1, y: 0, z: 0}
+      hitBoxScale: {x: 1, y: 2, z: 1}
+      cancelWindow: 2
+      killMultiplier: 3
+    - start: 25
       length: 15
       hitStun: 30
       hitStop: 15
       damage: 8
-      meterGain: 10
-      comboValue: 8
+      meterGain: 5
+      comboValue: 10
       poiseDamage: 20
       attackType: 0
       hitAnim: {x: 0, y: -1}
-      knockback: {x: 25, y: 30, z: 0}
+      knockback: {x: 25, y: -30, z: 0}
       hitBoxPos: {x: 1, y: 0, z: 0}
       hitBoxScale: {x: 3, y: 2.5, z: 1}
       cancelWindow: 2
@@ -491,8 +506,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 6, z: 0}
-      hitBoxPos: {x: 1.5, y: 0, z: 0}
-      hitBoxScale: {x: 2, y: 3, z: 1}
+      hitBoxPos: {x: 1.5, y: 0.5, z: 0}
+      hitBoxScale: {x: 4, y: 4, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -506,12 +521,12 @@ MonoBehaviour:
     lockedMoveCheck: 0
   - stateName: Brave/AirSlash2
     index: 0
-    length: 25
+    length: 20
     loop: 0
     blendRate: 0.05
     events:
     - start: 0
-      end: 25
+      end: 20
       active: 1
       script: 3
       parameters:
@@ -539,7 +554,7 @@ MonoBehaviour:
       - name: 
         val: 16
     - start: 15
-      end: 25
+      end: 20
       active: 1
       script: 6
       parameters:
@@ -557,8 +572,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 6, z: 0}
-      hitBoxPos: {x: 1.5, y: 1, z: 0}
-      hitBoxScale: {x: 3, y: 2.5, z: 1}
+      hitBoxPos: {x: 1.5, y: 1.5, z: 0}
+      hitBoxScale: {x: 4, y: 2.5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -609,8 +624,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 15, y: -10, z: 0}
-      hitBoxPos: {x: 1.5, y: 0.5, z: 0}
-      hitBoxScale: {x: 2.5, y: 3, z: 1}
+      hitBoxPos: {x: 1.5, y: 1, z: 0}
+      hitBoxScale: {x: 5, y: 4, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -661,8 +676,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: 1.5, z: 0}
-      hitBoxScale: {x: 2, y: 2, z: 1}
+      hitBoxPos: {x: 0, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     - start: 6
@@ -676,8 +691,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: -0.5, z: 0}
-      hitBoxScale: {x: 2, y: 2, z: 1}
+      hitBoxPos: {x: 0, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     - start: 9
@@ -691,8 +706,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: -1.5, z: 0}
-      hitBoxScale: {x: 2, y: 2, z: 1}
+      hitBoxPos: {x: 0, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     - start: 12
@@ -706,8 +721,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: -2, y: -0.5, z: 0}
-      hitBoxScale: {x: 2, y: 2, z: 1}
+      hitBoxPos: {x: 0, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     - start: 15
@@ -721,8 +736,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: -0.5, y: 2, z: 0}
-      hitBoxScale: {x: 2, y: 2, z: 1}
+      hitBoxPos: {x: 0, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     - start: 18
@@ -736,8 +751,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 0.5, y: 2, z: 0}
-      hitBoxScale: {x: 2, y: 2, z: 1}
+      hitBoxPos: {x: 0, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     - start: 21
@@ -751,8 +766,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: 0.5, z: 0}
-      hitBoxScale: {x: 2.5, y: 4, z: 1}
+      hitBoxPos: {x: 0, y: 1, z: 0}
+      hitBoxScale: {x: 6, y: 5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -766,7 +781,7 @@ MonoBehaviour:
     lockedMoveCheck: 0
   - stateName: Brave/BraveFlourish
     index: 0
-    length: 30
+    length: 20
     loop: 0
     blendRate: 0.05
     events:
@@ -935,7 +950,7 @@ MonoBehaviour:
       damage: 4
       meterGain: 5
       comboValue: 5
-      poiseDamage: 2
+      poiseDamage: 6
       attackType: 0
       hitAnim: {x: 0, y: -1}
       knockback: {x: 25, y: 25, z: 0}
@@ -3003,8 +3018,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 20, y: 0, z: 0}
-      hitBoxPos: {x: 1.5, y: 0, z: 0}
-      hitBoxScale: {x: 3, y: 1, z: 1}
+      hitBoxPos: {x: 2, y: 0, z: 0}
+      hitBoxScale: {x: 4, y: 1, z: 1}
       cancelWindow: 0
       killMultiplier: 1
     - start: 10
@@ -3018,8 +3033,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 20, y: 0, z: 0}
-      hitBoxPos: {x: 1.5, y: 0, z: 0}
-      hitBoxScale: {x: 3, y: 1, z: 1}
+      hitBoxPos: {x: 2, y: 0, z: 0}
+      hitBoxScale: {x: 4, y: 1, z: 1}
       cancelWindow: 0
       killMultiplier: 1
     - start: 15
@@ -3033,8 +3048,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: 0}
       knockback: {x: 20, y: 0, z: 0}
-      hitBoxPos: {x: 1.5, y: 0, z: 0}
-      hitBoxScale: {x: 3, y: 1, z: 1}
+      hitBoxPos: {x: 2, y: 0, z: 0}
+      hitBoxScale: {x: 4, y: 1, z: 1}
       cancelWindow: 0
       killMultiplier: 1
     jumpReq: 0
@@ -3134,7 +3149,7 @@ MonoBehaviour:
     attacks: []
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 50
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -3711,6 +3726,13 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 12
+    - start: 15
+      end: 15
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Spin
+        val: 0
     - start: 0
       end: 60
       active: 1
@@ -3742,7 +3764,7 @@ MonoBehaviour:
       - name: 
         val: -1
     - start: 0
-      end: 14.226804
+      end: 15
       active: 1
       script: 8
       parameters:
@@ -4706,7 +4728,7 @@ MonoBehaviour:
       meterGain: 2
       comboValue: 0
       poiseDamage: 3
-      attackType: 0
+      attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
@@ -5665,17 +5687,6 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 55
-      end: 55
-      active: 1
-      script: 15
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 0
     - start: 90
       end: 90
       active: 1
@@ -7425,122 +7436,108 @@ MonoBehaviour:
     - start: 30
       end: 30
       active: 1
-      script: 16
+      script: 10
       parameters:
       - name: 
         val: 0
       - name: 
-        val: 12
-      - name: 
-        val: 0
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-    - start: 30
-      end: 30
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 12
-      - name: 
-        val: 0
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: 15
-    - start: 30
-      end: 30
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 12
-      - name: 
-        val: 0
-      - name: 
-        val: 1
-      - name: 
-        val: 0
-      - name: 
-        val: -15
-    - start: 50
-      end: 50
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 12
+        val: 16
       - name: 
         val: 2
       - name: 
         val: 1
       - name: 
         val: 0
-      - name: 
-        val: -30
-    - start: 50
-      end: 50
+    - start: 33
+      end: 33
       active: 1
-      script: 16
+      script: 10
       parameters:
       - name: 
         val: 0
       - name: 
-        val: 12
+        val: 16
       - name: 
         val: 2
       - name: 
-        val: 1
+        val: 1.5
       - name: 
         val: 0
-      - name: 
-        val: -45
-    - start: 50
-      end: 50
+    - start: 36
+      end: 36
       active: 1
-      script: 16
+      script: 10
       parameters:
       - name: 
         val: 0
       - name: 
-        val: 12
+        val: 18
       - name: 
         val: 2
       - name: 
-        val: 1
+        val: 0.5
       - name: 
         val: 0
-      - name: 
-        val: 30
-    - start: 50
-      end: 50
+    - start: 39
+      end: 39
       active: 1
-      script: 16
+      script: 10
       parameters:
       - name: 
         val: 0
       - name: 
-        val: 12
+        val: 16
       - name: 
         val: 2
       - name: 
-        val: 1
+        val: 1.25
+      - name: 
+        val: 0
+    - start: 42
+      end: 42
+      active: 1
+      script: 10
+      parameters:
       - name: 
         val: 0
       - name: 
-        val: 45
+        val: 16
+      - name: 
+        val: 2
+      - name: 
+        val: 0.5
+      - name: 
+        val: 0
+    - start: 45
+      end: 45
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: 2
+      - name: 
+        val: 1.75
+      - name: 
+        val: 0
+    - start: 48
+      end: 48
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 16
+      - name: 
+        val: 2
+      - name: 
+        val: 0.25
+      - name: 
+        val: 0
     attacks:
     - start: 0
       length: 0
@@ -7598,13 +7595,49 @@ MonoBehaviour:
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
-  - stateName: Weapon/NEWSTATE
+  - stateName: Godsteed/SpinForward
     index: 0
-    length: 0
+    length: 55
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 15
+      end: 15
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Spin
+        val: 0
+    - start: 20
+      end: 20
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 20
+    - start: 20
+      end: 35
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 12
+    attacks:
+    - start: 20
+      length: 15
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -7614,13 +7647,49 @@ MonoBehaviour:
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
-  - stateName: Weapon/NEWSTATE
+  - stateName: Godsteed/SpinBackward
     index: 0
-    length: 0
+    length: 55
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 15
+      end: 15
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Spin
+        val: 0
+    - start: 20
+      end: 20
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 20
+    - start: 20
+      end: 35
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: -12
+    attacks:
+    - start: 20
+      length: 15
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -7904,7 +7973,7 @@ MonoBehaviour:
       length: 10
       hitStun: 20
       hitStop: 5
-      damage: 3
+      damage: 2
       meterGain: 5
       comboValue: 3
       poiseDamage: 5
@@ -8059,10 +8128,17 @@ MonoBehaviour:
     lockedMoveCheck: 0
   - stateName: Godsteed/Gallop
     index: 0
-    length: 60
+    length: 75
     loop: 0
     blendRate: 0.1
     events:
+    - start: 20
+      end: 20
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Streak
+        val: 16
     - start: 30
       end: 55
       active: 1
@@ -8070,7 +8146,14 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 16
-    - start: 59
+    - start: 40
+      end: 40
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Launcher
+        val: 0
+    - start: 60
       end: 60
       active: 1
       script: 1
@@ -8106,7 +8189,7 @@ MonoBehaviour:
         val: 7
     attacks:
     - start: 30
-      length: 40
+      length: 30
       hitStun: 10
       hitStop: 5
       damage: 2
@@ -8117,7 +8200,22 @@ MonoBehaviour:
       hitAnim: {x: 0, y: 0}
       knockback: {x: 10, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 3, y: 3, z: 0}
+      hitBoxScale: {x: 3, y: 2, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 65
+      length: 5
+      hitStun: 10
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      comboValue: 1
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 3, y: 0, z: 0}
+      hitBoxScale: {x: 2, y: 3, z: 0}
       cancelWindow: 0
       killMultiplier: 0
     jumpReq: 0
@@ -8135,8 +8233,15 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 19.84536
-      end: 40.20618
+    - start: 15
+      end: 15
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Streak
+        val: 0
+    - start: 20
+      end: 40
       active: 1
       script: 0
       parameters:
@@ -8167,35 +8272,86 @@ MonoBehaviour:
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
-  - stateName: Godsteed/Spin
+  - stateName: Godsteed/ChargedSpin
     index: 0
-    length: 60
+    length: 90
     loop: 0
     blendRate: 0.1
     events:
     - start: 25
-      end: 30
+      end: 25
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Spin
+        val: 0
+    - start: 25
+      end: 45
       active: 1
       script: 1
       parameters:
       - name: 
-        val: 16
-    - start: 15
-      end: 20
+        val: 12
+    - start: 45
+      end: 45
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 0
+    - start: 50
+      end: 70
       active: 1
       script: 1
       parameters:
       - name: 
-        val: -8
-    - start: 30
-      end: 60
+        val: 12
+    - start: 70
+      end: 70
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 0
     attacks:
-    - start: 15
+    - start: 30
+      length: 15
+      hitStun: 15
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 2, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 50
+      length: 15
+      hitStun: 15
+      hitStop: 5
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 10, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 2, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 75
       length: 5
       hitStun: 15
       hitStop: 5
@@ -8205,24 +8361,9 @@ MonoBehaviour:
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 0, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 1, z: 0}
-      hitBoxScale: {x: 4, y: 1, z: 1}
-      cancelWindow: 0
-      killMultiplier: 0
-    - start: 25
-      length: 10
-      hitStun: 20
-      hitStop: 5
-      damage: 2
-      meterGain: 0
-      comboValue: 1
-      poiseDamage: 0
-      attackType: 0
-      hitAnim: {x: 0, y: 0}
       knockback: {x: 10, y: 0, z: 0}
-      hitBoxPos: {x: 1, y: -1, z: 0}
-      hitBoxScale: {x: 4, y: 1, z: 1}
+      hitBoxPos: {x: 1, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 2, z: 1}
       cancelWindow: 0
       killMultiplier: 0
     jumpReq: 0
@@ -8236,7 +8377,7 @@ MonoBehaviour:
     lockedMoveCheck: 0
   - stateName: Godsteed/SuperAED
     index: 0
-    length: 160
+    length: 145
     loop: 0
     blendRate: 0.1
     events:
@@ -8247,6 +8388,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -8
+    - start: 55
+      end: 55
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Launcher
+        val: 0
     - start: 70
       end: 75
       active: 1
@@ -8344,6 +8492,34 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 2
+    - start: 80
+      end: 80
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Shotgun
+        val: 0
+    - start: 90
+      end: 90
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Shotgun
+        val: 0
+    - start: 100
+      end: 100
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Shotgun
+        val: 0
+    - start: 110
+      end: 110
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Shotgun
+        val: 0
     attacks:
     - start: 45
       length: 5
@@ -8399,13 +8575,148 @@ MonoBehaviour:
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
-  - stateName: Godsteed/NEWSTATE
+  - stateName: Godsteed/ThrowAxe
     index: 0
-    length: 0
+    length: 110
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 5
+      end: 5
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 30
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Streak
+        val: 0
+    - start: 50
+      end: 50
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0.5
+    - start: 50
+      end: 50
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 0.5
+    - start: 60
+      end: 60
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Streak
+        val: 0
+    - start: 15
+      end: 60
+      active: 1
+      script: 13
+      parameters:
+      - name: 
+        val: 0
+    - start: 5
+      end: 15
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: -12
+    - start: 15
+      end: 15
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Pursuer Form/Spin
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 16
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 16
+      - name: 
+        val: 1
+      - name: 
+        val: -0.5
+      - name: 
+        val: 0
+      - name: 
+        val: -45
+    - start: 60
+      end: 60
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: -30
+    - start: 60
+      end: 75
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 16
+    - start: 90
+      end: 90
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    attacks:
+    - start: 30
+      length: 0
+      hitStun: 15
+      hitStop: 8
+      damage: 4
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 15, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 65
+      length: 30
+      hitStun: 15
+      hitStop: 4
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 15, y: 15, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 2, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -8603,13 +8914,79 @@ MonoBehaviour:
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Bomber/Mushiki
     index: 0
-    length: 0
+    length: 100
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 40
+      end: 40
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0
+      - name: 
+        val: 3
+      - name: 
+        val: 3
+      - name: 
+        val: 0
+    - start: 60
+      end: 60
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 16
+    - start: 75
+      end: 75
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 30
+      end: 30
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 1
+    attacks:
+    - start: 0
+      length: 0
+      hitStun: 20
+      hitStop: 8
+      damage: 4
+      meterGain: 0
+      comboValue: 1
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 1}
+      knockback: {x: 5, y: 20, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 0, y: 0, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 65
+      length: 10
+      hitStun: 20
+      hitStop: 4
+      damage: 2
+      meterGain: 0
+      comboValue: 2
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 15, y: 10, z: 0}
+      hitBoxPos: {x: 1, y: 0, z: 0}
+      hitBoxScale: {x: 2, y: 1, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -11716,7 +12093,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 01000000020000000300000006000000
+        followUps: 0100000002000000030000000500000006000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -11780,7 +12157,7 @@ MonoBehaviour:
           input: 1
           state: 125
           inputs: 
-        followUps: 05000000
+        followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
@@ -11792,7 +12169,7 @@ MonoBehaviour:
         priority: 1
       - idIndex: 5
         command:
-          motionCommand: 0
+          motionCommand: 4
           input: 1
           state: 126
           inputs: 
@@ -11800,8 +12177,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 389
-          y: 196
+          x: 462
+          y: 232
           width: 175
           height: 50
         activated: 1
@@ -11822,8 +12199,8 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 0
-      omitList: 0400000005000000
-      nextFollowups: 01000000020000000300000006000000
+      omitList: 04000000
+      nextFollowups: 0100000002000000030000000500000006000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -12025,7 +12402,7 @@ MonoBehaviour:
       nextFollowups: 0100000002000000
   globalPrefabs:
   - {fileID: 1938826077859950, guid: e37a8b0db3fd7e147832c7ab84985181, type: 3}
-  - {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9, type: 3}
+  - {fileID: 7459617967329291029, guid: 19cca919a36c2ad40868bf945c6b0b86, type: 3}
   - {fileID: 7459617967329291029, guid: 1e86d6f6e9175084e96e6c3ff2b6e091, type: 3}
   - {fileID: 7459617967329291029, guid: 1e86d6f6e9175084e96e6c3ff2b6e091, type: 3}
   - {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9, type: 3}

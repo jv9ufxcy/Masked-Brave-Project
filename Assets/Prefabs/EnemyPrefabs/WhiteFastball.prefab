@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7447885408590751653}
   - component: {fileID: 7392957442314757607}
   m_Layer: 13
-  m_Name: WhiteBomb
+  m_Name: WhiteFastball
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,16 +47,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88908cd17c479ea4b8979a105e22c991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletType: 4
+  bulletType: 0
   direction: {x: 0, y: 0}
   bulletVel: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
-  bulletHitEffect: {fileID: 7459617967329291029, guid: b81017e0055c9e74ca7c6ca940f7ae8e,
+  bulletHitEffect: {fileID: 7459617967329291029, guid: 18c42084590b867449c3aceeec42a9de,
     type: 3}
-  bulletChild: {fileID: 0}
+  explosionEffect: {fileID: 7459617967329291029, guid: b81017e0055c9e74ca7c6ca940f7ae8e,
+    type: 3}
   tagToHit: Player
   tagToCollide: Ground
   lifeTime: 1
@@ -230,7 +231,7 @@ SpriteRenderer:
   m_SortingLayerID: -1411348221
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -434384616175877546, guid: b8e748b34ab6c0744a68fbe4ce64191f,
+  m_Sprite: {fileID: 1993014736812572763, guid: b8e748b34ab6c0744a68fbe4ce64191f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

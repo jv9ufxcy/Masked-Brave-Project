@@ -1341,7 +1341,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     void JumpStateCut()
     {
         //if (currentState==1)//jump state
-        if (aerialFlag)//jump state
+        if (currentState==1)//jump state
         {
             if (velocity.y > 0 && !Input.GetButton(GameEngine.coreData.rawInputs[0].name))
             {
@@ -1869,10 +1869,13 @@ public class CharacterObject : MonoBehaviour, IHittable
     
     //public float amplitude = 1f, frequency = 1f;
     [SerializeField] private bool isAggroRange, isLongRange, isShortRange;
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
 
     [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction, 3 = Float")]
     public int enemyType;
+    [Header("Desperation State")]
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int desperationTransitionState;
     [Header("enemyType 3 Only")]
     public float floatHeight = 2, floatTime=0.25f;
@@ -1985,6 +1988,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         closeAttackState = desperationCAStates;
         rangedAttackState = desperationRAStates;
         StartStateFromScript(desperationTransitionState);
+        attackStep = 0;
         dashCooldown += 100;
         //attackCooldown *= 0.5f;
     }

@@ -15,7 +15,7 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
     CharacterObject player;
     HealthManager playerHP;
     AudioManager audioManager;
-    [SerializeField]private int upgradeAmt = 2;
+    [SerializeField]private int upgradeAmt = 2,meterAmt = 50;
     [SerializeField]private string pickupSound;
     [SerializeField] private string unlockedMoveName;
     [SerializeField]private GameObject pickupEffect;
@@ -45,6 +45,10 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
             if (upgradeAmt > 0)
             {
                 playerHP.HealthUpgrade(upgradeAmt);
+            }
+            if (meterAmt > 0)
+            {
+                player.BuildMeter(meterAmt);
             }
             if (unlockedMoveName != null)
             {

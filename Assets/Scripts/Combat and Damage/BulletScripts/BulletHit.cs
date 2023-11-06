@@ -15,7 +15,7 @@ public class BulletHit : MonoBehaviour
     public CharacterObject target;
     public EnemySpawn closestEnemy;
     public Vector3 targetPos, velocity;
-    [SerializeField] private GameObject bulletHitEffect, bulletChild;
+    [SerializeField] private GameObject bulletHitEffect, explosionEffect;
     [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
     public float lifeTime = 2f, speed, rotation,maxJumpHeight = 4f, timeToJumpApex=0.125f,maxJumpVelocity, gravity,velocityXSmoothing, targetRange=10f;
     //[SerializeField] private int attackState = 0;
@@ -32,7 +32,10 @@ public class BulletHit : MonoBehaviour
         bulletSprites = GetComponentsInChildren<SpriteRenderer>();
         bulletColls = GetComponents<BoxCollider2D>();
         bulletRB = GetComponent<Rigidbody2D>();
-
+        if (explosionEffect==null)
+        {
+            explosionEffect = bulletHitEffect;
+        }
         if (bulletType==4)
         {
             thisBullet = GetComponent<Controller2D>();
@@ -240,13 +243,17 @@ public class BulletHit : MonoBehaviour
             RemoveForce();
             if (bulletHitEffect != null)
             {
-                GameObject hitEffect = Instantiate(bulletHitEffect, transform.position, transform.rotation);
                 if (isExplosion)
                 {
+                    GameObject hitEffect = Instantiate(explosionEffect, transform.position, transform.rotation);
                     BombController bomb = hitEffect.GetComponent<BombController>();
                     bomb.character = character;
                     bomb.StartState();
                 }
+                else
+                {
+                    GameObject dissipateEffect = Instantiate(bulletHitEffect, transform.position, transform.rotation);
+                }   
             }
             Destroy(gameObject, destroyTimer);
         }
@@ -295,6 +302,7 @@ public class BulletHit : MonoBehaviour
         //velocity *= -1;
         //velocity += Vector3.up;
         //bulletVel*= -1;
+        isExplosion = false;
         if (audioManager!=null)
         {
             audioManager.PlaySound(deflectSound);

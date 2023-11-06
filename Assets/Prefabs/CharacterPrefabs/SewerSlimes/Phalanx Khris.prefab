@@ -4875,8 +4875,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7373688278644007593}
-  m_RootOrder: 1
+  m_Father: {fileID: 4217467170511189530}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4769912499743263696
 SpriteRenderer:
@@ -9822,6 +9822,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4704411960889746219}
   - {fileID: 23279855908828480}
   m_Father: {fileID: 4620460539107160002}
   m_RootOrder: 0
@@ -19436,7 +19437,7 @@ Transform:
   - {fileID: 6578566107656233103}
   - {fileID: 2938589296800512151}
   m_Father: {fileID: 4217467170511189530}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7628279523438658775
 GameObject:
@@ -29175,7 +29176,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3314678896992989575}
-  - {fileID: 4704411960889746219}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29346,10 +29346,10 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 4900000048000000490000004a000000490000004800000061000000
-  rangedAttackState: 4a00000049000000490000004a00000048000000610000004900000048000000
-  desperationCAStates: 49000000610000004900000048000000610000004b000000
-  desperationRAStates: 4a000000490000004a0000004a000000610000004a0000004a0000004b000000
+  closeAttackState: 61000000490000004800000061000000480000004900000061000000
+  rangedAttackState: 4a00000049000000490000004a000000490000004900000061000000
+  desperationCAStates: 4900000061000000610000004b00000049000000610000004b000000
+  desperationRAStates: 490000004a0000004a0000004b000000490000004a0000004b000000
   enemyType: 0
   desperationTransitionState: 75
   floatHeight: 2
