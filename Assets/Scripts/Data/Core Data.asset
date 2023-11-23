@@ -354,7 +354,7 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: -10
+        val: -20
     - start: 1
       end: 30
       active: 1
@@ -9143,26 +9143,26 @@ MonoBehaviour:
     lockedMoveCheck: 0
   - stateName: Bomber/BombJump
     index: 0
-    length: 80
+    length: 100
     loop: 0
     blendRate: 0.1
     events:
-    - start: 5
-      end: 5
+    - start: 30
+      end: 30
       active: 1
       script: 0
       parameters:
       - name: 
         val: 40
-    - start: 0
-      end: 15
+    - start: 25
+      end: 40
       active: 1
       script: 1
       parameters:
       - name: 
         val: 16
-    - start: 5
-      end: 5
+    - start: 30
+      end: 30
       active: 1
       script: 10
       parameters:
@@ -9176,8 +9176,8 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
-    - start: 25
-      end: 25
+    - start: 50
+      end: 50
       active: 1
       script: 10
       parameters:
@@ -9191,8 +9191,8 @@ MonoBehaviour:
         val: -2
       - name: 
         val: 0
-    - start: 54.896908
-      end: 60
+    - start: 65
+      end: 85
       active: 1
       script: 1
       parameters:
@@ -12564,7 +12564,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -12574,7 +12574,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -12584,7 +12584,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -12594,7 +12594,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -12604,7 +12604,7 @@ MonoBehaviour:
     commands: 000000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 2
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -12614,7 +12614,7 @@ MonoBehaviour:
     commands: 00000000030000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0

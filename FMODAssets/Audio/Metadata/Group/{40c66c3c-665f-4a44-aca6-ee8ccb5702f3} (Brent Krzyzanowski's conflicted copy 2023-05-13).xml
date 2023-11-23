@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{40c66c3c-665f-4a44-aca6-ee8ccb5702f3}">
+		<property name="volume">
+			<value>-5</value>
+		</property>
+		<property name="name">
+			<value>SFX</value>
+		</property>
+		<relationship name="masters">
+			<destination>{6f771cff-9430-4ada-893d-309437a08c1d}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{7891e3fa-19fb-420a-8644-e2e6cf7cff15}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{1e01b9f6-c027-4065-a7c6-2c6ddacf528b}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{4b06b689-81fb-4ac8-88be-62c9996a9a9c}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{7891e3fa-19fb-420a-8644-e2e6cf7cff15}">
+		<relationship name="effects">
+			<destination>{39eb13f5-90e9-4714-8ef2-079eef6dc4d9}</destination>
+			<destination>{32356400-1485-48fe-b3c0-891029c6d80d}</destination>
+			<destination>{81edf2f0-f60a-4069-b485-c03b5485dcbc}</destination>
+			<destination>{ec6b66a4-b53c-42be-a732-3f9d9c0456ae}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{1e01b9f6-c027-4065-a7c6-2c6ddacf528b}" />
+	<object class="MixerBusFader" id="{39eb13f5-90e9-4714-8ef2-079eef6dc4d9}" />
+	<object class="Sidechain" id="{32356400-1485-48fe-b3c0-891029c6d80d}" />
+	<object class="MixerSend" id="{81edf2f0-f60a-4069-b485-c03b5485dcbc}">
+		<property name="level">
+			<value>0</value>
+		</property>
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{01b3fb00-78d1-46fe-a7af-dbb9d095cc15}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{ec6b66a4-b53c-42be-a732-3f9d9c0456ae}">
+		<property name="level">
+			<value>0</value>
+		</property>
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{bb730da2-9311-43ec-b535-816569e45b08}</destination>
+		</relationship>
+	</object>
+</objects>

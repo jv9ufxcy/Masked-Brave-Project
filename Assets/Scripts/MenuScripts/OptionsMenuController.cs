@@ -73,6 +73,10 @@ public class OptionsMenuController : MonoBehaviour
     {
         isFullScreen = fullScreenToggle.isOn;
         PlaySelectSound(0);
+        if (!isFullScreen&&isVSync)
+        {
+            ToggleVSync();
+        }
     }
     public void ToggleVSync()
     {

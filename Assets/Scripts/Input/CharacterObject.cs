@@ -2009,7 +2009,7 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     private void KillMinions()
     {
-        if (spawners.Length > 0)
+        if (spawners.Length > 0 && spawners[0] !=null)
         {
             foreach (InteractableObject spawner in spawners)
             {
