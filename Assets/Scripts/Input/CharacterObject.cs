@@ -1804,7 +1804,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
 
     private bool isInvulnerable;
-    private void SetInvulCooldown(float iFrames)
+    public void SetInvulCooldown(float iFrames)
     {
         invulCooldown = iFrames;
         curComboValue = 99;
@@ -1902,6 +1902,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         else return false;//cannot block
     }
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int defStateIndex;
     public int[] defStates;
     private int attackStep = 0;

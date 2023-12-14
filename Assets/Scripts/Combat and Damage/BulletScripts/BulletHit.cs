@@ -22,7 +22,7 @@ public class BulletHit : MonoBehaviour
     //[SerializeField] private LayerMask whatLayersToHit;
 
     //[SerializeField] private string bulletCollisionSound;
-    [SerializeField] private bool shouldScreenshakeOnHit = false, shouldStopOnHit = true, canReflect = true, parabolicArc = false;
+    [SerializeField] private bool shouldScreenshakeOnHit = false, shouldStopOnHit = true, canReflect = true, parabolicArc = false, cannotDeflect = false;
     public int bulletChain = 0, newBulletSpeed = 0;
     public CharacterObject character;
     private Controller2D thisBullet;
@@ -52,6 +52,11 @@ public class BulletHit : MonoBehaviour
             target = GameEngine.gameEngine.mainCharacter;
             targetPos = target.transform.position;
             velocity = (targetPos - transform.position).normalized * speed;
+            if (bulletType==5)
+            {
+                boomerangTime = boomerangStallTime;
+                transform.rotation = Quaternion.Euler(0, 0, rotation);
+            }
         }
         else
         {
@@ -87,17 +92,7 @@ public class BulletHit : MonoBehaviour
                     //thisBullet.FrontVelocity( speed * transform.localScale.x);
                     break;
                 case 5:
-                    if (boomerangStartTime > 0)
-                    {
-                        transform.rotation = Quaternion.Euler(0, 0, rotation);
-                        boomerangStartTime--;
-                        direction.y += ((target.transform.position.y + target.transform.position.normalized.y) - transform.position.y) * speedDampen;
-                        transform.Translate(direction * speed * Time.fixedDeltaTime);
-                    }
-                    else
-                    {
-                        Boomerang();
-                    }
+                    Boomerang();
                     break;
                 case 6:
                     Satellite();
@@ -200,7 +195,7 @@ public class BulletHit : MonoBehaviour
         }
         if (bulletType == 5)//if boomer
         {
-            if (boomerangStartTime <=0 && other.CompareTag(tagToCollide))
+            if (boomerangStallTime <=0 && other.CompareTag(tagToCollide))
             {
                 OnDestroyGO();
             }
@@ -258,11 +253,27 @@ public class BulletHit : MonoBehaviour
             Destroy(gameObject, destroyTimer);
         }
     }
-    public float speedDampen = 0.01f, boomerangStartTime = 30f, angle, boomerSpeed = 10f/*(2 * Mathf.PI) / 1*/, radius=1f;
+    public float speedDampen = 0.01f, boomerangStallTime = .5f, boomerangTime, angle, boomerSpeed = 10f/*(2 * Mathf.PI) / 1*/, radius=1f;
     public Vector3 boomerangDist;
     public Vector3 followVel;
     private void Boomerang()
     {
+        if (boomerangTime>0)
+        {
+            boomerangTime -= Time.fixedDeltaTime;
+            transform.Translate(velocity * speed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            if (boomerangStallTime>0)
+            {
+                boomerangStallTime -= Time.fixedDeltaTime;
+            }
+            else
+            {
+                transform.Translate(velocity * -boomerSpeed * Time.fixedDeltaTime);
+            }
+        }
         //if (Mathf.Abs(target.transform.position.x - transform.position.x)>=boomerangDist.x)
         //{
         //    followVel.x += (target.transform.position.x - transform.position.x) * speedDampen;
@@ -273,10 +284,10 @@ public class BulletHit : MonoBehaviour
         //    followVel.y += ((target.transform.position.y + target.transform.position.normalized.y) - transform.position.y ) * speedDampen;
         //    Mathf.Clamp(followVel.y, -.25f, .25f);
         //}
-        angle += boomerSpeed * Time.fixedDeltaTime; //if you want to switch direction, use -= instead of +=
-        followVel.x = Mathf.Cos(angle) * radius;
-        followVel.y = Mathf.Sin(angle) * radius;
-        SetVelocity(followVel);
+        //angle += boomerSpeed * Time.fixedDeltaTime; //if you want to switch direction, use -= instead of +=
+        //followVel.x = Mathf.Cos(angle) * radius;
+        //followVel.y = Mathf.Sin(angle) * radius;
+        //SetVelocity(followVel);
     }
     private void Satellite()
     {
@@ -297,6 +308,10 @@ public class BulletHit : MonoBehaviour
     [SerializeField] private string deflectSound = "Enemy/Roy/Block";
     private void ReflectBullet()
     {
+        if (cannotDeflect)
+        {
+            return;
+        }
         //Debug.Log("bulletReflected");
         transform.rotation = Quaternion.Euler(0, 0, rotation+135);
         //velocity *= -1;

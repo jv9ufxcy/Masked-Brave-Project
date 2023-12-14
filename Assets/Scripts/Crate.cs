@@ -15,6 +15,8 @@ public class Crate : MonoBehaviour, IHittable
     Rigidbody2D rb;
     BoxCollider2D boxCollider;
     bool isFalling;
+    public bool IsSpawned;
+    Vector3 spawnPos;
     public GameObject GetGameObject()
     {
         return gameObject;
@@ -50,18 +52,29 @@ public class Crate : MonoBehaviour, IHittable
         spriteRend = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        defaultMat=spriteRend.material;
         audioManager = AudioManager.instance;
-        currentHealth=maxHealth;
-        transform.SetParent(null);
+        defaultMat = spriteRend.material;
+        spawnPos = transform.position;
+        OnSpawn();
     }
-    [SerializeField] private LayerMask playerLayer;
+
+    public void OnSpawn()
+    {
+        gameObject.SetActive(true);
+        currentHealth = maxHealth;
+        transform.SetParent(null);
+        transform.position = spawnPos;
+        IsSpawned = true;
+    }
+
+    [SerializeField] private LayerMask playerLayer,groundLayer;
     [SerializeField] private float collisionHeight = 0.1f;
     [SerializeField] private int projectileIndex = 61;
+    [SerializeField] private float fallSpeedCheck = -0.2f;
     // Update is called once per frame
     void Update()
     {
-        isFalling = rb.velocity.y < -1;
+        isFalling = rb.velocity.y < fallSpeedCheck;
         if (isFalling)
         {
             RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider.bounds.center,boxCollider.bounds.size/2,0f, Vector2.down, boxCollider.bounds.extents.y + collisionHeight, playerLayer);
@@ -72,10 +85,16 @@ public class Crate : MonoBehaviour, IHittable
                 victim.Hit(GameEngine.gameEngine.mainCharacter, projectileIndex, 0);
                 DestroyCrate();
             }
+            //RaycastHit2D groundCastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size / 2, 0f, Vector2.down, boxCollider.bounds.extents.y + collisionHeight, groundLayer);//maybe hcange to linecast
+            RaycastHit2D groundCastHit = Physics2D.Raycast(boxCollider.bounds.center, Vector2.down, boxCollider.bounds.extents.y + (collisionHeight*2),groundLayer);//maybe hcange to linecast
+            if (groundCastHit)
+            {
+                DestroyCrate();
+            }
         }
     }
     [SerializeField] private bool isExplosion = false;
-    [SerializeField] private float lifeTime = 0.1f;
+    //[SerializeField] private float lifeTime = 0.1f;
     void RemoveHealth(AttackEvent curAtk)
     {
         currentHealth -= curAtk.damage;
@@ -98,6 +117,8 @@ public class Crate : MonoBehaviour, IHittable
             bomb.StartState();
         }
         DropItem();
+        IsSpawned = false;
+        spriteRend.material = defaultMat;
         gameObject.SetActive(false);
     }
     [SerializeField] int dropRate = 2,numOfPickups;

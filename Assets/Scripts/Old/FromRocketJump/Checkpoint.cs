@@ -17,6 +17,8 @@ public class Checkpoint : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     AudioManager audioManager;
     public string checkpointSound = "Props/Checkpoint";
+    [SerializeField] private int checkPointFXIndex = 14;
+    [SerializeField] private GameObject checkPointFX;
 
     //use this for initialization
     private void Start()
@@ -47,10 +49,11 @@ public class Checkpoint : MonoBehaviour
         spriteRenderer.color = activatedColor;
         gm.lastCheckpointPos = currentlyActiveCheckpoint.transform.position;
 
-        GameEngine.gameEngine.mainCharacter.FullyHeal();
+        //GameEngine.gameEngine.mainCharacter.FullyHeal();
         Mission.instance.CompleteScore();
         Mission.instance.CheckpointTime();
         audioManager.PlaySound(checkpointSound);
+        GameEngine.GlobalPrefab(checkPointFXIndex,checkPointFX, -1, -1);
     }
     private void DeactivateCheckpoint()
     {

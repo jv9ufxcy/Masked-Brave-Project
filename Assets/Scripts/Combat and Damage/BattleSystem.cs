@@ -209,6 +209,7 @@ public class BattleSystem : MonoBehaviour
 
     public void EndBattle()
     {
+        GameEngine.gameEngine.mainCharacter.SetInvulCooldown(120);
         audioManager.PlaySound(battleEndAudio);
         musicManager.StartBGM(stageTheme);
         enemySpawnList.Clear();
