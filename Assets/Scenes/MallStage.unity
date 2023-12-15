@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1144,7 +1144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2073879222}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &244814539
 MonoBehaviour:
@@ -1768,12 +1768,12 @@ PrefabInstance:
     - target: {fileID: 270833875624664107, guid: 90e1af9cadaf10d4d9fefb8b00b28cad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 270833875624664107, guid: 90e1af9cadaf10d4d9fefb8b00b28cad,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79999924
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 270833875624664107, guid: 90e1af9cadaf10d4d9fefb8b00b28cad,
         type: 3}
@@ -22037,11 +22037,11 @@ MonoBehaviour:
     Path: event:/Music/Boss
   stageTheme:
     Guid:
-      Data1: 1729377491
-      Data2: 1258386827
-      Data3: -2091954281
-      Data4: -1350409495
-    Path: event:/Music/Weapons Factory
+      Data1: 1147201400
+      Data2: 1131910282
+      Data3: -829060182
+      Data4: 125213129
+    Path: event:/Music/Stage One
 --- !u!4 &615570596
 Transform:
   m_ObjectHideFlags: 0
@@ -22055,6 +22055,7 @@ Transform:
   m_Children:
   - {fileID: 1877387054}
   - {fileID: 1053979554}
+  - {fileID: 1802826170}
   - {fileID: 1766584605}
   - {fileID: 922263477}
   m_Father: {fileID: 0}
@@ -22116,12 +22117,12 @@ MonoBehaviour:
     name: ???
     sentences: 'KABOOM!
 
-      Clear out if you don''t wanna die!'
+      Clear out if you don''t wanna get hurt!'
   - profile: {fileID: -1996703693659354134, guid: f0120b5629f3f4449a7fe99b64f1ab92,
       type: 3}
     cutscene: {fileID: 21300000, guid: 42b1c1f033041aa4bbdefa401205afef, type: 3}
     name: Zoe
-    sentences: What the hell are you?
+    sentences: What the hell are you doing threatening us?
   - profile: {fileID: 1003267074331328983, guid: d4263f85349f25f44909748074bb120e,
       type: 3}
     cutscene: {fileID: 21300000, guid: 42b1c1f033041aa4bbdefa401205afef, type: 3}
@@ -22133,17 +22134,15 @@ MonoBehaviour:
       type: 3}
     cutscene: {fileID: 21300000, guid: 42b1c1f033041aa4bbdefa401205afef, type: 3}
     name: Zoe
-    sentences: 'What''d a diner ever do to you?
-
-      Too much mayo on your burger?'
+    sentences: What'd a diner ever do to you?
   - profile: {fileID: 1003267074331328983, guid: d4263f85349f25f44909748074bb120e,
       type: 3}
     cutscene: {fileID: 21300000, guid: 42b1c1f033041aa4bbdefa401205afef, type: 3}
     name: ???
-    sentences: 'Shut up, I''m tearing this whole mall down.
+    sentences: 'Doesn''t matter, I''m saving this place for last.
 
-      Don''t be here
-      when I come back.'
+      Don''t be
+      here when I come back.'
   - profile: {fileID: -1996703693659354134, guid: f0120b5629f3f4449a7fe99b64f1ab92,
       type: 3}
     cutscene: {fileID: 21300000, guid: 42b1c1f033041aa4bbdefa401205afef, type: 3}
@@ -68434,7 +68433,7 @@ Transform:
   m_Children:
   - {fileID: 376243934}
   m_Father: {fileID: 615570596}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &941999447
 PrefabInstance:
@@ -68451,7 +68450,7 @@ PrefabInstance:
     - target: {fileID: 2832646074070743477, guid: d1511257f26c7344596c1bf808c0572f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.75
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2832646074070743477, guid: d1511257f26c7344596c1bf808c0572f,
         type: 3}
@@ -68987,7 +68986,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053979553}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.5, y: -3, z: 0}
+  m_LocalPosition: {x: 5.5, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 14, z: 1}
   m_Children: []
   m_Father: {fileID: 615570596}
@@ -69068,8 +69067,19 @@ MonoBehaviour:
   OnDialogueStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ShowCharacterCutscene
+      - m_Target: {fileID: 1802826168}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 4711075557076098983}
+        m_MethodName: BossRoomMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -69077,7 +69087,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
   OnDialogueEnd:
     m_PersistentCalls:
@@ -70256,17 +70266,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1998096551720584084}
-        m_MethodName: ChangeActiveCamera
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
@@ -70323,11 +70322,11 @@ MonoBehaviour:
     Path: event:/Music/Boss
   stageTheme:
     Guid:
-      Data1: 1848053232
-      Data2: 1261467299
-      Data3: 488878501
-      Data4: -77446334
-    Path: event:/Music/Sewer
+      Data1: 1147201400
+      Data2: 1131910282
+      Data3: -829060182
+      Data4: 125213129
+    Path: event:/Music/Stage One
 --- !u!4 &1285042116
 Transform:
   m_ObjectHideFlags: 0
@@ -71625,6 +71624,17 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1998096551720584084}
+        m_MethodName: ChangeActiveCamera
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -78791,7 +78801,7 @@ Transform:
   - {fileID: 337411692}
   - {fileID: 941999449}
   m_Father: {fileID: 2131071004}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1582297135 stripped
 MonoBehaviour:
@@ -79363,7 +79373,7 @@ Transform:
   - {fileID: 89518152}
   - {fileID: 156734284}
   m_Father: {fileID: 2131071004}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1728087053
 PrefabInstance:
@@ -80082,7 +80092,7 @@ Transform:
   m_LocalScale: {x: 1, y: 14, z: 1}
   m_Children: []
   m_Father: {fileID: 615570596}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1774776707
 GameObject:
@@ -80219,6 +80229,88 @@ MonoBehaviour:
   OnPlayerExitTrigger:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1802826168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1802826170}
+  - component: {fileID: 1802826169}
+  m_Layer: 0
+  m_Name: Alex_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!212 &1802826169
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802826168}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1411348221
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1188037148240035812, guid: 0b7f6e279210f9c4da7e18bbf997fa2a,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 1
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4, y: 4}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1802826170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802826168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.75, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 615570596}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1802846706
 GameObject:
   m_ObjectHideFlags: 0
@@ -80327,6 +80419,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1868730369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1868730371}
+  - component: {fileID: 1868730370}
+  m_Layer: 0
+  m_Name: ProfSparks_5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!212 &1868730370
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868730369}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1411348221
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -4535315324645939107, guid: 89bba4d23b1ea2843b7704dfb06c5b48,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5, y: 5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1868730371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868730369}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.75, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2131071004}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1877387053
 GameObject:
   m_ObjectHideFlags: 0
@@ -81931,9 +82105,92 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1179648058}
+  - {fileID: 2080701829}
   - {fileID: 244814538}
   m_Father: {fileID: 1285042116}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2080701827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2080701829}
+  - component: {fileID: 2080701828}
+  m_Layer: 0
+  m_Name: ProfSparks_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &2080701828
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080701827}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1411348221
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -5458432186115630438, guid: 89bba4d23b1ea2843b7704dfb06c5b48,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5, y: 5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &2080701829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080701827}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.75, y: -4.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2073879222}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2087006638
 GameObject:
@@ -82382,6 +82639,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1868730369}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2080701827}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   numOfEnemies: {fileID: 43649530}
   battleFightText: {fileID: 1404728385}
   enemyCounter: {fileID: 1630324278}
@@ -82425,11 +82704,11 @@ MonoBehaviour:
     Path: event:/Music/Boss
   stageTheme:
     Guid:
-      Data1: 1848053232
-      Data2: 1261467299
-      Data3: 488878501
-      Data4: -77446334
-    Path: event:/Music/Sewer
+      Data1: 1147201400
+      Data2: 1131910282
+      Data3: -829060182
+      Data4: 125213129
+    Path: event:/Music/Stage One
 --- !u!4 &2131071004
 Transform:
   m_ObjectHideFlags: 0
@@ -82441,6 +82720,7 @@ Transform:
   m_LocalPosition: {x: -17, y: -30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1868730371}
   - {fileID: 1572022002}
   - {fileID: 1715189415}
   m_Father: {fileID: 0}
