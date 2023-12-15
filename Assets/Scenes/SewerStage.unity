@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -814,10 +814,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: dff985ba618e7cb498a84933e3275dc1, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: -1, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1 &287029395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,10 +1736,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: c9c1bd813d282574f89efa9c66de37ec, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: -1, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1001 &512592831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1842,10 +1848,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: d8219e2aa65eeb54a955d4b779692f3a, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: 0, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1001 &531851920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2119,10 +2128,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: c9c1bd813d282574f89efa9c66de37ec, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: -1, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1 &589650075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,6 +2347,92 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 661777147}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &664015798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664015799}
+  - component: {fileID: 664015800}
+  m_Layer: 0
+  m_Name: ZoeLine (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &664015799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664015798}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1229652191}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &664015800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664015798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cee0c2e69020646b70674d39f90837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+  - profile: {fileID: 1976531482833533092, guid: d4263f85349f25f44909748074bb120e,
+      type: 3}
+    cutscene: {fileID: 0}
+    name: Zoe
+    sentences: 'Is she good? Even Alex had banter when he went nuts.
+
+'
+  - profile: {fileID: 21300024, guid: 6c5d99bbbc4b2754385d3239806234a9, type: 3}
+    cutscene: {fileID: 0}
+    name: Sparks
+    sentences: Seems every mask has a different effect on Bring her back to base,
+      she might have a lead.
+  - profile: {fileID: -1996703693659354134, guid: f0120b5629f3f4449a7fe99b64f1ab92,
+      type: 3}
+    cutscene: {fileID: 0}
+    name: Zoe
+    sentences: 'Right, let''s get her someplace safe.
+
+      I don''t wanna run into
+      that red guy right now.'
+  OnDialogueStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1543264848}
+        m_MethodName: EndLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  shouldMoveCharacter: 1
+  character:
+  - {fileID: 616907624}
+  characterPos:
+  - {fileID: 664015799}
 --- !u!1001 &664370321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2905,10 +3003,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: dff985ba618e7cb498a84933e3275dc1, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: -1, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1001 &776210041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4368,33 +4469,29 @@ MonoBehaviour:
       type: 3}
     cutscene: {fileID: 0}
     name: Zoe
-    sentences: A new monster? No, is that...?
+    sentences: 'A new slime type? No, is that...?
+
+      Khris?'
   - profile: {fileID: 2044344520945467304, guid: f0120b5629f3f4449a7fe99b64f1ab92,
       type: 3}
     cutscene: {fileID: 0}
     name: ???
-    sentences: 'Tresspasser...shall not take...
+    sentences: ...
+  - profile: {fileID: 1976531482833533092, guid: d4263f85349f25f44909748074bb120e,
+      type: 3}
+    cutscene: {fileID: 0}
+    name: Zoe
+    sentences: 'It''s just glaring at me... I gotta free her.
 
-      our power...'
-  - profile: {fileID: 1976531482833533092, guid: d4263f85349f25f44909748074bb120e,
-      type: 3}
-    cutscene: {fileID: 0}
-    name: Zoe
-    sentences: (Whatever's talking to me barely sounds like her.)
-  - profile: {fileID: 1976531482833533092, guid: d4263f85349f25f44909748074bb120e,
-      type: 3}
-    cutscene: {fileID: 0}
-    name: Zoe
-    sentences: 'I''m not giving up on you Khris,
+      I''m not giving
+      up on you Khris,
 
       just hang in there!'
   - profile: {fileID: 2044344520945467304, guid: f0120b5629f3f4449a7fe99b64f1ab92,
       type: 3}
     cutscene: {fileID: 0}
     name: Khris
-    sentences: 'No one will ever...
-
-      Take our power... anymore...'
+    sentences: ...
   OnDialogueStart:
     m_PersistentCalls:
       m_Calls:
@@ -4438,7 +4535,7 @@ MonoBehaviour:
   character:
   - {fileID: 616907624}
   characterPos:
-  - {fileID: 1229652191}
+  - {fileID: 1154926791}
 --- !u!4 &1154926791
 Transform:
   m_ObjectHideFlags: 0
@@ -4697,6 +4794,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1154926791}
+  - {fileID: 664015799}
   m_Father: {fileID: 2090122197}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5834,10 +5932,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: d8219e2aa65eeb54a955d4b779692f3a, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: 0, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1001 &1379050738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6862,10 +6963,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: d8219e2aa65eeb54a955d4b779692f3a, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: 0, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1001 &1442946805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13413,10 +13517,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: dff985ba618e7cb498a84933e3275dc1, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: -1, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1001 &1785232699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18402,10 +18509,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: d8219e2aa65eeb54a955d4b779692f3a, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: 0, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!4 &1802800078 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6476919978724093375, guid: 83a95f1077cc84541a77feabf629e69d,
@@ -18874,10 +18984,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: d8219e2aa65eeb54a955d4b779692f3a, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: 0, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!20 &1933888369 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1972660967820234308, guid: 52f19e2a6b2fa5c4eac4f763e7f57a47,
@@ -18928,10 +19041,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazardToSpawn: {fileID: 1580854460, guid: dff985ba618e7cb498a84933e3275dc1, type: 3}
-  spawnedHazard: {fileID: 0}
+  hazardObject: {fileID: 0}
+  crateObject: {fileID: 0}
   cooldown: 3
   maxCooldown: 3
   offset: {x: 0, y: -1, z: 0}
+  spawnDust: {fileID: 0}
+  _spawnLogic: 0
 --- !u!1001 &1951519884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20012,8 +20128,8 @@ MonoBehaviour:
   OnBattleEnded:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1543264848}
-        m_MethodName: EndLevel
+      - m_Target: {fileID: 664015800}
+        m_MethodName: BeginDialogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
