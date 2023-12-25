@@ -57,7 +57,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
     type: 3}
-  bulletChild: {fileID: 0}
+  explosionEffect: {fileID: 0}
   tagToHit: Player
   tagToCollide: Ground
   lifeTime: 3
@@ -73,6 +73,7 @@ MonoBehaviour:
   shouldStopOnHit: 1
   canReflect: 1
   parabolicArc: 0
+  cannotDeflect: 0
   bulletChain: 0
   newBulletSpeed: 0
   character: {fileID: 0}
@@ -83,12 +84,14 @@ MonoBehaviour:
   destroyTimer: 0.1
   isExplosion: 0
   speedDampen: 0.01
-  boomerangStartTime: 30
+  boomerangStallTime: 0.5
+  boomerangTime: 0
   angle: 0
   boomerSpeed: 10
   radius: 1
   boomerangDist: {x: 0, y: 0, z: 0}
   followVel: {x: 0, y: 0, z: 0}
+  deflectSound: Enemy/Roy/Block
 --- !u!212 &212310986017103336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,7 +196,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.5, y: 0}
+  m_Offset: {x: 1, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -204,7 +207,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.75, y: 1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &995338652320179467
 MonoBehaviour:
@@ -226,5 +229,6 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  defaultColl: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}

@@ -74,7 +74,7 @@ public class HazardSpawner : MonoBehaviour
                 if (cooldown > 0)
                 {
                     cooldown -= Time.fixedDeltaTime;
-                    if (cooldown == 1 && spawnDust != null)
+                    if ((cooldown < 1 && cooldown > 0.95) && spawnDust != null)
                     {
                         spawnDust.Play();
                     }
@@ -86,6 +86,12 @@ public class HazardSpawner : MonoBehaviour
                     spawnDust.Stop();
                 }
             }
+        }
+        else//instantiate hazard
+        {
+            SpawnHazard();
+            cooldown = maxCooldown;
+            //Debug.Log("Initial Spawn");
         }
     }
 

@@ -63,6 +63,7 @@ public class PauseManager : MonoBehaviour
     public void Results()
     {
         resultsMenuUI.SetActive(true);
+        resultsMenuUI.GetComponentInChildren<Button>().Select();
         DisplayResults();
         Time.timeScale=0f;
         IsGamePaused = true;

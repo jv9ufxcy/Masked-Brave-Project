@@ -26,7 +26,8 @@ public class Mission : MonoBehaviour
     [SerializeField] private string timeCounter = "Time: 00:00.00";
     public float elapsedTime, savedTime;
     public float bestTime, maxTime;
-
+    [Header("Score On Reload")]
+    [Space]
     public int savedScore;
 
     public float enemiesKilled, enemyKillReq;
@@ -93,12 +94,17 @@ public class Mission : MonoBehaviour
     {
         StartCoroutine(InitializeCoRoutine());
         elapsedTime = savedTime;
-        MissionPoints = savedScore;
-        mainChar.controlType = CharacterObject.ControlType.PLAYER;
+        StartCoroutine(DelayedScoreReset());
         BeginTimer();
+        mainChar.controlType = CharacterObject.ControlType.PLAYER;
         MusicManager.instance.StartBGM(stageTheme);
+        Debug.Log("Mission Restarted");
     }
-
+    private IEnumerator DelayedScoreReset()
+    {
+        yield return new WaitForFixedUpdate();
+        MissionPoints = savedScore;
+    }
     private void Initialize()
     {
         mainChar = GameEngine.gameEngine.mainCharacter;
@@ -115,6 +121,8 @@ public class Mission : MonoBehaviour
         scoreRectTransform.DOAnchorPos(hiddenPos, 0);
         ScoreMultiplier = 1;
         //Debug.Log("Initialize");
+        if (!isReload)
+            mainChar.controlType = CharacterObject.ControlType.OBJECT;
     }
     [SerializeField] private int henshinState = 37;
     private IEnumerator MissionStart()
@@ -299,8 +307,8 @@ public class Mission : MonoBehaviour
 
                     ScoreMultiplier += multiKill;
                     multiKillTimer = 0;
-                    multiKill = 0;
                     OnSkillUsed();
+                    multiKill = 0;
                 }
                 else
                 {
@@ -309,8 +317,8 @@ public class Mission : MonoBehaviour
                     PopUpTextQueue("Z-Finish\n<color=#FCE945>+" + finisherBonus);
                     IncreaseScore(finisherBonus);
                     multiKillTimer = 0;
-                    multiKill = 0;
                     OnSkillUsed();
+                    multiKill = 0;
                 }
             }
         }
@@ -346,7 +354,9 @@ public class Mission : MonoBehaviour
             ScoreVisible(value);
         }
     }
-
+    [Header("Score")]
+    [Space]
+    [SerializeField] private int missionPoints;
     public int MissionPoints
     {
         get => missionPoints;
@@ -568,6 +578,7 @@ public class Mission : MonoBehaviour
     private IEnumerator MissionComplete()
     {
         OnMissionComplete.Invoke();
+        NeutralState();
         missionStartText = PauseManager.pauseManager.battleUI;
         menuTimer = PauseManager.pauseManager.menuTimer;
         CalculateScore();
@@ -587,12 +598,22 @@ public class Mission : MonoBehaviour
         missionStartText.DOColor(Color.clear, 0.25f);
 
         yield return new WaitForSeconds(missionStartSeconds);
-        GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.PLAYER;
+        //GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.PLAYER;
         PauseManager.pauseManager.Results();
         LevelChange();
     }
+
+    private static void NeutralState()
+    {
+        CharacterObject mChar = GameEngine.gameEngine.mainCharacter;
+        mChar.controlType = CharacterObject.ControlType.OBJECT;
+        mChar.moveSpeed = 0;
+        mChar.StartStateFromScript(0);
+        mChar.CutsceneUpdatePhysics();
+    }
+
     [SerializeField] private string nextLevel = "LevelSelectScene";
-    private int missionPoints;
+    
 
     private void LevelChange()
     {

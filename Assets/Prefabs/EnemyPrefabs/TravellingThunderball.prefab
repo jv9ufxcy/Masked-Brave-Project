@@ -56,7 +56,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 7459617967329291029, guid: a27062d9c47b0e34b9afb6942de1ffab,
     type: 3}
-  bulletChild: {fileID: 0}
+  explosionEffect: {fileID: 0}
   tagToHit: Player
   tagToCollide: Player
   lifeTime: 1.5
@@ -68,15 +68,11 @@ MonoBehaviour:
   gravity: 0
   velocityXSmoothing: 0
   targetRange: 10
-  attackState: 0
-  whatLayersToHit:
-    serializedVersion: 2
-    m_Bits: 9728
-  bulletCollisionSound: 
   shouldScreenshakeOnHit: 0
   shouldStopOnHit: 1
   canReflect: 0
   parabolicArc: 0
+  cannotDeflect: 0
   bulletChain: 0
   newBulletSpeed: 0
   character: {fileID: 0}
@@ -87,12 +83,14 @@ MonoBehaviour:
   destroyTimer: 0.1
   isExplosion: 0
   speedDampen: 0.01
-  boomerangStartTime: 30
+  boomerangStallTime: 0.5
+  boomerangTime: 0
   angle: 0
   boomerSpeed: 10
   radius: 1
   boomerangDist: {x: 0, y: 0, z: 0}
   followVel: {x: 0, y: 0, z: 0}
+  deflectSound: Enemy/Roy/Block
 --- !u!50 &103164842620681103
 Rigidbody2D:
   serializedVersion: 4
@@ -127,7 +125,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -138,7 +136,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &1028938590309025647
 MonoBehaviour:
@@ -160,6 +158,7 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  defaultColl: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}
 --- !u!1 &4499256447364090959
@@ -188,7 +187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4499256447364090959}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4416640776730492586}
@@ -230,8 +229,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1411348221
-  m_SortingLayer: 3
+  m_SortingLayerID: -1964297353
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -3916260800885635326, guid: 82e96990c8adc8d4fa9d260db6a9f0e6,
     type: 3}

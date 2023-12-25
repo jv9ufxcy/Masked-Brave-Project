@@ -19,5 +19,6 @@ public class UnlockLevel : MonoBehaviour, IDataPersistence
     public void UnlockLevels(int level)
     {
         unlockedLevels = level;
+        this.transform.SetParent(null);//removes parent from mission child 
     }
 }

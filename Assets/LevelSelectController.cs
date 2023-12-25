@@ -25,6 +25,7 @@ public class LevelSelectController : MonoBehaviour, IDataPersistence
             if (i > savedLevelUnlockIndex)
                 levelButtons[i].interactable = false;
         }
+        Debug.Log("Unlocked "+ savedLevelUnlockIndex+" Levels");
         audioManager = AudioManager.instance;
         SetMenuInput();
     }
