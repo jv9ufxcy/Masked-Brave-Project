@@ -186,6 +186,8 @@ public class TitleScreen : MonoBehaviour,IDataPersistence
     public void OnContinueGameClicked()
     {
         dataPanel.SetActive(false);
+        // save the game anytime before loading a new scene
+        DataPersistenceManager.instance.SaveGame();
         SaveMenuDisable();
     }
 }

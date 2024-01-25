@@ -53,6 +53,7 @@ public class DataPersistenceManager : MonoBehaviour
     public void ChangeSelectedProfileId(string newProfileId)
     {
         this.selectedProfileID = newProfileId;//update profile
+        Debug.Log("Current profile: "+this.selectedProfileID);
         LoadGame();
     }
     private void Start()
@@ -71,7 +72,7 @@ public class DataPersistenceManager : MonoBehaviour
         if (overrideSelectedProfileId)
         {
             this.selectedProfileID = testSelectedProfileId;
-            Debug.LogWarning("Selected ProfileID overwritten");
+            Debug.LogWarning("Selected ProfileID overwritten with test ID: " + testSelectedProfileId);
         }
     }
     public void NewGame()
@@ -84,22 +85,22 @@ public class DataPersistenceManager : MonoBehaviour
         {
             return;
         }
-            this.gameData = dataHandler.Load(selectedProfileID);
-
+            
+        this.gameData = dataHandler.Load(selectedProfileID);
 
         if (this.gameData==null&&initDataIfNull)//if no data do not continue
-        { NewGame(); }
+        { 
+            NewGame();
+        }
         if (this.gameData==null)//if no data do not continue
         {
             Debug.Log("No data found. Create New Data");
-            //NewGame();
             return;
         }
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)//update all DP scripts
         {
             dataPersistenceObj.LoadData(gameData);
         }
-        //Debug.Log("Loaded skillList = " + gameData.unlockedSkillsData);
     }
     public void SaveGame()
     {
@@ -112,13 +113,12 @@ public class DataPersistenceManager : MonoBehaviour
             Debug.LogWarning("No data. Create a new game.");
             return;
         }
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)//save all DP scripts
         {
             dataPersistenceObj.SaveData(gameData);
         }
-        gameData.lastUpdated = System.DateTime.Now.ToBinary();
-        //Debug.Log("Saved skillList = " + gameData.unlockedSkillsData);
-        dataHandler.Save(gameData, selectedProfileID);
+        gameData.lastUpdated = System.DateTime.Now.ToBinary();//timestamp file
+        dataHandler.Save(gameData, selectedProfileID);//save data to file
     }
     private void OnApplicationQuit()
     {

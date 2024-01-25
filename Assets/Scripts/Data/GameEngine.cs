@@ -23,6 +23,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
     public CharacterObject mainCharacter;
 
     public int globalMovelistIndex, maxIndex=2;
+    public int extraSpecialMeter;
     public UnityEvent OnFormChange;
 
     public MoveList CurrentMoveList()
@@ -54,7 +55,11 @@ public class GameEngine : MonoBehaviour,IDataPersistence
             unlockedSkillsList.Add(moveName);
         }
     }
-    
+    public void SetSpecialMeter(int extraMeter)
+    {
+        if (mainCharacter!=null)
+            mainCharacter.UpgradeMeter(extraMeter);
+    }
     // Use this for initialization
     void Start ()
     {
@@ -123,6 +128,11 @@ public class GameEngine : MonoBehaviour,IDataPersistence
     {
         this.unlockedSkillsList = data.unlockedSkillsData;
         this.unlockedLevels = data.levelUnlocked;
+        foreach (string item in data.energyTanksCollected)
+        {
+            int _meter = 25;
+            SetSpecialMeter(_meter);
+        }
     }
 
     public void SaveData(GameData data)

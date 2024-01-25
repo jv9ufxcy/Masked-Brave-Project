@@ -9,7 +9,7 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
     public static HealthSystem healthSystemStatic;
     public int healthBoost;
     public int maxHealth = 18;
-    public float heartOffset = 4f, heartAnchor = -60f;
+    public float heartOffset = 4f, heartAnchor = -60f, lastHeartPos=-60f;
     [SerializeField] private Vector2 sizeDelta = new Vector2(64,64);
     [SerializeField] private Sprite healthSprite0;
     [SerializeField] private Sprite healthSprite1;
@@ -17,13 +17,16 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
     private List<HealthImage> healthImageList;
     private HealthSystem healthSystem;
     private RectTransform healthTransform;
+    private Image healthBGImage;
     private void Awake()
     {
         healthImageList = new List<HealthImage>();
         healthTransform = transform.parent.GetComponent<RectTransform>();
+        healthBGImage=healthTransform.GetComponent<Image>();
     }
     private void Start()
     {
+        lastHeartPos = heartAnchor;
         SetMaxHealth(healthBoost);
     }
 
@@ -45,6 +48,11 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
             HealthSystem.Heart heart = heartList[i];
             CreateHeartImage(heartAnchorPos).SetHealthFragments(heart.GetFragmentAmount());
             heartAnchorPos += new Vector2(heartOffset, 0);//4px
+            lastHeartPos = heartAnchorPos.x;
+        }
+        for (int i = 0; i < healthBoost/2; i++)
+        {
+            ScaleHealthSliderBG();
         }
         healthSystem.OnDamaged += HealthSystem_OnDamaged;
         healthSystem.OnHealed += HealthSystem_OnHealed;
@@ -67,14 +75,17 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
     }
     private void HealthSystem_OnUpgrade(object sender, System.EventArgs e)
     {
-        //foreach (KeyValuePair<string, bool> pair in data.upgradesCollected)
-        //{
-        //    if (pair.Value)
-        //    {
-        //        healthBoost++;
-        //        healthBoost++;
-        //    }
-        //}
+        List<HealthSystem.Heart> heartList = healthSystem.GetHeartList();
+        Vector2 heartAnchorPos = new Vector2(lastHeartPos, 0);
+        int newHeart = 2;
+        for (int i = 0; i < newHeart; i++)
+        {
+            HealthSystem.Heart heart = heartList[i];
+            CreateHeartImage(heartAnchorPos).SetHealthFragments(0);
+            heartAnchorPos += new Vector2(heartOffset, 0);//4px
+            lastHeartPos = heartAnchorPos.x;
+            ScaleHealthSliderBG();
+        }
         RefereshAllHearts();
     }
     private void RefereshAllHearts()
@@ -108,16 +119,22 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
         healthImageList.Add(healthImage);
         return healthImage;//???
     }
-
+    private void ScaleHealthSliderBG()
+    {
+        Vector2 widthIncrease = new Vector2(heartOffset, 0);
+        Vector3 posIncrease = new Vector2(heartOffset/2,0);
+        healthTransform.sizeDelta += widthIncrease;
+        healthTransform.localPosition += posIncrease;
+        transform.localPosition -= posIncrease;
+    }
     public void LoadData(GameData data)
     {
-        foreach (KeyValuePair<string,bool> pair in data.upgradesCollected)
+        foreach (string item in data.upgradesCollected)
         {
-            if (pair.Value)
-            {
-                healthBoost++;
-                healthBoost++;
-            }
+            healthBoost++;
+            healthBoost++;
+            healthBoost++;
+            healthBoost++;
         }
     }
 

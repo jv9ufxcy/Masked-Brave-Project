@@ -84,7 +84,8 @@ public class HealthSystem
             Heart heart = new Heart(2);
             heartList.Add(heart);
         }
-        Heal(upgradeAmt);
+        int fullHealAmt = 1000;
+        Heal(fullHealAmt);
         if (OnUpgrade != null)
         {
             OnUpgrade(this, EventArgs.Empty);
@@ -379,6 +380,10 @@ public class HealthManager : MonoBehaviour
         currentMeter = 0;
         UpdateMeter();
         UpdateGainMeter();
+    }
+    public void UpgradeMaxMeter(float _val)
+    {
+        maxMeter += _val;
     }
     public void ChangeMeter(int _val)
     {

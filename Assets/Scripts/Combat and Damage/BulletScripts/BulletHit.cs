@@ -54,7 +54,7 @@ public class BulletHit : MonoBehaviour
             velocity = (targetPos - transform.position).normalized * speed;
             if (bulletType==5)
             {
-                boomerangTime = boomerangStallTime;
+                boomerangTime = boomerangFlightTime;
                 transform.rotation = Quaternion.Euler(0, 0, rotation);
             }
         }
@@ -253,7 +253,7 @@ public class BulletHit : MonoBehaviour
             Destroy(gameObject, destroyTimer);
         }
     }
-    public float speedDampen = 0.01f, boomerangStallTime = .5f, boomerangTime, angle, boomerSpeed = 10f/*(2 * Mathf.PI) / 1*/, radius=1f;
+    public float boomerangFlightTime = .5f, boomerangStallTime = .5f, boomerangTime, angle, boomerSpeed = 10f/*(2 * Mathf.PI) / 1*/, radius=1f;
     public Vector3 boomerangDist;
     public Vector3 followVel;
     private void Boomerang()
@@ -261,7 +261,7 @@ public class BulletHit : MonoBehaviour
         if (boomerangTime>0)
         {
             boomerangTime -= Time.fixedDeltaTime;
-            transform.Translate(velocity * speed * Time.fixedDeltaTime);
+            transform.Translate(direction * speed * Time.fixedDeltaTime);
         }
         else
         {
@@ -271,7 +271,7 @@ public class BulletHit : MonoBehaviour
             }
             else
             {
-                transform.Translate(velocity * -boomerSpeed * Time.fixedDeltaTime);
+                transform.Translate(direction * -boomerSpeed * Time.fixedDeltaTime);
             }
         }
         //if (Mathf.Abs(target.transform.position.x - transform.position.x)>=boomerangDist.x)

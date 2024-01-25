@@ -9,6 +9,7 @@ public class SaveSlotsMenu : MonoBehaviour
     private SaveSlot[] saveSlots;
     private bool isLoadingGame = false;
     public UnityEvent OnNewGameClicked, OnLoadGameClicked;
+    [SerializeField] private GameObject backButton;
     private void Awake()
     {
         saveSlots=this.GetComponentsInChildren<SaveSlot>();
@@ -33,6 +34,7 @@ public class SaveSlotsMenu : MonoBehaviour
     }
     public void ActivateSaveMenu(bool isLoadingGame)
     {
+        GameObject firstSelected = backButton;
         this.gameObject.SetActive(true);
         this.isLoadingGame = isLoadingGame;
         Dictionary<string, GameData> profilesGameData=DataPersistenceManager.instance.GetAllProfilesGameData();
@@ -48,7 +50,17 @@ public class SaveSlotsMenu : MonoBehaviour
             else
             {
                 saveSlot.gameObject.GetComponent<Button>().interactable = true;
+                if (firstSelected.Equals(backButton.gameObject))
+                {
+                    firstSelected = saveSlot.gameObject;
+                }
             }
         }
+        Button firstSelectedButton = firstSelected.GetComponent<Button>();
+        SetFirstSelected(firstSelectedButton);
+    }
+    private void SetFirstSelected(Button selectedButton)
+    {
+        selectedButton.Select();
     }
 }

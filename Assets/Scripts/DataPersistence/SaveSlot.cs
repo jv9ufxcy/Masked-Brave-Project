@@ -28,7 +28,7 @@ public class SaveSlot : MonoBehaviour
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
             //Set Content
-            percentageCompletetext.text = data.GetPercentageUnlocked() + "% Complete";
+            percentageCompletetext.text = data.GetPercentageUnlocked() + "%";
             clearButton.gameObject.SetActive(true);
         }
     }

@@ -9677,6 +9677,7 @@ MonoBehaviour:
   PercentFormat: P1
   scorePos: {x: 0, y: 0, z: 0}
   hiddenPos: {x: 0, y: 0, z: 0}
+  missionPoints: 0
   rankingGrades:
   - Score: 30000
     Rank: Z
@@ -9730,10 +9731,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 830511440, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d, type: 3}
-      propertyPath: eventSystem
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 13425140563160416, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -10243,11 +10240,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4827906925151786242, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d,
-        type: 3}
-      propertyPath: eventSystem
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4827906925535728537, guid: 51c07b2f3b14a6e4ebcfdc6da75b101d,
         type: 3}
@@ -13516,7 +13508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4498154245500729}
   m_Layer: 0
-  m_Name: mallCameras
+  m_Name: bossCameras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14540,7 +14532,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 0
   m_IgnoreTimeScale: 1
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 1
+  m_UpdateMethod: 0
   m_DefaultBlend:
     m_Style: 4
     m_Time: 0.2

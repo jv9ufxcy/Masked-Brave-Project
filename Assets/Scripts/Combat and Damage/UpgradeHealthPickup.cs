@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,42 +20,40 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
     [SerializeField]private string pickupSound;
     [SerializeField] private string unlockedMoveName;
     [SerializeField]private GameObject pickupEffect;
-    private bool collected = false;
+    private bool collected;
+    private SpriteRenderer spriteRend;
     // Start is called before the first frame update
     void Start()
     {
         audioManager = AudioManager.instance;
+        spriteRend = gameObject.GetComponent<SpriteRenderer>();
         if (audioManager == null)
         {
             Debug.LogError("No Audio Manager in Scene");
         }
     }
-    private void Update()
-    {
-        if (collected)
-        {
-            gameObject.SetActive(false);
-        }
-    }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        playerHP = collision.gameObject.GetComponent<HealthManager>();
-        player = collision.gameObject.GetComponent<CharacterObject>();
-        if (collision.CompareTag("Player") && !collected)
+        if (!collected)
         {
-            if (upgradeAmt > 0)
+            playerHP = collision.gameObject.GetComponent<HealthManager>();
+            player = collision.gameObject.GetComponent<CharacterObject>();
+            if (collision.CompareTag("Player"))
             {
-                playerHP.HealthUpgrade(upgradeAmt);
+                if (upgradeAmt > 0)
+                {
+                    playerHP.HealthUpgrade(upgradeAmt);
+                }
+                if (meterAmt > 0)
+                {
+                    player.BuildMeter(meterAmt);
+                }
+                if (unlockedMoveName != null)
+                {
+                    GameEngine.gameEngine.UnlockMove(unlockedMoveName);
+                }
+                Pickup();
             }
-            if (meterAmt > 0)
-            {
-                player.BuildMeter(meterAmt);
-            }
-            if (unlockedMoveName != null)
-            {
-                GameEngine.gameEngine.UnlockMove(unlockedMoveName);
-            }
-            Pickup();
         }
     }
 
@@ -63,7 +62,7 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
         audioManager.PlaySound(pickupSound);
         GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
         collected = true;
-        gameObject.SetActive(false);
+        CollectedDataObject();
     }
     [Header("Magnet")]
     [SerializeField] private bool shouldAttract = false;
@@ -74,6 +73,11 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
     {
         if (shouldAttract)
             MoveTowardsPlayer();
+
+        if (collected && spriteRend.enabled)
+        {
+            spriteRend.enabled = false;
+        }
     }
     private void OnDrawGizmosSelected()
     {
@@ -91,19 +95,27 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
 
     public void LoadData(GameData data)
     {
-        data.upgradesCollected.TryGetValue(id, out collected);
-        if (collected)
+        if (data.upgradesCollected.Contains(id))
         {
-            gameObject.SetActive(false);
+            collected = true;
+            Debug.Log(collected);
         }
+    }
+
+    private void CollectedDataObject()
+    {
+        spriteRend.enabled = false;
+        collected = true;
     }
 
     public void SaveData(GameData data)
     {
-        if (data.upgradesCollected.ContainsKey(id))
+        if (collected)
         {
-            data.upgradesCollected.Remove(id);
-        }
-        data.upgradesCollected.Add(id, collected);
+            if (!data.upgradesCollected.Contains(id))//check if list doesnt contain id
+            {
+                data.upgradesCollected.Add(id);
+            }
+        }    
     }
 }

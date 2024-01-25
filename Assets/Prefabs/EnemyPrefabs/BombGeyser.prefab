@@ -4866,6 +4866,7 @@ MonoBehaviour:
   shouldStopOnHit: 0
   canReflect: 0
   parabolicArc: 0
+  cannotDeflect: 0
   bulletChain: 0
   newBulletSpeed: 0
   character: {fileID: 0}
@@ -4875,8 +4876,9 @@ MonoBehaviour:
   shakeTime: 0.2
   destroyTimer: 0.1
   isExplosion: 0
-  speedDampen: 0.01
-  boomerangStartTime: 30
+  boomerangFlightTime: 0.5
+  boomerangStallTime: 0.5
+  boomerangTime: 0
   angle: 0
   boomerSpeed: 10
   radius: 1
@@ -4997,9 +4999,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1103968383
+  m_SortingLayer: -1
+  m_SortingOrder: -10
   m_Sprite: {fileID: 5897731341508111641, guid: f183683fcc1ea7b40bcdbed1cb7f5749,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

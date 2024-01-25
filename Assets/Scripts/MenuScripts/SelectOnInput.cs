@@ -20,7 +20,10 @@ public class SelectOnInput : MonoBehaviour
     {
         if (Input.GetButton("Cancel") && eventSystem.alreadySelecting == false)
         {
-            eventSystem.SetSelectedGameObject(selectedObject);
+            if (selectedObject!=null)
+            {
+                eventSystem.SetSelectedGameObject(selectedObject);
+            }
                 //buttonSelected = true;
         }
 	}

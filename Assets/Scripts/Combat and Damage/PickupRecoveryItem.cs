@@ -43,7 +43,7 @@ public class PickupRecoveryItem : MonoBehaviour
             }
             else if (lifeTime <= 0)
             {
-                Destroy(transform.root.gameObject);
+                Destroy(transform.parent.gameObject);
             }
         }
     }
@@ -67,7 +67,7 @@ public class PickupRecoveryItem : MonoBehaviour
             }
             audioManager.PlaySound(pickupSound);
             GameObject effect = Instantiate(pickupEffect, transform.position, Quaternion.identity);
-            Destroy(transform.root.gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
     private void MoveTowardsPlayer()

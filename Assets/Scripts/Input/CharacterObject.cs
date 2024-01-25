@@ -459,6 +459,9 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 28:
                 DashJump();
                 break;
+            case 29:
+                GameEngine.SetHitPause(_params[0].val);
+                break;
 
         }
     }
@@ -1457,10 +1460,16 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
 
     [Header("Timers")]
-    public float coyoteTimer = 3f;
+    public float coyoteTimer = 6f;
     public float dashCooldown, dashCooldownRate = 1f, invulCooldown, invulFlickerRate = 4f;
+    [Header("Meter")]
     public float specialMeter, specialMeterMax = 100f, nextSpecialMeterUse;
 
+    public void UpgradeMeter(float _val)
+    {
+        specialMeterMax += _val;
+        healthManager.UpgradeMaxMeter(_val);
+    }
     public void UseMeter(float _val)
     {
         ChangeMeter(-_val);
@@ -1484,7 +1493,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void FullyHeal()
     {
         healthManager.AddHealth(1000);
-        ChangeMeter(100);
+        ChangeMeter(1000);
     }
     float velocityXSmoothing;
     void CalculateGravity()
