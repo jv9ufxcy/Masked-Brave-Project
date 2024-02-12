@@ -40,7 +40,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public Material defaultMat, whiteMat;
     private Color flashColor = new Color ( 0,0.5f,0.75f,1f);
     public GameObject kinzecter;
-    public enum ControlType { AI, PLAYER, BOSS, DEAD, OBJECT };
+    public enum ControlType { AI, PLAYER, BOSS, DEAD, OBJECT, DUMMY };
     public ControlType controlType;
     private CharacterObject playerChar;
 
@@ -88,6 +88,8 @@ public class CharacterObject : MonoBehaviour, IHittable
             case ControlType.DEAD:
                 break;
             case ControlType.OBJECT:
+                break;
+            case ControlType.DUMMY:
                 break;
             default:
                 break;
@@ -157,6 +159,13 @@ public class CharacterObject : MonoBehaviour, IHittable
 
                 leftStick = new Vector2(Input.GetAxis(GameEngine.coreData.rawInputs[13].name), Input.GetAxis(GameEngine.coreData.rawInputs[14].name));
                 break;
+
+            case ControlType.DUMMY:
+                isAggroRange = Vector3.Distance(transform.position, GameEngine.gameEngine.mainCharacter.transform.position) <= aggroDistance;
+                isLongRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange &&
+                    (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x)) > shortAttackRange);
+                isShortRange = (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= shortAttackRange);
+                break;
             default:
                 break;
         }
@@ -181,6 +190,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                         break;
                     case ControlType.PLAYER:
                         UpdateInput();
+                        break;
+                    case ControlType.DUMMY:
+                        UpdateAI();
                         break;
                     default:
                         break;
@@ -249,16 +261,20 @@ public class CharacterObject : MonoBehaviour, IHittable
                     lastDir = leftStick.normalized;
                     break;
                 case ControlType.BOSS:
+                    lastDir = (target.transform.position - transform.position).normalized;
                     break;
                 case ControlType.DEAD:
                     break;
                 case ControlType.OBJECT:
                     break;
+                case ControlType.DUMMY:
+                    lastDir = (target.transform.position - transform.position).normalized;
+                    break;
                 default:
                     break;
             }
         }
-        if (controlType==ControlType.AI || controlType == ControlType.BOSS)
+        if (controlType==ControlType.AI || controlType == ControlType.BOSS || controlType == ControlType.DUMMY)
         {
             FacePlayer();
         }
@@ -509,6 +525,17 @@ public class CharacterObject : MonoBehaviour, IHittable
             bullet.speed = bulletSpeed;
             bullet.radius = rotRadius;
             satellitesCreated.Add(satelliteInstance);//add to the list of references to ice blocks
+        }
+    }
+    void EraseSatellites()
+    {
+        if (satellitesCreated!=null)
+        {
+            foreach (GameObject item in satellitesCreated)
+            {
+                satellitesCreated.Remove(item);
+                Destroy(item);
+            }
         }
     }
     public void MaintainVelocity()
@@ -1319,10 +1346,27 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
         }
     }
+    public delegate void StartButtonPressed();
+    public delegate void SelectButtonPressed();
+    public delegate void TouchpadButtonPressed();
+    public event StartButtonPressed OnStartPressed;
+    public event SelectButtonPressed OnSelectPressed;
+    public event SelectButtonPressed OnTouchpadPressed;
     private void PauseMenu()
     {
         if (Input.GetButtonDown(GameEngine.coreData.rawInputs[8].name))
+        {
+            OnStartPressed?.Invoke();
             PauseManager.pauseManager.PauseButtonPressed();
+        }
+        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[9].name))
+        {
+            OnSelectPressed?.Invoke();
+        }
+        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[10].name))
+        {
+            OnTouchpadPressed?.Invoke();
+        }
     }
     private void Screenshake(float amp, float time)
     {
@@ -1659,6 +1703,10 @@ public class CharacterObject : MonoBehaviour, IHittable
     public Vector2 curHitAnim;
     public Vector2 targetHitAnim;
     private int curComboValue;
+    public delegate void AttackCallback(int actionStateIndex, AttackEvent attackEvent);
+    public delegate void ComboDropCallback();
+    public event AttackCallback Attack;
+    public event ComboDropCallback ComboDrop;
     public int GetComboValue()
     {
         return curComboValue;
@@ -1782,7 +1830,16 @@ public class CharacterObject : MonoBehaviour, IHittable
                     attacker.hitConfirm += 1;
                     attacker.BuildMeter(curAtk.meterGain);
 
-                    healthManager.RemoveHealth(curAtk.damage, curAtk);
+                    
+                    if (projectileIndex>0)
+                    {
+                        OnAttackEvent(projectileIndex, curAtk);//atk event
+                    }
+                    else
+                        OnAttackEvent(attacker.currentState, curAtk);//atk event
+                    if (controlType!=ControlType.DUMMY)
+                        healthManager.RemoveHealth(curAtk.damage, curAtk);
+
                     PlayAudio(attackStrings[curAtk.attackType]);
                     switch (controlType)//damage calc
                     {
@@ -1790,6 +1847,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                             GlobalPrefab(curAtk.attackType);
                             break;
                         case ControlType.OBJECT:
+                            GlobalPrefab(curAtk.attackType);
+                            break;
+                        case ControlType.DUMMY:
                             GlobalPrefab(curAtk.attackType);
                             break;
                         case ControlType.BOSS:
@@ -1805,7 +1865,10 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
         }
     }
-
+    public void OnAttackEvent(int stateIndex,AttackEvent attackEvent)
+    {
+        Attack?.Invoke(stateIndex, attackEvent);
+    }
     private void PoiseBreak()
     {
         float stunned = 30f;
@@ -1867,8 +1930,17 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void GettingHit()
     {
         hitStun--;
-        if (hitStun <= 0) { EndState();healthManager.PoiseReset(); }
+        if (hitStun <= 0) 
+        { 
+            EndState();
+            healthManager.PoiseReset(); 
+            OnComboEnded(); 
+        }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
+    }
+    public void OnComboEnded()
+    {
+        ComboDrop?.Invoke();
     }
     [Header("EnemyLogic")]
     public CharacterObject target;
@@ -1965,7 +2037,8 @@ public class CharacterObject : MonoBehaviour, IHittable
             if (isAggroRange && dashCooldown <= 0 && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange))
             {
                 FaceTarget(target.transform.position);
-                velocity = Vector2.zero;
+                if (controlType!=ControlType.DUMMY)
+                    velocity = Vector2.zero;
                 if (isLongRange && rangedAttackState.Length > 0)
                 {
                     //int randNum = UnityEngine.Random.Range(0, rangedAttackState.Length);
@@ -2015,6 +2088,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         Screenshake(2, .4f);
         SetVelocity(Vector2.zero);
         KillMinions();
+        EraseSatellites();
     }
 
     private void KillMinions()
@@ -2042,6 +2116,11 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void OnObjectSpawn()
     {
         controlType = ControlType.OBJECT;
+        StartStateFromScript(0);
+    }
+    public void OnDummySpawn()
+    {
+        controlType = ControlType.DUMMY;
         StartStateFromScript(0);
     }
     public void OnBossSpawn()

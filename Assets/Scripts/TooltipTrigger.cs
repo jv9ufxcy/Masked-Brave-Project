@@ -11,22 +11,25 @@ public class TooltipTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameEngine.coreData!=null)
+        {
+            switch (GameEngine.coreData.currentControllerIndex)
+            {
+                case 0://ps
+                    ttButton = ttButtons[0];
+                    break;
+                case 1://xbox
+                    ttButton = ttButtons[1];
+                    break;
+                case 2://kb
+                    ttButton = ttButtons[2];
+                    break;
+                default:
+                    break;
+            }
+        }
         dialogueManager = DialogueManager.instance;
         tooltipText = ttModifier + " <size=265%>" + ttButton + "<size=100%> " + ttDescription;
-        switch (GameEngine.coreData.currentControllerIndex)
-        {
-            case 0://ps
-                ttButton = ttButtons[0];
-                break;
-            case 1://xbox
-                ttButton = ttButtons[1];
-                break;
-            case 2://kb
-                ttButton = ttButtons[2];
-                break;
-            default:
-                break;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

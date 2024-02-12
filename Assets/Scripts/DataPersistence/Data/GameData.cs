@@ -6,6 +6,8 @@ using UnityEngine;
 public class GameData
 {
     public long lastUpdated;
+    public int[] missionScoreIndex;
+    public string[] missionGrade;
     public int healthBoost;
     public int levelUnlocked;
     public List<string> unlockedSkillsData;
@@ -17,6 +19,8 @@ public class GameData
     {
         this.healthBoost = 0;
         this.levelUnlocked = 0;
+        missionScoreIndex = new int[8];
+        missionGrade = new string[8];
         unlockedSkillsData = new List<string>();
         upgradesCollected = new List<string>();
         energyTanksCollected = new List<string>();
@@ -24,15 +28,18 @@ public class GameData
     public int GetPercentageUnlocked()
     {
         int totalUnlocked = 0;
-        foreach (string collected in upgradesCollected)
+        foreach (int beatenLevel in missionScoreIndex)
         {
-            totalUnlocked++;
+            if (beatenLevel>0)//if score exists at all
+            {
+                totalUnlocked++;
+            }
         }
 
         int percentUnlocked = -1;
         if (upgradesCollected.Count!=0)
         {
-            percentUnlocked = totalUnlocked * 100/ upgradesCollected.Count;
+            percentUnlocked = totalUnlocked * 100/ missionScoreIndex.Length;
         }
         return percentUnlocked;
     }

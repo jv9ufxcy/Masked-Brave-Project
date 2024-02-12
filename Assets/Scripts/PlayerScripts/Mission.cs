@@ -9,10 +9,11 @@ using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
-public class Mission : MonoBehaviour
+public class Mission : MonoBehaviour,IDataPersistence
 {
     public static Mission instance;
-
+    [Range(0,8)]
+    public int MissionIndex = 0;
     [Header("Mission Start Text")]
     [Space]
     public bool isMissionActive = false, isReload = false;
@@ -611,15 +612,44 @@ public class Mission : MonoBehaviour
         mChar.StartStateFromScript(0);
         mChar.CutsceneUpdatePhysics();
     }
-
+    [Header("Next Level")]
     [SerializeField] private string nextLevel = "LevelSelectScene";
+    [SerializeField] private string trainingLevel = "BombardierTraining", unlockedFormState = "Zoe/BombHenshin";
+    [SerializeField] private bool shouldCheckTrainingStage = false;
+    private bool formUnlockedHere;
     
 
     private void LevelChange()
     {
-        SceneTransitionController.instance.LoadScene(nextLevel);
-        Destroy(EnemySpawner.spawnerInstance.gameObject);
-        Destroy(gameObject);
-        Destroy(GameManager.instance.gameObject);
+        if (shouldCheckTrainingStage)
+        {
+            if (formUnlockedHere)
+                SceneTransitionController.instance.LoadScene(trainingLevel);
+            else
+                SceneTransitionController.instance.LoadScene(nextLevel);
+        }
+        else
+            SceneTransitionController.instance.LoadScene(nextLevel);
+
+        SceneManager.MoveGameObjectToScene(EnemySpawner.spawnerInstance.gameObject, SceneManager.GetActiveScene());
+        SceneManager.MoveGameObjectToScene(instance.gameObject, SceneManager.GetActiveScene());
+        SceneManager.MoveGameObjectToScene(GameManager.instance.gameObject, SceneManager.GetActiveScene());
+    }
+
+    public void LoadData(GameData data)
+    {
+        if (data.unlockedSkillsData.Contains(unlockedFormState))
+        {
+            formUnlockedHere = false;
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.missionScoreIndex[MissionIndex]<totalScore)
+        {
+            data.missionScoreIndex[MissionIndex] = (int)this.totalScore;
+            data.missionGrade[MissionIndex] = this.missionGrade;
+        }
     }
 }

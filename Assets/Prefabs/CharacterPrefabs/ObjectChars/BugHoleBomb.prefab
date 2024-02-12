@@ -73,17 +73,19 @@ MonoBehaviour:
   shouldStopOnHit: 1
   canReflect: 0
   parabolicArc: 0
+  cannotDeflect: 0
   bulletChain: 5
   newBulletSpeed: 0
   character: {fileID: 0}
-  projectileIndex: 31
+  projectileIndex: 98
   attackIndex: 0
   shakeAmp: 1
   shakeTime: 0.2
   destroyTimer: 0.3
   isExplosion: 1
-  speedDampen: 0.01
-  boomerangStartTime: 30
+  boomerangFlightTime: 0.5
+  boomerangStallTime: 0.5
+  boomerangTime: 0
   angle: 0
   boomerSpeed: 10
   radius: 1

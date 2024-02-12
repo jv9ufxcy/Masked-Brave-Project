@@ -123,22 +123,28 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         //    }
         //}
     }
-
+    [SerializeField] private bool dontLoadSkillsInMenu = false;
     public void LoadData(GameData data)
     {
-        this.unlockedSkillsList = data.unlockedSkillsData;
-        this.unlockedLevels = data.levelUnlocked;
-        foreach (string item in data.energyTanksCollected)
+        if (dontLoadSkillsInMenu)
         {
-            int _meter = 25;
-            SetSpecialMeter(_meter);
+            this.unlockedSkillsList = data.unlockedSkillsData;
+            this.unlockedLevels = data.levelUnlocked;
+            foreach (string item in data.energyTanksCollected)
+            {
+                int _meter = 25;
+                SetSpecialMeter(_meter);
+            }
         }
     }
 
     public void SaveData(GameData data)
     {
-        data.unlockedSkillsData = this.unlockedSkillsList;
-        data.levelUnlocked = this.unlockedLevels;
+        if (dontLoadSkillsInMenu)
+        {
+            data.unlockedSkillsData = this.unlockedSkillsList;
+            data.levelUnlocked = this.unlockedLevels;
+        }
     }
 
     public InputBuffer playerInputBuffer;

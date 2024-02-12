@@ -17,7 +17,7 @@ public class ColliderTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            OnPlayerEnterTrigger.Invoke();
+            OnPlayerExitTrigger.Invoke();
         }
     }
 }

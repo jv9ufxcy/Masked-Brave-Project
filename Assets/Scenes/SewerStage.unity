@@ -2149,6 +2149,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnergyUpgrade (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3453192646331524925, guid: bff937b586d2332439b8e9165d9a4142,
+        type: 3}
+      propertyPath: id
+      value: bdcbc47e-1355-4423-bddb-a0155f24bcb6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bff937b586d2332439b8e9165d9a4142, type: 3}
 --- !u!4 &531581596 stripped
@@ -15204,6 +15209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca54e36bcb92ba24f9e37d0d5625e619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MissionIndex: 2
   isMissionActive: 0
   isReload: 0
   missionStartText: {fileID: 1404728385}
@@ -15281,6 +15287,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   nextLevel: LevelSelectScene
+  trainingLevel: BombardierTraining
+  unlockedFormState: Zoe/BombHenshin
+  shouldTrainingStage: 1
 --- !u!4 &1273356926
 Transform:
   m_ObjectHideFlags: 0
@@ -44039,6 +44048,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnergyUpgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453192646331524925, guid: bff937b586d2332439b8e9165d9a4142,
+        type: 3}
+      propertyPath: id
+      value: 407c1e6d-11d8-4145-943f-6d34937db7ed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bff937b586d2332439b8e9165d9a4142, type: 3}

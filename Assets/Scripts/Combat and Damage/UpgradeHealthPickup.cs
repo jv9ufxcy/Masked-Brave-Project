@@ -98,7 +98,7 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
         if (data.upgradesCollected.Contains(id))
         {
             collected = true;
-            Debug.Log(collected);
+            //Debug.Log(collected);
         }
     }
 

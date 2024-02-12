@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Vector2 lastCheckpointPos, startingCheckpointPos = new Vector2(-4.5f, -3.5f);
+    [SerializeField] private bool shouldPersist = true;
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(instance);
+            if (shouldPersist)
+                DontDestroyOnLoad(instance);
         }
         else
             Destroy(gameObject);

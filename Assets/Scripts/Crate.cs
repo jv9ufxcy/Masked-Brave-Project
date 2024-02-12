@@ -65,6 +65,7 @@ public class Crate : MonoBehaviour, IHittable
         transform.SetParent(null);
         transform.position = spawnPos;
         IsSpawned = true;
+        isFalling = false;
     }
 
     [SerializeField] private LayerMask playerLayer,groundLayer;
@@ -74,10 +75,14 @@ public class Crate : MonoBehaviour, IHittable
     // Update is called once per frame
     void Update()
     {
-        isFalling = rb.velocity.y < fallSpeedCheck;
+        if (rb.velocity.y < fallSpeedCheck)
+        {
+            isFalling = true;
+        }
+
         if (isFalling)
         {
-            RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider.bounds.center,boxCollider.bounds.size/2,0f, Vector2.down, boxCollider.bounds.extents.y + collisionHeight, playerLayer);
+            RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size / 2, 0f, Vector2.down, boxCollider.bounds.extents.y + collisionHeight, playerLayer);
             Debug.DrawRay(boxCollider.bounds.center, Vector2.down * (boxCollider.bounds.extents.y + collisionHeight), Color.red);
             if (rayCastHit)
             {
@@ -86,7 +91,7 @@ public class Crate : MonoBehaviour, IHittable
                 DestroyCrate();
             }
             //RaycastHit2D groundCastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size / 2, 0f, Vector2.down, boxCollider.bounds.extents.y + collisionHeight, groundLayer);//maybe hcange to linecast
-            RaycastHit2D groundCastHit = Physics2D.Raycast(boxCollider.bounds.center, Vector2.down, boxCollider.bounds.extents.y + (collisionHeight*2),groundLayer);//maybe hcange to linecast
+            RaycastHit2D groundCastHit = Physics2D.Raycast(boxCollider.bounds.center, Vector2.down, boxCollider.bounds.extents.y + (collisionHeight * 2), groundLayer);//maybe hcange to linecast
             if (groundCastHit)
             {
                 DestroyCrate();

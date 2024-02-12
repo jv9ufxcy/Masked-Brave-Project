@@ -52,7 +52,7 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
         //{
         //    defaultLayer = gameObject.layer;
         //}
-        if (!IsSpawned && !(character.controlType==CharacterObject.ControlType.PLAYER || character.controlType == CharacterObject.ControlType.OBJECT))
+        if (!IsSpawned && !(character.controlType==CharacterObject.ControlType.PLAYER || character.controlType == CharacterObject.ControlType.OBJECT || character.controlType == CharacterObject.ControlType.DUMMY))
         {
             HideCharacter();
         }
@@ -107,7 +107,8 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
             case 2://Crate
                 character.OnObjectSpawn();
                 break;
-            case 3:
+            case 3://Dummy
+                character.OnDummySpawn();
                 break;
         }
         transform.SetParent(null);

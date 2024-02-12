@@ -74,6 +74,7 @@ public class InputBuffer
             {
                 //if (UpdateMotionCheck(m, b)) { GameEngine.coreData.motionCommands[m].checkStep++; }
                 //if (GameEngine.coreData.motionCommands[m].TestCheck(MotionCommand.GetNumPadDirection(buffer[b].rawInputs[4].value, buffer[b].rawInputs[5].value)))
+
                 if (GameEngine.coreData.motionCommands[m].TestCheck(buffer[b].rawInputs[13].value, buffer[b].rawInputs[14].value)) //horizontal and vertical inputs in the raw input list
                 { motionCommandCheck[m] = 1; break; }
             }
@@ -90,9 +91,10 @@ public class InputBuffer
         
         buffer[buttonCommandCheck[_i]].rawInputs[_i].used = true;
         //Debug.Log("USED UP!!!> : " + buttonCommandCheck[_i].ToString());
-        buttonCommandCheck[_i] = -1;
+        buttonCommandCheck[_i] = -1;//used button
 
-        motionCommandCheck[_m] = -1;
+        buffer[motionCommandCheck[_m]].rawInputs[_m].used = true;
+        motionCommandCheck[_m] = -1;//used motion
 
         //buffer[buttonCommandCheck[_i]].rawInputs[_i].hold = -2;
 

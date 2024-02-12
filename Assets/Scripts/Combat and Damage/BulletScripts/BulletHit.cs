@@ -132,7 +132,7 @@ public class BulletHit : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(tagToCollide))
+        if (collision.gameObject.CompareTag(tagToCollide)|| collision.gameObject.CompareTag(tagToHit))
         {
             if (shouldStopOnHit)
             {
@@ -149,44 +149,27 @@ public class BulletHit : MonoBehaviour
     public float shakeAmp = 1f, shakeTime = .2f;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(tagToHit)&&other.gameObject!=character.gameObject)
+        if ((other.CompareTag(tagToHit) || other.CompareTag(tagToCollide)) && other.gameObject!=character.gameObject)//if tag matches and character is not spawner of bullet
         {
             CharacterObject victimCO;
             IHittable victim;
             victim = other.GetComponent<IHittable>();
             if (victim == null)
                 victim = other.transform.root.GetComponent<IHittable>();
+            if (victim!=null)
+            {
 
-            GameObject victimGO = victim.GetGameObject();
-            victimCO = victimGO.GetComponent<CharacterObject>();
-            if (victimCO != null)
-            {
-                if (victimCO.IsDefendingInState())//if enemy blocking
+                GameObject victimGO = victim.GetGameObject();
+                victimCO = victimGO.GetComponent<CharacterObject>();
+                CheckReflect(victimCO);
+                if (victimGO != null)
                 {
-                    ReflectBullet();
-                }
-                else
-                {
-                    if (victimCO.GetIsInvulnerable())//if invul
-                    {
-                        if (victimCO.GetComboValue() >= GameEngine.coreData.characterStates[projectileIndex].attacks[attackIndex].comboValue)//check invul level
-                        {
-                            ReflectBullet();
-                        }                        
-                    }
-                    else
-                    {
-                        HitEffects();
-                    }
+                    victim.Hit(character, projectileIndex, attackIndex);
                 }
             }
-            if (victimGO != null)
-            {
-                victim.Hit(character, projectileIndex, attackIndex);
-                if (victimCO==null) HitEffects();
-            }
+            HitEffects();
         }
-        if (other.gameObject.CompareTag(tagToCollide))
+        if (other.gameObject.CompareTag(tagToHit))
         {
             if (shouldStopOnHit)
             {
@@ -195,9 +178,34 @@ public class BulletHit : MonoBehaviour
         }
         if (bulletType == 5)//if boomer
         {
-            if (boomerangStallTime <=0 && other.CompareTag(tagToCollide))
+            if (boomerangStallTime <=0 && other.CompareTag(tagToHit))
             {
                 OnDestroyGO();
+            }
+        }
+    }
+
+    private void CheckReflect(CharacterObject victimCO)
+    {
+        if (victimCO != null)
+        {
+            if (victimCO.IsDefendingInState())//if enemy blocking
+            {
+                ReflectBullet();
+            }
+            else
+            {
+                if (victimCO.GetIsInvulnerable())//if invul
+                {
+                    if (victimCO.GetComboValue() >= GameEngine.coreData.characterStates[projectileIndex].attacks[attackIndex].comboValue)//check invul level
+                    {
+                        ReflectBullet();
+                    }
+                }
+                else
+                {
+                    HitEffects();
+                }
             }
         }
     }

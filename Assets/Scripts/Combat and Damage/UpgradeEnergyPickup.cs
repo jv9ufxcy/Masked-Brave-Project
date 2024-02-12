@@ -68,7 +68,7 @@ public class UpgradeEnergyPickup : MonoBehaviour,IDataPersistence
         if (data.energyTanksCollected.Contains(id))
         {
             collected = true;
-            Debug.Log(collected);
+            //Debug.Log(collected);
         }
     }
 

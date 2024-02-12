@@ -254,7 +254,7 @@ public class Kinzecter : MonoBehaviour
 
     public CharacterObject SavedEnemy()
     {
-        if (_savedEnemy != null && (_savedEnemy.controlType == CharacterObject.ControlType.AI || _savedEnemy.controlType == CharacterObject.ControlType.BOSS))
+        if (_savedEnemy != null && (_savedEnemy.controlType == CharacterObject.ControlType.AI || _savedEnemy.controlType == CharacterObject.ControlType.BOSS || _savedEnemy.controlType == CharacterObject.ControlType.DUMMY))
         {
             return _savedEnemy;
         }
