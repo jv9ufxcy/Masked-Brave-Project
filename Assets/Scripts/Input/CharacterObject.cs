@@ -1125,6 +1125,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public ParticleSystem bombDashParticle, landingParticle;
     [Space]
     [Header("Shooting Stats")]
+    public List<GameObject> bulletsActiveInHierarchy = new List<GameObject>();
     public float shootAnim, shootAnimMax;
     public GameObject[] bullets;
     [HideInInspector] public bool isKinzecterOut;
@@ -1245,6 +1246,10 @@ public class CharacterObject : MonoBehaviour, IHittable
         bullet.rotation = bulletRot * (Direction * onWall);
         //newbullet.GetComponent<Hitbox>().character = characterObject;
         newbullet.transform.localScale = new Vector3((Direction * onWall) * Mathf.Sign(bulletSpeed), 1, 1);
+        if (!bulletsActiveInHierarchy.Contains(newbullet))
+        {
+            bulletsActiveInHierarchy.Add(newbullet);
+        }
     }
     public void SpecialFireCheck(float bulletType)
     {

@@ -50,35 +50,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: 0
   direction: {x: 0, y: 0}
+  bulletVel: {x: 0, y: 0}
   target: {fileID: 0}
   closestEnemy: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
-  moveDirection: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 1315619723106520, guid: c604edeb90222b64883a4fb75f22afb9,
     type: 3}
-  bulletChild: {fileID: 0}
+  explosionEffect: {fileID: 0}
   tagToHit: Enemy
   tagToCollide: Ground
   lifeTime: 0.7
   speed: 0
+  rotation: 0
+  maxJumpHeight: 4
+  timeToJumpApex: 0.125
+  maxJumpVelocity: 0
   gravity: -2
+  velocityXSmoothing: 0
   targetRange: 10
-  attackState: 0
-  whatLayersToHit:
-    serializedVersion: 2
-    m_Bits: 9728
-  bulletCollisionSound: 
-  shouldScreenshakeOnHit: 0
+  shouldScreenshakeOnHit: 1
   shouldStopOnHit: 0
   canReflect: 1
   parabolicArc: 0
+  cannotDeflect: 0
   bulletChain: 0
   newBulletSpeed: 0
   character: {fileID: 0}
-  thisBullet: {fileID: 0}
   projectileIndex: 21
   attackIndex: 0
+  shakeAmp: 1
+  shakeTime: 0.2
   destroyTimer: 0.1
+  isExplosion: 0
+  boomerangFlightTime: 0.5
+  boomerangStallTime: 0.5
+  boomerangTime: 0
+  angle: 0
+  boomerSpeed: 10
+  radius: 1
+  boomerangDist: {x: 0, y: 0, z: 0}
+  followVel: {x: 0, y: 0, z: 0}
+  deflectSound: Enemy/Roy/Block
 --- !u!95 &95611479683623692
 Animator:
   serializedVersion: 3
@@ -112,6 +125,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -123,6 +137,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -212,6 +227,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5
       objectReference: {fileID: 0}
@@ -227,6 +247,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -238,16 +263,6 @@ PrefabInstance:
     - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4849127227552175252, guid: 141a30506b4d9374a94801f03e7669b4,

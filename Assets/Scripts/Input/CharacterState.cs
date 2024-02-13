@@ -29,6 +29,7 @@ public class CharacterState
     public bool uncrouchReq;
     public bool activeTargetReq;
     public bool lockedMoveCheck;
+    public int bulletLimit;
 
     public bool ConditionsMet(CharacterObject character)
     {
@@ -52,6 +53,10 @@ public class CharacterState
         if (uncrouchReq)
         {
             if (!character.CanUnCrouch()) { return false; }
+        }
+        if (bulletLimit>0)
+        {
+            if (character.bulletsActiveInHierarchy.Count>=bulletLimit){return false;}
         }
         if (character.specialMeter < meterReq) { return false; }
         else { character.nextSpecialMeterUse = meterReq; }

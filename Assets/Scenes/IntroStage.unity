@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3756,7 +3756,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 288, y: 50}
+  m_Size: {x: 576, y: 50}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3789,7 +3789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: 0.4, y: 0}
+  speed: {x: 0, y: 0}
   zeroOnStart: 1
 --- !u!1001 &417557679
 PrefabInstance:
@@ -5121,7 +5121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: -0.08, y: 0}
+  speed: {x: 0.9, y: 0}
   zeroOnStart: 1
 --- !u!1 &735519239
 GameObject:
@@ -5233,7 +5233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: -0.04, y: 0}
+  speed: {x: 0.85, y: 0}
   zeroOnStart: 1
 --- !u!1 &761803198
 GameObject:
@@ -5515,7 +5515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: -0.01, y: 0}
+  speed: {x: 0.75, y: 0}
   zeroOnStart: 1
 --- !u!4 &817300266 stripped
 Transform:
@@ -6802,7 +6802,7 @@ MonoBehaviour:
   nextLevel: SewerStage
   trainingLevel: SewerStage
   unlockedFormState: Zoe/BraveHenshin
-  shouldTrainingStage: 0
+  shouldCheckTrainingStage: 0
 --- !u!4 &1273356926
 Transform:
   m_ObjectHideFlags: 0
@@ -7149,7 +7149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb06926aa8222b469ee2e107328cab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: -0.02, y: 0}
+  speed: {x: 0.8, y: 0}
   zeroOnStart: 1
 --- !u!1001 &1342656747
 PrefabInstance:

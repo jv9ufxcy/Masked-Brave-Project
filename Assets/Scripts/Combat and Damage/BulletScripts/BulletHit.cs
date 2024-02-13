@@ -18,6 +18,7 @@ public class BulletHit : MonoBehaviour
     [SerializeField] private GameObject bulletHitEffect, explosionEffect;
     [SerializeField] private string tagToHit = "Enemy", tagToCollide="Ground";
     public float lifeTime = 2f, speed, rotation,maxJumpHeight = 4f, timeToJumpApex=0.125f,maxJumpVelocity, gravity,velocityXSmoothing, targetRange=10f;
+    private float aliveTimerCounting;
     //[SerializeField] private int attackState = 0;
     //[SerializeField] private LayerMask whatLayersToHit;
 
@@ -258,6 +259,13 @@ public class BulletHit : MonoBehaviour
                     GameObject dissipateEffect = Instantiate(bulletHitEffect, transform.position, transform.rotation);
                 }   
             }
+            if (character!=null)
+            {
+                if (character.bulletsActiveInHierarchy.Contains(gameObject))
+                {
+                    character.bulletsActiveInHierarchy.Remove(gameObject);
+                }
+            }
             Destroy(gameObject, destroyTimer);
         }
     }
@@ -337,11 +345,11 @@ public class BulletHit : MonoBehaviour
         if (canReflect)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-            
+
             gameObject.layer = LayerMask.NameToLayer("Projectile");
         }
         else
-            Destroy(gameObject);
+            OnDestroyGO();
     }
     private void RemoveForce()
     {
