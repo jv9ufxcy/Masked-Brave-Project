@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class VCAController : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     private FMOD.Studio.VCA vcaController;
     public string vcaName = "Master";
-    [SerializeField] private float vcaVolume;
+    public float vcaVolume;
     private Slider audioSlider;
     [SerializeField]private TextMeshProUGUI sliderDesc;
     private AudioManager audioManager;
@@ -23,7 +24,14 @@ public class VCAController : MonoBehaviour, ISelectHandler, IDeselectHandler
         sliderDesc = GetComponentInChildren<TextMeshProUGUI>();
         audioManager = AudioManager.instance;
     }
-
+    public void SetSlider(float defaultVolume)
+    {
+        Start();
+        vcaVolume=defaultVolume;
+        audioSlider.value = vcaVolume;
+        vcaController.setVolume(defaultVolume / 10);
+        vcaController.getVolume(out vcaVolume);
+    }
     public void SetVolume(float volume)
     {
         vcaController.setVolume(volume/10);

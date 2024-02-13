@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class OptionsMenuController : MonoBehaviour
+public class OptionsMenuController : MonoBehaviour,IDataPersistence
 {
     public EventSystem eventSystem;
     private AudioManager audioManager;
@@ -24,17 +24,20 @@ public class OptionsMenuController : MonoBehaviour
     }
     public void PlaySelectSound(int sound)
     {
-        switch (sound)
+        if (audioManager!=null)
         {
-            case 0:
-                audioManager.PlaySound(uiSelectSound);
-                break;
-            case 1:
-                audioManager.PlaySound(uiCancelSound);
-                break;
-            case 2:
-                audioManager.PlaySound(uiCursorSound);
-                break;
+            switch (sound)
+            {
+                case 0:
+                    audioManager.PlaySound(uiSelectSound);
+                    break;
+                case 1:
+                    audioManager.PlaySound(uiCancelSound);
+                    break;
+                case 2:
+                    audioManager.PlaySound(uiCursorSound);
+                    break;
+            }
         }
     }
     public void Quit()
@@ -55,7 +58,7 @@ public class OptionsMenuController : MonoBehaviour
     private bool isFullScreen,visibleHealth,isVSync;
     public void ApplyVideoOptions()
     {
-        GlobalVars.LoadOptions();
+        //GlobalVars.LoadOptions();
 
         isFullScreen = (Screen.fullScreen);
         fullScreenToggle.isOn = isFullScreen;
@@ -103,9 +106,44 @@ public class OptionsMenuController : MonoBehaviour
     }
     public void Apply()
     {
-        GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1, visibleHealth, isVSync);
+        //GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1, visibleHealth, isVSync);
         Screen.SetResolution(chosenWidth, chosenHeight, isFullScreen);
+        for (int i = 0; i < audioControllers.Length; i++)
+        {
+            volumeMaster[i] = (audioControllers[i].vcaVolume * 10);
+        }
         PlaySelectSound(0);
         //ReturnToLevelSelectMenu();
+    }
+    [Tooltip("Master, Music, SFX")]
+    [SerializeField] private VCAController[] audioControllers;
+    private float[] volumeMaster=new float[3];
+    public void SetAudioLevels()
+    {
+        for (int i = 0; i < audioControllers.Length; i++)
+        {
+            audioControllers[i].SetSlider(volumeMaster[i]);
+        }
+    }
+    public void LoadData(GameData data)
+    {
+        this.resolutionIndex = data.resolutionIndex;
+        this.isFullScreen = data.isFullScreen;
+        this.isVSync = data.isVSync;
+        this.visibleHealth = data.visibleHealth;
+        ApplyVideoOptions();
+        this.volumeMaster = data.masterVolume;
+        SetAudioLevels();
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.resolutionIndex = this.resolutionIndex;
+
+        data.isFullScreen = this.isFullScreen;
+        data.isVSync = this.isVSync;
+        data.visibleHealth = this.visibleHealth;
+
+        data.masterVolume = this.volumeMaster;
     }
 }

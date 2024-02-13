@@ -510,14 +510,13 @@ public class CharacterObject : MonoBehaviour, IHittable
         bomb.StartState();
         healthManager.FinisherDeath(false);
     }
-    private GameObject satelliteInstance;
     public List<GameObject> satellitesCreated;
     public void SummonSatellite(int satteliteIndex, int numOfBullets, float bulletSpeed,float rotRadius, float attackIndex)
     {
         //CREATE ICE BLOCKS
         for (int i = 0; i < numOfBullets; i++)
         {
-            satelliteInstance = Instantiate(bullets[satteliteIndex], transform.position, Quaternion.identity);//make prefab
+            GameObject satelliteInstance = Instantiate(bullets[satteliteIndex], transform.position, Quaternion.identity);//make prefab
             BulletHit bullet = satelliteInstance.GetComponent<BulletHit>();
             bullet.SetStartingAngle(i, numOfBullets);//tell it which angle to start at
             bullet.character = characterObject;//transform of kitty cat because why not do it the stupid way
@@ -533,9 +532,12 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             foreach (GameObject item in satellitesCreated)
             {
-                satellitesCreated.Remove(item);
-                Destroy(item);
+                if (item!=null)
+                {
+                    item.GetComponent<BulletHit>().OnDestroyGO();
+                }
             }
+                satellitesCreated.Clear();
         }
     }
     public void MaintainVelocity()

@@ -133,7 +133,7 @@ public class BulletHit : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(tagToCollide)|| collision.gameObject.CompareTag(tagToHit))
+        if (collision.gameObject.CompareTag(tagToCollide))
         {
             if (shouldStopOnHit)
             {
@@ -157,25 +157,29 @@ public class BulletHit : MonoBehaviour
             victim = other.GetComponent<IHittable>();
             if (victim == null)
                 victim = other.transform.root.GetComponent<IHittable>();
-            if (victim!=null)
+            if (victim != null)
             {
 
                 GameObject victimGO = victim.GetGameObject();
                 victimCO = victimGO.GetComponent<CharacterObject>();
-                CheckReflect(victimCO);
+
                 if (victimGO != null)
                 {
-                    victim.Hit(character, projectileIndex, attackIndex);
+                    if (CheckReflect(victimCO))
+                    {
+                        ReflectBullet();
+                    }
+                    else
+                    {
+                        victim.Hit(character, projectileIndex, attackIndex);
+                        HitEffects();
+                    }
                 }
+                else
+                    HitEffects();
             }
-            HitEffects();
-        }
-        if (other.gameObject.CompareTag(tagToHit))
-        {
-            if (shouldStopOnHit)
-            {
-                OnDestroyGO();
-            }
+            else
+                HitEffects();
         }
         if (bulletType == 5)//if boomer
         {
@@ -186,13 +190,13 @@ public class BulletHit : MonoBehaviour
         }
     }
 
-    private void CheckReflect(CharacterObject victimCO)
+    private bool CheckReflect(CharacterObject victimCO)
     {
         if (victimCO != null)
         {
             if (victimCO.IsDefendingInState())//if enemy blocking
             {
-                ReflectBullet();
+                return true;
             }
             else
             {
@@ -200,15 +204,19 @@ public class BulletHit : MonoBehaviour
                 {
                     if (victimCO.GetComboValue() >= GameEngine.coreData.characterStates[projectileIndex].attacks[attackIndex].comboValue)//check invul level
                     {
-                        ReflectBullet();
+                        return true;
                     }
+                    else
+                        return false;
                 }
                 else
                 {
-                    HitEffects();
+                    return false;
                 }
             }
         }
+        else
+            return false;
     }
 
     private bool CheckInvul(CharacterObject victimCO)
@@ -230,7 +238,7 @@ public class BulletHit : MonoBehaviour
     private bool isDestroyed = false;
     [SerializeField] private float destroyTimer = .1f;
     public bool isExplosion = false;
-    private void OnDestroyGO()
+    public void OnDestroyGO()
     {
         if (!isDestroyed)
         {

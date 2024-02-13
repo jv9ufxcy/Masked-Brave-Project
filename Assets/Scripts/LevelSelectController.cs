@@ -63,17 +63,20 @@ public class LevelSelectController : MonoBehaviour, IDataPersistence
     }
     public void PlaySelectSound(int sound)
     {
-        switch (sound)
+        if (audioManager != null)
         {
-            case 0:
-                audioManager.PlaySound(uiSelectSound);
-                break;
-            case 1:
-                audioManager.PlaySound(uiCancelSound);
-                break;
-            case 2:
-                audioManager.PlaySound(uiCursorSound);
-                break;
+            switch (sound)
+            {
+                case 0:
+                    audioManager.PlaySound(uiSelectSound);
+                    break;
+                case 1:
+                    audioManager.PlaySound(uiCancelSound);
+                    break;
+                case 2:
+                    audioManager.PlaySound(uiCursorSound);
+                    break;
+            }
         }
     }
     public void LoadByIndex(string sceneToLoad)

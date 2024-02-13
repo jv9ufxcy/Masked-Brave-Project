@@ -126,7 +126,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
     [SerializeField] private bool dontLoadSkillsInMenu = false;
     public void LoadData(GameData data)
     {
-        if (dontLoadSkillsInMenu)
+        if (!dontLoadSkillsInMenu)
         {
             this.unlockedSkillsList = data.unlockedSkillsData;
             this.unlockedLevels = data.levelUnlocked;
@@ -140,7 +140,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
 
     public void SaveData(GameData data)
     {
-        if (dontLoadSkillsInMenu)
+        if (!dontLoadSkillsInMenu)
         {
             data.unlockedSkillsData = this.unlockedSkillsList;
             data.levelUnlocked = this.unlockedLevels;
