@@ -5074,10 +5074,12 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 7626717631851928225}
   landingParticle: {fileID: 7626717631114487396}
+  bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
   bullets:
-  - {fileID: 1946779624007576, guid: 10e3966c32593ce4f901de6c1a077754, type: 3}
+  - {fileID: 1946779624007576, guid: 0b58cd32371f5324c991edc456837057, type: 3}
+  - {fileID: 3038521847444880924, guid: 836e36b5ea815144fa117bdf003e2ccc, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -5140,12 +5142,12 @@ MonoBehaviour:
   aggroHeight: 12
   longAttackRange: 18
   shortAttackRange: 5
-  attackCooldown: 120
+  attackCooldown: 60
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 5c000000
-  rangedAttackState: 5c000000
+  closeAttackState: 5c0000005d000000
+  rangedAttackState: 5c0000005d000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 0
@@ -5153,6 +5155,8 @@ MonoBehaviour:
   floatHeight: 2
   floatTime: 0.25
   canDefend: 0
+  shouldFacePlayer: 0
+  startingDirection: 1
   defStateIndex: 84
   defStates: 
 --- !u!114 &7626717631480346097

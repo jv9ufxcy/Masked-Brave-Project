@@ -276,7 +276,10 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         if (controlType==ControlType.AI || controlType == ControlType.BOSS || controlType == ControlType.DUMMY)
         {
-            FacePlayer();
+            if (shouldFacePlayer)
+                FacePlayer();
+            else
+                FaceDir(startingDirection);
         }
     }
     void UpdateState()
@@ -1990,6 +1993,9 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         else return false;//cannot block
     }
+    [SerializeField] private bool shouldFacePlayer = true;
+    [Range(-1f, 1f)]
+    [SerializeField] private int startingDirection = 1;
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int defStateIndex;
     public int[] defStates;
@@ -2007,7 +2013,11 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             if (isAggroRange && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) > longAttackRange))
             {
-                FaceTarget(target.transform.position);
+                if (shouldFacePlayer)
+                    FaceTarget(target.transform.position);
+                else
+                    FaceDir(startingDirection);
+                
                 switch (enemyType)
                 {
                     case 0:
@@ -2043,9 +2053,14 @@ public class CharacterObject : MonoBehaviour, IHittable
             
             if (isAggroRange && dashCooldown <= 0 && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) <= longAttackRange))
             {
-                FaceTarget(target.transform.position);
+                if (shouldFacePlayer)
+                    FaceTarget(target.transform.position);
+                else
+                    FaceDir(startingDirection);
+
                 if (controlType!=ControlType.DUMMY)
                     velocity = Vector2.zero;
+
                 if (isLongRange && rangedAttackState.Length > 0)
                 {
                     //int randNum = UnityEngine.Random.Range(0, rangedAttackState.Length);

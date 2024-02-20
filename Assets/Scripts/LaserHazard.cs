@@ -113,7 +113,7 @@ public class LaserHazard : MonoBehaviour
     private void HitCharacter(IHittable victim)
     {
         //IHittable victim = collision.transform.root.GetComponent<IHittable>();
-        if (victim != null)
+        if (victim != null && victim.GetGameObject() != this.gameObject)
         {
             victim.Hit(character, projectileIndex, 0);
         }

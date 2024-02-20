@@ -27,12 +27,15 @@ public class BulletHit : MonoBehaviour
     public int bulletChain = 0, newBulletSpeed = 0;
     public CharacterObject character;
     private Controller2D thisBullet;
+    private LaserHazard laser;
     // Use this for initialization
     void Awake()
     {
         bulletSprites = GetComponentsInChildren<SpriteRenderer>();
         bulletColls = GetComponents<BoxCollider2D>();
         bulletRB = GetComponent<Rigidbody2D>();
+        laser = GetComponentInChildren<LaserHazard>();
+        
         if (explosionEffect==null)
         {
             explosionEffect = bulletHitEffect;
@@ -66,6 +69,10 @@ public class BulletHit : MonoBehaviour
         if (parabolicArc)
         {
             bulletVel.y = maxJumpHeight;
+        }
+        if (laser != null && character != null)
+        {
+            laser.character = this.character;
         }
     }
     private void FixedUpdate()
@@ -337,7 +344,8 @@ public class BulletHit : MonoBehaviour
             return;
         }
         //Debug.Log("bulletReflected");
-        transform.rotation = Quaternion.Euler(0, 0, rotation+135);
+        float newRotation = 135*Mathf.Sign(transform.localScale.x);
+        transform.rotation = Quaternion.Euler(0, 0, rotation+newRotation);
         //velocity *= -1;
         //velocity += Vector3.up;
         //bulletVel*= -1;
