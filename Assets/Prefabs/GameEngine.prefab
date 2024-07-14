@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 114017247934721476}
   - component: {fileID: 925417841}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameEngine
   m_TagString: GM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,11 +58,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coreDataObject: {fileID: 11400000, guid: 834004322a7ab974491c656e023586df, type: 2}
   deadZone: 0.2
-  currency: 0
-  currencyText: {fileID: 0}
+  unlockedSkillsList: []
   mainCharacter: {fileID: 0}
   globalMovelistIndex: 0
-  maxIndex: 2
+  maxIndex: 5
+  extraSpecialMeter: 0
   OnFormChange:
     m_PersistentCalls:
       m_Calls:
@@ -77,5 +77,4 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  dontLoadSkillsInMenu: 0

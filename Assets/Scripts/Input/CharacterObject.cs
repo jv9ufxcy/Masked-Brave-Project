@@ -42,6 +42,8 @@ public class CharacterObject : MonoBehaviour, IHittable
     public GameObject kinzecter;
     public enum ControlType { AI, PLAYER, BOSS, DEAD, OBJECT, DUMMY };
     public ControlType controlType;
+    public enum MovementStyle { DEFAULT, BIKE, WIND }
+    public MovementStyle movementStyle;
     private CharacterObject playerChar;
 
     [Header("HitCancel")]
@@ -220,6 +222,16 @@ public class CharacterObject : MonoBehaviour, IHittable
     void UpdateTimers()
     {
         if (dashCooldown > 0) { dashCooldown -= dashCooldownRate; }
+        if (windGauge > 0) { windGauge -= windDecrementRate; }
+
+        if (windGauge<=0&&movementStyle==MovementStyle.WIND)
+        {
+            if (GameEngine.gameEngine.globalMovelistIndex == 5)
+                movementStyle = MovementStyle.BIKE;
+            else
+                movementStyle = MovementStyle.DEFAULT;
+        }
+
         if (invulCooldown > 0) { invulCooldown --; }
         else { isInvulnerable = false; curComboValue = -1; }
     }
@@ -444,6 +456,14 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 17:
                 QuickChangeForm((int)_params[0].val);
                 healthManager.lastChance = true;
+                if (_params[0].val == 5)//bike
+                {
+                    OnMovementStateChange(1);
+                }
+                else
+                {
+                    OnMovementStateChange(0);
+                }
                 break;
             case 18:
                 Screenshake(_params[0].val, _params[1].val);
@@ -484,6 +504,31 @@ public class CharacterObject : MonoBehaviour, IHittable
 
         }
     }
+    public void OnCyclonePower(int windPower)
+    {
+        movementStyle = MovementStyle.WIND;
+        windGauge += windPower;
+        //start particles
+    }
+    private void OnMovementStateChange(int v)
+    {
+        
+        switch (v)
+        {
+            case 0://default
+                movementStyle = MovementStyle.DEFAULT;
+                break;
+            case 1://bike
+                movementStyle = MovementStyle.BIKE;
+                break;
+            case 2://default
+                movementStyle = MovementStyle.WIND;
+                break;
+            default:
+                break;
+        }
+    }
+
     public void SelfDestruct(int index)
     {
         switch (index)
@@ -681,6 +726,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public float minJumpHeight = .125f;
     public float timeToJumpApex = .4f;
     public float accelerationTimeAirborne = 0f, accelerationTimeGrounded = 0f;
+    public float bikeAccelerationTimeAirborne = 0.5f, bikeAccelerationTimeGrounded = 0.25f, bikeMoveSpeed=12f, windAccelerationTimeAirborne = 1f, windAccelerationTimeGrounded = 0f,windMoveSpeed=16f;
 
     public Vector2 wallJumpClimb;
     public Vector2 wallJumpOff;
@@ -771,27 +817,47 @@ public class CharacterObject : MonoBehaviour, IHittable
             {
                 _mov = -1;
             }
-            if (aerialFlag)
-            {
-                targetVelocityX = leftStick.x * (moveSpeed*airMod) * _pow;
-                velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
-                //velocity.x = (airMod * _mov) * moveSpeed * _pow;
-                if (Mathf.Abs(airMod) == 2)
-                {
-                    //ShowAfterImage();
-                }
-            }
-            else
+            switch (movementStyle)
             {
-                targetVelocityX = leftStick.x * moveSpeed * _pow;
-                velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-                //velocity.x = (_mov) * moveSpeed * _pow;
+                case MovementStyle.DEFAULT:
+                    targetVelocityX = leftStick.x * (moveSpeed * (controller.collisions.below ? airMod : 1)) * _pow;
+                    velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+                    break;
+                case MovementStyle.BIKE:
+                    targetVelocityX = leftStick.x * bikeMoveSpeed * _pow;
+                    velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? bikeAccelerationTimeGrounded : bikeAccelerationTimeAirborne);
+                    break;
+                case MovementStyle.WIND:
+                    targetVelocityX = leftStick.x * windMoveSpeed * _pow;
+                    velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? windAccelerationTimeGrounded : windAccelerationTimeAirborne);
+                    break;
+                default:
+                    break;
             }
+
+            //if (Mathf.Abs(airMod) == 2)
+            //{
+            //    //ShowAfterImage();
+            //}
+
         }
         else
         {
-            velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+            switch (movementStyle)
+            {
+                case MovementStyle.DEFAULT:
+                    velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+                    break;
+                case MovementStyle.BIKE:
+                    velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocityXSmoothing, (controller.collisions.below) ? bikeAccelerationTimeGrounded : bikeAccelerationTimeAirborne);
+                    break;
+                case MovementStyle.WIND:
+                    velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocityXSmoothing, (controller.collisions.below) ? windAccelerationTimeGrounded : windAccelerationTimeAirborne);
+                    break;
+                default:
+                    break;
+            }
         }
         if (hitStun <= 0)
         {
@@ -836,7 +902,7 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     public float deadzone = 0.2f;
 
-    public float moveSpeed = 10f;
+    public float moveSpeed = 8f, playerSpeed = 8f;
     public float airMod = 1f;
     public float jumpPow = 12;
     public void StartStateFromScript(int _newState)
@@ -1515,7 +1581,7 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     [Header("Timers")]
     public float coyoteTimer = 6f;
-    public float dashCooldown, dashCooldownRate = 1f, invulCooldown, invulFlickerRate = 4f;
+    public float dashCooldown, dashCooldownRate = 1f, invulCooldown, invulFlickerRate = 4f, windGauge, windDecrementRate = 1f;
     [Header("Meter")]
     public float specialMeter, specialMeterMax = 100f, nextSpecialMeterUse;
 
@@ -1537,7 +1603,11 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         specialMeter += _val;
         specialMeter = Mathf.Clamp(specialMeter, 0f, specialMeterMax);
-        healthManager.ChangeMeter((int)_val);
+        if (healthManager!=null)
+        {
+            healthManager.ChangeMeter((int)_val);
+        }
+        
     }
     public void OnSkillUsed()
     {
@@ -1569,10 +1639,27 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             wallSliding = true;
             animAerialState = -1f;
-            if (velocity.y < -wallSlideSpeedMax)
+            switch (movementStyle)
             {
-                velocity.y = -wallSlideSpeedMax;
+                case MovementStyle.DEFAULT://slide down wall and clamp to max speed
+                    if (velocity.y < -wallSlideSpeedMax)
+                    {
+                        velocity.y = -wallSlideSpeedMax;
+                    }
+                    break;
+                case MovementStyle.BIKE://ride up wall
+                    velocity.y = -wallSlideSpeedMax;
+                    break;
+                case MovementStyle.WIND:
+                    if (velocity.y < -wallSlideSpeedMax)
+                    {
+                        velocity.y = -wallSlideSpeedMax;
+                    }
+                    break;
+                default:
+                    break;
             }
+            
 
             if (timeToWallUnstick > 0)
             {
@@ -1693,6 +1780,13 @@ public class CharacterObject : MonoBehaviour, IHittable
     private bool hasLanded=true;
     private void GroundTouch()
     {
+        if (movementStyle==MovementStyle.WIND)
+        {
+            if (GameEngine.gameEngine.globalMovelistIndex==5)
+                movementStyle = MovementStyle.BIKE;
+            else
+                movementStyle = MovementStyle.DEFAULT;
+        }
         //DashReset();
         if (!hasLanded)
         {
@@ -1939,7 +2033,10 @@ public class CharacterObject : MonoBehaviour, IHittable
     public float hitStun;
     public void GettingHit()
     {
-        hitStun--;
+        if (IsGrounded() || enemyType == 3)//if not floating enemy
+        {
+            hitStun--;
+        }
         if (hitStun <= 0) 
         { 
             EndState();

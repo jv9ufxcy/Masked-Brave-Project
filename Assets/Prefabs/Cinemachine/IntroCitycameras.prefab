@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74322556}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -128, y: -6.4125, z: -10}
+  m_LocalPosition: {x: -128, y: -10.125, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1696979254}
@@ -1477,20 +1477,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 61563552838010150}
     m_ColliderPaths:
-    - - X: 109999707
+    - - X: 99999707
         Y: -55000000
-      - X: 109999707
+      - X: 99999707
         Y: 55000000
-      - X: -110000000
+      - X: -100000000
         Y: 54999707
-      - X: -109999707
+      - X: -99999707
         Y: -55000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 10.999942, y: -5.5}
-      - {x: 10.999942, y: 5.5}
-      - {x: -11, y: 5.499942}
-      - {x: -10.999942, y: -5.5}
+    - - {x: 9.999942, y: -5.5}
+      - {x: 9.999942, y: 5.5}
+      - {x: -10, y: 5.499942}
+      - {x: -9.999942, y: -5.5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!61 &61563552838010150
@@ -1517,7 +1517,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 22, y: 11}
+  m_Size: {x: 20, y: 11}
   m_EdgeRadius: 0
 --- !u!50 &50516357123348786
 Rigidbody2D:
@@ -1873,7 +1873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778115836508380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 179, y: -15.5, z: 0}
+  m_LocalPosition: {x: 179, y: -17.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4732078921268522}
@@ -1900,19 +1900,19 @@ CompositeCollider2D:
   - m_Collider: {fileID: 61726815671358032}
     m_ColliderPaths:
     - - X: 99999707
-        Y: -75000000
+        Y: -55000000
       - X: 99999707
-        Y: 35000000
+        Y: 55000000
       - X: -100000000
-        Y: 34999707
+        Y: 54999707
       - X: -99999707
-        Y: -75000000
+        Y: -55000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 9.999942, y: -7.5}
-      - {x: 9.999942, y: 3.5}
-      - {x: -10, y: 3.4999416}
-      - {x: -9.999942, y: -7.5}
+    - - {x: 9.999942, y: -5.5}
+      - {x: 9.999942, y: 5.5}
+      - {x: -10, y: 5.499942}
+      - {x: -9.999942, y: -5.5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!61 &61726815671358032
@@ -1928,7 +1928,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 0, y: -2}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

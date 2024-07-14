@@ -9620,6 +9620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca54e36bcb92ba24f9e37d0d5625e619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MissionIndex: 0
   isMissionActive: 0
   isReload: 0
   missionStartText: {fileID: 1404728385}
@@ -9697,6 +9698,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   nextLevel: LevelSelectScene
+  trainingLevel: BombardierTraining
+  unlockedFormState: Zoe/BombHenshin
+  shouldCheckTrainingStage: 0
 --- !u!4 &1273356926
 Transform:
   m_ObjectHideFlags: 0
@@ -11589,7 +11593,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 925417841, guid: 4092e24f632fcfe46a51ac39052b012f, type: 3}
       propertyPath: maxIndex
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 925417841, guid: 4092e24f632fcfe46a51ac39052b012f, type: 3}
       propertyPath: currencyObj

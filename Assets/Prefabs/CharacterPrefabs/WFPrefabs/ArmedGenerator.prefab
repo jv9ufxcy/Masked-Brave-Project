@@ -5033,6 +5033,8 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  bikeAccelerationTimeAirborne: 0
+  bikeAccelerationTimeGrounded: 0
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -5043,6 +5045,8 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 8
+  playerSpeed: 8
+  bikeSpeed: 12
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -5178,8 +5182,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 16
-  currentPoise: 16
+  maxPoise: 255
+  currentPoise: 255
   HealthFill: {fileID: 7626717632735597373}
   DamageFill: {fileID: 7626717631804950600}
   BarImage: {fileID: 7626717631568981768}

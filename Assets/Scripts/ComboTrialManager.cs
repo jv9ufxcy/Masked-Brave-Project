@@ -48,6 +48,7 @@ public class ComboTrialManager : MonoBehaviour
 
     public void BeginTrials()
     {
+        trialActive = true;
         CreateTrialTransform();
         SetControlsText();
         RefillMeter();
@@ -74,29 +75,37 @@ public class ComboTrialManager : MonoBehaviour
     }
     public void StartPressed()
     {
-        if (trialComplete)
+        if (trialActive)
         {
-            OnFinishInput?.Invoke();
+            if (trialComplete)
+            {
+                trialActive = false;
+                OnFinishInput?.Invoke();
+            }
         }
     }
     public void SelectPressed()
     {
-        if (comboSuccess == false)//don't allow reset mid combo
+        if (trialActive)
         {
-            ResetComboText();
-            ResetPosition();
-            RefillMeter();
-        }
-        if (trialComplete)
-        {
-            trialStep = 0;
-            BeginTrials();
-            trialComplete = false;
+            if (comboSuccess == false)//don't allow reset mid combo
+            {
+                ResetComboText();
+                ResetPosition();
+                RefillMeter();
+            }
+            if (trialComplete)
+            {
+                trialStep = 0;
+                BeginTrials();
+                trialComplete = false;
+            }
         }
     }
     void TouchpadPressed()
     {
-        SelectPressed();
+        if (trialActive) 
+            SelectPressed();
     }
     public void ComboDrop()
     {
@@ -141,7 +150,7 @@ public class ComboTrialManager : MonoBehaviour
             }
         }
     }
-    bool comboSuccess = false, trialComplete = false;
+    bool comboSuccess = false, trialComplete = false, trialActive = false;
     void OnComboSuccess()
     {
         comboSuccess = true;
