@@ -356,6 +356,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 3948506263805587040}
   canCancel: 0
   isHit: 0
@@ -369,6 +370,12 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  bikeAccelerationTimeAirborne: 0.5
+  bikeAccelerationTimeGrounded: 0.25
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -379,6 +386,7 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 5
+  playerSpeed: 8
   airMod: 1
   jumpPow: 18
   currentCommandState: 0
@@ -430,8 +438,6 @@ MonoBehaviour:
     m_Bits: 256
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -446,6 +452,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -481,17 +489,19 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 92000000
-  rangedAttackState: 
+  closeAttackState: 9200000054000000
+  rangedAttackState: 92000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 2
-  desperationTransitionState: 0
+  desperationTransitionState: 84
   floatHeight: 2
   floatTime: 0.25
   canDefend: 1
+  shouldFacePlayer: 1
+  startingDirection: 1
   defStateIndex: 84
-  defStates: 00000000
+  defStates: 5400000000000000
 --- !u!114 &4692018418690321730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,8 +521,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 6
-  currentPoise: 6
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 7673643568302415704}
   DamageFill: {fileID: 9156451246854498923}
   BarImage: {fileID: 3744071429934874618}

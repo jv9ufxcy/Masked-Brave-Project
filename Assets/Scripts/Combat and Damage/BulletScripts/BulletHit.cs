@@ -9,7 +9,7 @@ public class BulletHit : MonoBehaviour
     private SpriteRenderer[] bulletSprites;
     private BoxCollider2D[] bulletColls;
     private AudioManager audioManager;
-    [Tooltip("0 - straight, 1 - homing, 2 - target, 3 - nearest enemy, 4 - follow ground, 5 - boomerang, 6 - satellite")]
+    [Tooltip("0 - Straight, 1 - Homing, 2 - Target, 3 - Nearest Enemy, 4 - Follow Ground, 5 - Boomerang, 6 - Satellite, 7 - Curvy")]
     public int bulletType;
     public Vector2 direction, bulletVel;
     public CharacterObject target;
@@ -104,6 +104,9 @@ public class BulletHit : MonoBehaviour
                     break;
                 case 6:
                     Satellite();
+                    break;
+                case 7:
+                    CurvyBullet();
                     break;
 
             }
@@ -284,7 +287,7 @@ public class BulletHit : MonoBehaviour
             Destroy(gameObject, destroyTimer);
         }
     }
-    public float boomerangFlightTime = .5f, boomerangStallTime = .5f, boomerangTime, angle, boomerSpeed = 10f/*(2 * Mathf.PI) / 1*/, radius=1f;
+    public float boomerangFlightTime = .5f, boomerangStallTime = .5f, boomerangTime, angle, boomerSpeed = 10f/*(2 * Mathf.PI) / 1*/, radius = 1f, radX, radY;
     public Vector3 boomerangDist;
     public Vector3 followVel;
     private void Boomerang()
@@ -315,10 +318,14 @@ public class BulletHit : MonoBehaviour
         //    followVel.y += ((target.transform.position.y + target.transform.position.normalized.y) - transform.position.y ) * speedDampen;
         //    Mathf.Clamp(followVel.y, -.25f, .25f);
         //}
-        //angle += boomerSpeed * Time.fixedDeltaTime; //if you want to switch direction, use -= instead of +=
-        //followVel.x = Mathf.Cos(angle) * radius;
-        //followVel.y = Mathf.Sin(angle) * radius;
-        //SetVelocity(followVel);
+        
+    }
+    private void CurvyBullet()
+    {
+        angle += speed * Time.fixedDeltaTime; //if you want to switch direction, use -= instead of +=
+        followVel.x = Mathf.Cos(angle) * radX;
+        followVel.y = Mathf.Sin(angle) * radY;
+        SetVelocity(followVel);
     }
     private void Satellite()
     {

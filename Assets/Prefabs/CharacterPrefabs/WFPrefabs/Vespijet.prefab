@@ -24428,6 +24428,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 3068497383835196671}
   canCancel: 0
   isHit: 0
@@ -24441,6 +24442,12 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  bikeAccelerationTimeAirborne: 0.5
+  bikeAccelerationTimeGrounded: 0.25
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -24451,6 +24458,7 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 6
+  playerSpeed: 8
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -24482,6 +24490,7 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 7343953619865073519}
   landingParticle: {fileID: 1367701522295119782}
+  bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
   bullets:
@@ -24520,6 +24529,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -24564,6 +24575,8 @@ MonoBehaviour:
   floatHeight: 4
   floatTime: 0.25
   canDefend: 0
+  shouldFacePlayer: 1
+  startingDirection: 1
   defStateIndex: 0
   defStates: 
 --- !u!114 &8638271176540993372
@@ -24585,8 +24598,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 8
-  currentPoise: 8
+  maxPoise: 4
+  currentPoise: 4
   HealthFill: {fileID: 3717915349170568901}
   DamageFill: {fileID: 7270305921206227494}
   BarImage: {fileID: 4001168514364923852}

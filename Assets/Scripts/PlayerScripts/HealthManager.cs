@@ -84,6 +84,7 @@ public class HealthSystem
             Heart heart = new Heart(2);
             heartList.Add(heart);
         }
+
         int fullHealAmt = 1000;
         Heal(fullHealAmt);
         if (OnUpgrade != null)

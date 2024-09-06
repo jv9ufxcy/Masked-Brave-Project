@@ -24173,6 +24173,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 3118008819221536238}
   canCancel: 0
   isHit: 0
@@ -24188,6 +24189,10 @@ MonoBehaviour:
   accelerationTimeGrounded: 0.1
   bikeAccelerationTimeAirborne: 0
   bikeAccelerationTimeGrounded: 0
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -24199,7 +24204,6 @@ MonoBehaviour:
   deadzone: 0.2
   moveSpeed: 5
   playerSpeed: 8
-  bikeSpeed: 12
   airMod: 1
   jumpPow: 18
   currentCommandState: 0
@@ -24250,8 +24254,6 @@ MonoBehaviour:
     m_Bits: 256
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -24266,6 +24268,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -24297,11 +24301,11 @@ MonoBehaviour:
   aggroHeight: 4
   longAttackRange: 8
   shortAttackRange: 8
-  attackCooldown: 45
+  attackCooldown: 15
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 94000000
+  closeAttackState: 9400000054000000
   rangedAttackState: 94000000
   desperationCAStates: 
   desperationRAStates: 
@@ -24309,11 +24313,11 @@ MonoBehaviour:
   desperationTransitionState: 0
   floatHeight: 2
   floatTime: 0.25
-  canDefend: 0
+  canDefend: 1
   shouldFacePlayer: 1
   startingDirection: 1
-  defStateIndex: 0
-  defStates: 
+  defStateIndex: 84
+  defStates: 54000000
 --- !u!114 &6670931534286233292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24333,8 +24337,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 10
-  currentPoise: 10
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 8642635480293518550}
   DamageFill: {fileID: 7105751004142148069}
   BarImage: {fileID: 3349288505309236340}

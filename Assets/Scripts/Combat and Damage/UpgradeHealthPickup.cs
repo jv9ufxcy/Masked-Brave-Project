@@ -16,7 +16,8 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
     CharacterObject player;
     HealthManager playerHP;
     AudioManager audioManager;
-    [SerializeField]private int upgradeAmt = 2,meterAmt = 50;
+    [SerializeField][Range(0,20)]private int upgradeAmt = 2;
+    [SerializeField]private int meterAmt = 50;
     [SerializeField]private string pickupSound;
     [SerializeField] private string unlockedMoveName;
     [SerializeField]private GameObject pickupEffect;
@@ -40,7 +41,7 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
             player = collision.gameObject.GetComponent<CharacterObject>();
             if (collision.CompareTag("Player"))
             {
-                if (upgradeAmt > 0)
+                if (upgradeAmt >= 2)
                 {
                     playerHP.HealthUpgrade(upgradeAmt);
                 }

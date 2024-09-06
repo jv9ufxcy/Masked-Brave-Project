@@ -8,7 +8,7 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
 {
     public static HealthSystem healthSystemStatic;
     public int healthBoost;
-    public int maxHealth = 18;
+    public int maxHealth = 16;
     public float heartOffset = 4f, heartAnchor = -60f, lastHeartPos=-60f;
     [SerializeField] private Vector2 sizeDelta = new Vector2(64,64);
     [SerializeField] private Sprite healthSprite0;

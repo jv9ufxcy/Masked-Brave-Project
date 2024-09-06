@@ -496,10 +496,13 @@ public class CharacterObject : MonoBehaviour, IHittable
                 JumpStateCut();
                 break;
             case 28:
-                DashJump();
+                DashJump(_params[0].val);
                 break;
             case 29:
                 GameEngine.SetHitPause(_params[0].val);
+                break;
+            case 30:
+                CurvyBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, _params[5].val, _params[6].val, _params[7].val, _params[8].val, _params[9].val, _params[10].val);
                 break;
 
         }
@@ -604,19 +607,22 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         switch (actIndex)
         {
-            case 0:
+            case 0://Start Grapple
                 lineRend.enabled = true;
                 grappleVictim.Grappled();
                 lineRend.SetPosition(0, transform.position);
                 lineRend.SetPosition(1, grappleVictim.transform.position);
                 break;
-            case 1:
+            case 1://DealDamage
                 lineRend.enabled = false;
                 grappleVictim.GetHit(this, impactState, 0);
                 break;
-            case 2:
+            case 2://End Grapple
                 lineRend.enabled = false;
                 grappleVictim = null;
+                break;
+            case 3://Projectile
+                Instantiate(bullets[impactState], grappleVictim.transform);
                 break;
         }
     }
@@ -698,7 +704,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             dir.x = Direction;
         }
-        if (!isOnGround && dir.y == 0)
+        if (!IsGrounded() && dir.y == 0)
         {
             AirStill(0);
         }
@@ -821,7 +827,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             switch (movementStyle)
             {
                 case MovementStyle.DEFAULT:
-                    targetVelocityX = leftStick.x * (moveSpeed * (controller.collisions.below ? airMod : 1)) * _pow;
+                    targetVelocityX = leftStick.x * (moveSpeed * (controller.collisions.below ? 1 : airMod)) * _pow;
                     velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
                     break;
                 case MovementStyle.BIKE:
@@ -1322,6 +1328,34 @@ public class CharacterObject : MonoBehaviour, IHittable
             bulletsActiveInHierarchy.Add(newbullet);
         }
     }
+    public void CurvyBullet(float bulletIndex, float bulletSpeed, float offsetX, float offsetY, float attackIndex, float bulletRot,
+        float boomerangMaxTime, float boomerangStallTime, float boomerangSpeed, float radiusX, float radiusY)
+    {
+        shootAnim = shootAnimMax;
+        var offset = new Vector3(offsetX * Direction, offsetY, 0);
+        GameObject newbullet = Instantiate(bullets[(int)bulletIndex], transform.position + offset, Quaternion.identity);
+        BulletHit bullet = newbullet.GetComponent<BulletHit>();
+        bullet.character = characterObject;
+        int onWall = wallFlag ? -1 : 1;
+        bullet.direction.x = (Direction * onWall);
+
+        bullet.velocity.x = (Direction * onWall) * Mathf.Sign(bulletSpeed);
+        bullet.attackIndex = (int)attackIndex;
+        bullet.speed = bulletSpeed;
+        bullet.rotation = bulletRot * (Direction * onWall);
+
+        bullet.boomerangTime = boomerangMaxTime;
+        bullet.boomerangStallTime = boomerangStallTime;
+        bullet.boomerSpeed = boomerangSpeed;
+        bullet.radX = radiusX * Direction;
+        bullet.radY = radiusY;
+        //newbullet.GetComponent<Hitbox>().character = characterObject;
+        newbullet.transform.localScale = new Vector3((Direction * onWall) * Mathf.Sign(bulletSpeed), 1, 1);
+        if (!bulletsActiveInHierarchy.Contains(newbullet))
+        {
+            bulletsActiveInHierarchy.Add(newbullet);
+        }
+    }
     public void SpecialFireCheck(float bulletType)
     {
         //if (CurrentNumberOfBullets >= 1)
@@ -1525,7 +1559,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
 
 
-    private void DashJump()
+    private void DashJump(float _pow)
     {
         if (!aerialFlag || wallFlag)//on ground
         {
@@ -1535,6 +1569,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                 airMod = 1f;
             if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name) && wallFlag)
                 airMod = 1f;
+        }
+        if (_pow>1)
+        {
+            airMod = _pow;
         }
     }
     [SerializeField]
@@ -1568,7 +1606,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     [Header("Grounded Check")]
     [SerializeField]
     private LayerMask whatCountsAsGround;
-    [HideInInspector] public bool aerialFlag, wallFlag, isOnGround, isOnWall;
+    /*[HideInInspector] */public bool aerialFlag, wallFlag;
     public float aerialTimer, groundDetectHeight, wallDetectWidth, animAerialState, animFallSpeed;
 
     public int jumps, jumpMax = 1;
@@ -1865,7 +1903,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[atkIndex];
         }
         
-        if (IsDefendingInState() && attacker.Direction==-Direction)
+        if (IsDefendingInState() && attacker.Direction==-Direction)//if blocking and attacker is facing each other
         {
             if (curAtk.poiseDamage < 20f)
             {
@@ -1873,7 +1911,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 StartStateFromScript(defStateIndex);
                 dashCooldown = 0;
                 FaceTarget(target.transform.position);
-                if (projectileIndex == 0) attacker.FrontVelocity(-10f);
+                if (projectileIndex == 0) attacker.FrontVelocity(-10f);//if not a projectile
             }
             else
             {
@@ -2085,8 +2123,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                     }
                 }
                 return false;//has no blocking states
+                Debug.Log("Number of block states: " + defStates.Length);
             }
             else return false;//is stunned
+            Debug.Log("Is Stunned for: " + hitStun);
         }
         else return false;//cannot block
     }

@@ -63,7 +63,7 @@ public class ComboTrialManager : MonoBehaviour
     {
         controlsPanel.GetComponent<TextMeshProUGUI>().SetText("<size=262.5%>" + selectResetButton[GameEngine.coreData.currentControllerIndex] + "<size=100%>" + resetButtonText);
         trialExitPanel.GetComponent<TextMeshProUGUI>().SetText("<size=262.5%>" + trialStartButton[GameEngine.coreData.currentControllerIndex] + "<size=100%>" + progressText);
-        trialExitPanel.gameObject.SetActive(trialComplete);
+        trialExitPanel.gameObject.SetActive(trialActive);
     }
     private void CreateTrialTransform()
     {
@@ -77,11 +77,11 @@ public class ComboTrialManager : MonoBehaviour
     {
         if (trialActive)
         {
-            if (trialComplete)
-            {
+            //if (trialComplete)
+            //{
                 trialActive = false;
                 OnFinishInput?.Invoke();
-            }
+            //}
         }
     }
     public void SelectPressed()
