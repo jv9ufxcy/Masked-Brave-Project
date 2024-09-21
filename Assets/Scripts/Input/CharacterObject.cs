@@ -622,7 +622,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                 grappleVictim = null;
                 break;
             case 3://Projectile
-                Instantiate(bullets[impactState], grappleVictim.transform);
+                GameObject newBullet = Instantiate(bullets[impactState], grappleVictim.transform);
+                BulletHit bullet = newBullet.GetComponent<BulletHit>();
+                bullet.character = characterObject;
                 break;
         }
     }
@@ -1605,7 +1607,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     [Header("Grounded Check")]
     [SerializeField]
-    private LayerMask whatCountsAsGround;
+    private LayerMask whatCountsAsGround, whatIsSlippery = 1<<15;
     /*[HideInInspector] */public bool aerialFlag, wallFlag;
     public float aerialTimer, groundDetectHeight, wallDetectWidth, animAerialState, animFallSpeed;
 
@@ -1673,7 +1675,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         wallDirX = (controller.collisions.left) ? -1 : 1;
         wallSliding = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0 && leftStick.x == wallDirX)
+        if (IsOnWall() && !controller.collisions.below && velocity.y < 0 && leftStick.x == wallDirX)
         {
             wallSliding = true;
             animAerialState = -1f;
@@ -1813,7 +1815,8 @@ public class CharacterObject : MonoBehaviour, IHittable
         //    Debug.Log("IsOnWall");
 
         //return rayCastHit.collider != null;
-        return controller.collisions.left || controller.collisions.right;
+        RaycastHit2D slipperyHit = Physics2D.Raycast(boxCollider2D.bounds.center, Vector2.right * Direction, boxCollider2D.bounds.size.magnitude, whatIsSlippery);
+        return (controller.collisions.left || controller.collisions.right)&&!slipperyHit;
     }
     private bool hasLanded=true;
     private void GroundTouch()
@@ -2071,7 +2074,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public float hitStun;
     public void GettingHit()
     {
-        if (IsGrounded() || enemyType == 3)//if not floating enemy
+        if (IsGrounded() || enemyType == 3||controlType==ControlType.PLAYER)//if not floating enemy or player
         {
             hitStun--;
         }
@@ -2318,7 +2321,18 @@ public class CharacterObject : MonoBehaviour, IHittable
 
         Gizmos.DrawWireSphere(transform.position+Vector3.down, .49f);
     }
+    private void OnDrawGizmos()
+    {
+        Vector3 yPos = new Vector3(transform.position.x, transform.position.y - floatHeight, 0);
+        float size = .3f;
+        if (enemyType == 3)//floating enemy
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(yPos - Vector3.left*size, yPos - Vector3.right * size);
+            Gizmos.DrawLine(yPos - Vector3.up*size, yPos - Vector3.down * size);
+        }
 
+    }
     public GameObject GetGameObject()
     {
         return gameObject;

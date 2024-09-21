@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class HazardSpawner : MonoBehaviour
@@ -94,12 +95,13 @@ public class HazardSpawner : MonoBehaviour
             //Debug.Log("Initial Spawn");
         }
     }
-
+    [SerializeField] private float setFloatHeight = 3;
     void SpawnHazard()
     {
         if (hazardObject != null)
         {
             hazardObject.Spawn(2);
+            hazardObject.floatHeight = setFloatHeight;
         }
         else
         {
@@ -125,10 +127,19 @@ public class HazardSpawner : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
         hazardObject.Spawn(2);
+        hazardObject.floatHeight = setFloatHeight;
     }
     private IEnumerator SpawnACrate()
     {
         yield return new WaitForFixedUpdate();
         crateObject.OnSpawn();
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = UnityEngine.Color.green;
+        Vector3 yPos = new Vector3(transform.position.x, transform.position.y + setFloatHeight, 0);
+        float size = .3f;
+        Gizmos.DrawLine(yPos - Vector3.left * size, yPos - Vector3.right * size);
+        Gizmos.DrawLine(yPos - Vector3.up * size, yPos - Vector3.down * size);
     }
 }

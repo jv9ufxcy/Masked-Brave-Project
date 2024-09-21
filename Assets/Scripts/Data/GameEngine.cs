@@ -86,10 +86,10 @@ public class GameEngine : MonoBehaviour,IDataPersistence
     {
         return unlockedSkillsList.Contains(stateName);
     }
-    private int unlockedLevels = 0;
+    //private int unlockedLevels = 0;
     public void UnlockLevel(int level)
     {
-        unlockedLevels = level;
+        //unlockedLevels = level;
     }
     public void EndLevel()
     {
@@ -129,7 +129,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         if (!dontLoadSkillsInMenu)
         {
             this.unlockedSkillsList = data.unlockedSkillsData;
-            this.unlockedLevels = data.levelUnlocked;
+            //this.unlockedLevels = data.levelUnlocked;
             foreach (string item in data.energyTanksCollected)
             {
                 int _meter = 25;
@@ -143,7 +143,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         if (!dontLoadSkillsInMenu)
         {
             data.unlockedSkillsData = this.unlockedSkillsList;
-            data.levelUnlocked = this.unlockedLevels;
+            //data.levelUnlocked = this.unlockedLevels;
         }
     }
 

@@ -723,6 +723,7 @@ MonoBehaviour:
   - {fileID: 3152041610049941263, guid: 19a81000b4fa8374f94804fee3d0ff15, type: 3}
   - {fileID: 1946779624007576, guid: 8cabce124c9781f46b6e1ff6d09f3e19, type: 3}
   - {fileID: 1946779624007576, guid: 20fe283d2a7b1b746ae45e40291a19d0, type: 3}
+  - {fileID: 1946779624007576, guid: 171a4e349864e034b880efcf75778dae, type: 3}
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -736,6 +737,9 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
   aerialTimer: 0
@@ -938,7 +942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 33024
   horizontalRayCount: 4
   verticalRayCount: 4
   horizontalRaySpacing: 0
@@ -1547,6 +1551,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 540283558877753055}
     m_Modifications:
+    - target: {fileID: 2536785112974432903, guid: 518c1468f5f9b4448a5cf479422711a3,
+        type: 3}
+      propertyPath: stopAction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2536785112974432903, guid: 518c1468f5f9b4448a5cf479422711a3,
+        type: 3}
+      propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7248093287683203386, guid: 518c1468f5f9b4448a5cf479422711a3,
         type: 3}
       propertyPath: m_Name

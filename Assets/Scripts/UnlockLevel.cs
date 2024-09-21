@@ -14,6 +14,7 @@ public class UnlockLevel : MonoBehaviour, IDataPersistence
     public void SaveData(GameData data)
     {
         data.levelUnlocked = this.unlockedLevels;
+        Debug.Log("Levels Unlocked: " + data.levelUnlocked);
     }
 
     public void UnlockLevels(int level)

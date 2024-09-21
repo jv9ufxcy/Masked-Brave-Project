@@ -416,7 +416,9 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         }
 
     }
-
+    [Header("Floating Balloon")]
+    public float floatHeight = 3;
+    [SerializeField] private float floatTime = 0.5f;
     void CalculateVelocity()
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
@@ -425,8 +427,29 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         {
             velocity.y += gravity * Time.fixedDeltaTime;
         }
+        else
+        {
+            Vector3 newPos = transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
+            if (hit)
+            {
+                newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * floatHeight).y, floatTime);
+            }
+            transform.position = newPos;
+        }
     }
+    private void OnDrawGizmos()
+    {
+        Vector3 yPos = new Vector3(transform.position.x, transform.position.y - floatHeight, 0);
+        float size = .3f;
+        if (!gravityFix)//floating enemy
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(yPos - Vector3.left * size, yPos - Vector3.right * size);
+            Gizmos.DrawLine(yPos - Vector3.up * size, yPos - Vector3.down * size);
+        }
 
+    }
     public GameObject GetGameObject()
     {
         return gameObject;
