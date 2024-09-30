@@ -140,8 +140,8 @@ public class CharacterObject : MonoBehaviour, IHittable
                 if (!DialogueManager.instance.isDialogueActive)
                     PauseMenu();
 
-                //if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4)
-                //    Henshin();
+                if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4)
+                    Henshin();
 
                 if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
                 {
@@ -1452,8 +1452,8 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
             else
             {
-                //henshin.SelectForm();
-                ToggleMovelist();
+                henshin.SelectForm();
+                //ToggleMovelist();
                 menuTimer = 0;
             }
         }

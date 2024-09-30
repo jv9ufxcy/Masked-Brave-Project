@@ -91,7 +91,7 @@ public class RadialMenuController : MonoBehaviour
                     SwitchBomb();
                     break;
                 case 4:
-                    
+                    SwitchYellow();
                     break;
                 default:
                     break;
