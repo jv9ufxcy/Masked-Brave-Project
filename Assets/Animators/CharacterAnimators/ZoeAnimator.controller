@@ -775,8 +775,16 @@ BlendTree:
   m_Name: Aerial Tree
   m_Childs:
   - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 5adfe038e2b584d469be1eb84bb155e8, type: 2}
+    m_Threshold: -16
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: moveSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: f10f28544a73a824cbbce87fd56b303e, type: 2}
-    m_Threshold: -30
+    m_Threshold: 12
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -784,8 +792,8 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: fallSpeed
   m_BlendParameterY: Blend
-  m_MinThreshold: -30
-  m_MaxThreshold: -30
+  m_MinThreshold: -16
+  m_MaxThreshold: 12
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
@@ -1030,6 +1038,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 4219191078833744142}
     m_Position: {x: 585, y: 485, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6079878580793887553}
+    m_Position: {x: 620, y: 550, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1141,6 +1152,32 @@ AnimatorState:
   m_Motion: {fileID: 7400000, guid: f2450359147aeaa41b3a884372d9b63a, type: 2}
   m_Tag: 
   m_SpeedParameter: animSpeed
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &6079878580793887553
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ZoeJumpFall
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 5adfe038e2b584d469be1eb84bb155e8, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

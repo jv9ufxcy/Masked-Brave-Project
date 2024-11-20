@@ -628,8 +628,14 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
         }
     }
+    public delegate void FormChanged();
+    public event FormChanged OnFormChanged;
     public void DOChangeMovelist(int index)
     {
+        if (movementStyle != MovementStyle.DEFAULT)
+        {
+            OnMovementStateChange(0);
+        }
         PlayFlashParticle(henshinColors[index]);
         GameEngine.SetHitPause(5f);
         QuickChangeForm(index);
@@ -648,6 +654,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             kinzecter.GetComponent<Kinzecter>().RemoveKinzecter();
         }
+        OnFormChanged?.Invoke();
     }
 
     public void ToggleMovelist()
@@ -1439,15 +1446,15 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         if (menuTimer >= menuDelay)
         {
-            //GameEngine.SetHitPause(5f);
-            //henshin.ActivateMenu();
+            GameEngine.SetHitPause(5f);
+            henshin.ActivateMenu();
             menuTimer++;
         }
         if (Input.GetButtonUp(GameEngine.coreData.rawInputs[henshinInput].name))//open radial menu
         {
             if (menuTimer < menuDelay)
             {
-                ToggleMovelist();
+                //ToggleMovelist();
                 menuTimer = 0;
             }
             else
@@ -1647,7 +1654,10 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             healthManager.ChangeMeter((int)_val);
         }
-        
+    }
+    public void OnPoorMeter()
+    {
+        healthManager.PoorMeterShake();
     }
     public void OnSkillUsed()
     {

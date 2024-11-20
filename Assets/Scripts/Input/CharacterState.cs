@@ -58,8 +58,15 @@ public class CharacterState
         {
             if (character.bulletsActiveInHierarchy.Count>=bulletLimit){return false;}
         }
-        if (character.specialMeter < meterReq) { return false; }
-        else { character.nextSpecialMeterUse = meterReq; }
+        if (character.specialMeter < meterReq)
+        {
+            character.OnPoorMeter();
+            return false;
+        }
+        else
+        {
+            character.nextSpecialMeterUse = meterReq;
+        }
         if (activeTargetReq)
         {
             if (character.isKinzecterOut)

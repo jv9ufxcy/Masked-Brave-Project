@@ -62,7 +62,7 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
     private void HealthSystem_OnDamaged(object sender, System.EventArgs e)
     {
         RefereshAllHearts();
-        healthTransform.DOKill();
+        healthTransform.DOComplete();
         healthTransform.DOShakeAnchorPos(0.2f, 5, 2, 0, true, false);
     }
     private void HealthSystem_OnHealed(object sender, System.EventArgs e)

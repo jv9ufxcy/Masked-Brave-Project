@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -236,7 +237,18 @@ public class HealthManager : MonoBehaviour
         if (meterPercent!=null)
             meterPercent.text=currentMeter.ToString()+"%";
     }
-
+    public void PoorMeterShake()
+    {
+        if (UI == UIType.PLAYER)
+        {
+            BarImage.transform.DOComplete();
+            meterPercent.transform.DOComplete();
+            meterPercent.DOColor(Color.red, .01f);
+            BarImage.transform.DOShakePosition(.25f, 1f, 20, 90);
+            meterPercent.transform.DOShakePosition(.25f, 2f, 50, 90);
+            meterPercent.DOColor(Color.white, 0.5f).SetDelay(0.25f);
+        }
+    }
     private void UpdateGainMeter()
     {
         DamageFill.fillAmount = currentMeter / maxMeter;
