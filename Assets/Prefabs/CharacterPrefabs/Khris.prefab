@@ -9655,8 +9655,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409493736011381154}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0.75, y: -0.25, z: 0}
+  m_LocalScale: {x: 1.5, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5740533245852725019}
   m_RootOrder: 0
@@ -9702,7 +9702,7 @@ MonoBehaviour:
   projectileIndex: 0
   atkIndex: 0
   character: {fileID: 0}
-  stateIndex: 68
+  stateIndex: 202
 --- !u!1 &1924416676738825031
 GameObject:
   m_ObjectHideFlags: 0
@@ -9777,6 +9777,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 5107432936938591976}
   canCancel: 0
   isHit: 0
@@ -9790,6 +9791,12 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  bikeAccelerationTimeAirborne: 0.5
+  bikeAccelerationTimeGrounded: 0.25
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -9800,6 +9807,7 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 0
+  playerSpeed: 8
   airMod: 1
   jumpPow: 24
   currentCommandState: 0
@@ -9831,6 +9839,7 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 2717275953844453400}
   landingParticle: {fileID: 2055079213733235714}
+  bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
   bullets:
@@ -9849,10 +9858,11 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -9867,6 +9877,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -9902,17 +9914,21 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 370000004300000037000000440000003b0000003b00000043000000
-  rangedAttackState: 3b000000440000003b000000440000003b0000003b00000037000000
-  desperationCAStates: 4d000000470000004d0000004c0000003b00000045000000470000003b0000004d000000
-  desperationRAStates: 3b000000460000004c0000004c0000003b00000045000000460000003b0000004c000000
+  closeAttackState: 3700000043000000c700000044000000c7000000ca00000043000000
+  rangedAttackState: 3b000000440000003b000000440000003b000000ca00000037000000
+  desperationCAStates: 4d000000470000004d0000004c000000ca0000004500000047000000ca0000004d000000
+  desperationRAStates: 3b000000460000004c0000004c000000ca00000045000000460000003b0000004c000000
   enemyType: 2
   desperationTransitionState: 69
   floatHeight: 2
   floatTime: 0.25
   canDefend: 0
+  canWakeupEvade: 1
+  shouldFacePlayer: 1
+  startingDirection: 1
   defStateIndex: 0
   defStates: 
+  wakeUpStateIndex: 199
 --- !u!114 &9087836554154984959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9932,8 +9948,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: 32
-  maxPoise: 8
-  currentPoise: 8
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}

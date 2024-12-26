@@ -24783,6 +24783,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 274056748056195978}
   canCancel: 0
   isHit: 0
@@ -24796,6 +24797,12 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  bikeAccelerationTimeAirborne: 0.5
+  bikeAccelerationTimeGrounded: 0.25
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -24806,6 +24813,7 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 8
+  playerSpeed: 8
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -24837,6 +24845,7 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 274056749725603701}
   landingParticle: {fileID: 274056749784381294}
+  bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
   bullets:
@@ -24856,10 +24865,11 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -24874,6 +24884,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -24918,8 +24930,12 @@ MonoBehaviour:
   floatHeight: 2
   floatTime: 0.25
   canDefend: 0
+  canWakeupEvade: 1
+  shouldFacePlayer: 1
+  startingDirection: 1
   defStateIndex: 84
   defStates: 
+  wakeUpStateIndex: 154
 --- !u!114 &274056749905712190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24939,8 +24955,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 8
-  currentPoise: 8
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}

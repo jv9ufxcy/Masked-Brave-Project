@@ -14530,6 +14530,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 1748216600849104108}
   canCancel: 0
   isHit: 0
@@ -14543,6 +14544,12 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  bikeAccelerationTimeAirborne: 0.5
+  bikeAccelerationTimeGrounded: 0.25
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -14553,6 +14560,7 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 8
+  playerSpeed: 8
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -14584,6 +14592,7 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 1748216599297153043}
   landingParticle: {fileID: 1748216599356061704}
+  bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
   bullets:
@@ -14602,10 +14611,11 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -14620,6 +14630,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -14655,17 +14667,21 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 600000005f0000006e0000005f0000006d000000600000006f000000
-  rangedAttackState: 5f000000600000006e0000005f0000006f0000006c00000070000000
+  closeAttackState: 600000005f0000006e0000005f0000006d000000710000006f000000
+  rangedAttackState: 5f000000600000006c0000005f0000006f000000cb00000070000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 0
-  desperationTransitionState: 84
+  desperationTransitionState: 203
   floatHeight: 2
   floatTime: 0.25
-  canDefend: 0
-  defStateIndex: 84
-  defStates: 
+  canDefend: 1
+  canWakeupEvade: 1
+  shouldFacePlayer: 1
+  startingDirection: 1
+  defStateIndex: 113
+  defStates: 71000000
+  wakeUpStateIndex: 203
 --- !u!114 &1748216599477787480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14685,8 +14701,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 24
-  currentPoise: 24
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}
@@ -29645,8 +29661,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748216600849104098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1748216600068744436}
   m_RootOrder: 0
@@ -29692,7 +29708,7 @@ MonoBehaviour:
   projectileIndex: 0
   atkIndex: 0
   character: {fileID: 0}
-  stateIndex: 110
+  stateIndex: 113
 --- !u!1 &1748216601043270916
 GameObject:
   m_ObjectHideFlags: 0

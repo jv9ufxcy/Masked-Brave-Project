@@ -24252,6 +24252,9 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
   aerialTimer: 0
@@ -24314,10 +24317,12 @@ MonoBehaviour:
   floatHeight: 2
   floatTime: 0.25
   canDefend: 1
+  canWakeupEvade: 0
   shouldFacePlayer: 1
   startingDirection: 1
-  defStateIndex: 84
+  defStateIndex: 151
   defStates: 54000000
+  wakeUpStateIndex: 84
 --- !u!114 &6670931534286233292
 MonoBehaviour:
   m_ObjectHideFlags: 0

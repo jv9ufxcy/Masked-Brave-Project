@@ -29216,6 +29216,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 2831459344816916596}
   canCancel: 0
   isHit: 0
@@ -29229,6 +29230,12 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  bikeAccelerationTimeAirborne: 0.5
+  bikeAccelerationTimeGrounded: 0.25
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -29239,6 +29246,7 @@ MonoBehaviour:
   verticalAxis: altPs4Vertical
   deadzone: 0.2
   moveSpeed: 0
+  playerSpeed: 8
   airMod: 1
   jumpPow: 0
   currentCommandState: 0
@@ -29291,10 +29299,11 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -29309,6 +29318,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -29347,19 +29358,21 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 61000000490000004800000061000000480000004900000061000000
-  rangedAttackState: 4a00000049000000490000004a000000490000004900000061000000
-  desperationCAStates: 4900000061000000610000004b00000049000000610000004b000000
-  desperationRAStates: 490000004a0000004a0000004b000000490000004a0000004b000000
+  closeAttackState: 610000004900000048000000c8000000480000004900000061000000
+  rangedAttackState: 4a000000490000004a000000c8000000490000004900000061000000
+  desperationCAStates: 49000000c8000000610000004b00000049000000610000004b000000
+  desperationRAStates: 49000000c80000004a0000004b000000c90000004a0000004b000000
   enemyType: 0
   desperationTransitionState: 75
   floatHeight: 2
   floatTime: 0.25
-  canDefend: 0
+  canDefend: 1
+  canWakeupEvade: 1
   shouldFacePlayer: 0
   startingDirection: -1
-  defStateIndex: 0
-  defStates: 
+  defStateIndex: 200
+  defStates: c8000000
+  wakeUpStateIndex: 201
 --- !u!114 &2284478698493631331
 MonoBehaviour:
   m_ObjectHideFlags: 0

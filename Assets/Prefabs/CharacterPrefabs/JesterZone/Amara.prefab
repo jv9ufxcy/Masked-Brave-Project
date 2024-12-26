@@ -29363,10 +29363,12 @@ MonoBehaviour:
   floatHeight: 2
   floatTime: 0.25
   canDefend: 0
+  canWakeupEvade: 1
   shouldFacePlayer: 1
   startingDirection: 1
   defStateIndex: 0
   defStates: 
+  wakeUpStateIndex: 177
 --- !u!114 &2249038301929395185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29386,8 +29388,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: 32
-  maxPoise: 8
-  currentPoise: 8
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}

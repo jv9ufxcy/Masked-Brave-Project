@@ -24511,10 +24511,11 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -24575,10 +24576,12 @@ MonoBehaviour:
   floatHeight: 4
   floatTime: 0.25
   canDefend: 0
+  canWakeupEvade: 0
   shouldFacePlayer: 1
   startingDirection: 1
   defStateIndex: 0
   defStates: 
+  wakeUpStateIndex: 0
 --- !u!114 &8638271176540993372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24598,8 +24601,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 4
-  currentPoise: 4
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 3717915349170568901}
   DamageFill: {fileID: 7270305921206227494}
   BarImage: {fileID: 4001168514364923852}

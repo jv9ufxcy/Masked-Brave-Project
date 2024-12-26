@@ -504,6 +504,12 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 30:
                 CurvyBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, _params[5].val, _params[6].val, _params[7].val, _params[8].val, _params[9].val, _params[10].val);
                 break;
+            case 31:
+                if (CorneredCheck(_params[0].val))
+                {
+                    FaceDir(-Direction);
+                }
+                break;
 
         }
     }
@@ -2029,11 +2035,19 @@ public class CharacterObject : MonoBehaviour, IHittable
         float stunned = 30f;
         hitStun += stunned;
     }
-
+    RaycastHit2D CorneredCheck(float distToWall)
+    {
+        RaycastHit2D hitCorner = Physics2D.Raycast(transform.position,Vector2.right*-Direction, distToWall, whatCountsAsGround);
+        Debug.DrawRay(transform.position, Vector2.right * -Direction, Color.magenta);
+        return hitCorner;
+    }
     private bool isInvulnerable;
     public void SetInvulCooldown(float iFrames)
     {
-        invulCooldown = iFrames;
+        if (invulCooldown<iFrames)
+        {
+            invulCooldown = iFrames;
+        }
         curComboValue = 99;
     }
     private void StartInvul(float hitFlash)
@@ -2092,7 +2106,11 @@ public class CharacterObject : MonoBehaviour, IHittable
         { 
             EndState();
             healthManager.PoiseReset(); 
-            OnComboEnded(); 
+            OnComboEnded();
+            if (canWakeupEvade && (controlType == ControlType.AI||controlType == ControlType.BOSS))
+            {
+                StartState(wakeUpStateIndex);
+            }
         }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
     }
@@ -2121,7 +2139,7 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     [Space]
     [Header("Blocking States")]
-    public bool canDefend = false;
+    public bool canDefend = false, canWakeupEvade = false;
     public bool IsDefendingInState()
     {
         if (canDefend)//can block attacks
@@ -2136,19 +2154,23 @@ public class CharacterObject : MonoBehaviour, IHittable
                     }
                 }
                 return false;//has no blocking states
-                Debug.Log("Number of block states: " + defStates.Length);
+                //Debug.Log("Number of block states: " + defStates.Length);
             }
             else return false;//is stunned
-            Debug.Log("Is Stunned for: " + hitStun);
+            //Debug.Log("Is Stunned for: " + hitStun);
         }
         else return false;//cannot block
     }
     [SerializeField] private bool shouldFacePlayer = true;
     [Range(-1f, 1f)]
     [SerializeField] private int startingDirection = 1;
+    [Header("Blocking State")]
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int defStateIndex;
     public int[] defStates;
+    [Header("Wake Up State")]
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
+    public int wakeUpStateIndex;
     private int attackStep = 0;
     public float MaxJumpVelocity { get => maxJumpVelocity; set => maxJumpVelocity = value; }
     public float Direction { get => _direction; set => _direction = value; }
@@ -2233,7 +2255,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 }
             }
         }
-        if (currentState != 0 && currentState != defStateIndex)//Attack
+        if (currentState != 0 && currentState != defStateIndex && currentState!=wakeUpStateIndex)//Attack
         {
             dashCooldown = attackCooldown;
         }
@@ -2245,6 +2267,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         StartStateFromScript(desperationTransitionState);
         attackStep = 0;
         dashCooldown += 100;
+        hitStun = 0;
         //attackCooldown *= 0.5f;
     }
     public void OnDeath()
@@ -2318,6 +2341,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void FacePlayer()
     {
         FaceTarget(GameEngine.gameEngine.mainCharacter.transform.position);
+        startingDirection = (int)Direction;
     }
 
     void OnDrawGizmosSelected()
