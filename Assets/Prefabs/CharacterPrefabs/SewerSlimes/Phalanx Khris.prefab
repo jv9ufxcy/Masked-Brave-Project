@@ -29358,10 +29358,10 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 610000004900000048000000c8000000480000004900000061000000
-  rangedAttackState: 4a000000490000004a000000c8000000490000004900000061000000
-  desperationCAStates: 49000000c8000000610000004b00000049000000610000004b000000
-  desperationRAStates: 49000000c80000004a0000004b000000c90000004a0000004b000000
+  closeAttackState: 61000000490000004800000054000000480000004900000061000000
+  rangedAttackState: 4a000000490000004a00000054000000490000004900000061000000
+  desperationCAStates: 4900000054000000610000004b00000049000000610000004b000000
+  desperationRAStates: 49000000540000004a0000004b000000c90000004a0000004b000000
   enemyType: 0
   desperationTransitionState: 75
   floatHeight: 2
@@ -29370,8 +29370,9 @@ MonoBehaviour:
   canWakeupEvade: 1
   shouldFacePlayer: 0
   startingDirection: -1
+  isStationary: 1
   defStateIndex: 200
-  defStates: c8000000
+  defStates: 54000000c8000000
   wakeUpStateIndex: 201
 --- !u!114 &2284478698493631331
 MonoBehaviour:
@@ -29392,8 +29393,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: 32
-  maxPoise: 255
-  currentPoise: 255
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 0}
   DamageFill: {fileID: 0}
   BarImage: {fileID: 0}

@@ -1929,7 +1929,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 //parry sound
                 StartStateFromScript(defStateIndex);
                 dashCooldown = 0;
-                FaceTarget(target.transform.position);
+                if (shouldFacePlayer) FaceTarget(target.transform.position);
                 if (projectileIndex == 0) attacker.FrontVelocity(-10f);//if not a projectile
             }
             else
@@ -1958,17 +1958,22 @@ public class CharacterObject : MonoBehaviour, IHittable
 
                     bool shouldBreakPoise = false;
                     if (healthManager.currentPoise > 0 && curAtk.poiseDamage>healthManager.currentPoise){shouldBreakPoise = true;}
+                    bool stunlessProjectileOpener = false;
 
-                    healthManager.PoiseDamage(curAtk.poiseDamage); 
-                    if (healthManager.currentPoise <= 0)
+                    if (projectileIndex != 0 && curAtk.poiseDamage < 0 && hitStun > 0)//bullets cannot begin stun
+                        stunlessProjectileOpener = true;
+                    else
+                        healthManager.PoiseDamage(curAtk.poiseDamage);
+                    if (healthManager.currentPoise <= 0 && !stunlessProjectileOpener)
                     {
-                        SetVelocity(nextKnockback * 0.7f);//dampen a bit
+                        if (!isStationary)
+                            SetVelocity(nextKnockback * 0.7f);//dampen a bit
+                        
                         targetHitAnim.x = curAtk.hitAnim.x;
                         targetHitAnim.y = curAtk.hitAnim.y;
 
-                        //curHitAnim.x = UnityEngine.Random.Range(-1f, 1f);//randomized for fun
-                        //curHitAnim.y = UnityEngine.Random.Range(-1f, 1f);
                         curHitAnim = targetHitAnim * .25f;
+                        
                         hitStun = curAtk.hitStun;
 
                         if (shouldBreakPoise)
@@ -1976,7 +1981,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                             PoiseBreak();
                         }
                         StartState(hitStunStateIndex);
-                        if (curAtk.attackType == 10 && controlType != ControlType.OBJECT)//grappling code
+                        if (curAtk.attackType == 10 && controlType != ControlType.OBJECT&&!isStationary)//grappling code
                         {
                             grappleTarget = attacker.grapplePoint;
                             attacker.grappleVictim = this;
@@ -2139,7 +2144,8 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     [Space]
     [Header("Blocking States")]
-    public bool canDefend = false, canWakeupEvade = false;
+    public bool canDefend = false;
+    public bool canWakeupEvade = false;
     public bool IsDefendingInState()
     {
         if (canDefend)//can block attacks
@@ -2164,6 +2170,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     [SerializeField] private bool shouldFacePlayer = true;
     [Range(-1f, 1f)]
     [SerializeField] private int startingDirection = 1;
+    [SerializeField] private bool isStationary = false;
     [Header("Blocking State")]
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int defStateIndex;

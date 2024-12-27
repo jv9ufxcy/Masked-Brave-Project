@@ -5020,6 +5020,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 7626717632035741149}
   canCancel: 0
   isHit: 0
@@ -5035,6 +5036,10 @@ MonoBehaviour:
   accelerationTimeGrounded: 0.1
   bikeAccelerationTimeAirborne: 0
   bikeAccelerationTimeGrounded: 0
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -5046,7 +5051,6 @@ MonoBehaviour:
   deadzone: 0.2
   moveSpeed: 8
   playerSpeed: 8
-  bikeSpeed: 12
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -5097,10 +5101,11 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -5115,6 +5120,8 @@ MonoBehaviour:
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -5150,19 +5157,22 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 5c0000005d000000
-  rangedAttackState: 5c0000005d000000
+  closeAttackState: 5c000000c60000005d000000c6000000
+  rangedAttackState: 5c000000c60000005d000000c6000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 0
-  desperationTransitionState: 84
+  desperationTransitionState: 198
   floatHeight: 2
   floatTime: 0.25
-  canDefend: 0
+  canDefend: 1
+  canWakeupEvade: 1
   shouldFacePlayer: 0
   startingDirection: 1
-  defStateIndex: 84
-  defStates: 
+  isStationary: 1
+  defStateIndex: 94
+  defStates: 5e000000c6000000
+  wakeUpStateIndex: 198
 --- !u!114 &7626717631480346097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5182,8 +5192,8 @@ MonoBehaviour:
   currentShieldHealth: 0
   currentHealth: 0
   desperationHealth: -10
-  maxPoise: 255
-  currentPoise: 255
+  maxPoise: 0
+  currentPoise: 0
   HealthFill: {fileID: 7626717632735597373}
   DamageFill: {fileID: 7626717631804950600}
   BarImage: {fileID: 7626717631568981768}
@@ -15317,8 +15327,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7626717632035741151}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalPosition: {x: 2.5, y: 1, z: 0}
+  m_LocalScale: {x: 4, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 7626717632984320256}
   m_RootOrder: 0
@@ -15364,7 +15374,7 @@ MonoBehaviour:
   projectileIndex: 0
   atkIndex: 0
   character: {fileID: 0}
-  stateIndex: 54
+  stateIndex: 94
 --- !u!1 &7626717632057664291
 GameObject:
   m_ObjectHideFlags: 0
