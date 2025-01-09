@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Security.Cryptography.X509Certificates;
 
 public class SkillListItem : MonoBehaviour, ISelectHandler
 {
     private SkillListMenu skillMenu;
     [SerializeField] private string skillDescription, controlDesc,statDesc;
     [SerializeField] private string psControls, xboxControls, keyboardControls;
+    [Header("State Index")]
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int stateIndex;
+    [Header("Henshin Index")]
+    [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
+    public int henshinIndex;
+    [SerializeField] int atkIndex = 0;
     private AttackEvent curAtk;
     private TextMeshProUGUI description;
     private AudioManager audioManager;
@@ -35,11 +41,24 @@ public class SkillListItem : MonoBehaviour, ISelectHandler
                 break;
         }
         SkillStats();
+        if (henshinIndex>0)
+        {
+            DisableUntilUnlocked();
+        }
     }
     private void OnEnable()
     {
         audioManager = AudioManager.instance;
     }
+
+    private void DisableUntilUnlocked()
+    {
+        if (GameEngine.coreData.characterStates[henshinIndex].lockedMoveCheck && !GameEngine.gameEngine.IsSkillUnlocked(GameEngine.coreData.characterStates[henshinIndex].stateName))
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     public void OnSelect(BaseEventData eventData)
     {
         skillMenu = GetComponentInParent<SkillListMenu>();
@@ -50,9 +69,14 @@ public class SkillListItem : MonoBehaviour, ISelectHandler
     private int damage, comboVal;
     private void SkillStats()
     {
-
-        if (stateIndex>0)
-            curAtk = GameEngine.coreData.characterStates[stateIndex].attacks[0];
+        if (stateIndex > 0)
+        {
+            if (atkIndex> GameEngine.coreData.characterStates[stateIndex].attacks.Count)
+            {
+                 atkIndex = GameEngine.coreData.characterStates[stateIndex].attacks.Count;
+            }
+            curAtk = GameEngine.coreData.characterStates[stateIndex].attacks[atkIndex];
+        }
         if (curAtk != null)
         {
             damage = curAtk.damage;

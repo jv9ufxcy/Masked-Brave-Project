@@ -616,7 +616,7 @@ public class Mission : MonoBehaviour,IDataPersistence
     [SerializeField] private string nextLevel = "LevelSelectScene";
     [SerializeField] private string trainingLevel = "BombardierTraining", unlockedFormState = "Zoe/BombHenshin";
     [SerializeField] private bool shouldCheckTrainingStage = false;
-    private bool formUnlockedHere;
+    private bool formUnlockedHere = true;
     
 
     private void LevelChange()
@@ -630,8 +630,9 @@ public class Mission : MonoBehaviour,IDataPersistence
         }
         else
             SceneTransitionController.instance.LoadScene(nextLevel);
+        if (EnemySpawner.spawnerInstance!=null)
+            SceneManager.MoveGameObjectToScene(EnemySpawner.spawnerInstance.gameObject, SceneManager.GetActiveScene());
 
-        SceneManager.MoveGameObjectToScene(EnemySpawner.spawnerInstance.gameObject, SceneManager.GetActiveScene());
         SceneManager.MoveGameObjectToScene(instance.gameObject, SceneManager.GetActiveScene());
         SceneManager.MoveGameObjectToScene(GameManager.instance.gameObject, SceneManager.GetActiveScene());
     }
@@ -642,6 +643,8 @@ public class Mission : MonoBehaviour,IDataPersistence
         {
             formUnlockedHere = false;
         }
+        else
+            formUnlockedHere = true;
     }
 
     public void SaveData(GameData data)

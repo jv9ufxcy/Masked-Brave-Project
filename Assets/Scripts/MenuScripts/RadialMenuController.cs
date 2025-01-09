@@ -139,7 +139,7 @@ public class RadialMenuController : MonoBehaviour
     }
     public void SwitchArmament()
     {
-        if (GameEngine.gameEngine.globalMovelistIndex==0)
+        if (GameEngine.gameEngine.globalMovelistIndex==0)//if arm current form
         {
             SwitchCivillian();
         }
@@ -152,7 +152,7 @@ public class RadialMenuController : MonoBehaviour
 
     public void SwitchBombardier()
     {
-        if (GameEngine.gameEngine.globalMovelistIndex == 1)
+        if (GameEngine.gameEngine.globalMovelistIndex == 1)//if bomb current form
         {
             SwitchCivillian();
         }
@@ -165,7 +165,7 @@ public class RadialMenuController : MonoBehaviour
 
     public void SwitchPursuer()
     {
-        if (GameEngine.gameEngine.globalMovelistIndex == 2)
+        if (GameEngine.gameEngine.globalMovelistIndex == 2)//if bike current form
         {
             SwitchCivillian();
         }
@@ -178,7 +178,7 @@ public class RadialMenuController : MonoBehaviour
 
     public void SwitchCyclone()
     {
-        if (GameEngine.gameEngine.globalMovelistIndex == 3)
+        if (GameEngine.gameEngine.globalMovelistIndex == 3)//if nin current form
         {
             SwitchCivillian();
         }
@@ -205,6 +205,7 @@ public class RadialMenuController : MonoBehaviour
     {
         unmasked.formNameText = GetActiveMask().formNameText;
         player.DOChangeMovelist(4);
+        player.BuildMeter(50f);//refund
     }
     
 }

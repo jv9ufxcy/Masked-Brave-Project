@@ -30,6 +30,7 @@ public class CharacterState
     public bool activeTargetReq;
     public bool lockedMoveCheck;
     public int bulletLimit;
+    public int windReq;
 
     public bool ConditionsMet(CharacterObject character)
     {
@@ -49,6 +50,10 @@ public class CharacterState
         {
             if (character.dashCooldown > 0) { return false; }
             else { character.dashCooldown = dashCooldownReq; }
+        }
+        if (character.windGauge<windReq)
+        {
+            return false;
         }
         if (uncrouchReq)
         {

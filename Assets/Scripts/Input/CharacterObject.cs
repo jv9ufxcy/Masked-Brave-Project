@@ -140,7 +140,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 if (!DialogueManager.instance.isDialogueActive)
                     PauseMenu();
 
-                if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4)
+                if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4 && GameEngine.gameEngine.unlockedSkillsList.Count > 2)//not human and has at least 2 more forms
                     Henshin();
 
                 if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
@@ -226,10 +226,7 @@ public class CharacterObject : MonoBehaviour, IHittable
 
         if (windGauge<=0&&movementStyle==MovementStyle.WIND)
         {
-            if (GameEngine.gameEngine.globalMovelistIndex == 5)
-                movementStyle = MovementStyle.BIKE;
-            else
-                movementStyle = MovementStyle.DEFAULT;
+            EndWindState();
         }
 
         if (invulCooldown > 0) { invulCooldown --; }
@@ -448,7 +445,8 @@ public class CharacterObject : MonoBehaviour, IHittable
                 PlayAudio(_params[0].name);
                 break;
             case 15:
-                SpawnTurret((int)_params[0].val, new Vector2(_params[1].val, _params[2].val));
+                //SpawnTurret((int)_params[0].val, new Vector2(_params[1].val, _params[2].val));
+                SpawnObject((int)_params[0].val, _params[1].val, _params[2].val);
                 break;
             case 16:
                 FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, _params[5].val);
@@ -515,8 +513,9 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public void OnCyclonePower(int windPower)
     {
-        movementStyle = MovementStyle.WIND;
-        windGauge += windPower;
+        OnMovementStateChange(2);
+        windGauge = windPower;
+        cycloneParticle.Play();
         //start particles
     }
     private void OnMovementStateChange(int v)
@@ -532,6 +531,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
             case 2://default
                 movementStyle = MovementStyle.WIND;
+                
                 break;
             default:
                 break;
@@ -1062,7 +1062,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     private float shotPressure;
     [SerializeField] private float minShotPressure = 30f, maxShotPressure = 60f;
     private bool shouldChargeBuster;
-    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22, shotgunIndex = 40, missileIndex = 41;
+    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22, shotgunIndex = 40, missileIndex = 41, cycloneIndex = 183;
     [SerializeField] private bool firstCharge, secondCharge;
     private Color c;
 
@@ -1117,12 +1117,41 @@ public class CharacterObject : MonoBehaviour, IHittable
                 }
                 break;
             case 3:
+                if (Input.GetButton(GameEngine.coreData.rawInputs[1].name))//name of charge Attack
+                {
+                    ColorCharge();
+                    ChargeUp(chargeIncrement);
+                    if (shotPressure < maxShotPressure)
+                    {
+                        //hasShotChargingStarted = true;
+                    }
+                }
+                if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
+                {
+                    ReleaseChargedCyclone();
+                }
                 break;
             case 4:
                 break;
         }
     }
 
+    private void ReleaseChargedCyclone()
+    {
+        if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
+        {
+            StartStateFromScript(cycloneIndex);
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        else if (shotPressure >= maxShotPressure)
+        {
+            StartStateFromScript(cycloneIndex);
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        StopChargeAttack();
+    }
     private void ReleaseChargedArsenal()
     {
         if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
@@ -1214,12 +1243,12 @@ public class CharacterObject : MonoBehaviour, IHittable
     public List<ParticleSystem> primaryGunParticles = new List<ParticleSystem>();
     public List<ParticleSystem> primaryJumpParticles = new List<ParticleSystem>();
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
-    public ParticleSystem bombDashParticle, landingParticle;
+    public ParticleSystem bombDashParticle, landingParticle, cycloneParticle;
     [Space]
     [Header("Shooting Stats")]
     public List<GameObject> bulletsActiveInHierarchy = new List<GameObject>();
     public float shootAnim, shootAnimMax;
-    public GameObject[] bullets;
+    public GameObject[] bullets, nonBulletObjects;
     [HideInInspector] public bool isKinzecterOut;
     public void KinzectorActions(float action, float offsetX, float offsetY)
     {
@@ -1297,10 +1326,16 @@ public class CharacterObject : MonoBehaviour, IHittable
             summonIndex = 0;
         }
     }
+    private void SpawnObject(int index, float offsetX, float offsetY)
+    {
+        var offset = new Vector3(offsetX * Direction, offsetY, 0);
+        GameObject newObject = Instantiate(nonBulletObjects[index], transform.position + offset, Quaternion.identity);
+        newObject.transform.SetParent(null);
+    }
     private void SpawnKinzecter(float offsetX, float offsetY)
     {
         var offset = new Vector3(offsetX * Direction, offsetY, 0);
-        GameObject newbullet = Instantiate(bullets[5], transform.position + offset, Quaternion.identity);
+        GameObject newbullet = Instantiate(nonBulletObjects[0], transform.position + offset, Quaternion.identity);
         kinzecter = newbullet;
 
         int onWall = wallFlag ? -1 : 1;
@@ -1456,7 +1491,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             henshin.ActivateMenu();
             menuTimer++;
         }
-        if (Input.GetButtonUp(GameEngine.coreData.rawInputs[henshinInput].name))//open radial menu
+        if (Input.GetButtonUp(GameEngine.coreData.rawInputs[henshinInput].name))//close radial menu
         {
             if (menuTimer < menuDelay)
             {
@@ -1673,7 +1708,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void FullyHeal()
     {
         healthManager.AddHealth(1000);
-        ChangeMeter(1000);
+        BuildMeter(1000);
     }
     float velocityXSmoothing;
     void CalculateGravity()
@@ -1839,10 +1874,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         if (movementStyle==MovementStyle.WIND)
         {
-            if (GameEngine.gameEngine.globalMovelistIndex==5)
-                movementStyle = MovementStyle.BIKE;
-            else
-                movementStyle = MovementStyle.DEFAULT;
+            EndWindState();
         }
         //DashReset();
         if (!hasLanded)
@@ -1856,6 +1888,17 @@ public class CharacterObject : MonoBehaviour, IHittable
             audioManager.PlaySound("Player/Landing");
         }
     }
+
+    private void EndWindState()
+    {
+        windGauge = 0;
+        cycloneParticle.Stop();
+        if (GameEngine.gameEngine.globalMovelistIndex == 5)
+            movementStyle = MovementStyle.BIKE;
+        else
+            movementStyle = MovementStyle.DEFAULT;
+    }
+
     public void SetVelocity(Vector3 v)
     {
         velocity = v;
@@ -1922,20 +1965,20 @@ public class CharacterObject : MonoBehaviour, IHittable
             curAtk = GameEngine.coreData.characterStates[projectileIndex].attacks[atkIndex];
         }
         
-        if (IsDefendingInState() && attacker.Direction==-Direction)//if blocking and attacker is facing each other
+        if (IsDefendingInState() && attacker.Direction==-Direction && curAtk.poiseDamage < 20f)//if blocking and attacker is facing each other and attack doesnt shatter shields
         {
-            if (curAtk.poiseDamage < 20f)
-            {
+            //if (curAtk.poiseDamage < 20f)
+            //{
                 //parry sound
                 StartStateFromScript(defStateIndex);
                 dashCooldown = 0;
                 if (shouldFacePlayer) FaceTarget(target.transform.position);
                 if (projectileIndex == 0) attacker.FrontVelocity(-10f);//if not a projectile
-            }
-            else
-            {
-                PoiseBreak();
-            }
+            //}
+            //else
+            //{
+            //    PoiseBreak();
+            //}
         }
         else
         {
@@ -1958,22 +2001,28 @@ public class CharacterObject : MonoBehaviour, IHittable
 
                     bool shouldBreakPoise = false;
                     if (healthManager.currentPoise > 0 && curAtk.poiseDamage>healthManager.currentPoise){shouldBreakPoise = true;}
+                    
                     bool stunlessProjectileOpener = false;
 
-                    if (projectileIndex != 0 && curAtk.poiseDamage < 0 && hitStun > 0)//bullets cannot begin stun
-                        stunlessProjectileOpener = true;
+                    if (projectileIndex != 0 && curAtk.poiseDamage < 0)//is a bullet with neg poise
+                    {
+                        if (hitStun <= 0)
+                            stunlessProjectileOpener = true;
+                    }
                     else
                         healthManager.PoiseDamage(curAtk.poiseDamage);
+
+
                     if (healthManager.currentPoise <= 0 && !stunlessProjectileOpener)
                     {
                         if (!isStationary)
                             SetVelocity(nextKnockback * 0.7f);//dampen a bit
-                        
+
                         targetHitAnim.x = curAtk.hitAnim.x;
                         targetHitAnim.y = curAtk.hitAnim.y;
 
                         curHitAnim = targetHitAnim * .25f;
-                        
+
                         hitStun = curAtk.hitStun;
 
                         if (shouldBreakPoise)
@@ -1981,13 +2030,13 @@ public class CharacterObject : MonoBehaviour, IHittable
                             PoiseBreak();
                         }
                         StartState(hitStunStateIndex);
-                        if (curAtk.attackType == 10 && controlType != ControlType.OBJECT&&!isStationary)//grappling code
+                        if (curAtk.attackType == 10 && controlType != ControlType.OBJECT && !isStationary)//grappling code
                         {
                             grappleTarget = attacker.grapplePoint;
                             attacker.grappleVictim = this;
                             attacker.StartStateFromScript((int)curAtk.hitAnim.x);
                         }
-                    }
+                    } 
                     if (curAtk.attackType == 9)//auto combo
                     {
                         attacker.StartStateFromScript((int)curAtk.hitAnim.x);
@@ -2003,6 +2052,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                     }
                     else
                         OnAttackEvent(attacker.currentState, curAtk);//atk event
+
+                    if (curAtk.poiseDamage < 0 && hitStun<=0)
+                        OnComboEnded();
+
                     if (controlType!=ControlType.DUMMY)
                         healthManager.RemoveHealth(curAtk.damage, curAtk);
 

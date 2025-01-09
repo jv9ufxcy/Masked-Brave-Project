@@ -24194,6 +24194,7 @@ MonoBehaviour:
   critBusterIndex: 22
   shotgunIndex: 40
   missileIndex: 41
+  cycloneIndex: 183
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
@@ -24214,12 +24215,14 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 5655261648273639218}
   landingParticle: {fileID: 9207735360056994235}
+  cycloneParticle: {fileID: 0}
   bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
   bullets:
   - {fileID: 1946779624007576, guid: ae8250bfc1f132c46afa261d098667d6, type: 3}
   - {fileID: 1946779624007576, guid: f50d52cb40290394daffc39943364489, type: 3}
+  nonBulletObjects: []
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -24285,7 +24288,7 @@ MonoBehaviour:
   aggroHeight: 20
   longAttackRange: 10
   shortAttackRange: 5
-  attackCooldown: 30
+  attackCooldown: 20
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
@@ -24301,6 +24304,7 @@ MonoBehaviour:
   canWakeupEvade: 0
   shouldFacePlayer: 1
   startingDirection: 1
+  isStationary: 0
   defStateIndex: 83
   defStates: 0000000053000000c2000000
   wakeUpStateIndex: 0

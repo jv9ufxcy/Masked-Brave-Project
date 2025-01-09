@@ -124,7 +124,7 @@ public class ComboTrialManager : MonoBehaviour
 
     private void RefillMeter()
     {
-        playerCharacter.ChangeMeter(playerCharacter.specialMeterMax);
+        playerCharacter.BuildMeter(playerCharacter.specialMeterMax);
     }
 
     public void AttackHit(int attackStateIndex, AttackEvent attack)

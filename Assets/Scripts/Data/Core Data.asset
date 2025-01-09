@@ -51,6 +51,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Jump
     index: 0
     length: 5
@@ -103,6 +104,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Dash
     index: 0
     length: 30
@@ -175,6 +177,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/Slash1
     index: 0
     length: 25
@@ -228,6 +231,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/Slash2
     index: 0
     length: 25
@@ -288,6 +292,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/Slash3
     index: 0
     length: 25
@@ -341,6 +346,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/BraveStrike
     index: 0
     length: 65
@@ -487,6 +493,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: HitStun
     index: 0
     length: 10
@@ -509,6 +516,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/AirSlash1
     index: 0
     length: 25
@@ -548,8 +556,8 @@ MonoBehaviour:
       attackType: 0
       hitAnim: {x: 1, y: -1}
       knockback: {x: 4, y: 6, z: 0}
-      hitBoxPos: {x: 1.5, y: 0.5, z: 0}
-      hitBoxScale: {x: 4, y: 4, z: 1}
+      hitBoxPos: {x: 1.5, y: 0.25, z: 0}
+      hitBoxScale: {x: 4, y: 2.5, z: 1}
       cancelWindow: 4
       killMultiplier: 1
     jumpReq: 0
@@ -562,6 +570,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/AirSlash2
     index: 0
     length: 20
@@ -629,6 +638,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/AirSlash3
     index: 0
     length: 25
@@ -682,6 +692,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/SpinSlash
     index: 0
     length: 35
@@ -825,6 +836,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/BraveFlourish
     index: 0
     length: 20
@@ -896,6 +908,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/BraveLauncher
     index: 0
     length: 24
@@ -956,6 +969,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/BraveKick
     index: 0
     length: 25
@@ -1016,6 +1030,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/ChargeSlash
     index: 0
     length: 30
@@ -1078,6 +1093,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/BraveBurst
     index: 0
     length: 35
@@ -1202,6 +1218,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: DashJump
     index: 0
     length: 5
@@ -1288,6 +1305,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: WallJump
     index: 0
     length: 20
@@ -1347,6 +1365,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/WallSlash
     index: 0
     length: 20
@@ -1386,6 +1405,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/FireBullet
     index: 0
     length: 15
@@ -1454,6 +1474,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 3
+    windReq: 0
   - stateName: Bombardier/FireBuster
     index: 0
     length: 15
@@ -1522,6 +1543,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/CritBuster
     index: 0
     length: 15
@@ -1599,6 +1621,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/Boost
     index: 0
     length: 20
@@ -1679,6 +1702,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/Magnum1
     index: 0
     length: 25
@@ -1693,7 +1717,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 30
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -1708,7 +1732,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 30
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -1723,7 +1747,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 30
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -1759,12 +1783,12 @@ MonoBehaviour:
       damage: 1
       meterGain: 1
       comboValue: 6
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 1, z: 0}
-      hitBoxScale: {x: 1.5, y: 1, z: 1}
+      hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
       killMultiplier: 1
     - start: 5
@@ -1774,12 +1798,12 @@ MonoBehaviour:
       damage: 1
       meterGain: 1
       comboValue: 7
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 1, z: 0}
-      hitBoxScale: {x: 1.5, y: 1, z: 1}
+      hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
       killMultiplier: 1
     - start: 5
@@ -1789,12 +1813,12 @@ MonoBehaviour:
       damage: 1
       meterGain: 1
       comboValue: 8
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 1, z: 0}
-      hitBoxScale: {x: 1.5, y: 1, z: 1}
+      hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
       killMultiplier: 1
     jumpReq: 0
@@ -1807,6 +1831,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 6
+    windReq: 0
   - stateName: Pursuer/Magnum2
     index: 0
     length: 25
@@ -1821,7 +1846,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -1836,7 +1861,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -1851,7 +1876,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -1894,12 +1919,12 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 6
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 1, z: 0}
-      hitBoxScale: {x: 1.5, y: 1, z: 1}
+      hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
       killMultiplier: 1
     - start: 5
@@ -1909,12 +1934,12 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 7
-      poiseDamage: 0
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 1, z: 0}
-      hitBoxScale: {x: 1.5, y: 1, z: 1}
+      hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
       killMultiplier: 1
     - start: 5
@@ -1924,12 +1949,12 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 8
-      poiseDamage: 0
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 1, z: 0}
-      hitBoxScale: {x: 1.5, y: 1, z: 1}
+      hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 0
       killMultiplier: 1
     jumpReq: 0
@@ -1942,6 +1967,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 6
+    windReq: 0
   - stateName: Pursuer/Magnum3
     index: 0
     length: 25
@@ -1956,7 +1982,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -1971,7 +1997,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1.2
       - name: 
@@ -1986,7 +2012,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -2036,7 +2062,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 6
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2051,7 +2077,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 7
-      poiseDamage: 0
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2066,7 +2092,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 8
-      poiseDamage: 0
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2084,6 +2110,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 6
+    windReq: 0
   - stateName: Pursuer/Magnum4
     index: 0
     length: 25
@@ -2098,7 +2125,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -2113,7 +2140,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -2128,7 +2155,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -2164,7 +2191,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 6
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2179,7 +2206,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 7
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2194,7 +2221,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 8
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2212,6 +2239,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 6
+    windReq: 0
   - stateName: Pursuer/Magnum5
     index: 0
     length: 30
@@ -2226,7 +2254,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -2241,7 +2269,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -2256,7 +2284,7 @@ MonoBehaviour:
       - name: 
         val: 4
       - name: 
-        val: 20
+        val: 32
       - name: 
         val: 1
       - name: 
@@ -2306,7 +2334,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 6
-      poiseDamage: 1
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2321,7 +2349,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 7
-      poiseDamage: 0
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2336,7 +2364,7 @@ MonoBehaviour:
       damage: 2
       meterGain: 1
       comboValue: 8
-      poiseDamage: 0
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -2354,6 +2382,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 6
+    windReq: 0
   - stateName: Redline
     index: 0
     length: 70
@@ -2577,6 +2606,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/SlideKick
     index: 0
     length: 30
@@ -2664,6 +2694,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/TriDash
     index: 0
     length: 75
@@ -2879,6 +2910,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/TossBomb
     index: 0
     length: 25
@@ -2940,6 +2972,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/BlastBomb
     index: 0
     length: 35
@@ -3175,6 +3208,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/BraveTarget
     index: 0
     length: 30
@@ -3262,6 +3296,7 @@ MonoBehaviour:
     activeTargetReq: 1
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/BraveStinger
     index: 0
     length: 20
@@ -3352,6 +3387,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Defeat
     index: 0
     length: 300
@@ -3397,6 +3433,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Henshin
     index: 0
     length: 120
@@ -3449,6 +3486,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 1
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/Streak
     index: 0
     length: 30
@@ -3506,7 +3544,7 @@ MonoBehaviour:
     attacks:
     - start: 5
       length: 20
-      hitStun: 10
+      hitStun: 15
       hitStop: 5
       damage: 2
       meterGain: 4
@@ -3529,6 +3567,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/WheelSpin
     index: 0
     length: 50
@@ -3604,6 +3643,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/SpinBullets
     index: 0
     length: 50
@@ -3774,6 +3814,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/ShotgunFire
     index: 0
     length: 35
@@ -3863,6 +3904,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/Wheelie
     index: 0
     length: 55
@@ -3960,6 +4002,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/Stoppie
     index: 0
     length: 55
@@ -4050,6 +4093,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/MajinDonut
     index: 0
     length: 80
@@ -4200,6 +4244,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/MajinBackflip
     index: 0
     length: 60
@@ -4253,6 +4298,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/AirBikeB
     index: 0
     length: 60
@@ -4270,6 +4316,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/WheelSaw
     index: 0
     length: 60
@@ -4323,7 +4370,7 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: 0
+        val: -2
     - start: 15
       end: 15
       active: 1
@@ -4533,6 +4580,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/BurstGrab
     index: 0
     length: 40
@@ -4593,6 +4641,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/WGRush
     index: 0
     length: 30
@@ -4631,7 +4680,7 @@ MonoBehaviour:
       killMultiplier: 1
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -4639,6 +4688,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/BurstGrapple
     index: 0
     length: 90
@@ -4810,6 +4860,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/WGIzuna
     index: 0
     length: 70
@@ -4936,7 +4987,7 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 0
-      hitStun: 60
+      hitStun: 30
       hitStop: 5
       damage: 3
       meterGain: 10
@@ -4959,6 +5010,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Shuriken
     index: 0
     length: 5
@@ -5006,6 +5058,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/SmallJumpAttack
     index: 0
     length: 75
@@ -5080,6 +5133,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/ChompAttack
     index: 0
     length: 105
@@ -5133,6 +5187,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/TwinElecSlam
     index: 0
     length: 80
@@ -5244,6 +5299,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/ElecBall
     index: 0
     length: 60
@@ -5312,6 +5368,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/Satellite
     index: 0
     length: 20
@@ -5362,7 +5419,7 @@ MonoBehaviour:
       damage: 3
       meterGain: 2
       comboValue: 0
-      poiseDamage: 3
+      poiseDamage: -1
       attackType: 1
       hitAnim: {x: 1, y: 0}
       knockback: {x: 5, y: 0, z: 0}
@@ -5380,6 +5437,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/SlimeBullet
     index: 0
     length: 80
@@ -5436,6 +5494,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/JumpForward
     index: 0
     length: 30
@@ -5481,6 +5540,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/RushAttack
     index: 0
     length: 60
@@ -5527,6 +5587,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/Spike
     index: 0
     length: 60
@@ -5559,6 +5620,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/Skewer
     index: 0
     length: 90
@@ -5612,6 +5674,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/BruteFist
     index: 0
     length: 45
@@ -5672,6 +5735,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/Laser
     index: 0
     length: 60
@@ -5704,6 +5768,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/FloatTowards
     index: 0
     length: 90
@@ -5786,6 +5851,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/FloatAway
     index: 0
     length: 90
@@ -5868,6 +5934,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/StabArm
     index: 0
     length: 70
@@ -5958,6 +6025,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/ThrowSlime
     index: 0
     length: 40
@@ -6012,6 +6080,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/Frenzy
     index: 0
     length: 85
@@ -6087,6 +6156,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/GreatArrow
     index: 0
     length: 95
@@ -6175,6 +6245,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/GiantFist
     index: 0
     length: 80
@@ -6242,6 +6313,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/TriArrow
     index: 0
     length: 60
@@ -6332,6 +6404,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/SummonA
     index: 0
     length: 120
@@ -6401,6 +6474,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/DoubleGreatArrow
     index: 0
     length: 120
@@ -6516,6 +6590,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/SummonSpikes
     index: 0
     length: 280
@@ -6883,6 +6958,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/DoubleElecBall
     index: 0
     length: 70
@@ -6966,6 +7042,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/ThunderCrash
     index: 0
     length: 80
@@ -7047,6 +7124,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/SpikeAttack
     index: 0
     length: 90
@@ -7079,6 +7157,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/Strike
     index: 0
     length: 80
@@ -7147,6 +7226,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/PunchCombo
     index: 0
     length: 115
@@ -7266,9 +7346,10 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/ChargingStar
     index: 0
-    length: 115
+    length: 100
     loop: 0
     blendRate: 0.1
     events:
@@ -7293,6 +7374,13 @@ MonoBehaviour:
       parameters:
       - name: Enemy/Roy/Roy BigShield
         val: 0
+    - start: 35
+      end: 35
+      active: 1
+      script: 24
+      parameters:
+      - name: 
+        val: 40
     attacks:
     - start: 40
       length: 30
@@ -7319,6 +7407,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/DragonPunch
     index: 0
     length: 105
@@ -7408,6 +7497,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/Guard
     index: 0
     length: 20
@@ -7474,6 +7564,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/Guard
     index: 0
     length: 60
@@ -7525,6 +7616,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/VespSting
     index: 0
     length: 110
@@ -7606,6 +7698,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/DroneExplode
     index: 0
     length: 15
@@ -7694,6 +7787,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/MotoRush
     index: 0
     length: 70
@@ -7801,6 +7895,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/HornetShooting
     index: 0
     length: 75
@@ -7891,6 +7986,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/RetreatShooting
     index: 0
     length: 160
@@ -8051,6 +8147,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/WaspCharge
     index: 0
     length: 90
@@ -8097,6 +8194,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/TrooperBlast
     index: 0
     length: 60
@@ -8158,6 +8256,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/GeneratorShotgun
     index: 0
     length: 140
@@ -8305,6 +8404,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/GenLaunchDrone
     index: 0
     length: 180
@@ -8413,6 +8513,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/HexShieldBash
     index: 0
     length: 40
@@ -8445,6 +8546,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/SpinForward
     index: 0
     length: 55
@@ -8498,6 +8600,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/SpinBackward
     index: 0
     length: 55
@@ -8551,6 +8654,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/SpikeBall
     index: 0
     length: 200
@@ -8676,6 +8780,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/BugHole
     index: 0
     length: 95
@@ -8768,6 +8873,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/GravityBomb
     index: 0
     length: 20
@@ -8836,6 +8942,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/FinalGeyser
     index: 0
     length: 35
@@ -8952,6 +9059,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/NEWSTATE
     index: 0
     length: 0
@@ -8969,6 +9077,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/Sweep
     index: 0
     length: 25
@@ -9015,6 +9124,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/KinzecterRecall
     index: 0
     length: 15
@@ -9050,6 +9160,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/AirHike
     index: 0
     length: 15
@@ -9081,6 +9192,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Brave/Henshin
     index: 0
     length: 0
@@ -9105,6 +9217,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bombardier/Henshin
     index: 0
     length: 0
@@ -9129,6 +9242,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/Henshin
     index: 0
     length: 0
@@ -9153,6 +9267,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/Gallop
     index: 0
     length: 85
@@ -9255,6 +9370,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/Skyburst
     index: 0
     length: 50
@@ -9301,6 +9417,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/ChargedSpin
     index: 0
     length: 90
@@ -9405,6 +9522,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/SuperAED
     index: 0
     length: 145
@@ -9606,6 +9724,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/ThrowAxe
     index: 0
     length: 110
@@ -9758,6 +9877,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/BlockRetreat
     index: 0
     length: 40
@@ -9845,6 +9965,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/BombCrate
     index: 0
     length: 15
@@ -9877,6 +9998,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/BombAttack
     index: 0
     length: 80
@@ -9928,6 +10050,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/Crash
     index: 0
     length: 60
@@ -9987,6 +10110,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/BombLance
     index: 0
     length: 120
@@ -10021,6 +10145,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/Mushiki
     index: 0
     length: 100
@@ -10104,6 +10229,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/AirRaid
     index: 0
     length: 80
@@ -10174,6 +10300,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/BombBarrage
     index: 0
     length: 80
@@ -10251,6 +10378,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/BombJump
     index: 0
     length: 100
@@ -10319,6 +10447,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/GroundRaid
     index: 0
     length: 80
@@ -10370,6 +10499,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/BlastFist
     index: 0
     length: 80
@@ -10450,6 +10580,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/Knee
     index: 0
     length: 25
@@ -10510,6 +10641,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/Kick
     index: 0
     length: 25
@@ -10556,6 +10688,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/Stomp
     index: 0
     length: 30
@@ -10609,6 +10742,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/Run
     index: 0
     length: 30
@@ -10681,6 +10815,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/RoundhouseKick
     index: 0
     length: 30
@@ -10734,6 +10869,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/HeavyKick
     index: 0
     length: 40
@@ -10787,6 +10923,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/AxeKick
     index: 0
     length: 30
@@ -10826,6 +10963,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/NEWSTATE
     index: 0
     length: 0
@@ -10843,6 +10981,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/DeHenshin
     index: 0
     length: 0
@@ -10867,6 +11006,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/BounceDash
     index: 0
     length: 5
@@ -10939,6 +11079,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/BraveHenshin
     index: 0
     length: 0
@@ -10979,6 +11120,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 1
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/BombHenshin
     index: 0
     length: 0
@@ -11010,6 +11152,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 1
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/BikeHenshin
     index: 0
     length: 0
@@ -11041,6 +11184,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 1
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/NinjaHenshin
     index: 0
     length: 0
@@ -11072,6 +11216,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 1
     bulletLimit: 0
+    windReq: 0
   - stateName: Zoe/DeHenshin
     index: 0
     length: 0
@@ -11103,6 +11248,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/Slide
     index: 0
     length: 30
@@ -11163,6 +11309,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/KickBack
     index: 0
     length: 15
@@ -11215,6 +11362,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/AirMagnum
     index: 0
     length: 15
@@ -11342,6 +11490,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/KickFlip
     index: 0
     length: 25
@@ -11381,6 +11530,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/MajinShotgun
     index: 0
     length: 35
@@ -11453,7 +11603,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -11461,6 +11611,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/SlideJump
     index: 0
     length: 35
@@ -11548,6 +11699,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/FastFall
     index: 0
     length: 30
@@ -11617,6 +11769,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/RocketPunch
     index: 0
     length: 120
@@ -11664,6 +11817,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/Reloading
     index: 0
     length: 90
@@ -11695,6 +11849,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/HoarfrostStomp
     index: 0
     length: 120
@@ -11857,6 +12012,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/StatueSlide
     index: 0
     length: 100
@@ -11931,6 +12087,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/CounterTeleport
     index: 0
     length: 60
@@ -12085,6 +12242,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/MultiStomp
     index: 0
     length: 170
@@ -12263,6 +12421,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/BruteChaseSlide
     index: 0
     length: 160
@@ -12359,6 +12518,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Enemy/NEWSTATE
     index: 0
     length: 0
@@ -12376,13 +12536,14 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Bomber/SmokeBomb
     index: 0
     length: 30
     loop: 0
     blendRate: 0.1
     events:
-    - start: 0
+    - start: 5
       end: 30
       active: 1
       script: 1
@@ -12471,6 +12632,27 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 19
+    - start: 0
+      end: 0
+      active: 1
+      script: 31
+      parameters:
+      - name: 
+        val: -3
+    - start: 5
+      end: 5
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 30
+    - start: 29
+      end: 30
+      active: 1
+      script: 20
+      parameters:
+      - name: 
+        val: 30
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -12482,6 +12664,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/Slash
     index: 0
     length: 25
@@ -12509,6 +12692,20 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
+    - start: 5
+      end: 5
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
     attacks:
     - start: 5
       length: 5
@@ -12550,6 +12747,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/Cross
     index: 0
     length: 25
@@ -12569,6 +12767,13 @@ MonoBehaviour:
       script: 6
       parameters:
       - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 5
@@ -12596,6 +12801,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/MidChain
     index: 0
     length: 40
@@ -12708,7 +12914,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -12716,6 +12922,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/LowChain
     index: 0
     length: 40
@@ -12798,7 +13005,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -12806,6 +13013,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/HighChain
     index: 0
     length: 40
@@ -12890,7 +13098,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -12898,6 +13106,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/SpinningMixer
     index: 0
     length: 70
@@ -12928,24 +13137,24 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 10
-      hitStun: 20
+      hitStun: 15
       hitStop: 4
-      damage: 2
+      damage: 1
       meterGain: 3
       comboValue: 4
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 15, y: 0, z: 0}
+      knockback: {x: 16, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 1, z: 0}
       hitBoxScale: {x: 3, y: 3, z: 0}
       cancelWindow: 0
       killMultiplier: 0
     - start: 10
       length: 10
-      hitStun: 20
+      hitStun: 15
       hitStop: 4
-      damage: 2
+      damage: 1
       meterGain: 3
       comboValue: 5
       poiseDamage: 1
@@ -12958,30 +13167,30 @@ MonoBehaviour:
       killMultiplier: 0
     - start: 20
       length: 10
-      hitStun: 20
+      hitStun: 15
       hitStop: 4
-      damage: 2
+      damage: 1
       meterGain: 3
       comboValue: 6
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 15, y: 0, z: 0}
+      knockback: {x: 16, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 1, z: 0}
       hitBoxScale: {x: 3, y: 3, z: 0}
       cancelWindow: 0
       killMultiplier: 0
     - start: 30
       length: 10
-      hitStun: 20
+      hitStun: 15
       hitStop: 4
-      damage: 2
+      damage: 1
       meterGain: 3
       comboValue: 7
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 15, y: 0, z: 0}
+      knockback: {x: 16, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 1, z: 0}
       hitBoxScale: {x: 3, y: 3, z: 0}
       cancelWindow: 0
@@ -12996,7 +13205,7 @@ MonoBehaviour:
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 15, y: 0, z: 0}
+      knockback: {x: 20, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 1, z: 0}
       hitBoxScale: {x: 3, y: 3, z: 0}
       cancelWindow: 0
@@ -13011,6 +13220,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 1
   - stateName: Cyclone/Quickstep
     index: 0
     length: 20
@@ -13056,6 +13266,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/AirStab
     index: 0
     length: 30
@@ -13075,6 +13286,13 @@ MonoBehaviour:
       script: 20
       parameters:
       - name: 
+        val: 0
+    - start: 5
+      end: 5
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
         val: 0
     attacks:
     - start: 10
@@ -13102,6 +13320,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/Pogo
     index: 0
     length: 15
@@ -13126,6 +13345,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NAirChain
     index: 0
     length: 20
@@ -13164,7 +13384,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 20
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -13172,6 +13392,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/AirSlam
     index: 0
     length: 45
@@ -13240,7 +13461,7 @@ MonoBehaviour:
       length: 0
       hitStun: 20
       hitStop: 10
-      damage: 2
+      damage: 4
       meterGain: 0
       comboValue: 10
       poiseDamage: 0
@@ -13261,6 +13482,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/AirUpGrab
     index: 0
     length: 15
@@ -13273,14 +13495,14 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: 20
+        val: 16
     - start: 0
       end: 0
       active: 1
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 12
     - start: 0
       end: 0
       active: 1
@@ -13288,6 +13510,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 15
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: -1
     attacks:
     - start: 0
       length: 15
@@ -13302,18 +13531,19 @@ MonoBehaviour:
       knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
-      cancelWindow: 0
+      cancelWindow: 30
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
-    dashCooldownReq: 0
+    meterReq: 25
+    dashCooldownReq: 20
     groundedReq: 0
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/LeapingGrab
     index: 0
     length: 45
@@ -13352,7 +13582,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -13360,6 +13590,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/Dash
     index: 0
     length: 30
@@ -13425,6 +13656,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/CrossSlash
     index: 0
     length: 55
@@ -13478,6 +13710,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/UpperCut
     index: 0
     length: 55
@@ -13546,6 +13779,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/SpinningSlashes
     index: 0
     length: 60
@@ -13614,6 +13848,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/ChakramCombo
     index: 0
     length: 200
@@ -13626,7 +13861,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 0
+        val: 12
     - start: 25
       end: 30
       active: 1
@@ -13681,7 +13916,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 0
+        val: 12
     - start: 75
       end: 75
       active: 1
@@ -13756,7 +13991,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 0
+        val: 12
     - start: 130
       end: 130
       active: 1
@@ -13883,6 +14118,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/ChopDiveKick
     index: 0
     length: 190
@@ -14012,7 +14248,7 @@ MonoBehaviour:
       length: 5
       hitStun: 15
       hitStop: 4
-      damage: 0
+      damage: 2
       meterGain: 0
       comboValue: 0
       poiseDamage: 0
@@ -14027,7 +14263,7 @@ MonoBehaviour:
       length: 5
       hitStun: 15
       hitStop: 4
-      damage: 0
+      damage: 2
       meterGain: 0
       comboValue: 1
       poiseDamage: 0
@@ -14042,7 +14278,7 @@ MonoBehaviour:
       length: 20
       hitStun: 25
       hitStop: 4
-      damage: 0
+      damage: 1
       meterGain: 0
       comboValue: 2
       poiseDamage: 0
@@ -14057,7 +14293,7 @@ MonoBehaviour:
       length: 30
       hitStun: 20
       hitStop: 4
-      damage: 0
+      damage: 3
       meterGain: 0
       comboValue: 3
       poiseDamage: 0
@@ -14078,6 +14314,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/DiamondDust
     index: 0
     length: 180
@@ -14463,7 +14700,7 @@ MonoBehaviour:
       length: 20
       hitStun: 20
       hitStop: 4
-      damage: 0
+      damage: 2
       meterGain: 0
       comboValue: 0
       poiseDamage: 0
@@ -14478,7 +14715,7 @@ MonoBehaviour:
       length: 30
       hitStun: 20
       hitStop: 4
-      damage: 0
+      damage: 6
       meterGain: 0
       comboValue: 1
       poiseDamage: 0
@@ -14499,6 +14736,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/Chakram
     index: 0
     length: 60
@@ -14558,6 +14796,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/Backflip
     index: 0
     length: 80
@@ -14715,6 +14954,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/Escape
     index: 0
     length: 30
@@ -14794,6 +15034,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Amara/NEWSTATE
     index: 0
     length: 0
@@ -14811,6 +15052,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/MajinDash
     index: 0
     length: 30
@@ -14876,14 +15118,14 @@ MonoBehaviour:
     - start: 0
       length: 30
       hitStun: 20
-      hitStop: 0
+      hitStop: 4
       damage: 2
-      meterGain: 0
-      comboValue: 0
+      meterGain: 3
+      comboValue: 1
       poiseDamage: 0
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 15, y: 0, z: 0}
+      knockback: {x: 16, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 3, y: 2, z: 0}
       cancelWindow: 0
@@ -14898,6 +15140,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/NEWSTATE
     index: 0
     length: 0
@@ -14915,6 +15158,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/NEWSTATE
     index: 0
     length: 0
@@ -14932,6 +15176,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Pursuer/NEWSTATE
     index: 0
     length: 0
@@ -14949,13 +15194,74 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
-  - stateName: Pursuer/NEWSTATE
+    windReq: 0
+  - stateName: Cyclone/WindSummon
     index: 0
-    length: 0
+    length: 30
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 10
+      end: 10
+      active: 1
+      script: 15
+      parameters:
+      - name: 
+        val: 1
+      - name: 
+        val: 2
+      - name: 
+        val: 1
+    - start: 0
+      end: 30
+      active: 1
+      script: 9
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 25
+    attacks:
+    - start: 10
+      length: 10
+      hitStun: 15
+      hitStop: 4
+      damage: 2
+      meterGain: 3
+      comboValue: 1
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 0, y: 24, z: 0}
+      hitBoxPos: {x: 2, y: 1, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -14966,6 +15272,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/HighChainYank
     index: 0
     length: 20
@@ -14990,7 +15297,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 25
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -14998,6 +15305,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NegativeGain
     index: 0
     length: 50
@@ -15085,7 +15393,7 @@ MonoBehaviour:
     attacks:
     - start: 35
       length: 0
-      hitStun: 20
+      hitStun: 30
       hitStop: 10
       damage: 4
       meterGain: 0
@@ -15108,6 +15416,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/StranglingChain
     index: 0
     length: 50
@@ -15180,7 +15489,7 @@ MonoBehaviour:
       length: 0
       hitStun: 20
       hitStop: 10
-      damage: 4
+      damage: 2
       meterGain: 0
       comboValue: 11
       poiseDamage: 0
@@ -15195,7 +15504,7 @@ MonoBehaviour:
       length: 10
       hitStun: 20
       hitStop: 10
-      damage: 4
+      damage: 2
       meterGain: 0
       comboValue: 10
       poiseDamage: 0
@@ -15210,7 +15519,7 @@ MonoBehaviour:
       length: 10
       hitStun: 20
       hitStop: 10
-      damage: 4
+      damage: 2
       meterGain: 0
       comboValue: 11
       poiseDamage: 0
@@ -15231,6 +15540,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NEWSTATE
     index: 0
     length: 0
@@ -15248,6 +15558,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NEWSTATE
     index: 0
     length: 0
@@ -15265,6 +15576,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NEWSTATE
     index: 0
     length: 0
@@ -15282,6 +15594,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NEWSTATE
     index: 0
     length: 0
@@ -15299,6 +15612,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NEWSTATE
     index: 0
     length: 0
@@ -15316,6 +15630,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NEWSTATE
     index: 0
     length: 0
@@ -15333,6 +15648,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Cyclone/NEWSTATE
     index: 0
     length: 0
@@ -15350,6 +15666,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/ShieldBash
     index: 0
     length: 30
@@ -15382,6 +15699,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/MeteorSpike
     index: 0
     length: 80
@@ -15449,6 +15767,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/NEWSTATE
     index: 0
     length: 0
@@ -15466,6 +15785,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Roy/NEWSTATE
     index: 0
     length: 0
@@ -15483,6 +15803,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Weapon/GenShieldUp
     index: 0
     length: 60
@@ -15549,6 +15870,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/Backdash
     index: 0
     length: 20
@@ -15594,6 +15916,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/SpikeBlock
     index: 0
     length: 30
@@ -15626,6 +15949,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/Escape
     index: 0
     length: 40
@@ -15678,6 +16002,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Khris/AirDrill
     index: 0
     length: 45
@@ -15782,6 +16107,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/Backroll
     index: 0
     length: 25
@@ -15827,6 +16153,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/Block
     index: 0
     length: 0
@@ -15859,6 +16186,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/NEWSTATE
     index: 0
     length: 0
@@ -15876,6 +16204,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/NEWSTATE
     index: 0
     length: 0
@@ -15893,6 +16222,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/NEWSTATE
     index: 0
     length: 0
@@ -15910,6 +16240,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   - stateName: Godsteed/NEWSTATE
     index: 0
     length: 0
@@ -15927,6 +16258,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
+    windReq: 0
   characterScripts:
   - index: 0
     name: VelocityY
@@ -16034,7 +16366,7 @@ MonoBehaviour:
     - name: Name
       val: 0
   - index: 0
-    name: SpawnTurret
+    name: SpawnObject
     parameters:
     - name: index
       val: 1
@@ -17778,7 +18110,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
+        followUps: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -17996,8 +18328,24 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 5
+      - idIndex: 14
+        command:
+          motionCommand: 0
+          input: 1
+          state: 160
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 272
+          y: 177
+          width: 175
+          height: 50
+        activated: 1
+        priority: 2
       omitList: 
-      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
+      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -18023,7 +18371,7 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 4
-          state: 23
+          state: 161
           inputs: 
         followUps: 
         strict: 0
@@ -18150,7 +18498,7 @@ MonoBehaviour:
       - idIndex: 9
         command:
           motionCommand: 0
-          input: 5
+          input: 1
           state: 160
           inputs: 
         followUps: 
@@ -18162,7 +18510,7 @@ MonoBehaviour:
           width: 175
           height: 50
         activated: 1
-        priority: 0
+        priority: 2
       - idIndex: 10
         command:
           motionCommand: 0
@@ -18783,6 +19131,7 @@ MonoBehaviour:
   - {fileID: 6510561786469778453, guid: bb088666d4d72fd499dcb025949682ed, type: 3}
   - {fileID: 7459617967329291029, guid: 5355147a1be62324986b76b1a3c888f6, type: 3}
   - {fileID: 1315619723106520, guid: de01d1c20c1db3142bb40481c07f5953, type: 3}
+  - {fileID: 2308452426114614047, guid: 83241f193b8782443b03a26dff0dfbdb, type: 3}
   rawInputs:
   - inputType: 0
     name: Ps4X
@@ -18986,5 +19335,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 4
+  currentMovelistIndex: 2
   currentControllerIndex: 0

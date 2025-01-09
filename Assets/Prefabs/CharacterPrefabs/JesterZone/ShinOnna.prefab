@@ -4948,6 +4948,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: b638a694e874a92489d7eccd92fbe4aa, type: 2}
   kinzecter: {fileID: 0}
   controlType: 3
+  movementStyle: 0
   hitbox: {fileID: 5075554511312000784}
   canCancel: 0
   isHit: 0
@@ -4963,6 +4964,10 @@ MonoBehaviour:
   accelerationTimeGrounded: 0.1
   bikeAccelerationTimeAirborne: 0
   bikeAccelerationTimeGrounded: 0
+  bikeMoveSpeed: 12
+  windAccelerationTimeAirborne: 1
+  windAccelerationTimeGrounded: 0
+  windMoveSpeed: 16
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
@@ -4974,7 +4979,6 @@ MonoBehaviour:
   deadzone: 0.2
   moveSpeed: 8
   playerSpeed: 8
-  bikeSpeed: 12
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -4986,6 +4990,7 @@ MonoBehaviour:
   critBusterIndex: 22
   shotgunIndex: 40
   missileIndex: 41
+  cycloneIndex: 183
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
@@ -5006,12 +5011,14 @@ MonoBehaviour:
   secondaryParticles: []
   bombDashParticle: {fileID: 653150706644302976}
   landingParticle: {fileID: 9079695257204757577}
+  cycloneParticle: {fileID: 0}
   bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
   bullets:
   - {fileID: 3152041610049941263, guid: 724bd95c0ae4ef9448e54239b0746162, type: 3}
   - {fileID: 1946779624007576, guid: 10e3966c32593ce4f901de6c1a077754, type: 3}
+  nonBulletObjects: []
   isKinzecterOut: 0
   menuDelay: 12
   henshinInput: 2
@@ -5025,10 +5032,11 @@ MonoBehaviour:
   whatCountsAsGround:
     serializedVersion: 2
     m_Bits: 256
+  whatIsSlippery:
+    serializedVersion: 2
+    m_Bits: 32768
   aerialFlag: 0
   wallFlag: 0
-  isOnGround: 0
-  isOnWall: 0
   aerialTimer: 0
   groundDetectHeight: 0.01
   wallDetectWidth: 0
@@ -5039,10 +5047,12 @@ MonoBehaviour:
   dashes: 0
   dashMax: 1
   coyoteTimer: 3
-  dashCooldown: 90
+  dashCooldown: 30
   dashCooldownRate: 1
   invulCooldown: 0
   invulFlickerRate: 4
+  windGauge: 0
+  windDecrementRate: 1
   specialMeter: 0
   specialMeterMax: 100
   nextSpecialMeterUse: 0
@@ -5074,7 +5084,7 @@ MonoBehaviour:
   aggroHeight: 4
   longAttackRange: 10
   shortAttackRange: 4
-  attackCooldown: 60
+  attackCooldown: 35
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
@@ -5087,10 +5097,13 @@ MonoBehaviour:
   floatHeight: 2
   floatTime: 0.25
   canDefend: 1
+  canWakeupEvade: 0
   shouldFacePlayer: 1
   startingDirection: 1
+  isStationary: 0
   defStateIndex: 150
   defStates: 0000000054000000
+  wakeUpStateIndex: 0
 --- !u!114 &1953381557111422131
 MonoBehaviour:
   m_ObjectHideFlags: 0
