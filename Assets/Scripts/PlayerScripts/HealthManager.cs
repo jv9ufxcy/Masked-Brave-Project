@@ -216,7 +216,7 @@ public class HealthManager : MonoBehaviour
 
     public void SetMaxHealth()
     {
-        PoiseReset();
+        //PoiseReset();
         currentHealth = maxHealth;
         if(rend!=null)
             rend.color = Color.white;
@@ -573,7 +573,7 @@ public class HealthManager : MonoBehaviour
         charAnim.SetFloat("aniHealthState", 1);
         isDesperation = true;
         character.OnDesperation();
-        PoiseReset();
+        //PoiseReset();
     }
 
     public void AddShield(int amount)
@@ -640,7 +640,7 @@ public class HealthManager : MonoBehaviour
                 SpawnPickup(healthPickup);
             }
         }
-        rend.color = Color.clear;
+        //rend.color = Color.clear;
 
         switch (character.controlType)
         {

@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.Experimental.XR;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 
 public class CharacterObject : MonoBehaviour, IHittable
 {
@@ -326,6 +327,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         currentState = 0;
         prevStateTime = -1;
         StartState(currentState);
+        ArmorOff();
     }
     void UpdateStateEvents()
     {
@@ -363,6 +365,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             if (currentStateTime == _atk.start + _atk.length)
             {
                 hitActive = 0;
+                ArmorOff();
             }
             //HitCancel
             float cWindow = _atk.start + _atk.cancelWindow;
@@ -507,6 +510,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                 {
                     FaceDir(-Direction);
                 }
+                break;
+            case 32:
+                ApplyArmor((int)_params[0].val);
                 break;
 
         }
@@ -942,7 +948,8 @@ public class CharacterObject : MonoBehaviour, IHittable
         //Attacks
         hitActive = 0;
         hitConfirm = 0;
-
+        ArmorOff();
+        armorBroken = false;
         UseMeter(nextSpecialMeterUse);
         nextSpecialMeterUse = 0;
 
@@ -1934,7 +1941,9 @@ public class CharacterObject : MonoBehaviour, IHittable
         else
         {
             isInvulnerable = false;
-            spriteRend.color = Color.white;
+            spriteRend.material.SetColor("_SpriteColor", Color.white);
+            spriteRend.material.SetFloat("_FlashAmt", 0f);
+            //spriteRend.color = Color.white;
             return true;
         }
     }
@@ -2000,7 +2009,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                     StartInvul(curAtk.hitStop);
 
                     bool shouldBreakPoise = false;
-                    if (healthManager.currentPoise > 0 && curAtk.poiseDamage>healthManager.currentPoise){shouldBreakPoise = true;}
+                    if (curHitArmor > 0 && curAtk.poiseDamage > curHitArmor) {shouldBreakPoise = true;}
                     
                     bool stunlessProjectileOpener = false;
 
@@ -2009,11 +2018,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                         if (hitStun <= 0)
                             stunlessProjectileOpener = true;
                     }
-                    else
-                        healthManager.PoiseDamage(curAtk.poiseDamage);
+                    OnHitArmor();
 
-
-                    if (healthManager.currentPoise <= 0 && !stunlessProjectileOpener)
+                    if (curHitArmor <= 0 && !stunlessProjectileOpener)
                     {
                         if (!isStationary)
                             SetVelocity(nextKnockback * 0.7f);//dampen a bit
@@ -2115,18 +2122,22 @@ public class CharacterObject : MonoBehaviour, IHittable
             invulCooldown = 90f;
             isInvulnerable = true;
         }
-        StartCoroutine(FlashWhiteDamage(hitFlash));
+        StartCoroutine(FlashWhiteDamage(hitFlash, Color.white));
     }
 
-    private IEnumerator FlashWhiteDamage(float hitFlash)
+    private IEnumerator FlashWhiteDamage(float hitFlash, Color flashColor)
     {
-        spriteRend.material = defaultMat;
-        spriteRend.material = whiteMat;
+        //spriteRend.material = defaultMat;
+        //spriteRend.material = whiteMat;
+        spriteRend.material.SetFloat("_FlashAmt", 0);
+        spriteRend.material.SetFloat("_FlashAmt", 1);
         for (int i = 0; i < hitFlash; i++)
         {
+            spriteRend.material.SetColor("_SpriteColor", Color.white);
             yield return new WaitForFixedUpdate();
         }
-        spriteRend.material = defaultMat;
+        spriteRend.material.SetFloat("_FlashAmt", 0);
+        //spriteRend.material = defaultMat;
         StartCoroutine(BlinkWhileInvulnerableCoroutine());
     }
     private IEnumerator BlinkWhileInvulnerableCoroutine()
@@ -2134,13 +2145,17 @@ public class CharacterObject : MonoBehaviour, IHittable
         while (isInvulnerable)
         {
             //yield return new WaitForSeconds(blinkInterval);
-            spriteRend.color = flashColor;
+            //spriteRend.color = flashColor;
+            spriteRend.material.SetColor("_SpriteColor", flashColor);
+            spriteRend.material.SetFloat("_FlashAmt", 0.5f);
             for (int i = 0; i < invulFlickerRate; i++)
             {
                 yield return new WaitForFixedUpdate();
             }
 
-            spriteRend.color = Color.white;
+            spriteRend.material.SetColor("_SpriteColor", Color.white);
+            spriteRend.material.SetFloat("_FlashAmt", 0f);
+            //spriteRend.color = Color.white;
             for (int i = 0; i < invulFlickerRate; i++)
             {
                 yield return new WaitForFixedUpdate();
@@ -2163,7 +2178,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         if (hitStun <= 0) 
         { 
             EndState();
-            healthManager.PoiseReset(); 
+            //healthManager.PoiseReset(); 
             OnComboEnded();
             if (canWakeupEvade && (controlType == ControlType.AI||controlType == ControlType.BOSS))
             {
@@ -2171,6 +2186,39 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
         }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
+    }
+    public int curHitArmor = 0;
+    private bool armorBroken = false;
+    void ApplyArmor (int armorToApply)
+    {
+        if (!armorBroken)
+        {
+            curHitArmor = armorToApply; 
+            spriteRend.material.SetColor("_OutlineColor", Color.white);
+        }
+    }
+    void OnHitArmor()
+    {
+        bool wasArmored = false;
+        float hitFlash = 6f;
+        if (curHitArmor>0)
+        {
+            curHitArmor--;
+            wasArmored = true;
+            StartCoroutine(FlashWhiteDamage(hitFlash, Color.red));
+        }
+
+        if (curHitArmor <= 0 && wasArmored)
+        {
+            //shatterSFX
+            armorBroken = true;
+            ArmorOff();
+        }
+    }
+    void ArmorOff()
+    {
+        curHitArmor = 0;
+        spriteRend.material.SetColor("_OutlineColor", Color.clear);
     }
     public void OnComboEnded()
     {
@@ -2338,8 +2386,11 @@ public class CharacterObject : MonoBehaviour, IHittable
         StartStateFromScript(deathStateIndex);
         controlType = ControlType.DEAD;
         invulCooldown = 0f;
-        spriteRend.color = Color.white;
-        spriteRend.material = defaultMat;
+        //spriteRend.color = Color.white;
+        spriteRend.material.SetColor("_SpriteColor", Color.white);
+        spriteRend.material.SetColor("_OutlineColor", Color.clear);
+        spriteRend.material.SetFloat("_FlashAmt", 0f);
+        //spriteRend.material = defaultMat;
         Screenshake(2, .4f);
         SetVelocity(Vector2.zero);
         KillMinions();
