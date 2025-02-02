@@ -217,7 +217,10 @@ public class BattleSystem : MonoBehaviour
         EndBattleUI();
         battleState = State.Conclusion;
     }
-
+    //public void RestartTimer()
+    //{
+    //    Mission.instance.BeginTimer();
+    //}
     private bool IsBattleOver()
     {
         foreach (Wave wave in waveArray)

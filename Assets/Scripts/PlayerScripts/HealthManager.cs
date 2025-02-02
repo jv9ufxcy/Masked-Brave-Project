@@ -667,7 +667,6 @@ public class HealthManager : MonoBehaviour
                     E.Kill();
                 break;
             case CharacterObject.ControlType.BOSS:
-                DeathStates();
 
                 OnDeath.Invoke();
                 if (deathEffect != null)
@@ -677,13 +676,18 @@ public class HealthManager : MonoBehaviour
                 }
                 else
                     character.GlobalPrefab(5);
-                character.OnDeath();
-                GameEngine.SetHitPause(60f);
-                CinemachineShake.instance.ShakeCamera(3f, 2f);
+                character.OnBossDeath();
+                MusicManager.instance.StopMusic();
+                //GameEngine.SetHitPause(60f);
+                //CinemachineShake.instance.ShakeCamera(3f, 2f);
                 audioManager.PlaySound(deathSound);
-                yield return new WaitForFixedUpdate();//get length of death animation        
                 scoreMult *= 100;
                 Mission.instance.OnEnemyKilled(scoreMult);
+                for (int i = 0; i < 240; i++)
+                {
+                    yield return new WaitForFixedUpdate();//get length of death animation        
+                }
+                DeathStates();
 
                 EnemySpawn B = GetComponent<EnemySpawn>();
                 if (B != null)

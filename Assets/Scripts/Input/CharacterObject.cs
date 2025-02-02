@@ -514,6 +514,22 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 32:
                 ApplyArmor((int)_params[0].val);
                 break;
+            case 33:
+                switch (_params[0].val)
+                {
+                    case 0://default
+                        ChangeSpriteColors(_params[1].val, Color.white, Color.clear);
+                        break;
+                    case 1://black
+                        ChangeSpriteColors(_params[1].val, Color.black, Color.clear);
+                        break;
+                    case 2://black
+                        ChangeSpriteColors(_params[1].val, flashColor, Color.clear);
+                        break;
+                    default:
+                        break;
+                }
+                break;
 
         }
     }
@@ -2018,7 +2034,11 @@ public class CharacterObject : MonoBehaviour, IHittable
                         if (hitStun <= 0)
                             stunlessProjectileOpener = true;
                     }
-                    OnHitArmor();
+
+                    if (curAtk.poiseDamage >= 20f && curHitArmor > 0)
+                        BreakArmor();
+
+                        OnHitArmor();
 
                     if (curHitArmor <= 0 && !stunlessProjectileOpener)
                     {
@@ -2167,7 +2187,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     [SerializeField] string[] attackStrings;
 
     [Tooltip("hitstun index in coreData")]
-    public int hitStunStateIndex = 7, deathStateIndex = 36;//hitstun state in coreData
+    public int hitStunStateIndex = 7, deathStateIndex = 36, bossDeathStateIndex = 153;//hitstun state in coreData
     public float hitStun;
     public void GettingHit()
     {
@@ -2191,7 +2211,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     private bool armorBroken = false;
     void ApplyArmor (int armorToApply)
     {
-        if (!armorBroken)
+        if (!armorBroken&&curHitArmor==0)
         {
             curHitArmor = armorToApply; 
             spriteRend.material.SetColor("_OutlineColor", Color.white);
@@ -2206,15 +2226,24 @@ public class CharacterObject : MonoBehaviour, IHittable
             curHitArmor--;
             wasArmored = true;
             StartCoroutine(FlashWhiteDamage(hitFlash, Color.red));
+            spriteRend.material.SetColor("_OutlineColor", Color.red);
         }
 
         if (curHitArmor <= 0 && wasArmored)
         {
             //shatterSFX
-            armorBroken = true;
-            ArmorOff();
+            BreakArmor();
         }
     }
+
+    private void BreakArmor()
+    {
+        float shatterIndex = 26f;
+        GlobalPrefab(shatterIndex);
+        armorBroken = true;
+        ArmorOff();
+    }
+
     void ArmorOff()
     {
         curHitArmor = 0;
@@ -2386,15 +2415,37 @@ public class CharacterObject : MonoBehaviour, IHittable
         StartStateFromScript(deathStateIndex);
         controlType = ControlType.DEAD;
         invulCooldown = 0f;
-        //spriteRend.color = Color.white;
-        spriteRend.material.SetColor("_SpriteColor", Color.white);
-        spriteRend.material.SetColor("_OutlineColor", Color.clear);
-        spriteRend.material.SetFloat("_FlashAmt", 0f);
-        //spriteRend.material = defaultMat;
+
+        ChangeSpriteColors(0, Color.white, Color.clear);
+
         Screenshake(2, .4f);
         SetVelocity(Vector2.zero);
         KillMinions();
         EraseSatellites();
+    }
+    public void OnBossDeath()
+    {
+        hitStun = 0;
+        StopChargeAttack();
+        invulCooldown = 0f;
+        KillMinions();
+        EraseSatellites();
+        //black sprite for white BG
+        //ChangeSpriteColors(1, Color.black, Color.clear);
+
+        StartStateFromScript(bossDeathStateIndex);
+        controlType = ControlType.DEAD;
+        //ChangeSpriteColors(0, Color.white, Color.clear);
+
+        //Screenshake(2, .4f);
+        SetVelocity(Vector2.zero);
+    }
+
+    private void ChangeSpriteColors(float flashAmt, Color spriteCol, Color outlineCol)
+    {
+        spriteRend.material.SetFloat("_FlashAmt", flashAmt);
+        spriteRend.material.SetColor("_SpriteColor", spriteCol);
+        spriteRend.material.SetColor("_OutlineColor", outlineCol);
     }
 
     private void KillMinions()

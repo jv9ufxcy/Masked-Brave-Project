@@ -164,13 +164,13 @@ public class Mission : MonoBehaviour,IDataPersistence
         MusicManager.instance.StopReverbZone();
         GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.OBJECT;
     }
-    private void BeginTimer()
+    public void BeginTimer()
     {
         //elapsedTime = 0f;
         isMissionActive = true;
         StartCoroutine(UpdateTimer());
     }
-    private void EndTimer()
+    public void EndTimer()
     {
         //CheckpointTimer();
         MusicManager.instance.StopMusic();
@@ -187,7 +187,7 @@ public class Mission : MonoBehaviour,IDataPersistence
     {
         while (isMissionActive)
         {
-            if (!PauseManager.IsGamePaused)
+            if (!PauseManager.IsGamePaused&&!DialogueManager.instance.isDialogueActive)
             {
                 elapsedTime += Time.deltaTime;
                 timePlaying = TimeSpan.FromSeconds(elapsedTime);
