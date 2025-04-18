@@ -44,6 +44,7 @@ public class CameraController : MonoBehaviour {
             else
                 vCams[i].Priority = 0;
         }
+        Debug.Log("Changed to camera: "+index);
     }
     float dampenTimer=1;
     public void ChangeConfiner(int index)

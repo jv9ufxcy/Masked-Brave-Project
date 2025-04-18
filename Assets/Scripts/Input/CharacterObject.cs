@@ -585,8 +585,11 @@ public class CharacterObject : MonoBehaviour, IHittable
     {
         GameObject bombGO = Instantiate(bullets[0], transform.position, transform.rotation);
         BombController bomb = bombGO.GetComponent<BombController>();
-        bomb.character = GameEngine.gameEngine.mainCharacter;
-        bomb.StartState();
+        if (bomb!=null)
+        {
+            bomb.character = GameEngine.gameEngine.mainCharacter;
+            bomb.StartState();
+        }
         healthManager.FinisherDeath(false);
     }
     public List<GameObject> satellitesCreated;

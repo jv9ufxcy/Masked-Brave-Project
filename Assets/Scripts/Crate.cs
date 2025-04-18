@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using DG.Tweening;
 
 public class Crate : MonoBehaviour, IHittable
 {
@@ -35,13 +36,20 @@ public class Crate : MonoBehaviour, IHittable
         }
         GetHit(attacker, curAtk);
     }
-
+    [SerializeField] private int minimumDamage;
     private void GetHit(CharacterObject attacker, AttackEvent curAtk)
     {
-        RemoveHealth(curAtk);
-       
+        if (curAtk.damage >= minimumDamage)
+        {
+            RemoveHealth(curAtk);
+            attacker.hitConfirm += 1;
+        }
+        else
+        {
+            spriteRend.transform.DOComplete();
+            spriteRend.transform.DOPunchPosition(Vector3.right*0.25f, .125f);
+        }
         GameEngine.SetHitPause(curAtk.hitStop);
-        attacker.hitConfirm += 1;
         attacker.BuildMeter(curAtk.meterGain);
         
     }

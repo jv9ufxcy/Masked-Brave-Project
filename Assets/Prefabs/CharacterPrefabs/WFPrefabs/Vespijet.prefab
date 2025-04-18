@@ -14664,8 +14664,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3621860600067121992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 5325916701400132512}
   m_RootOrder: 0
@@ -14711,7 +14711,7 @@ MonoBehaviour:
   projectileIndex: 0
   atkIndex: 0
   character: {fileID: 0}
-  stateIndex: 54
+  stateIndex: 218
 --- !u!1 &3798563433919180960
 GameObject:
   m_ObjectHideFlags: 0
@@ -24496,10 +24496,7 @@ MonoBehaviour:
   shootAnim: 0
   shootAnimMax: 0
   bullets:
-  - {fileID: 1946779624007576, guid: 4d44dc666ad645a46a539a483990aaf9, type: 3}
-  - {fileID: 1946779624007576, guid: b4ef358abf1f55f43a9e874ccb19b4ad, type: 3}
-  - {fileID: 1946779624007576, guid: 3c0465471e8bee14ea8764fc450febc5, type: 3}
-  - {fileID: 1946779624007576, guid: 5ce40fee1cb5c4549aea1da77c569712, type: 3}
+  - {fileID: 4163667659854110514, guid: b19d854b4d33dd94bbb41d3f20083918, type: 3}
   nonBulletObjects: []
   isKinzecterOut: 0
   menuDelay: 12
@@ -24558,8 +24555,10 @@ MonoBehaviour:
   - Enemy/Enemy Hurt
   - Enemy/Enemy Hurt
   hitStunStateIndex: 7
-  deathStateIndex: 36
+  deathStateIndex: 218
+  bossDeathStateIndex: 153
   hitStun: 0
+  curHitArmor: 0
   target: {fileID: 0}
   spawners: []
   aggroDistance: 8
@@ -24572,10 +24571,10 @@ MonoBehaviour:
   isShortRange: 0
   closeAttackState: 55000000
   rangedAttackState: 55000000
-  desperationCAStates: 
-  desperationRAStates: 
+  desperationCAStates: da000000
+  desperationRAStates: da000000
   enemyType: 3
-  desperationTransitionState: 58
+  desperationTransitionState: 218
   floatHeight: 4
   floatTime: 0.25
   canDefend: 0
@@ -24604,7 +24603,7 @@ MonoBehaviour:
   maxHealth: 16
   currentShieldHealth: 0
   currentHealth: 0
-  desperationHealth: -10
+  desperationHealth: 4
   maxPoise: 0
   currentPoise: 0
   HealthFill: {fileID: 3717915349170568901}

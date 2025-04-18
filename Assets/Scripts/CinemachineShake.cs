@@ -24,6 +24,12 @@ public class CinemachineShake : MonoBehaviour
         perlin.m_AmplitudeGain = intensity;
         shakeTimer = time;
     }
+    public void ShakeCutsceneCamera(float intensity)
+    {
+        GetActiveCinemachineCamera();
+        perlin.m_AmplitudeGain = intensity;
+        shakeTimer = 2;
+    }
     private void Update()
     {
         if (shakeTimer>0)
