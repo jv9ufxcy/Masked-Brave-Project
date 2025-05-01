@@ -123,7 +123,7 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     {
         if (character != null)
         {
-            character.OnObjectSpawn();
+            character.OnDeSpawn();
             HideCharacter();
             enemyHealth.SetMaxHealth();
             enemyHealth.IsDead = true;

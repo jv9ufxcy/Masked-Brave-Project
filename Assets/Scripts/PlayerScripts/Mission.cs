@@ -162,7 +162,7 @@ public class Mission : MonoBehaviour,IDataPersistence
     {
         EndTimer();
         MusicManager.instance.StopReverbZone();
-        GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.OBJECT;
+        GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.DEAD;
     }
     public void BeginTimer()
     {

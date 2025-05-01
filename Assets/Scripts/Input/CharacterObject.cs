@@ -1977,7 +1977,8 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     public void Hit(CharacterObject attacker, int projectileIndex, int atkIndex)
     {
-        GetHit(attacker, projectileIndex, atkIndex);
+        if (controlType != ControlType.DEAD)
+            GetHit(attacker, projectileIndex, atkIndex);
     }
     public CharacterObject grappleVictim;
     public Transform grapplePoint, grappleTarget;
@@ -2476,6 +2477,11 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void OnObjectSpawn()
     {
         controlType = ControlType.OBJECT;
+        StartStateFromScript(0);
+    }
+    public void OnDeSpawn()
+    {
+        controlType = ControlType.DEAD;
         StartStateFromScript(0);
     }
     public void OnDummySpawn()

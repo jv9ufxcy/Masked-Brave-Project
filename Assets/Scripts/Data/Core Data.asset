@@ -17235,7 +17235,7 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Ambushed
     index: 0
     length: 0
     loop: 0
@@ -17718,7 +17718,7 @@ MonoBehaviour:
           width: 175
           height: 50
         activated: 1
-        priority: 0
+        priority: 1
       - idIndex: 6
         command:
           motionCommand: 0
@@ -17734,7 +17734,7 @@ MonoBehaviour:
           width: 175
           height: 50
         activated: 1
-        priority: 0
+        priority: 1
       - idIndex: 7
         command:
           motionCommand: 3
@@ -19830,7 +19830,7 @@ MonoBehaviour:
           width: 175
           height: 50
         activated: 1
-        priority: 4
+        priority: 3
       - idIndex: 7
         command:
           motionCommand: 4
@@ -20478,5 +20478,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 4
+  currentMovelistIndex: 0
   currentControllerIndex: 0
