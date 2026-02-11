@@ -91,6 +91,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (battleState == State.Idle)
         {
+            GameEngine.gameEngine.mainCharacter.StartStateFromScript(217);//120 frames ambushed state
             StartBattleUI();
             audioManager.PlaySound(battleStartAudio);
 
@@ -108,18 +109,18 @@ public class BattleSystem : MonoBehaviour
         battleFightText.DOColor(Color.white, 0.25f);
         battleFightText.transform.DOScale(1, .5f);
 
-        enemyCounter.DOAnchorPos(midScreen, 0.5f).SetDelay(1f);
-        numOfEnemies.transform.DOScale(2, 0.25f).SetDelay(1f);
+        enemyCounter.DOAnchorPos(midScreen, 0.5f).SetDelay(.5f);
+        numOfEnemies.transform.DOScale(2, 0.25f).SetDelay(.5f);
 
-        enemyIcon.DOColor(Color.white, 0f).SetDelay(1f);
-        numOfEnemies.DOColor(Color.white, 0f).SetDelay(1f);
+        enemyIcon.DOColor(Color.white, 0f).SetDelay(.5f);
+        numOfEnemies.DOColor(Color.white, 0f).SetDelay(.5f);
 
-        enemyCounter.DOAnchorPos(restingLocation, .5f).SetDelay(2f);
-        numOfEnemies.transform.DOScale(1, .5f).SetDelay(2f);
+        enemyCounter.DOAnchorPos(restingLocation, .5f).SetDelay(1f);
+        numOfEnemies.transform.DOScale(1, .5f).SetDelay(1f);
 
 
-        battleFightText.transform.DOScale(8, .25f).SetDelay(3f);
-        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(3f);
+        battleFightText.transform.DOScale(8, .25f).SetDelay(2f);
+        battleFightText.DOColor(Color.clear, 0.25f).SetDelay(2f);
     }
     private void EndBattleUI()
     {

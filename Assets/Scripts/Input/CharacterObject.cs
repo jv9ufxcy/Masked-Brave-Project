@@ -442,7 +442,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 KinzectorActions(_params[0].val, _params[1].val, _params[2].val);
                 break;
             case 13:
-                AirStill(_params[0].val);
+                AirStill(_params[0].val, _params[1].val);
                 break;
             case 14:
                 PlayAudio(_params[0].name);
@@ -529,6 +529,9 @@ public class CharacterObject : MonoBehaviour, IHittable
                     default:
                         break;
                 }
+                break;
+            case 34:
+                DoHovering(_params[0].val, _params[1].val);
                 break;
 
         }
@@ -724,17 +727,17 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
         }
     }
-    private void AirStill(float _pow)
+    private void AirStill(float groundPow, float airPow)
     {
         if (IsGrounded())
         {
-            if (_pow > 0)
-            {
-                VelocityY(_pow);
-            }
+            //if (_pow > 0)
+            //{
+                VelocityY(groundPow);
+            //}
         }
         else
-            VelocityY(2f);
+            VelocityY(airPow);
     }
     private void Dash(float dashSpeed)
     {
@@ -746,7 +749,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         if (!IsGrounded() && dir.y == 0)
         {
-            AirStill(0);
+            AirStill(0,2);
         }
         //velocity += dir.normalized * dashSpeed;
         FrontVelocity(Mathf.Abs(dir.x) * dashSpeed);
@@ -1088,7 +1091,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     private float shotPressure;
     [SerializeField] private float minShotPressure = 30f, maxShotPressure = 60f;
     private bool shouldChargeBuster;
-    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22, shotgunIndex = 40, missileIndex = 41, cycloneIndex = 183;
+    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22, shotgunIndex = 40, missileIndex = 41, cycloneIndex = 160;
     [SerializeField] private bool firstCharge, secondCharge;
     private Color c;
 
@@ -1618,7 +1621,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     void DashCut()
     {
-        if (currentState == 2 || currentState == 23||currentState==139)//dash and airdashState
+        if (currentState == 2 || currentState == 23 || currentState == 139 || currentState == 188)//dash and airdashState
         {
             //SetCrouchFlag(true);
             if (!Input.GetButton(GameEngine.coreData.rawInputs[dashInput].name))
@@ -2344,6 +2347,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                         break;
                     case 3:
                         //flying code
+                        FrontVelocity(moveSpeed);
                         break;
                 }
             }
@@ -2351,14 +2355,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             {
                 if (currentState != hitStunStateIndex)
                 {
-                    Vector3 newPos = transform.position;
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
-                    if (hit)
-                    {
-                        //newPos.y = (hit.point + Vector2.up * floatHeight).y;
-                        newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * floatHeight).y, floatTime);
-                    }
-                    transform.position = newPos;
+                    DoHovering(floatHeight,floatTime);
                 }
                 else
                     velocity.y += gravity * Time.fixedDeltaTime;
@@ -2401,6 +2398,19 @@ public class CharacterObject : MonoBehaviour, IHittable
             dashCooldown = attackCooldown;
         }
     }
+
+    private void DoHovering(float fHeight,float fTime)
+    {
+        Vector3 newPos = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100, controller.collisionMask);
+        if (hit)
+        {
+            //newPos.y = (hit.point + Vector2.up * floatHeight).y;
+            newPos.y = Mathf.Lerp(newPos.y, (hit.point + Vector2.up * fHeight).y, fTime);
+        }
+        transform.position = newPos;
+    }
+
     public void OnDesperation()
     {
         closeAttackState = desperationCAStates;

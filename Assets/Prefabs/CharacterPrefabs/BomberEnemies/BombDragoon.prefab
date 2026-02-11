@@ -342,7 +342,7 @@ MonoBehaviour:
   horizontalAxis: altPs4Horizontal
   verticalAxis: altPs4Vertical
   deadzone: 0.2
-  moveSpeed: 0.1
+  moveSpeed: -4
   playerSpeed: 8
   airMod: 1
   jumpPow: 0.1
@@ -441,10 +441,12 @@ MonoBehaviour:
   - Enemy/Slime Hurt
   hitStunStateIndex: 7
   deathStateIndex: 36
+  bossDeathStateIndex: 153
   hitStun: 0
+  curHitArmor: 0
   target: {fileID: 0}
   spawners: []
-  aggroDistance: 8
+  aggroDistance: 12
   aggroHeight: 6
   longAttackRange: 8
   shortAttackRange: 3
@@ -452,14 +454,14 @@ MonoBehaviour:
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 75000000
-  rangedAttackState: 75000000
+  closeAttackState: d2000000d3000000
+  rangedAttackState: 7500000075000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 3
   desperationTransitionState: 58
   floatHeight: 5
-  floatTime: 2
+  floatTime: 0.2
   canDefend: 0
   canWakeupEvade: 0
   shouldFacePlayer: 1
@@ -25054,8 +25056,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7898812731466031385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalPosition: {x: 0.75, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 1599941525769300465}
   m_RootOrder: 0
@@ -25101,7 +25103,7 @@ MonoBehaviour:
   projectileIndex: 0
   atkIndex: 0
   character: {fileID: 0}
-  stateIndex: 54
+  stateIndex: 210
 --- !u!1 &8460541377463097015
 GameObject:
   m_ObjectHideFlags: 0

@@ -1139,8 +1139,10 @@ MonoBehaviour:
       active: 1
       script: 13
       parameters:
-      - name: Pow
+      - name: 
         val: 0
+      - name: 
+        val: 1
     - start: 5
       end: 5
       active: 1
@@ -2816,7 +2818,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: 2
+        val: 0
+      - name: 
+        val: 1
     - start: 5
       end: 25
       active: 1
@@ -2844,7 +2848,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: 2
+        val: 0
+      - name: 
+        val: 1
     - start: 30
       end: 50
       active: 1
@@ -2872,7 +2878,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: 2
+        val: 0
+      - name: 
+        val: 1
     - start: 55
       end: 75
       active: 1
@@ -3674,7 +3682,7 @@ MonoBehaviour:
     blendRate: 0.1
     events:
     - start: 5
-      end: 20
+      end: 10
       active: 1
       script: 1
       parameters:
@@ -4571,7 +4579,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 1
     - start: 15
       end: 15
       active: 1
@@ -4835,7 +4845,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 1
     - start: 39
       end: 40
       active: 1
@@ -4889,7 +4901,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 1
     attacks:
     - start: 5
       length: 15
@@ -4943,7 +4957,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 1
     - start: 0
       end: 54
       active: 1
@@ -5108,7 +5124,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 1
     - start: 35
       end: 40
       active: 1
@@ -5662,10 +5680,12 @@ MonoBehaviour:
     - start: 0
       end: 20
       active: 1
-      script: 0
+      script: 13
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 1
     attacks:
     - start: 0
       length: 0
@@ -7889,6 +7909,13 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 24
+    - start: 0
+      end: 60
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -7908,7 +7935,7 @@ MonoBehaviour:
     blendRate: 0.1
     events:
     - start: 10
-      end: 40
+      end: 10
       active: 1
       script: 14
       parameters:
@@ -8091,7 +8118,7 @@ MonoBehaviour:
       poiseDamage: 20
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 5, y: 0, z: 0}
+      knockback: {x: 4, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 2, y: 2, z: 1}
       cancelWindow: 0
@@ -9205,7 +9232,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 1
     - start: 5
       end: 5
       active: 1
@@ -9274,7 +9303,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 1
     - start: 0
       end: 30
       active: 1
@@ -10459,7 +10490,22 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -2
-    attacks: []
+    attacks:
+    - start: 30
+      length: 30
+      hitStun: 10
+      hitStop: 4
+      damage: 2
+      meterGain: 0
+      comboValue: 1
+      poiseDamage: 0
+      attackType: 0
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 4, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 1.5, y: 1, z: 1.5}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -10485,7 +10531,7 @@ MonoBehaviour:
       - name: 
         val: 0
       - name: 
-        val: 16
+        val: 20
       - name: 
         val: 1
       - name: 
@@ -11650,6 +11696,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 1
     attacks:
     - start: 0
       length: 20
@@ -11794,6 +11842,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 1
     - start: 0
       end: 0
       active: 1
@@ -12219,7 +12269,7 @@ MonoBehaviour:
     windReq: 0
   - stateName: Enemy/HoarfrostStomp
     index: 0
-    length: 120
+    length: 90
     loop: 0
     blendRate: 0.1
     events:
@@ -12230,8 +12280,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 35
-      end: 35
+    - start: 25
+      end: 25
       active: 1
       script: 5
       parameters:
@@ -12257,8 +12307,8 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 20
-    - start: 37
-      end: 37
+    - start: 27
+      end: 27
       active: 1
       script: 5
       parameters:
@@ -12284,8 +12334,8 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 20
-    - start: 40
-      end: 40
+    - start: 30
+      end: 30
       active: 1
       script: 5
       parameters:
@@ -12311,8 +12361,8 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 20
-    - start: 42
-      end: 42
+    - start: 32
+      end: 32
       active: 1
       script: 5
       parameters:
@@ -12346,7 +12396,7 @@ MonoBehaviour:
       - name: 
         val: 1
     attacks:
-    - start: 35
+    - start: 25
       length: 20
       hitStun: 20
       hitStop: 5
@@ -12361,7 +12411,7 @@ MonoBehaviour:
       hitBoxScale: {x: 5, y: 2, z: 0}
       cancelWindow: 0
       killMultiplier: 0
-    - start: 80
+    - start: 60
       length: 5
       hitStun: 20
       hitStop: 5
@@ -12387,14 +12437,14 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Enemy/StatueSlide
+  - stateName: Enemy/IceBreath
     index: 0
-    length: 100
+    length: 60
     loop: 0
     blendRate: 0.1
     events:
-    - start: 35
-      end: 35
+    - start: 15
+      end: 15
       active: 1
       script: 5
       parameters:
@@ -12420,8 +12470,8 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 21
-    - start: 90
-      end: 90
+    - start: 45
+      end: 45
       active: 1
       script: 10
       parameters:
@@ -12436,17 +12486,17 @@ MonoBehaviour:
       - name: 
         val: 0
     attacks:
-    - start: 35
-      length: 50
+    - start: 15
+      length: 30
       hitStun: 20
       hitStop: 4
-      damage: 1
+      damage: 2
       meterGain: 0
       comboValue: 0
       poiseDamage: 0
       attackType: 1
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 5, y: 0, z: 0}
+      knockback: {x: 8, y: -12, z: 0}
       hitBoxPos: {x: 2, y: 1, z: 0}
       hitBoxScale: {x: 1, y: 1, z: 0}
       cancelWindow: 0
@@ -12462,7 +12512,7 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Enemy/CounterTeleport
+  - stateName: Enemy/RetreatKunai
     index: 0
     length: 60
     loop: 0
@@ -12495,116 +12545,84 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 21
-    - start: 0
-      end: 0
-      active: 1
-      script: 5
-      parameters:
-      - name: 
-        val: 4
-      - name: 
-        val: 4
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 1
-      - name: 
-        val: 1
-      - name: 
-        val: 1
-      - name: 
-        val: 1
-      - name: 
-        val: 22
-    - start: 1
-      end: 1
+    - start: 5
+      end: 20
       active: 1
       script: 1
       parameters:
       - name: 
-        val: 48
-    - start: 1
-      end: 1
-      active: 1
-      script: 0
-      parameters:
-      - name: 
-        val: 48
-    - start: 6
+        val: -8
+    - start: 20
       end: 35
       active: 1
       script: 1
       parameters:
       - name: 
-        val: 0
-    - start: 6
-      end: 35
-      active: 1
-      script: 0
-      parameters:
-      - name: 
-        val: 1
-    - start: 30
-      end: 30
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 1
-      - name: 
-        val: 12
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: -45
-    - start: 30
-      end: 30
-      active: 1
-      script: 16
-      parameters:
-      - name: 
-        val: 1
-      - name: 
-        val: 12
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: 0
-      - name: 
-        val: -60
+        val: -12
     - start: 5
       end: 5
       active: 1
-      script: 8
+      script: 0
+      parameters:
+      - name: 
+        val: 20
+    - start: 10
+      end: 20
+      active: 1
+      script: 13
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+    - start: 20
+      end: 20
+      active: 1
+      script: 16
       parameters:
       - name: 
         val: 1
-    - start: 0
-      end: 0
+      - name: 
+        val: 20
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: -15
+    - start: 25
+      end: 25
       active: 1
-      script: 24
+      script: 16
       parameters:
       - name: 
-        val: 30
-    - start: 0
-      end: 0
+        val: 1
+      - name: 
+        val: 20
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+    - start: 5
+      end: 5
       active: 1
-      script: 29
+      script: 31
       parameters:
       - name: 
-        val: 10
+        val: 3
+    - start: 40.206184
+      end: 45
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -12619,12 +12637,12 @@ MonoBehaviour:
     windReq: 0
   - stateName: Enemy/MultiStomp
     index: 0
-    length: 170
+    length: 120
     loop: 0
     blendRate: 0.1
     events:
-    - start: 25
-      end: 140
+    - start: 20
+      end: 120
       active: 1
       script: 32
       parameters:
@@ -12637,8 +12655,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
-    - start: 35
-      end: 35
+    - start: 20
+      end: 20
       active: 1
       script: 5
       parameters:
@@ -12664,22 +12682,22 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 20
+    - start: 40
+      end: 45
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 16
+    - start: 45
+      end: 45
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     - start: 60
-      end: 65
-      active: 1
-      script: 1
-      parameters:
-      - name: 
-        val: 16
-    - start: 65
-      end: 65
-      active: 1
-      script: 1
-      parameters:
-      - name: 
-        val: 0
-    - start: 90
-      end: 90
+      end: 60
       active: 1
       script: 5
       parameters:
@@ -12705,22 +12723,22 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 20
-    - start: 110
-      end: 115
+    - start: 80
+      end: 85
       active: 1
       script: 1
       parameters:
       - name: 
         val: 16
-    - start: 115
-      end: 115
+    - start: 85
+      end: 85
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
-    - start: 145
-      end: 145
+    - start: 100
+      end: 100
       active: 1
       script: 5
       parameters:
@@ -12747,7 +12765,7 @@ MonoBehaviour:
       - name: 
         val: 20
     attacks:
-    - start: 35
+    - start: 20
       length: 5
       hitStun: 15
       hitStop: 4
@@ -12762,7 +12780,7 @@ MonoBehaviour:
       hitBoxScale: {x: 2, y: 1, z: 1}
       cancelWindow: 0
       killMultiplier: 0
-    - start: 90
+    - start: 60
       length: 5
       hitStun: 15
       hitStop: 4
@@ -12777,7 +12795,7 @@ MonoBehaviour:
       hitBoxScale: {x: 2, y: 1, z: 1}
       cancelWindow: 0
       killMultiplier: 0
-    - start: 145
+    - start: 100
       length: 5
       hitStun: 15
       hitStop: 4
@@ -13303,7 +13321,7 @@ MonoBehaviour:
     - start: 0
       end: 25
       active: 1
-      script: 3
+      script: 9
       parameters:
       - name: 
         val: 1
@@ -13356,7 +13374,7 @@ MonoBehaviour:
       hitStun: 15
       hitStop: 4
       damage: 2
-      meterGain: 4
+      meterGain: 2
       comboValue: 3
       poiseDamage: 2
       attackType: 1
@@ -13386,7 +13404,7 @@ MonoBehaviour:
     - start: 0
       end: 25
       active: 1
-      script: 3
+      script: 9
       parameters:
       - name: 
         val: 1
@@ -13410,7 +13428,7 @@ MonoBehaviour:
       hitStun: 15
       hitStop: 4
       damage: 2
-      meterGain: 0
+      meterGain: 2
       comboValue: 1
       poiseDamage: 3
       attackType: 1
@@ -13748,7 +13766,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 24
+        val: 16
     - start: 30
       end: 30
       active: 1
@@ -13852,26 +13870,28 @@ MonoBehaviour:
     windReq: 1
   - stateName: Cyclone/Quickstep
     index: 0
-    length: 20
+    length: 30
     loop: 0
     blendRate: 0.1
     events:
     - start: 0
-      end: 0
+      end: 30
       active: 1
       script: 1
       parameters:
       - name: 
         val: 16
     - start: 0
-      end: 0
+      end: 30
       active: 1
-      script: 24
+      script: 13
       parameters:
       - name: 
-        val: 10
-    - start: 15
-      end: 20
+        val: 0
+      - name: 
+        val: 1
+    - start: 30
+      end: 30
       active: 1
       script: 1
       parameters:
@@ -13884,11 +13904,52 @@ MonoBehaviour:
       parameters:
       - name: Player/Dash
         val: 0
+    - start: 10
+      end: 30
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 1
+    - start: 0
+      end: 0
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: -2
+      - name: 
+        val: 1.5
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 7
     attacks: []
     jumpReq: 0
-    dashReq: 0
+    dashReq: 1
     meterReq: 0
-    dashCooldownReq: 30
+    dashCooldownReq: 45
     groundedReq: 0
     wallReq: 0
     uncrouchReq: 0
@@ -13987,7 +14048,9 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: 2
+        val: 0
+      - name: 
+        val: 1
     - start: 0
       end: 0
       active: 1
@@ -14071,6 +14134,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 1
     - start: 20
       end: 20
       active: 1
@@ -16003,6 +16068,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 1
     - start: 15
       end: 15
       active: 1
@@ -16177,36 +16244,86 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Cyclone/NEWSTATE
+  - stateName: Cyclone/QuickSlash
     index: 0
-    length: 0
+    length: 30
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 10
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Sword Swing
+        val: 0
+    attacks:
+    - start: 5
+      length: 10
+      hitStun: 15
+      hitStop: 4
+      damage: 2
+      meterGain: 2
+      comboValue: 3
+      poiseDamage: 2
+      attackType: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 8, y: 0, z: 0}
+      hitBoxPos: {x: 0.5, y: 0.5, z: 0}
+      hitBoxScale: {x: 3, y: 2, z: 0}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
     dashCooldownReq: 0
-    groundedReq: 0
+    groundedReq: 1
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Cyclone/NEWSTATE
+  - stateName: Cyclone/Run
     index: 0
-    length: 0
-    loop: 0
+    length: 30
+    loop: 1
     blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 16
+    - start: 0
+      end: 30
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 30
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: 1
     attacks: []
     jumpReq: 0
     dashReq: 0
     meterReq: 0
     dashCooldownReq: 0
-    groundedReq: 0
+    groundedReq: 1
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
@@ -17109,13 +17226,184 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Enemy/DragoonSlash
     index: 0
-    length: 0
+    length: 70
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
+    events:
+    - start: 0
+      end: 5
+      active: 1
+      script: 2
+      parameters:
+      - name: 
+        val: 8
+    - start: 20
+      end: 20
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 8
+    - start: 30
+      end: 30
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 40
+      end: 40
+      active: 1
+      script: 2
+      parameters:
+      - name: 
+        val: 1
+    - start: 50
+      end: 50
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 8
+    - start: 60
+      end: 60
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 70
+      active: 1
+      script: 34
+      parameters:
+      - name: 
+        val: 3
+      - name: 
+        val: 0.2
+    attacks:
+    - start: 20
+      length: 5
+      hitStun: 15
+      hitStop: 4
+      damage: 2
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 1
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 8, y: 0, z: 0}
+      hitBoxPos: {x: 0, y: -1, z: 0}
+      hitBoxScale: {x: 4, y: 2, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
+    - start: 20
+      length: 5
+      hitStun: 15
+      hitStop: 4
+      damage: 2
+      meterGain: 0
+      comboValue: 1
+      poiseDamage: 0
+      attackType: 1
+      hitAnim: {x: 0, y: 0}
+      knockback: {x: 8, y: 0, z: 0}
+      hitBoxPos: {x: 0.75, y: 0, z: 0}
+      hitBoxScale: {x: 3, y: 3, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
+    jumpReq: 0
+    dashReq: 0
+    meterReq: 0
+    dashCooldownReq: 0
+    groundedReq: 0
+    wallReq: 0
+    uncrouchReq: 0
+    activeTargetReq: 0
+    lockedMoveCheck: 0
+    bulletLimit: 0
+    windReq: 0
+  - stateName: Enemy/DragoonStake
+    index: 0
+    length: 115
+    loop: 0
+    blendRate: 0.1
+    events:
+    - start: 0
+      end: 15
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: -4
+    - start: 0
+      end: 15
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 4
+    - start: 20
+      end: 20
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 16
+    - start: 20
+      end: 20
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: -16
+    - start: 50
+      end: 50
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
+    - start: 70
+      end: 70
+      active: 1
+      script: 2
+      parameters:
+      - name: 
+        val: 0
+    - start: 85
+      end: 85
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 20
+      - name: 
+        val: 1
+      - name: 
+        val: 0.5
+      - name: 
+        val: 0
+    attacks:
+    - start: 20
+      length: 30
+      hitStun: 20
+      hitStop: 4
+      damage: 4
+      meterGain: 0
+      comboValue: 0
+      poiseDamage: 0
+      attackType: 1
+      hitAnim: {x: 1, y: 0}
+      knockback: {x: 16, y: -16, z: 0}
+      hitBoxPos: {x: 0.25, y: -0.5, z: 0}
+      hitBoxScale: {x: 2, y: 2, z: 1}
+      cancelWindow: 0
+      killMultiplier: 0
     jumpReq: 0
     dashReq: 0
     meterReq: 0
@@ -17217,30 +17505,26 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Zoe/Ambushed
     index: 0
-    length: 0
+    length: 120
     loop: 0
     blendRate: 0.1
-    events: []
-    attacks: []
-    jumpReq: 0
-    dashReq: 0
-    meterReq: 0
-    dashCooldownReq: 0
-    groundedReq: 0
-    wallReq: 0
-    uncrouchReq: 0
-    activeTargetReq: 0
-    lockedMoveCheck: 0
-    bulletLimit: 0
-    windReq: 0
-  - stateName: Ambushed
-    index: 0
-    length: 0
-    loop: 0
-    blendRate: 0.1
-    events: []
+    events:
+    - start: 0
+      end: 120
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: -1
+    - start: 0
+      end: 120
+      active: 1
+      script: 1
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -17467,6 +17751,8 @@ MonoBehaviour:
     parameters:
     - name: Ground Float
       val: 0
+    - name: Air Gravity
+      val: 2
   - index: 0
     name: PlayAudio
     parameters:
@@ -17615,6 +17901,13 @@ MonoBehaviour:
       val: 0
     - name: Flash Amount
       val: 1
+  - index: 0
+    name: Hovering
+    parameters:
+    - name: Height
+      val: 2
+    - name: TimeToFloat
+      val: 0.5
   moveLists:
   - name: Brave
     commandStates:
@@ -19275,9 +19568,9 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 4
-          state: 161
+          state: 188
           inputs: 
-        followUps: 
+        followUps: 0f00000010000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -19479,7 +19772,39 @@ MonoBehaviour:
           height: 50
         activated: 1
         priority: 2
-      omitList: 
+      - idIndex: 15
+        command:
+          motionCommand: 0
+          input: 1
+          state: 187
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 283
+          y: 102
+          width: 175
+          height: 50
+        activated: 1
+        priority: 1
+      - idIndex: 16
+        command:
+          motionCommand: 0
+          input: 0
+          state: 17
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 78
+          y: 172
+          width: 175
+          height: 50
+        activated: 1
+        priority: 0
+      omitList: 0f00000010000000
       nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e000000
     - stateName: Aerial
       aerial: 1
@@ -20478,5 +20803,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 0
+  currentMovelistIndex: 3
   currentControllerIndex: 0

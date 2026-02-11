@@ -5077,33 +5077,35 @@ MonoBehaviour:
   - Enemy/Enemy Hurt
   hitStunStateIndex: 7
   deathStateIndex: 36
+  bossDeathStateIndex: 153
   hitStun: 0
+  curHitArmor: 0
   target: {fileID: 0}
   spawners: []
   aggroDistance: 10
   aggroHeight: 4
-  longAttackRange: 10
-  shortAttackRange: 4
+  longAttackRange: 4
+  shortAttackRange: 2
   attackCooldown: 35
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
-  closeAttackState: 95000000
-  rangedAttackState: 95000000
+  closeAttackState: 9500000096000000
+  rangedAttackState: 9500000095000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 0
-  desperationTransitionState: 84
+  desperationTransitionState: 150
   floatHeight: 2
   floatTime: 0.25
-  canDefend: 1
-  canWakeupEvade: 0
+  canDefend: 0
+  canWakeupEvade: 1
   shouldFacePlayer: 1
   startingDirection: 1
   isStationary: 0
   defStateIndex: 150
   defStates: 0000000054000000
-  wakeUpStateIndex: 0
+  wakeUpStateIndex: 150
 --- !u!114 &1953381557111422131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10290,7 +10292,8 @@ GameObject:
   - component: {fileID: 1033937051547863646}
   - component: {fileID: 1930527952108157246}
   - component: {fileID: 3964558017112853692}
-  m_Layer: 9
+  - component: {fileID: 1103346196293451385}
+  m_Layer: 15
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10381,6 +10384,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &1103346196293451385
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3821571068053293252}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.016, y: 2}
+  m_Direction: 0
 --- !u!1 &4163063378814002307
 GameObject:
   m_ObjectHideFlags: 0
