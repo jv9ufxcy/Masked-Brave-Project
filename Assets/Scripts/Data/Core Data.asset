@@ -208,7 +208,7 @@ MonoBehaviour:
     attacks:
     - start: 5
       length: 10
-      hitStun: 10
+      hitStun: 15
       hitStop: 5
       damage: 2
       meterGain: 2
@@ -7961,7 +7961,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 12
     - start: 45
       end: 70
       active: 1
@@ -7996,7 +7996,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 8
     - start: 95
       end: 120
       active: 1
@@ -10168,6 +10168,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 0
     - start: 5
       end: 15
       active: 1
@@ -10463,7 +10465,7 @@ MonoBehaviour:
       - name: 
         val: 1
     - start: 29.690722
-      end: 120
+      end: 60
       active: 1
       script: 26
       parameters:
@@ -10482,14 +10484,16 @@ MonoBehaviour:
       script: 13
       parameters:
       - name: 
-        val: -2
+        val: 0
+      - name: 
+        val: 0
     - start: 20
       end: 30
       active: 1
       script: 1
       parameters:
       - name: 
-        val: -2
+        val: -4
     attacks:
     - start: 30
       length: 30
@@ -12688,7 +12692,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 24
     - start: 45
       end: 45
       active: 1
@@ -12729,7 +12733,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 24
     - start: 85
       end: 85
       active: 1
@@ -16318,6 +16322,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 30
+      active: 1
+      script: 35
+      parameters:
+      - name: 
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -17908,6 +17919,11 @@ MonoBehaviour:
       val: 2
     - name: TimeToFloat
       val: 0.5
+  - index: 0
+    name: AirCancel
+    parameters:
+    - name: Cancel State
+      val: 0
   moveLists:
   - name: Brave
     commandStates:
@@ -20600,6 +20616,7 @@ MonoBehaviour:
   - {fileID: 7459617967329291029, guid: 4c45e9cace6c7844da47ae99d8d13a88, type: 3}
   - {fileID: 1938826077859950, guid: a7f76c034ccb03a41922cfcd28005b9c, type: 3}
   - {fileID: 7459617967329291029, guid: faf4d5ef5bf0131409eece1e8f0e8f60, type: 3}
+  - {fileID: 5277361873265183749, guid: 8a3c999dcbb582f48a2f3c6ba8b380a3, type: 3}
   rawInputs:
   - inputType: 0
     name: Ps4X
@@ -20749,7 +20766,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20759,7 +20776,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20769,7 +20786,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20779,7 +20796,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20789,7 +20806,7 @@ MonoBehaviour:
     commands: 000000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20799,7 +20816,7 @@ MonoBehaviour:
     commands: 00000000030000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 1
+    checkStep: 0
     angleChange: 0
     prevAngle: 0
     curAngle: 0

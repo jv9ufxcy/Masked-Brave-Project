@@ -533,6 +533,9 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 34:
                 DoHovering(_params[0].val, _params[1].val);
                 break;
+            case 35:
+                AirCancel(_params[0].val);
+                break;
 
         }
     }
@@ -635,6 +638,13 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             currentStateTime = prevStateTime;
             animSpeed = 0;
+        }
+    }
+    public void AirCancel(float state)
+    {
+        if (aerialFlag)
+        {
+            StartState((int)state);
         }
     }
     public void GrappleActions(int actIndex, int impactState)
@@ -2481,7 +2491,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void OnEnemySpawn()
     {
         controlType = ControlType.AI;
-        dashCooldown = 60;
+        dashCooldown += 60;
         StartStateFromScript(0);
     }
     public void OnObjectSpawn()
