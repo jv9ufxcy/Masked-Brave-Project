@@ -53,6 +53,7 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
     [SerializeField] private Toggle fullScreenToggle,vSyncToggle, hpToggle;
     [SerializeField] private List<int> resolutionWidths;
     [SerializeField] private List<int> resolutionHeights;
+    [SerializeField] private ResolutionController resolutionCon;
     private int resolutionIndex=3;
     private int chosenWidth, chosenHeight;
     private bool isFullScreen,visibleHealth,isVSync;
@@ -62,11 +63,12 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
 
         isFullScreen = (Screen.fullScreen);
         fullScreenToggle.isOn = isFullScreen;
-        vSyncToggle.isOn = isVSync;
-        if (isVSync)
-            QualitySettings.vSyncCount = 1;
-        else
-            QualitySettings.vSyncCount = 0;
+        //resolutionCon.DefaultSliderPos(resolutionIndex);
+        //vSyncToggle.isOn = isVSync;
+        //if (isVSync)
+        //    QualitySettings.vSyncCount = 1;
+        //else
+        //    QualitySettings.vSyncCount = 0;
         hpToggle.isOn = visibleHealth;
         resolutionIndex = 3;
         chosenWidth = resolutionWidths[resolutionIndex];
@@ -76,10 +78,10 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
     {
         isFullScreen = fullScreenToggle.isOn;
         PlaySelectSound(0);
-        if (!isFullScreen&&isVSync)
-        {
-            ToggleVSync();
-        }
+        //if (!isFullScreen&&isVSync)
+        //{
+        //    ToggleVSync();
+        //}
     }
     public void ToggleVSync()
     {
@@ -125,6 +127,7 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
             audioControllers[i].SetSlider(volumeMaster[i]);
         }
     }
+
     public void LoadData(GameData data)
     {
         this.resolutionIndex = data.resolutionIndex;

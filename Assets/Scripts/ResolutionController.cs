@@ -20,7 +20,10 @@ public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHand
         sliderDesc = GetComponentInChildren<TextMeshProUGUI>();
         audioManager = AudioManager.instance;
     }
-
+    public void DefaultSliderPos(int index)
+    {
+        resSlider.value = index;
+    }
     public void SetResolutionSlider(float index)//unity event
     {
         resolutionIndex = (int)index;

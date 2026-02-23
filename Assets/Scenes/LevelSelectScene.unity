@@ -189,7 +189,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 487425691}
+      - m_Target: {fileID: 487425690}
         m_MethodName: ToggleFullScreen
         m_Mode: 1
         m_Arguments:
@@ -2262,7 +2262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &481278774
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2346,7 +2346,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 487425691}
+      - m_Target: {fileID: 487425690}
         m_MethodName: ToggleVSync
         m_Mode: 1
         m_Arguments:
@@ -2416,6 +2416,7 @@ MonoBehaviour:
   hpToggle: {fileID: 1963301997}
   resolutionWidths: 40010000800200000005000080070000
   resolutionHeights: b400000068010000d002000038040000
+  resolutionCon: {fileID: 174330422}
   audioControllers:
   - {fileID: 396785681}
   - {fileID: 917227636}
@@ -2443,12 +2444,6 @@ MonoBehaviour:
   - {fileID: 698764888}
   - {fileID: 179561511}
   - {fileID: 769597392}
-  resDisplayText: {fileID: 862597013}
-  fullScreenToggle: {fileID: 10122326}
-  vSyncToggle: {fileID: 481278776}
-  hpToggle: {fileID: 1963301997}
-  resolutionWidths: 40010000800200000005000080070000
-  resolutionHeights: b400000068010000d002000038040000
 --- !u!1001 &515055296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4440,7 +4435,7 @@ MonoBehaviour:
           m_StringArgument: IntroStage
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1905535064}
+      - m_Target: {fileID: 1608897980}
         m_MethodName: Select
         m_Mode: 1
         m_Arguments:
@@ -7133,6 +7128,7 @@ GameObject:
   - component: {fileID: 1557176995}
   - component: {fileID: 1557176994}
   - component: {fileID: 1557176993}
+  - component: {fileID: 1557176996}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -7171,7 +7167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 392981567}
+  m_FirstSelected: {fileID: 1290057640}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1557176995
@@ -7188,6 +7184,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1557176996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557176992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89adc9a865a7b2458b05efef19760fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSystem: {fileID: 1557176994}
+  selectedObject: {fileID: 1290057640}
 --- !u!1 &1608003004
 GameObject:
   m_ObjectHideFlags: 0
@@ -7358,7 +7368,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 487425690}
+      - m_Target: {fileID: 487425691}
         m_MethodName: ReturnToLevelSelectMenu
         m_Mode: 1
         m_Arguments:
@@ -9002,7 +9012,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 487425691}
+      - m_Target: {fileID: 487425690}
         m_MethodName: Apply
         m_Mode: 1
         m_Arguments:
@@ -9510,7 +9520,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 487425691}
+      - m_Target: {fileID: 487425690}
         m_MethodName: ToggleHP
         m_Mode: 1
         m_Arguments:

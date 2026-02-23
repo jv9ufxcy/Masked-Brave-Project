@@ -1504,6 +1504,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 15
+      active: 1
+      script: 27
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 0
       length: 5
@@ -1573,6 +1580,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 15
+      active: 1
+      script: 27
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 0
       length: 5
@@ -1651,6 +1665,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 15
+      active: 1
+      script: 27
+      parameters:
+      - name: 
+        val: 0
     attacks:
     - start: 0
       length: 5
@@ -3648,6 +3669,13 @@ MonoBehaviour:
         val: 2
       - name: 
         val: 0.35
+    - start: 0
+      end: 119.99999
+      active: 1
+      script: 6
+      parameters:
+      - name: 
+        val: -1
     attacks:
     - start: 75
       length: 15
@@ -5473,6 +5501,8 @@ MonoBehaviour:
       active: 1
       script: 13
       parameters:
+      - name: 
+        val: 0
       - name: 
         val: 0
     - start: 40
@@ -7381,6 +7411,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 0
     - start: 40
       end: 50
       active: 1
@@ -7766,6 +7798,8 @@ MonoBehaviour:
       active: 1
       script: 13
       parameters:
+      - name: 
+        val: 0
       - name: 
         val: 0
     - start: 55
@@ -10691,6 +10725,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 2
     attacks:
     - start: 0
       length: 0
@@ -12193,7 +12229,7 @@ MonoBehaviour:
     windReq: 0
   - stateName: Enemy/RocketPunch
     index: 0
-    length: 120
+    length: 135
     loop: 0
     blendRate: 0.1
     events:
@@ -16570,6 +16606,8 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 0
     - start: 40
       end: 50
       active: 1
@@ -17075,7 +17113,7 @@ MonoBehaviour:
     windReq: 0
   - stateName: Enemy/DoubleRocketPunch
     index: 0
-    length: 60
+    length: 85
     loop: 0
     blendRate: 0.1
     events:
@@ -17177,7 +17215,7 @@ MonoBehaviour:
     windReq: 0
   - stateName: Enemy/AdvancingDoubleStrike
     index: 0
-    length: 60
+    length: 75
     loop: 0
     blendRate: 0.1
     events:
@@ -20696,9 +20734,9 @@ MonoBehaviour:
     name: XboxLB
   - inputType: 0
     name: XboxRB
-  - inputType: 0
+  - inputType: 1
     name: XboxLT
-  - inputType: 0
+  - inputType: 1
     name: XboxRT
   - inputType: 0
     name: XboxMenu
@@ -20766,7 +20804,7 @@ MonoBehaviour:
     commands: 00000000030000000000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20776,7 +20814,7 @@ MonoBehaviour:
     commands: 0000000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20786,7 +20824,7 @@ MonoBehaviour:
     commands: 0000000001000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20796,7 +20834,7 @@ MonoBehaviour:
     commands: 0000000002000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20806,7 +20844,7 @@ MonoBehaviour:
     commands: 000000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0
@@ -20816,7 +20854,7 @@ MonoBehaviour:
     commands: 00000000030000000200000003000000
     clean: 0
     anyOrder: 0
-    checkStep: 0
+    checkStep: 1
     angleChange: 0
     prevAngle: 0
     curAngle: 0

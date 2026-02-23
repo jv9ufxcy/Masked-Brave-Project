@@ -111,65 +111,65 @@ public class LevelSelectController : MonoBehaviour, IDataPersistence
         //throw new System.NotImplementedException();
     }
 
-    [Header("Video Settings")]
-    [SerializeField] private TextMeshProUGUI resDisplayText;
-    [SerializeField] private Toggle fullScreenToggle, vSyncToggle, hpToggle;
-    [SerializeField] private List<int> resolutionWidths;
-    [SerializeField] private List<int> resolutionHeights;
-    private int resolutionIndex = 3;
-    private int chosenWidth, chosenHeight;
-    private bool isFullScreen, visibleHealth, isVSync;
-    public void ApplyVideoOptions()
-    {
-        GlobalVars.LoadOptions();
+    //[Header("Video Settings")]
+    //[SerializeField] private TextMeshProUGUI resDisplayText;
+    //[SerializeField] private Toggle fullScreenToggle, vSyncToggle, hpToggle;
+    //[SerializeField] private List<int> resolutionWidths;
+    //[SerializeField] private List<int> resolutionHeights;
+    //private int resolutionIndex = 3;
+    //private int chosenWidth, chosenHeight;
+    //private bool isFullScreen, visibleHealth, isVSync;
+    //public void ApplyVideoOptions()
+    //{
+    //    GlobalVars.LoadOptions();
 
-        isFullScreen = (Screen.fullScreen);
-        fullScreenToggle.isOn = isFullScreen;
-        vSyncToggle.isOn = isVSync;
-        if (isVSync)
-            QualitySettings.vSyncCount = 1;
-        else
-            QualitySettings.vSyncCount = 0;
-        hpToggle.isOn = visibleHealth;
-        resolutionIndex = 3;
-        chosenWidth = resolutionWidths[resolutionIndex];
-        chosenHeight = resolutionHeights[resolutionIndex];
-    }
-    public void ToggleFullScreen()
-    {
-        isFullScreen = fullScreenToggle.isOn;
-        PlaySelectSound(0);
-    }
-    public void ToggleVSync()
-    {
-        isVSync = vSyncToggle.isOn;
-        PlaySelectSound(0);
-    }
-    public void ToggleHP()
-    {
-        visibleHealth = hpToggle.isOn;
-        PlaySelectSound(0);
-    }
-    private void DisplayChosenRes()
-    {
-        resDisplayText.text = chosenWidth + " x " + chosenHeight;
-    }
-    public void SetResolution(int index)
-    {
-        resolutionIndex = index;
-        chosenWidth = resolutionWidths[resolutionIndex];
-        chosenHeight = resolutionHeights[resolutionIndex];
+    //    isFullScreen = (Screen.fullScreen);
+    //    fullScreenToggle.isOn = isFullScreen;
+    //    //vSyncToggle.isOn = isVSync;
+    //    //if (isVSync)
+    //    //    QualitySettings.vSyncCount = 1;
+    //    //else
+    //    //    QualitySettings.vSyncCount = 0;
+    //    hpToggle.isOn = visibleHealth;
+    //    resolutionIndex = 3;
+    //    chosenWidth = resolutionWidths[resolutionIndex];
+    //    chosenHeight = resolutionHeights[resolutionIndex];
+    //}
+    //public void ToggleFullScreen()
+    //{
+    //    isFullScreen = fullScreenToggle.isOn;
+    //    PlaySelectSound(0);
+    //}
+    //public void ToggleVSync()
+    //{
+    //    isVSync = vSyncToggle.isOn;
+    //    PlaySelectSound(0);
+    //}
+    //public void ToggleHP()
+    //{
+    //    visibleHealth = hpToggle.isOn;
+    //    PlaySelectSound(0);
+    //}
+    //private void DisplayChosenRes()
+    //{
+    //    resDisplayText.text = chosenWidth + " x " + chosenHeight;
+    //}
+    //public void SetResolution(int index)
+    //{
+    //    resolutionIndex = index;
+    //    chosenWidth = resolutionWidths[resolutionIndex];
+    //    chosenHeight = resolutionHeights[resolutionIndex];
 
-        DisplayChosenRes();//show what was set with the text
-        PlaySelectSound(2);
-    }
-    public void Apply()
-    {
-        GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1, visibleHealth, isVSync);
-        Screen.SetResolution(chosenWidth, chosenHeight, isFullScreen);
-        PlaySelectSound(0);
-        ReturnToLevelSelectMenu();
-    }
+    //    DisplayChosenRes();//show what was set with the text
+    //    PlaySelectSound(2);
+    //}
+    //public void Apply()
+    //{
+    //    GlobalVars.SaveOptions(isFullScreen, chosenWidth, chosenHeight, 1, 1, visibleHealth, false);
+    //    Screen.SetResolution(chosenWidth, chosenHeight, isFullScreen);
+    //    PlaySelectSound(0);
+    //    ReturnToLevelSelectMenu();
+    //}
 
     
 }

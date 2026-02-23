@@ -193,16 +193,7 @@ public class HealthManager : MonoBehaviour
                 break;
             case UIType.AI:
                 SetMaxHealth();
-                if (enemyHPVis)
-                {
-                    UpdateHealth();
-                    ShowHealth();
-                    HideHealth();
-                }
-                else
-                {
-                    HideHealth();
-                }
+                UpdateHealthVis();
                 break;
             case UIType.BOSS:
                 SetMaxHealth();
@@ -211,6 +202,20 @@ public class HealthManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    private void UpdateHealthVis()
+    {
+        if (enemyHPVis)
+        {
+            UpdateHealth();
+            ShowHealth();
+            HideHealth();
+        }
+        else
+        {
+            HideHealth();
         }
     }
 
