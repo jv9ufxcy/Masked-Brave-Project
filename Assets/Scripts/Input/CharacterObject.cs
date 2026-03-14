@@ -141,7 +141,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 if (!DialogueManager.instance.isDialogueActive)
                     PauseMenu();
 
-                if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4 && GameEngine.gameEngine.unlockedSkillsList.Count > 2)//not human and has at least 2 more forms
+                if (CanUnCrouch() && GameEngine.gameEngine.globalMovelistIndex != 4 && GameEngine.gameEngine.localSkillsList.Count > 2)//not human and has at least 2 more forms
                     Henshin();
 
                 if (!PauseManager.IsGamePaused && !DialogueManager.instance.isDialogueActive)
@@ -589,7 +589,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     void Explode()
     {
-        GameObject bombGO = Instantiate(bullets[0], transform.position, transform.rotation);
+        GameObject bombGO = Instantiate(bullets[0], transform.position, Quaternion.identity);
         BombController bomb = bombGO.GetComponent<BombController>();
         if (bomb!=null)
         {

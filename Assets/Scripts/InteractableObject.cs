@@ -234,7 +234,7 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
     IEnumerator DeathEvent(bool spawnPickup)
     {
         deathCoroutineStarted = true;
-        Instantiate(deathEffect, transform.position, transform.rotation);
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
         if (spawnPickup)
         {
             for (int i = 0; i < numOfPickups; i++)
@@ -256,7 +256,7 @@ public class InteractableObject : MonoBehaviour, IHittable, ISpawnable
         int randNumX = UnityEngine.Random.Range(-20, 20);
         int randNumY = UnityEngine.Random.Range(15, 35);
         Vector2 offsetDir = new Vector2(randNumX, randNumY);
-        GameObject effect = Instantiate(pickup, transform.position, transform.rotation);
+        GameObject effect = Instantiate(pickup, transform.position, Quaternion.identity);
         effect.GetComponentInChildren<Rigidbody2D>().AddForce(offsetDir, ForceMode2D.Impulse);
     }
     public bool IsDead=false, IsSpawned=false;

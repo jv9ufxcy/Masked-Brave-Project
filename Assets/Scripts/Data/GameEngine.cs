@@ -18,7 +18,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
 
     public float deadZone = 0.2f;
 
-    public List<string> unlockedSkillsList;
+    public List<string> unlockedSkillsList, localSkillsList;
 
     public CharacterObject mainCharacter;
 
@@ -54,18 +54,27 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         {
             unlockedSkillsList.Add(moveName);
         }
+        if (!localSkillsList.Contains(moveName))
+        {
+            localSkillsList.Add(moveName);
+        }
     }
     public void SetSpecialMeter(int extraMeter)
     {
         if (mainCharacter!=null)
             mainCharacter.UpgradeMeter(extraMeter);
     }
-    // Use this for initialization
-    void Start ()
+    private void Awake()
     {
         Application.targetFrameRate = 60;
         coreData = coreDataObject;
         gameEngine = this;
+    }
+    // Use this for initialization
+    void Start ()
+    {
+        
+        
     }
     public static void SetHitPause(float _pow)
     {
@@ -84,7 +93,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
 	}
     public bool IsSkillUnlocked(string stateName)
     {
-        return unlockedSkillsList.Contains(stateName);
+        return localSkillsList.Contains(stateName);
     }
     //private int unlockedLevels = 0;
     public void UnlockLevel(int level)
@@ -129,6 +138,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         if (!dontLoadSkillsInMenu)
         {
             this.unlockedSkillsList = data.unlockedSkillsData;
+            localSkillsList = data.unlockedSkillsData;
             //this.unlockedLevels = data.levelUnlocked;
             foreach (string item in data.energyTanksCollected)
             {
@@ -143,6 +153,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         if (!dontLoadSkillsInMenu)
         {
             data.unlockedSkillsData = this.unlockedSkillsList;
+            localSkillsList = data.unlockedSkillsData;
             //data.levelUnlocked = this.unlockedLevels;
         }
     }

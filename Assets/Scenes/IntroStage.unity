@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3043,7 +3043,7 @@ GameObject:
   - component: {fileID: 305544479}
   - component: {fileID: 305544480}
   m_Layer: 0
-  m_Name: LoseCondition (5)
+  m_Name: LoseConditionLine (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3619,7 +3619,7 @@ PrefabInstance:
     - target: {fileID: 6476919978724093375, guid: 83a95f1077cc84541a77feabf629e69d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -22.05
+      value: -22
       objectReference: {fileID: 0}
     - target: {fileID: 6476919978724093375, guid: 83a95f1077cc84541a77feabf629e69d,
         type: 3}
@@ -4034,7 +4034,6 @@ GameObject:
   m_Component:
   - component: {fileID: 615570596}
   - component: {fileID: 615570595}
-  - component: {fileID: 615570597}
   m_Layer: 0
   m_Name: BossBattle (2)
   m_TagString: Untagged
@@ -4057,7 +4056,7 @@ MonoBehaviour:
   OnBattleStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 615570597}
+      - m_Target: {fileID: 946127640}
         m_MethodName: CheckDefeatEvent
         m_Mode: 1
         m_Arguments:
@@ -4171,19 +4170,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &615570597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 615570594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eb8ed6077fa04643a171bb686f88f5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lossDialogue: {fileID: 305544480}
 --- !u!4 &616907624 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2833465963085331514, guid: b398be5e33a630b4fa62dcf16b605269,
@@ -4201,7 +4187,7 @@ GameObject:
   - component: {fileID: 630503559}
   - component: {fileID: 630503560}
   m_Layer: 0
-  m_Name: ZoeLine (1)
+  m_Name: ZoeLine (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5463,6 +5449,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6476919979300229508}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &946127639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 946127641}
+  - component: {fileID: 946127640}
+  m_Layer: 0
+  m_Name: LoseConScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &946127640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946127639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb8ed6077fa04643a171bb686f88f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossBattle: {fileID: 615570595}
+  lossDialogue: {fileID: 305544480}
+--- !u!4 &946127641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946127639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &953056125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6864794735866032657, guid: 071a2851949abeb4f9dd628247606f54,
@@ -6527,11 +6558,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1273356925}
         m_MethodName: HumanForm
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6633,7 +6664,10 @@ MonoBehaviour:
       Data3: -829060182
       Data4: 125213129
     Path: event:/Music/Stage One
-  henshinState: 37
+  isSpecialCase: 0
+  armamentHenshin: 37
+  bombardierHenshin: 131
+  startingForm: 4
   currency: 0
   maxScoremultiplier: 99.9
   _scoreMultiplier: 1
@@ -8419,7 +8453,7 @@ PrefabInstance:
     - target: {fileID: 1674745594676707915, guid: 0dfc1bf25d867df48b4b229a5a26513f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.85
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 1674745594676707915, guid: 0dfc1bf25d867df48b4b229a5a26513f,
         type: 3}
@@ -8900,7 +8934,7 @@ GameObject:
   - component: {fileID: 1565494204}
   - component: {fileID: 1565494205}
   m_Layer: 0
-  m_Name: WinCondition (4)
+  m_Name: WinConditionLine (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10187,7 +10221,7 @@ PrefabInstance:
     - target: {fileID: 1674745594676707915, guid: ebfa165f84ca99d45b0fe3f468a66be7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -18
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 1674745594676707915, guid: ebfa165f84ca99d45b0fe3f468a66be7,
         type: 3}
@@ -12694,12 +12728,12 @@ PrefabInstance:
     - target: {fileID: 6476919978724093375, guid: 83a95f1077cc84541a77feabf629e69d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -79.55
+      value: -79.5
       objectReference: {fileID: 0}
     - target: {fileID: 6476919978724093375, guid: 83a95f1077cc84541a77feabf629e69d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.05
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 6476919978724093375, guid: 83a95f1077cc84541a77feabf629e69d,
         type: 3}

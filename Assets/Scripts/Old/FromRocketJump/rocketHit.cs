@@ -69,7 +69,7 @@ public class rocketHit : MonoBehaviour {
             myPC.RemoveForce();
             //pointEffector.enabled = true;
             //ConcussiveBlast(GetComponent<Rigidbody2D>(), power * 100, transform.position, radius);
-            Instantiate(Explosion, transform.position, transform.rotation);
+            Instantiate(Explosion, transform.position, Quaternion.identity);
             Debug.Log(Explosion);
             audioManager.PlaySound(explodesound);
             FindObjectOfType<AudioManager>().PlaySound("explodesound");
@@ -97,7 +97,7 @@ public class rocketHit : MonoBehaviour {
         {
             myPC.RemoveForce();
             //ConcussiveBlast(GetComponent<Rigidbody2D>(), power * 100, transform.position, radius);
-            Instantiate(Explosion, transform.position, transform.rotation);
+            Instantiate(Explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

@@ -218,7 +218,7 @@ public class ShiftMask
     public Sprite formIcon;
     public bool isUnlocked()
     {
-        return (GameEngine.gameEngine.unlockedSkillsList.Contains(skillListName));
+        return (GameEngine.gameEngine.localSkillsList.Contains(skillListName));
     }
     public void DefaultName()
     {

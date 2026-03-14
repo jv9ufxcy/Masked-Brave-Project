@@ -63,6 +63,10 @@ public class Mission : MonoBehaviour,IDataPersistence
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (GameEngine.gameEngine!=null)
+        {
+            mainChar = GameEngine.gameEngine.mainCharacter;
+        }
         if (isReload)
         {
             RestartMission();
@@ -125,14 +129,24 @@ public class Mission : MonoBehaviour,IDataPersistence
         if (!isReload)
             mainChar.controlType = CharacterObject.ControlType.OBJECT;
     }
-    [SerializeField] private int henshinState = 37;
+    [Header("Special Case")]
+    [SerializeField] private bool isSpecialCase = false;
+    [SerializeField] private int armamentHenshin = 37,bombardierHenshin = 131, startingForm = 4;
     private IEnumerator MissionStart()
     {
         missionStartText.rectTransform.DOAnchorPos(offScreen, 0);
         missionStartText.text = missionStart;
         mainChar.controlType = CharacterObject.ControlType.OBJECT;
         yield return new WaitForSeconds(missionStartSeconds / 2);
-        mainChar.StartStateFromScript(henshinState);
+
+        if (isSpecialCase)
+        {
+            SpecialCaseStartingForm(startingForm);
+            DestroyLoseCondition();
+        }
+        else
+            mainChar.StartStateFromScript(armamentHenshin);
+
 
         yield return new WaitForSeconds(missionStartSeconds / 2);
         missionStartText.DOColor(Color.white, missionStartSeconds / 4);
@@ -145,11 +159,61 @@ public class Mission : MonoBehaviour,IDataPersistence
         BeginTimer();
         MusicManager.instance.StartBGM(stageTheme);
     }
-
-    public void HumanForm()
+    public void DestroyLoseCondition()
     {
-        mainChar.QuickChangeForm(4);
-        mainChar.controlType = CharacterObject.ControlType.OBJECT;
+        if (LoseCondition.instance!=null)
+        {
+            SceneManager.MoveGameObjectToScene(instance.gameObject, SceneManager.GetActiveScene());
+        }
+    }
+    public void HumanForm(int formIndex)
+    {
+        mainChar.QuickChangeForm(formIndex);
+        //mainChar.controlType = CharacterObject.ControlType.OBJECT;
+    }
+    void SpecialCaseStartingForm (int formIndex)
+    {
+        switch (formIndex)
+        {
+            case 0:
+                if (GameEngine.gameEngine.localSkillsList.Contains("Zoe/BraveHenshin"))
+                {
+                    HumanForm(formIndex);
+                }
+                else
+                    mainChar.StartStateFromScript(bombardierHenshin);
+                break;
+            case 1:
+                if (GameEngine.gameEngine.localSkillsList.Contains("Zoe/BombHenshin"))
+                {
+                    HumanForm(formIndex);
+                }
+                else
+                    mainChar.StartStateFromScript(armamentHenshin);
+                break;
+            case 2:
+                if (GameEngine.gameEngine.localSkillsList.Contains("Zoe/BikeHenshin"))
+                {
+                    HumanForm(formIndex);
+                }
+                else
+                    mainChar.StartStateFromScript(armamentHenshin);
+                break;
+            case 3:
+                if (GameEngine.gameEngine.localSkillsList.Contains("Zoe/NinjaHenshin"))
+                {
+                    HumanForm(formIndex);
+                }
+                else
+                    mainChar.StartStateFromScript(armamentHenshin);
+                break;
+            case 4:
+                HumanForm(formIndex);
+                break;
+            default:
+                HumanForm(formIndex);
+                break;
+        }
     }
     public void StartMission()
     {
@@ -208,6 +272,8 @@ public class Mission : MonoBehaviour,IDataPersistence
         currency += val;
         if (currencyText != null)
             currencyText.text = "x " + currency.ToString();
+        if (val > 0) IncreaseScore(val);
+        RewardChainKillTimer(1);
     }
     public float maxScoremultiplier = 99.9f;
     public float _scoreMultiplier = 1, multiKillTimer, maxMKTime = 1f;
@@ -234,12 +300,20 @@ public class Mission : MonoBehaviour,IDataPersistence
     public void OnEnemyDamaged(int damage)
     {
         if (damage > 0) IncreaseScore(damage);
+        RewardChainKillTimer(1);
         if (ScoreActive == false)
         {
             strikeCounter = maxStrikeCounter;
             kudosHandler.UpdateStrike(strikeCounter);
         }
     }
+
+    private void RewardChainKillTimer(float timerIncrement)
+    {
+        chainKillTimer += timerIncrement;
+        chainKillTimer = Mathf.Clamp(chainKillTimer, 0, maxChainTime);
+    }
+
     public void OnEnemyKilled(float killMultiplier)
     {
         float killPoint = 100;
@@ -636,9 +710,10 @@ public class Mission : MonoBehaviour,IDataPersistence
         SceneManager.MoveGameObjectToScene(instance.gameObject, SceneManager.GetActiveScene());
         SceneManager.MoveGameObjectToScene(GameManager.instance.gameObject, SceneManager.GetActiveScene());
     }
-
+    private List<string> unlockedForms = new List<string>();
     public void LoadData(GameData data)
     {
+        unlockedForms = data.unlockedSkillsData;
         if (data.unlockedSkillsData.Contains(unlockedFormState))
         {
             formUnlockedHere = false;

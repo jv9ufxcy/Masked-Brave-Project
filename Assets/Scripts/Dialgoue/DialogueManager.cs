@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     public bool isDialogueActive=false;
 
     private Queue<Dialogue> sentences;
+    private string storedSentence;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -88,35 +89,41 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayNextSentence()
     {
-        if (sentences.Count==0)
+        
+        if (dialogueText.text != storedSentence)
         {
-            EndDialogue();
-            return;
-        }
-        //if (dialogueText.text!=sentences)
-        //{
-            //dialogueText.text = sentence;
-
-        //}
-        Dialogue dialogue = sentences.Dequeue();
-
-        nameText.text = dialogue.name;
-        profileImage.sprite = dialogue.profile;
-
-        if (dialogue.cutscene!=null)
-        {
-            cutsceneImage.sprite = dialogue.cutscene;
-            borderImage.DOFade(1, tweenSpeed);
-            cutsceneImage.DOFade(1, tweenSpeed);
+            StopAllCoroutines();
+            dialogueText.text = storedSentence;
         }
         else
         {
-            FadeCutscene();
-        }
+            if (sentences.Count == 0)
+            {
+                EndDialogue();
+                return;
+            }
+            Dialogue dialogue = sentences.Dequeue();
 
-        string sentence = dialogue.sentences;
-        StopAllCoroutines();
-        StartCoroutine(Type(sentence));
+            nameText.text = dialogue.name;
+            profileImage.sprite = dialogue.profile;
+
+            if (dialogue.cutscene != null)
+            {
+                cutsceneImage.sprite = dialogue.cutscene;
+                borderImage.DOFade(1, tweenSpeed);
+                cutsceneImage.DOFade(1, tweenSpeed);
+            }
+            else
+            {
+                FadeCutscene();
+            }
+
+            string sentence = dialogue.sentences;
+            StopAllCoroutines();
+
+            storedSentence = sentence;
+            StartCoroutine(Type(sentence));
+        }
     }
 
     private void FadeCutscene()
@@ -139,6 +146,7 @@ public class DialogueManager : MonoBehaviour
     }
     private void EndDialogue()
     {
+        storedSentence = string.Empty;
         FadeCutscene();
         isDialogueActive = false;
         dialogueParent.DOScaleY(0f, tweenSpeed);

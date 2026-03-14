@@ -122,7 +122,7 @@ public class Crate : MonoBehaviour, IHittable
 
     private void DestroyCrate()
     {
-        GameObject destroyedEffect = Instantiate(destroyEffect, transform.position, transform.rotation);
+        GameObject destroyedEffect = Instantiate(destroyEffect, transform.position, Quaternion.identity);
         if (isExplosion)
         {
             BombController bomb = destroyedEffect.GetComponent<BombController>();
@@ -157,7 +157,7 @@ public class Crate : MonoBehaviour, IHittable
             int randNumX = UnityEngine.Random.Range(-20, 20);
             int randNumY = UnityEngine.Random.Range(15, 35);
             Vector2 offsetDir = new Vector2(randNumX, randNumY);
-            GameObject effect = Instantiate(pickup, transform.position, transform.rotation);
+            GameObject effect = Instantiate(pickup, transform.position, Quaternion.identity);
             effect.GetComponentInChildren<Rigidbody2D>().AddForce(offsetDir, ForceMode2D.Impulse);
             effect.transform.SetParent(null);
         }

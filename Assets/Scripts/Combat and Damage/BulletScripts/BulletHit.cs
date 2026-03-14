@@ -267,14 +267,14 @@ public class BulletHit : MonoBehaviour
             {
                 if (isExplosion)
                 {
-                    GameObject hitEffect = Instantiate(explosionEffect, transform.position, transform.rotation);
+                    GameObject hitEffect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
                     BombController bomb = hitEffect.GetComponent<BombController>();
                     bomb.character = character;
                     bomb.StartState();
                 }
                 else
                 {
-                    GameObject dissipateEffect = Instantiate(bulletHitEffect, transform.position, transform.rotation);
+                    GameObject dissipateEffect = Instantiate(bulletHitEffect, transform.position, Quaternion.identity);
                 }   
             }
             if (character!=null)

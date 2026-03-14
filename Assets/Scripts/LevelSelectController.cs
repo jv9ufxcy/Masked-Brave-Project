@@ -20,15 +20,21 @@ public class LevelSelectController : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
+        UnlockLevelButtons();
+        audioManager = AudioManager.instance;
+        SetMenuInput();
+    }
+
+    private void UnlockLevelButtons()
+    {
         for (int i = 0; i < levelButtons.Length; i++)
         {
             if (i > savedLevelUnlockIndex)
                 levelButtons[i].interactable = false;
         }
-        Debug.Log("Unlocked "+ savedLevelUnlockIndex+" Levels");
-        audioManager = AudioManager.instance;
-        SetMenuInput();
+        Debug.Log("Unlocked " + savedLevelUnlockIndex + " Levels");
     }
+
     private void SetMenuInput()
     {
         inputModule.horizontalAxis = GameEngine.coreData.rawInputs[13].name;
@@ -103,7 +109,12 @@ public class LevelSelectController : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        savedLevelUnlockIndex = data.levelUnlocked;
+        if (data.missionScoreIndex[0]>0)
+        {
+            savedLevelUnlockIndex = data.missionScoreIndex.Length;
+        }
+        
+        //savedLevelUnlockIndex = data.levelUnlocked;
     }
 
     public void SaveData(GameData data)
