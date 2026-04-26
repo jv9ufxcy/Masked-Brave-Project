@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class DialogueConversation : Dialogue 
+[CreateAssetMenu(menuName = "Dialogue/ConversationObject")]
+public class DialogueConversation : ScriptableObject
 {
-    public Dialogue[] dialogue;
+    public List<Dialogue> line = new List<Dialogue>();
 }

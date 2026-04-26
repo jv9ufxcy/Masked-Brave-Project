@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3472802788005294836}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -164,7 +164,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3472802788005294836}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -298,7 +298,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3472802788005294836}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -478,6 +478,80 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3109638133253976363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4089491733753944573}
+  - component: {fileID: 19756830195375217}
+  - component: {fileID: 4830111286265887282}
+  m_Layer: 5
+  m_Name: Icon (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4089491733753944573
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3109638133253976363}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3472802788005294836}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 24, y: 24}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &19756830195375217
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3109638133253976363}
+  m_CullTransparentMesh: 0
+--- !u!114 &4830111286265887282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3109638133253976363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300014, guid: fa37346c08f6a0743a777c30c8027978, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3170660584604993480
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,8 +699,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 1602752967
-  m_SortingOrder: 0
+  m_SortingLayerID: -1411348221
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &6519773752590213077
 MonoBehaviour:
@@ -693,32 +767,32 @@ MonoBehaviour:
     skillListName: Zoe/NinjaHenshin
     formIndex: 3
     formNameText: {fileID: 6485553833527739819}
-    formIcon: {fileID: -3668614178636754847, guid: c507d03ae229e6f44a2202f3f48cbdce,
+    formIcon: {fileID: 8292690761361815972, guid: 7d6da6bb4fa89c7479817b966ef4c515,
       type: 3}
   - formName: BMB
     skillListName: Zoe/BombHenshin
     formIndex: 1
     formNameText: {fileID: 2167760570249272342}
-    formIcon: {fileID: 1003267074331328983, guid: d4263f85349f25f44909748074bb120e,
+    formIcon: {fileID: 3509436901197823337, guid: 7d6da6bb4fa89c7479817b966ef4c515,
       type: 3}
   - formName: ARM
     skillListName: Zoe/BraveHenshin
     formIndex: 0
     formNameText: {fileID: 7740507912129824551}
-    formIcon: {fileID: 1976531482833533092, guid: d4263f85349f25f44909748074bb120e,
+    formIcon: {fileID: 5179241884937455602, guid: 7d6da6bb4fa89c7479817b966ef4c515,
       type: 3}
   - formName: PRS
     skillListName: Zoe/BikeHenshin
     formIndex: 2
     formNameText: {fileID: 4835228981631959272}
-    formIcon: {fileID: -4869467185125073541, guid: d4263f85349f25f44909748074bb120e,
+    formIcon: {fileID: 6725730108198903462, guid: 7d6da6bb4fa89c7479817b966ef4c515,
       type: 3}
   unmasked:
     formName: ZOE
     skillListName: Henshin
     formIndex: 4
     formNameText: {fileID: 0}
-    formIcon: {fileID: -1996703693659354134, guid: f0120b5629f3f4449a7fe99b64f1ab92,
+    formIcon: {fileID: 6534730773636874483, guid: 7d6da6bb4fa89c7479817b966ef4c515,
       type: 3}
 --- !u!1 &3472802788005294839
 GameObject:
@@ -756,6 +830,7 @@ RectTransform:
   - {fileID: 7232759356950924289}
   - {fileID: 7232759356225767109}
   - {fileID: 7232759356753501821}
+  - {fileID: 4089491733753944573}
   - {fileID: 880227008080012056}
   - {fileID: 3552680784864341564}
   - {fileID: 1861548396517779371}
@@ -852,7 +927,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3472802788005294836}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1077,7 +1152,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3472802788005294836}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1872,7 +1947,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3472802788005294836}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1906,7 +1981,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1976531482833533092, guid: d4263f85349f25f44909748074bb120e,
+  m_Sprite: {fileID: 5179241884937455602, guid: 7d6da6bb4fa89c7479817b966ef4c515,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 1

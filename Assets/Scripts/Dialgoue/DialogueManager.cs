@@ -69,7 +69,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue(Dialogue[] dialogue, DialogueTrigger trigger)
+    public void StartDialogue(DialogueConversation dialogue, DialogueTrigger trigger)
     {
         GameEngine.gameEngine.mainCharacter.UpdateCharacter();
         if (!isDialogueActive)
@@ -80,7 +80,7 @@ public class DialogueManager : MonoBehaviour
         currentDialogue = trigger;
 
         sentences.Clear();
-        foreach (Dialogue sentence in dialogue)
+        foreach (Dialogue sentence in dialogue.line)
         {
             sentences.Enqueue(sentence);
         }
@@ -104,12 +104,12 @@ public class DialogueManager : MonoBehaviour
             }
             Dialogue dialogue = sentences.Dequeue();
 
-            nameText.text = dialogue.name;
-            profileImage.sprite = dialogue.profile;
+            nameText.text = dialogue.Name;
+            profileImage.sprite = dialogue.Profile;
 
-            if (dialogue.cutscene != null)
+            if (dialogue.Cutscene != null)
             {
-                cutsceneImage.sprite = dialogue.cutscene;
+                cutsceneImage.sprite = dialogue.Cutscene;
                 borderImage.DOFade(1, tweenSpeed);
                 cutsceneImage.DOFade(1, tweenSpeed);
             }
@@ -118,7 +118,7 @@ public class DialogueManager : MonoBehaviour
                 FadeCutscene();
             }
 
-            string sentence = dialogue.sentences;
+            string sentence = dialogue.Sentences;
             StopAllCoroutines();
 
             storedSentence = sentence;

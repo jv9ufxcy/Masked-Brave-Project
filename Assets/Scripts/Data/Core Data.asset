@@ -117,7 +117,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 13.125
     - start: 1
       end: 30
       active: 1
@@ -166,6 +166,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 30
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -1016,14 +1023,14 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: -24
+        val: -16.875
     - start: 10
       end: 25
       active: 1
       script: 1
       parameters:
       - name: 
-        val: 24
+        val: 16.875
     - start: 0
       end: 0
       active: 1
@@ -1322,7 +1329,7 @@ MonoBehaviour:
       script: 28
       parameters:
       - name: 
-        val: 1
+        val: 2.333333
     - start: 0
       end: 0
       active: 1
@@ -1711,7 +1718,7 @@ MonoBehaviour:
       script: 11
       parameters:
       - name: Speed
-        val: 16
+        val: 16.875
     - start: 0
       end: 0
       active: 1
@@ -1753,6 +1760,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 20
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks:
     - start: 0
       length: 0
@@ -2631,6 +2645,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 70
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks:
     - start: 5
       length: 20
@@ -2730,7 +2751,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 13.125
     - start: 0
       end: 30
       active: 1
@@ -2848,7 +2869,7 @@ MonoBehaviour:
       script: 11
       parameters:
       - name: 
-        val: 16
+        val: 16.875
     - start: 25
       end: 25
       active: 1
@@ -2878,7 +2899,7 @@ MonoBehaviour:
       script: 11
       parameters:
       - name: 
-        val: 16
+        val: 16.875
     - start: 50
       end: 50
       active: 1
@@ -2908,7 +2929,7 @@ MonoBehaviour:
       script: 11
       parameters:
       - name: 
-        val: 16
+        val: 16.875
     - start: 5
       end: 5
       active: 1
@@ -3421,6 +3442,13 @@ MonoBehaviour:
         val: 2
       - name: 
         val: 0.5
+    - start: 0
+      end: 30
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks:
     - start: 0
       length: 0
@@ -3700,7 +3728,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: Speed
-        val: 16
+        val: 13.125
     - start: 20
       end: 20
       active: 1
@@ -4132,7 +4160,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 12
+        val: 13.125
     - start: 0
       end: 10
       active: 1
@@ -4237,7 +4265,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 4
+        val: 5.625
     - start: 0
       end: 10
       active: 1
@@ -4335,7 +4363,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 8
+        val: 5.625
     - start: 0
       end: 80
       active: 1
@@ -9486,14 +9514,14 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 12
+        val: 13.125
     - start: 10
       end: 10
       active: 1
       script: 1
       parameters:
       - name: 
-        val: 4
+        val: 0
     attacks:
     - start: 5
       length: 10
@@ -11198,7 +11226,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 12
+        val: 13.125
     - start: 0
       end: 30
       active: 1
@@ -11782,7 +11810,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 13.125
     - start: 0
       end: 30
       active: 1
@@ -11806,6 +11834,13 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 1
+    - start: 0
+      end: 30
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks:
     - start: 0
       length: 20
@@ -12008,13 +12043,13 @@ MonoBehaviour:
     jumpReq: 0
     dashReq: 0
     meterReq: 5
-    dashCooldownReq: 0
+    dashCooldownReq: 15
     groundedReq: 0
     wallReq: 0
     uncrouchReq: 0
     activeTargetReq: 0
     lockedMoveCheck: 0
-    bulletLimit: 0
+    bulletLimit: 3
     windReq: 0
   - stateName: Pursuer/KickFlip
     index: 0
@@ -12149,7 +12184,7 @@ MonoBehaviour:
       script: 28
       parameters:
       - name: 
-        val: 2
+        val: 2.33333
     - start: 0
       end: 30
       active: 1
@@ -12227,26 +12262,26 @@ MonoBehaviour:
     windReq: 0
   - stateName: Pursuer/FastFall
     index: 0
-    length: 30
+    length: 20
     loop: 0
     blendRate: 0.1
     events:
-    - start: 10
-      end: 15
+    - start: 5
+      end: 10
       active: 1
       script: 0
       parameters:
       - name: 
         val: -30
-    - start: 11
-      end: 15
+    - start: 5
+      end: 10
       active: 1
       script: 20
       parameters:
       - name: 
         val: 1
-    - start: 16
-      end: 16
+    - start: 11
+      end: 11
       active: 1
       script: 18
       parameters:
@@ -12254,22 +12289,29 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 0.2
-    - start: 10
-      end: 10
+    - start: 0
+      end: 15
       active: 1
       script: 1
       parameters:
       - name: 
         val: 0
-    - start: 16
-      end: 30
+    - start: 10
+      end: 20
       active: 1
       script: 6
       parameters:
       - name: 
         val: 1
+    - start: 0
+      end: 20
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks:
-    - start: 10
+    - start: 5
       length: 10
       hitStun: 10
       hitStop: 4
@@ -13874,7 +13916,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 16.875
     - start: 30
       end: 30
       active: 1
@@ -13888,7 +13930,7 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: -24
+        val: -16.875
     attacks:
     - start: 0
       length: 5
@@ -14053,6 +14095,13 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 7
+    - start: 0
+      end: 30
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks: []
     jumpReq: 0
     dashReq: 1
@@ -14131,7 +14180,7 @@ MonoBehaviour:
       script: 0
       parameters:
       - name: 
-        val: 20
+        val: 13.125
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -15874,7 +15923,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 15
     - start: 1
       end: 30
       active: 1
@@ -15923,6 +15972,13 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 7
+    - start: 0
+      end: 30
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks:
     - start: 0
       length: 30
@@ -16411,7 +16467,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 13.625
     - start: 0
       end: 30
       active: 1
@@ -16433,6 +16489,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+    - start: 0
+      end: 30
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -17341,8 +17404,8 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 5
-      end: 5
+    - start: 15
+      end: 15
       active: 1
       script: 10
       parameters:
@@ -17356,8 +17419,8 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 0
-    - start: 25
-      end: 25
+    - start: 45
+      end: 45
       active: 1
       script: 10
       parameters:
@@ -18186,6 +18249,11 @@ MonoBehaviour:
     parameters:
     - name: Cancel State
       val: 0
+  - index: 0
+    name: Afterimage
+    parameters:
+    - name: Rate
+      val: 5
   moveLists:
   - name: Brave
     commandStates:
@@ -21130,5 +21198,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 1
+  currentMovelistIndex: 5
   currentControllerIndex: 0

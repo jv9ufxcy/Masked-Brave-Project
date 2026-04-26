@@ -649,10 +649,10 @@ MonoBehaviour:
   accelerationTimeGrounded: 0
   bikeAccelerationTimeAirborne: 0.5
   bikeAccelerationTimeGrounded: 0.25
-  bikeMoveSpeed: 12
+  bikeMoveSpeed: 15
   windAccelerationTimeAirborne: 0
   windAccelerationTimeGrounded: 0
-  windMoveSpeed: 16
+  windMoveSpeed: 13.625
   wallJumpClimb: {x: 12, y: 20}
   wallJumpOff: {x: 12, y: 20}
   wallLeap: {x: 12, y: 20}
@@ -662,8 +662,8 @@ MonoBehaviour:
   horizontalAxis: altPs4Horizontal
   verticalAxis: altPs4Vertical
   deadzone: 0.2
-  moveSpeed: 8
-  playerSpeed: 8
+  moveSpeed: 5.625
+  playerSpeed: 5.625
   airMod: 1
   jumpPow: 30
   currentCommandState: 0
@@ -737,8 +737,10 @@ MonoBehaviour:
   headColl: {fileID: 7483764649046599055}
   crouchFlag: 0
   fadeTime: 0.5
-  shortDashInterval: 0.05
-  dashLength: 0.45
+  shortDashInterval: 0.08333
+  afterImageTimer: 0
+  afterImageCount: 6
+  afterStep: 0
   afterImageParent: {fileID: 0}
   whatCountsAsGround:
     serializedVersion: 2
@@ -793,10 +795,10 @@ MonoBehaviour:
   curHitArmor: 0
   target: {fileID: 0}
   spawners: []
-  aggroDistance: 1.5
-  aggroHeight: 1.5
-  longAttackRange: 1
-  shortAttackRange: 0.5
+  aggroDistance: 0
+  aggroHeight: 0
+  longAttackRange: 0
+  shortAttackRange: 0
   attackCooldown: 180
   isAggroRange: 0
   isLongRange: 0
@@ -926,7 +928,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.025}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -937,7 +939,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.95}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &6973307751482091409
 MonoBehaviour:
@@ -975,7 +977,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.475}
+  m_Offset: {x: 0, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -986,7 +988,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.95}
+  m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
 --- !u!1001 &2079165394299010438
 PrefabInstance:

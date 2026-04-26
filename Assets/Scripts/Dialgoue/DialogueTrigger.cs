@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue[] dialogue;
+    public DialogueConversation dialogue;
     public UnityEvent OnDialogueStart, OnDialogueEnd;
     public bool shouldMoveCharacter = false;
     public Transform[] character, characterPos;

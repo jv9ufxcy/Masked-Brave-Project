@@ -41,7 +41,7 @@ public class UpgradeHealthPickup : MonoBehaviour,IDataPersistence
             player = collision.gameObject.GetComponent<CharacterObject>();
             if (collision.CompareTag("Player"))
             {
-                if (upgradeAmt >= 2)
+                if (upgradeAmt >= 1)
                 {
                     playerHP.HealthUpgrade(upgradeAmt);
                 }

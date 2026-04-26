@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4368,11 +4368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cee0c2e69020646b70674d39f90837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-  - profile: {fileID: 21300024, guid: 6c5d99bbbc4b2754385d3239806234a9, type: 3}
-    cutscene: {fileID: 0}
-    name: Prof Sparks
-    sentences: Boss Rush training. Survive for an early reward!
+  dialogue: {fileID: 0}
   OnDialogueStart:
     m_PersistentCalls:
       m_Calls:
@@ -9798,7 +9794,10 @@ MonoBehaviour:
       Data3: -829060182
       Data4: 125213129
     Path: event:/Music/Stage One
-  henshinState: 37
+  isSpecialCase: 0
+  armamentHenshin: 37
+  bombardierHenshin: 131
+  startingForm: 4
   currency: 0
   maxScoremultiplier: 99.9
   _scoreMultiplier: 1
@@ -11905,6 +11904,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4092e24f632fcfe46a51ac39052b012f, type: 3}
+--- !u!1001 &1709299556
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5333113112140333136, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_Name
+      value: RecordGIF
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333113112140333230, guid: 4531886f7f83cde40924c930d824efc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4531886f7f83cde40924c930d824efc2, type: 3}
 --- !u!1 &1711229440
 GameObject:
   m_ObjectHideFlags: 0
@@ -12728,16 +12796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cee0c2e69020646b70674d39f90837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-  - profile: {fileID: 1976531482833533092, guid: d4263f85349f25f44909748074bb120e,
-      type: 3}
-    cutscene: {fileID: 0}
-    name: Zoe
-    sentences: 'Boss Rush!
-
-      Begin!
-
-'
+  dialogue: {fileID: 0}
   OnDialogueStart:
     m_PersistentCalls:
       m_Calls:
@@ -14350,7 +14409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1998096551720584082}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -64.00004, y: -15.375, z: -10}
+  m_LocalPosition: {x: -83.00006, y: -15.375, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4498154245500729}

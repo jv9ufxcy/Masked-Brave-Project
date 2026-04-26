@@ -85,6 +85,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 break;
             case ControlType.PLAYER:
                 chargeLoop = FMODUnity.RuntimeManager.CreateInstance(chargeEvent);
+                AfterImageCreate();
                 break;
             case ControlType.BOSS:
                 break;
@@ -223,6 +224,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     void UpdateTimers()
     {
         if (dashCooldown > 0) { dashCooldown -= dashCooldownRate; }
+        if (afterImageTimer > 0) { afterImageTimer -= dashCooldownRate; }
         if (windGauge > 0) { windGauge -= windDecrementRate; }
 
         if (windGauge<=0&&movementStyle==MovementStyle.WIND)
@@ -536,6 +538,9 @@ public class CharacterObject : MonoBehaviour, IHittable
             case 35:
                 AirCancel(_params[0].val);
                 break;
+            case 36:
+                ShowAfterImage(_params[0].val);
+                break;
 
         }
     }
@@ -770,8 +775,8 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     IEnumerator DashWait()
     {
-        DOVirtual.Float(velocity.x, 0, dashLength, HorizontalDrag);
-        DOVirtual.Float(velocity.y, 0, dashLength, VerticalDrag);
+        DOVirtual.Float(velocity.x, 0, afterImageTimer, HorizontalDrag);
+        DOVirtual.Float(velocity.y, 0, afterImageTimer, VerticalDrag);
         //ShowAfterImage(bombTrailColor, bombTrailFadeColor, shortDashInterval);
         bombDashParticle.Play();
         yield return new WaitForSeconds(.6f);
@@ -895,10 +900,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                     break;
             }
 
-            //if (Mathf.Abs(airMod) == 2)
-            //{
-            //    //ShowAfterImage();
-            //}
+            if (Mathf.Abs(airMod) >= 2)
+            {
+                ShowAfterImage(Mathf.Round(shortDashInterval * 60));
+            }
 
         }
         else
@@ -1665,29 +1670,70 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
     }
     [SerializeField]
-    private float fadeTime = 0.5f, shortDashInterval = 0.05f, dashLength = 0.45f;
+    private float fadeTime = 0.5f, shortDashInterval = 0.25f, afterImageTimer = 0f;
+    [SerializeField] private int afterImageCount = 6, afterStep;
     [SerializeField]
     private Transform afterImageParent;
-    public void ShowAfterImage()
+    void AfterImageCreate()
     {
-        Sequence s = DOTween.Sequence();
+        GameObject aIParent = new GameObject("AfterImageParent");
+        afterImageParent = aIParent.transform;
 
-        for (int i = 0; i < afterImageParent.childCount; i++)
+        for (int i = 0; i < afterImageCount; i++)
         {
-            Transform currentGhost = afterImageParent.GetChild(i);
-            s.AppendCallback(() => currentGhost.position = draw.transform.position);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = Direction != 1);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().sprite = spriteRend.sprite);
-            s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(henshinColors[GameEngine.gameEngine.globalMovelistIndex], 0));
-            s.AppendCallback(() => FadeSprite(currentGhost, henshinColors[6]));
-            s.AppendInterval(shortDashInterval);
+            GameObject go = new GameObject("AfterImage");
+            go.transform.SetParent(afterImageParent);
+            go.AddComponent<SpriteRenderer>();
+
+            SpriteRenderer goSprite = go.GetComponent<SpriteRenderer>();
+            goSprite.material = spriteRend.material;
+            goSprite.material.SetColor ("_SpriteColor", Color.clear);
+            goSprite.material.SetFloat("_FlashAmt", 1f);
+            goSprite.sortingOrder = -10;
+            //Destroy(go.GetComponent<Animator>());
+        }
+        afterImageParent.transform.SetParent(null);
+    }
+    public void ShowAfterImage(float rate)
+    { 
+        if (afterImageTimer<=0)
+        {
+            if (afterStep < afterImageParent.childCount-1)
+            {
+                afterStep++;
+            }
+            else
+                afterStep = 0;
+            Transform currentGhost = afterImageParent.GetChild(afterStep);
+            currentGhost.DOKill();
+            currentGhost.position = draw.transform.position;
+
+            SpriteRenderer ghostSprite = currentGhost.GetComponent<SpriteRenderer>();
+            ghostSprite.DOKill();
+            ghostSprite.flipX = Direction != 1;
+            ghostSprite.sprite = spriteRend.sprite;
+
+            Color formColor = henshinColors[GameEngine.gameEngine.globalMovelistIndex];
+            Color fadeColor = formColor;
+            fadeColor.a = 0f;
+
+            ghostSprite.material.DOColor(fadeColor, "_SpriteColor", fadeTime).From(formColor);
+            ghostSprite.material.DOColor(fadeColor, "_OutlineColor", fadeTime).From(formColor);
+
+            //FadeSprite(ghostSprite, formColor);
+
+            afterImageTimer += rate;
         }
     }
-    public void FadeSprite(Transform current, Color fadeColor)
+    public void FadeSprite(SpriteRenderer current, Color fadeColor)
     {
-        current.GetComponent<SpriteRenderer>().material.DOKill();
-        current.GetComponent<SpriteRenderer>().material.DOColor(fadeColor, fadeTime);
+        current.material.DOKill();
+        fadeColor.a = 0f;
+
+        current.material.DOColor(fadeColor, "_SpriteColor", fadeTime / 2).SetDelay(fadeTime / 2);
+        current.material.DOColor(fadeColor, "_OutlineColor", fadeTime / 2).SetDelay(fadeTime / 2);
     }
+
     void ChargeUp(float _val)
     {
         shotPressure += _val;
@@ -1855,6 +1901,12 @@ public class CharacterObject : MonoBehaviour, IHittable
             {
                 aerialFlag = true;
                 hasLanded = false;
+
+                if (Mathf.Abs(airMod) >= 2)
+                {
+                    ShowAfterImage(Mathf.Round(shortDashInterval * 60));
+                }
+
                 if (animAerialState <= 1f)
                 {
                     animAerialState += 0.1f;
@@ -2491,7 +2543,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void OnEnemySpawn()
     {
         controlType = ControlType.AI;
-        dashCooldown += 60;
+        dashCooldown += 60f;
         StartStateFromScript(0);
     }
     public void OnObjectSpawn()
@@ -2512,6 +2564,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     public void OnBossSpawn()
     {
         controlType = ControlType.BOSS;
+        dashCooldown += 60f;
         StartStateFromScript(0);
     }
     void FindTarget()

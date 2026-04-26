@@ -77,7 +77,7 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
     {
         List<HealthSystem.Heart> heartList = healthSystem.GetHeartList();
         Vector2 heartAnchorPos = new Vector2(lastHeartPos, 0);
-        int newHeart = 2;
+        int newHeart = 1;
         for (int i = 0; i < newHeart; i++)
         {
             HealthSystem.Heart heart = heartList[i];
@@ -133,8 +133,8 @@ public class HealthVisualManager : MonoBehaviour, IDataPersistence
         {
             healthBoost++;
             healthBoost++;
-            healthBoost++;
-            healthBoost++;
+            //healthBoost++;
+            //healthBoost++;
         }
     }
 
