@@ -91,7 +91,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (battleState == State.Idle)
         {
-            GameEngine.gameEngine.mainCharacter.StartStateFromScript(217);//120 frames ambushed state
+            GameEngine.gameEngine.mainCharacter.StartStateFromScript(217);//120 frames ambushed state just like the timer in the battle system is set to 2 seconds
             StartBattleUI();
             audioManager.PlaySound(battleStartAudio);
 

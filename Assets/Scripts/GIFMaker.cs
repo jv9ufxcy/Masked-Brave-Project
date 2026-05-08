@@ -40,11 +40,11 @@ public class GIFMaker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[9].name) && recorderRunning)
+        if ((Input.GetButtonDown(GameEngine.coreData.rawInputs[9].name)||Input.GetKeyDown(KeyCode.G)) && recorderRunning)
         {
             SavePNGs();
         }
-        if (Input.GetButtonDown(GameEngine.coreData.rawInputs[10].name))
+        if ((Input.GetButtonDown(GameEngine.coreData.rawInputs[10].name)) || Input.GetKeyDown(KeyCode.R))
         {
             recorderRunning = !recorderRunning;
             currentTime = 0;

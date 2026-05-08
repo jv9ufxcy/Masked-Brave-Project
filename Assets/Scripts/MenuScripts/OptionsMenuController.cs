@@ -10,7 +10,11 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
     public EventSystem eventSystem;
     private AudioManager audioManager;
     private string uiSelectSound = "UI/Select", uiCancelSound = "UI/Cancel", uiCursorSound = "UI/Move Cursor";
-    
+    private void OnEnable()
+    {
+        ApplyVideoOptions();
+        SetAudioLevels();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -137,6 +141,7 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
         ApplyVideoOptions();
         this.volumeMaster = data.masterVolume;
         SetAudioLevels();
+        Debug.Log("Options loaded");
     }
 
     public void SaveData(GameData data)
