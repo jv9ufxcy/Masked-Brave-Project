@@ -3030,11 +3030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cee0c2e69020646b70674d39f90837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-  - profile: {fileID: 21300024, guid: 6c5d99bbbc4b2754385d3239806234a9, type: 3}
-    cutscene: {fileID: 0}
-    name: Prof Sparks
-    sentences: Boss Rush training. Survive for an early reward!
+  dialogue: {fileID: 0}
   OnDialogueStart:
     m_PersistentCalls:
       m_Calls:
@@ -9297,18 +9293,18 @@ MonoBehaviour:
       - <sprite=4>
       - <sprite=6>
       - Z
-  - comboTitle: Charged Buster
+  - comboTitle: LVL 1 Charged Buster
     comboInputsMoveList:
     - stateIndex: 21
-      name: (Hold) Charged Buster
+      name: (Hold) LVL 1 Charged Buster
       consoleInputs:
       - <sprite=5>
       - <sprite=7>
       - '[Z]'
-  - comboTitle: Critical Buster
+  - comboTitle: LVL 2 Charged Buster
     comboInputsMoveList:
     - stateIndex: 22
-      name: (HOLD) Critical Buster
+      name: (HOLD) LVL 2 Charged Buster Buster
       consoleInputs:
       - <sprite=5>
       - <sprite=7>
@@ -9348,7 +9344,7 @@ MonoBehaviour:
   - comboTitle: Bullet Kick
     comboInputsMoveList:
     - stateIndex: 21
-      name: '[Hold]Charged Buster'
+      name: '[Hold] LVL 1 Charged Buster'
       consoleInputs:
       - <sprite=5>
       - <sprite=7>

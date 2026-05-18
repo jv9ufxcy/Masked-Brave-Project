@@ -24555,7 +24555,9 @@ MonoBehaviour:
   crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
-  dashLength: 0.45
+  afterImageTimer: 0
+  afterImageCount: 6
+  afterStep: 0
   afterImageParent: {fileID: 0}
   whatCountsAsGround:
     serializedVersion: 2
@@ -24625,7 +24627,7 @@ MonoBehaviour:
   enemyType: 3
   desperationTransitionState: 218
   floatHeight: 4
-  floatTime: 0.2
+  floatTime: 1
   canDefend: 0
   canWakeupEvade: 0
   shouldFacePlayer: 1

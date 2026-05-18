@@ -3128,7 +3128,7 @@ MonoBehaviour:
     attacks:
     - start: 0
       length: 0
-      hitStun: 15
+      hitStun: 30
       hitStop: 5
       damage: 2
       meterGain: 5
@@ -3319,7 +3319,7 @@ MonoBehaviour:
     attacks:
     - start: 1
       length: 5
-      hitStun: 10
+      hitStun: 20
       hitStop: 4
       damage: 2
       meterGain: 0
@@ -3334,7 +3334,7 @@ MonoBehaviour:
       killMultiplier: 1
     - start: 10
       length: 5
-      hitStun: 10
+      hitStun: 20
       hitStop: 5
       damage: 2
       meterGain: 0
@@ -3349,7 +3349,7 @@ MonoBehaviour:
       killMultiplier: 1
     - start: 20
       length: 5
-      hitStun: 10
+      hitStun: 20
       hitStop: 5
       damage: 2
       meterGain: 0
@@ -3364,7 +3364,7 @@ MonoBehaviour:
       killMultiplier: 1
     - start: 30
       length: 5
-      hitStun: 10
+      hitStun: 20
       hitStop: 5
       damage: 2
       meterGain: 0
@@ -3714,7 +3714,7 @@ MonoBehaviour:
     attacks: []
     jumpReq: 0
     dashReq: 0
-    meterReq: 50
+    meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -11529,7 +11529,7 @@ MonoBehaviour:
     attacks: []
     jumpReq: 0
     dashReq: 0
-    meterReq: 50
+    meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -12346,12 +12346,12 @@ MonoBehaviour:
     windReq: 0
   - stateName: Enemy/RocketPunch
     index: 0
-    length: 135
+    length: 150
     loop: 0
     blendRate: 0.1
     events:
-    - start: 20
-      end: 20
+    - start: 30
+      end: 30
       active: 1
       script: 10
       parameters:
@@ -16638,7 +16638,7 @@ MonoBehaviour:
     attacks: []
     jumpReq: 0
     dashReq: 0
-    meterReq: 50
+    meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -16734,7 +16734,7 @@ MonoBehaviour:
     attacks: []
     jumpReq: 0
     dashReq: 0
-    meterReq: 50
+    meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -21205,5 +21205,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 5
+  currentMovelistIndex: 4
   currentControllerIndex: 0
