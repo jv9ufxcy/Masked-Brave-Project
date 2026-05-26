@@ -276,7 +276,7 @@ MonoBehaviour:
     attacks:
     - start: 5
       length: 10
-      hitStun: 15
+      hitStun: 20
       hitStop: 5
       damage: 2
       meterGain: 4
@@ -330,7 +330,7 @@ MonoBehaviour:
     attacks:
     - start: 10
       length: 10
-      hitStun: 15
+      hitStun: 25
       hitStop: 4
       damage: 4
       meterGain: 8
@@ -1006,7 +1006,7 @@ MonoBehaviour:
     windReq: 0
   - stateName: Brave/BraveKick
     index: 0
-    length: 25
+    length: 35
     loop: 0
     blendRate: 0.05
     events:
@@ -1018,14 +1018,14 @@ MonoBehaviour:
       - name: 
         val: 2
     - start: 10
-      end: 25
+      end: 35
       active: 1
       script: 0
       parameters:
       - name: 
         val: -16.875
     - start: 10
-      end: 25
+      end: 35
       active: 1
       script: 1
       parameters:
@@ -5974,7 +5974,7 @@ MonoBehaviour:
       - name: SlimePsi
         val: 0
     attacks:
-    - start: 35
+    - start: 40
       length: 10
       hitStun: 20
       hitStop: 10

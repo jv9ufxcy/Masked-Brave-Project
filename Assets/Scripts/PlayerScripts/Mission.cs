@@ -142,7 +142,6 @@ public class Mission : MonoBehaviour,IDataPersistence
         if (isSpecialCase)
         {
             SpecialCaseStartingForm(startingForm);
-            DestroyLoseCondition();
         }
         else
             mainChar.StartStateFromScript(armamentHenshin);
@@ -159,7 +158,7 @@ public class Mission : MonoBehaviour,IDataPersistence
         BeginTimer();
         MusicManager.instance.StartBGM(stageTheme);
     }
-    public void DestroyLoseCondition()
+    public void MoveObjectToScene()
     {
         if (LoseCondition.instance!=null)
         {
@@ -170,6 +169,10 @@ public class Mission : MonoBehaviour,IDataPersistence
     {
         mainChar.QuickChangeForm(formIndex);
         //mainChar.controlType = CharacterObject.ControlType.OBJECT;
+    }
+    public void SetSpecialCase(bool specialCase)
+    {
+        isSpecialCase=specialCase;
     }
     void SpecialCaseStartingForm (int formIndex)
     {
@@ -227,6 +230,10 @@ public class Mission : MonoBehaviour,IDataPersistence
         EndTimer();
         MusicManager.instance.StopReverbZone();
         GameEngine.gameEngine.mainCharacter.controlType = CharacterObject.ControlType.DEAD;
+        if (isSpecialCase)
+        {
+            MoveObjectToScene();
+        }
     }
     public void BeginTimer()
     {
@@ -308,7 +315,7 @@ public class Mission : MonoBehaviour,IDataPersistence
         }
     }
 
-    private void RewardChainKillTimer(float timerIncrement)
+    public void RewardChainKillTimer(float timerIncrement)
     {
         chainKillTimer += timerIncrement;
         chainKillTimer = Mathf.Clamp(chainKillTimer, 0, maxChainTime);
@@ -365,6 +372,11 @@ public class Mission : MonoBehaviour,IDataPersistence
             chainKillTimer -= Time.deltaTime;
             kudosHandler.UpdateTimer(chainKillTimer / maxChainTime);
         }
+        else
+        {
+            chainKillTimer = 0;
+            chainCount = 0;
+        }
         if (multiKill > 0)
         {
             if (multiKillTimer > 0)
@@ -373,9 +385,9 @@ public class Mission : MonoBehaviour,IDataPersistence
             }
             else
             {
-                if (multiKill>=2)
+                if (multiKill >= 2)
                 {
-                    int finisherBonus=50;
+                    int finisherBonus = 50;
                     finisherBonus *= multiKill;
                     PopUpTextQueue("Z-Finish\n<color=#FCE945>+" + finisherBonus);
                     IncreaseScore(finisherBonus);

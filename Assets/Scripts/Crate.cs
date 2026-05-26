@@ -18,6 +18,9 @@ public class Crate : MonoBehaviour, IHittable
     bool isFalling;
     public bool IsSpawned;
     Vector3 spawnPos;
+    [Header("Lifetime")]
+    [SerializeField] private bool canDie = false;
+    [SerializeField] private float lifetime = 1, maxLifeTime=1;
     public GameObject GetGameObject()
     {
         return gameObject;
@@ -74,6 +77,7 @@ public class Crate : MonoBehaviour, IHittable
         transform.position = spawnPos;
         IsSpawned = true;
         isFalling = false;
+        lifetime = maxLifeTime;
     }
 
     [SerializeField] private LayerMask playerLayer,groundLayer;
@@ -104,6 +108,15 @@ public class Crate : MonoBehaviour, IHittable
             {
                 DestroyCrate();
             }
+        }
+        if (canDie)
+        {
+            if (lifetime <= 0)
+            {
+                DestroyCrate();
+            }
+            else
+                lifetime-=Time.deltaTime;
         }
     }
     [SerializeField] private bool isExplosion = false;

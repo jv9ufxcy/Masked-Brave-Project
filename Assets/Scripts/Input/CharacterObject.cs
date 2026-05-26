@@ -69,7 +69,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         defaultMat = spriteRend.material;
         hasLanded = true;
         RendererCheck();
-
+        //UnCrouch();
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
@@ -330,6 +330,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         prevStateTime = -1;
         StartState(currentState);
         ArmorOff();
+        RendererCheck();
     }
     void UpdateStateEvents()
     {
@@ -2275,6 +2276,7 @@ public class CharacterObject : MonoBehaviour, IHittable
             }
         }
         curHitAnim += (targetHitAnim - curHitAnim) * .1f;//blends for 3D games
+        RendererCheck();
     }
     public int curHitArmor = 0;
     private bool armorBroken = false;

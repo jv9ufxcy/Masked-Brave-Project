@@ -36,7 +36,8 @@ public class VCAController : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         vcaController.setVolume(volume/10);
         vcaController.getVolume(out vcaVolume);
-        audioManager.PlaySound(uiCursorSound);
+        if(audioManager != null)
+            audioManager.PlaySound(uiCursorSound);
     }
     public void OnDeselect(BaseEventData eventData)
     {
@@ -44,7 +45,8 @@ public class VCAController : MonoBehaviour, ISelectHandler, IDeselectHandler
     }
     public void OnSelect(BaseEventData eventData)
     {
-        audioManager.PlaySound(uiCursorSound);
+        if (audioManager != null)
+            audioManager.PlaySound(uiCursorSound);
         sliderDesc.color = Color.yellow;
     }
 }

@@ -141,7 +141,7 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
         ApplyVideoOptions();
         this.volumeMaster = data.masterVolume;
         SetAudioLevels();
-        Debug.Log("Options loaded");
+        //Debug.Log("Options loaded");
     }
 
     public void SaveData(GameData data)

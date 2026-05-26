@@ -23,6 +23,7 @@ public class RadialMenuController : MonoBehaviour
     {
         highlightedColor = segmentedBlock.color;
         player.OnFormChanged += UpdateForms;
+        MaskUnlockDefault();
     }
 
     // Update is called once per frame
@@ -30,7 +31,21 @@ public class RadialMenuController : MonoBehaviour
     {
         UpdateMenu();
     }
-
+    void MaskUnlockDefault()
+    {
+        for (int i = 0; i < masks.Count; i++)
+        {
+            if (masks[i].isUnlocked())
+            {
+                if (masks[i] == GetActiveMask())//if the same, switch face to Civ Zoe
+                    formIconImage.sprite = unmasked.formIcon;
+                else
+                    formIconImage.sprite = masks[i].formIcon;
+            }
+            else
+                formIconImage.sprite = unmasked.formIcon;
+        }
+    }
     private void UpdateMenu()
     {
         if (theMenu.activeInHierarchy)
@@ -40,6 +55,7 @@ public class RadialMenuController : MonoBehaviour
 
             if (moveInput != Vector2.zero)
             {
+                neutralTimer = neutralTimerMax;
                 segmentedBlock.color = highlightedColor;
                 float angle = Mathf.Atan2(moveInput.y, -moveInput.x) / Mathf.PI;
                 float section = 360/masks.Count;//360/5 = 72
@@ -75,17 +91,22 @@ public class RadialMenuController : MonoBehaviour
             }
             else
             {
-                selectedOption = masks.IndexOf(GetActiveMask());
-                segmentedBlock.color = Color.clear;
-                formIconImage.sprite = GetActiveMask().formIcon;
-                foreach (ShiftMask mask in masks)
+                if (neutralTimer>0)
+                { neutralTimer-=Time.deltaTime; }
+                if (neutralTimer<=0)
                 {
-                    mask.formNameText.color = normalColor;
+                    selectedOption = masks.IndexOf(GetActiveMask());
+                    segmentedBlock.color = Color.clear;
+                    formIconImage.sprite = GetActiveMask().formIcon;
+                    foreach (ShiftMask mask in masks)
+                    {
+                        mask.formNameText.color = normalColor;
+                    }
                 }
             }
         }
     }
-
+    [SerializeField]private float neutralTimer, neutralTimerMax = 0.1f;
     public void ActivateMenu()
     {
         theMenu.SetActive(true);

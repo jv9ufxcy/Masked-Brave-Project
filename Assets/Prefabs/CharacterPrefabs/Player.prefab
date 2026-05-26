@@ -566,8 +566,8 @@ GameObject:
   - component: {fileID: 83875697}
   - component: {fileID: 7998329228308978832}
   - component: {fileID: 5477669995049630363}
-  - component: {fileID: 6973307751482091409}
   - component: {fileID: 7483764649046599055}
+  - component: {fileID: 6973307751482091409}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -941,29 +941,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6973307751482091409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2833465963085331510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66914df5cc564214c97d02b104fb968a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 557312
-  horizontalRayCount: 4
-  verticalRayCount: 4
-  horizontalRaySpacing: 0
-  verticalRaySpacing: 0
-  collider: {fileID: 0}
-  defaultColl: {fileID: 0}
-  maxSlopeAngle: 80
-  playerInput: {x: 0, y: 0}
 --- !u!61 &7483764649046599055
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -990,6 +967,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &6973307751482091409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833465963085331510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66914df5cc564214c97d02b104fb968a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 557312
+  horizontalRayCount: 4
+  verticalRayCount: 4
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
+  collider: {fileID: 0}
+  defaultColl: {fileID: 0}
+  maxSlopeAngle: 80
+  playerInput: {x: 0, y: 0}
 --- !u!1001 &2079165394299010438
 PrefabInstance:
   m_ObjectHideFlags: 0

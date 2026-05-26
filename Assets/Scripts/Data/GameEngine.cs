@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
+using System.Linq;
 
 
 public class GameEngine : MonoBehaviour,IDataPersistence
@@ -138,7 +139,7 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         if (!dontLoadSkillsInMenu)
         {
             this.unlockedSkillsList = data.unlockedSkillsData;
-            localSkillsList = data.unlockedSkillsData;
+            localSkillsList = unlockedSkillsList.ToList();
             //this.unlockedLevels = data.levelUnlocked;
             foreach (string item in data.energyTanksCollected)
             {
@@ -153,7 +154,6 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         if (!dontLoadSkillsInMenu)
         {
             data.unlockedSkillsData = this.unlockedSkillsList;
-            localSkillsList = data.unlockedSkillsData;
             //data.levelUnlocked = this.unlockedLevels;
         }
     }
