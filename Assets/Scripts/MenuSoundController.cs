@@ -18,6 +18,8 @@ public class MenuSoundController : MonoBehaviour, ISelectHandler, IDeselectHandl
     private void OnEnable()
     {
         audioManager = AudioManager.instance;
+        if (uiText != null)
+            uiText.color = Color.white;
     }
     public void OnDeselect(BaseEventData eventData)
     {
@@ -30,5 +32,10 @@ public class MenuSoundController : MonoBehaviour, ISelectHandler, IDeselectHandl
 
         if (uiText!=null)
             uiText.color = Color.yellow;
+    }
+    public void OnDisable ()
+    {
+        if (uiText!=null)
+            uiText.color = Color.white;
     }
 }

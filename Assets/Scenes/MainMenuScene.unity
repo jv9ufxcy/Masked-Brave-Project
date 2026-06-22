@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5643,6 +5643,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4315861150314622595, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
+      propertyPath: optionsController
+      value: 
+      objectReference: {fileID: 487425690}
     - target: {fileID: 4315861150402806949, guid: c854442a6a347c34e915ff6d9199ab43,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5920,6 +5925,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4315861152112923885, guid: c854442a6a347c34e915ff6d9199ab43,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4315861152112923885, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4315861152112923885, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 487425690}
@@ -5928,6 +5943,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1977305336}
+    - target: {fileID: 4315861152112923885, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 487425690}
+    - target: {fileID: 4315861152112923885, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4315861152112923885, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ApplyVideoOptions
+      objectReference: {fileID: 0}
+    - target: {fileID: 4315861152112923885, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4315861152137419564, guid: c854442a6a347c34e915ff6d9199ab43,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5948,6 +5983,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6502654616491902441, guid: c854442a6a347c34e915ff6d9199ab43,
+        type: 3}
+      propertyPath: optionsMenu
+      value: 
+      objectReference: {fileID: 487425690}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c854442a6a347c34e915ff6d9199ab43, type: 3}
 --- !u!114 &4315861150207933622 stripped

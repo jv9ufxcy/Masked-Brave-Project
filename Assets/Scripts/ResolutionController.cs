@@ -8,26 +8,42 @@ using UnityEngine.EventSystems;
 public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     private Slider resSlider;
-    private OptionsMenuController optionsController;
+    [SerializeField] private OptionsMenuController optionsController;
     [SerializeField] private TextMeshProUGUI sliderDesc;
     public int resolutionIndex;
     private AudioManager audioManager;
+    private void OnEnable()
+    {
+        resSlider = GetComponent<Slider>();
+        optionsController = GetComponentInParent<OptionsMenuController>();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        resSlider = GetComponent<Slider>();
         optionsController = GetComponentInParent<OptionsMenuController>();
         sliderDesc = GetComponentInChildren<TextMeshProUGUI>();
         audioManager = AudioManager.instance;
     }
     public void DefaultSliderPos(int index)
     {
-        resSlider.value = index;
+        if (resSlider != null)
+        {
+            resSlider.value = index;
+            SetResolutionSlider(index);
+            Debug.Log("Set Slider position to default: " + resSlider.value);
+        }
+        else
+        {
+            resSlider = GetComponent<Slider>();
+            resSlider.value = index;
+            SetResolutionSlider(index);
+        }
     }
     public void SetResolutionSlider(float index)//unity event
     {
         resolutionIndex = (int)index;
-        optionsController.SetResolution(resolutionIndex);
+        if (optionsController != null)
+            optionsController.SetResolution(resolutionIndex);
     }
     public void OnDeselect(BaseEventData eventData)
     {
@@ -37,5 +53,9 @@ public class ResolutionController : MonoBehaviour, ISelectHandler, IDeselectHand
     {
         sliderDesc.color = Color.yellow;
         //audioManager.PlaySound("UI/Move Cursor");
+    }
+    private void OnDisable()
+    {
+        sliderDesc.color = Color.white;
     }
 }

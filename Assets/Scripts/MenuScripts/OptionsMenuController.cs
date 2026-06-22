@@ -61,22 +61,25 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
     private int resolutionIndex=3;
     private int chosenWidth, chosenHeight;
     private bool isFullScreen,visibleHealth,isVSync;
-    public void ApplyVideoOptions()
+    public void ApplyVideoOptions()//defaults
     {
         //GlobalVars.LoadOptions();
 
         isFullScreen = (Screen.fullScreen);
         fullScreenToggle.isOn = isFullScreen;
-        //resolutionCon.DefaultSliderPos(resolutionIndex);
         //vSyncToggle.isOn = isVSync;
         //if (isVSync)
         //    QualitySettings.vSyncCount = 1;
         //else
         //    QualitySettings.vSyncCount = 0;
         hpToggle.isOn = visibleHealth;
-        resolutionIndex = 3;
+        if (resolutionIndex<0)
+        {
+            resolutionIndex = 3;
+        }
         chosenWidth = resolutionWidths[resolutionIndex];
         chosenHeight = resolutionHeights[resolutionIndex];
+        resolutionCon.DefaultSliderPos(resolutionIndex);
     }
     public void ToggleFullScreen()
     {
@@ -106,7 +109,7 @@ public class OptionsMenuController : MonoBehaviour,IDataPersistence
         resolutionIndex = index;
         chosenWidth = resolutionWidths[resolutionIndex];
         chosenHeight = resolutionHeights[resolutionIndex];
-
+        Debug.Log(chosenWidth + " " + chosenHeight);
         DisplayChosenRes();//show what was set with the text
         PlaySelectSound(2);
     }

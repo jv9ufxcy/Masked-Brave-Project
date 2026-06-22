@@ -80,7 +80,7 @@ public class ComboTrialManager : MonoBehaviour
             //if (trialComplete)
             //{
                 trialActive = false;
-                OnFinishInput?.Invoke();
+                //OnFinishInput?.Invoke();
             //}
         }
     }

@@ -57,7 +57,7 @@ public class CharacterState
         }
         if (uncrouchReq)
         {
-            if (!character.CanUnCrouch()) { return false; }
+            if (!character.CanUnCrouch()) { character.FrontVelocity(-5.625f); return false;  }
         }
         if (bulletLimit>0)
         {

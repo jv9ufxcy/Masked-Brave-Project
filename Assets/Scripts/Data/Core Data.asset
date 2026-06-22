@@ -4932,7 +4932,7 @@ MonoBehaviour:
     windReq: 0
   - stateName: Cyclone/WGRush
     index: 0
-    length: 30
+    length: 20
     loop: 0
     blendRate: 0.1
     events:
@@ -4942,7 +4942,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 16
+        val: 13.125
     - start: 0
       end: 24.742268
       active: 1
@@ -4950,6 +4950,13 @@ MonoBehaviour:
       parameters:
       - name: 
         val: 0
+      - name: 
+        val: 1
+    - start: 0
+      end: 4.5360827
+      active: 1
+      script: 9
+      parameters:
       - name: 
         val: 1
     attacks:
@@ -4965,7 +4972,7 @@ MonoBehaviour:
       hitAnim: {x: 51, y: 0}
       knockback: {x: 0, y: 0, z: 0}
       hitBoxPos: {x: 1, y: 0.5, z: 0}
-      hitBoxScale: {x: 2, y: 1, z: 0}
+      hitBoxScale: {x: 2, y: 2, z: 0}
       cancelWindow: 30
       killMultiplier: 1
     jumpReq: 0
@@ -5155,35 +5162,33 @@ MonoBehaviour:
     windReq: 0
   - stateName: Cyclone/WGIzuna
     index: 0
-    length: 70
+    length: 55
     loop: 0
     blendRate: 0.1
     events:
-    - start: 5
-      end: 15
+    - start: 0
+      end: 0
       active: 1
       script: 0
       parameters:
       - name: 
         val: 20
-    - start: 30
-      end: 35
+    - start: 0
+      end: 0
       active: 1
-      script: 13
+      script: 1
       parameters:
       - name: 
-        val: 0
-      - name: 
-        val: 1
-    - start: 35
-      end: 40
+        val: 5.625
+    - start: 15
+      end: 15
       active: 1
       script: 0
       parameters:
       - name: 
-        val: -20
+        val: -16
     - start: 0
-      end: 40
+      end: 30
       active: 1
       script: 19
       parameters:
@@ -5191,8 +5196,8 @@ MonoBehaviour:
         val: 0
       - name: 
         val: 51
-    - start: 41
-      end: 41
+    - start: 31
+      end: 31
       active: 1
       script: 19
       parameters:
@@ -5200,8 +5205,8 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 51
-    - start: 41
-      end: 41
+    - start: 31
+      end: 31
       active: 1
       script: 19
       parameters:
@@ -5209,43 +5214,43 @@ MonoBehaviour:
         val: 2
       - name: 
         val: 0
-    - start: 25
-      end: 35
+    - start: 20
+      end: 30
       active: 1
       script: 1
       parameters:
       - name: 
-        val: -5
+        val: 0
     - start: 0
-      end: 60
+      end: 55
       active: 1
       script: 6
       parameters:
       - name: 
-        val: 0
-    - start: 38
-      end: 40
+        val: -1
+    - start: 28
+      end: 30
       active: 1
       script: 20
       parameters:
       - name: 
         val: 0
-    - start: 45
-      end: 60
+    - start: 35
+      end: 40
       active: 1
       script: 1
       parameters:
       - name: 
-        val: -10
-    - start: 45
-      end: 50
+        val: -13.125
+    - start: 35
+      end: 35
       active: 1
       script: 0
       parameters:
       - name: 
-        val: 15
-    - start: 41
-      end: 41
+        val: 10
+    - start: 30
+      end: 30
       active: 1
       script: 5
       parameters:
@@ -5271,13 +5276,22 @@ MonoBehaviour:
         val: 1
       - name: 
         val: 10
-    - start: 50.15464
-      end: 70
+    - start: 30
+      end: 30
+      active: 1
+      script: 18
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: 0.5
+    - start: 45
+      end: 45
       active: 1
       script: 3
       parameters:
       - name: 
-        val: 0
+        val: 0.5
     attacks:
     - start: 0
       length: 0
@@ -5289,7 +5303,7 @@ MonoBehaviour:
       poiseDamage: 10
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 10, y: 20, z: 0}
+      knockback: {x: 5, y: 32, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 3, y: 2, z: 0}
       cancelWindow: 70
@@ -6434,21 +6448,6 @@ MonoBehaviour:
       - name: 
         val: 2
     attacks:
-    - start: 10
-      length: 5
-      hitStun: 10
-      hitStop: 5
-      damage: 0
-      meterGain: 0
-      comboValue: 0
-      poiseDamage: 0
-      attackType: 0
-      hitAnim: {x: 0, y: 0}
-      knockback: {x: 30, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 4, y: 4, z: 1}
-      cancelWindow: 0
-      killMultiplier: 1
     - start: 50
       length: 15
       hitStun: 20
@@ -14414,7 +14413,7 @@ MonoBehaviour:
       script: 1
       parameters:
       - name: 
-        val: 8
+        val: 5.625
     - start: 0
       end: 0
       active: 1
@@ -16261,7 +16260,7 @@ MonoBehaviour:
       script: 18
       parameters:
       - name: 
-        val: 1
+        val: 2
       - name: 
         val: 0.4
     attacks:
@@ -16421,7 +16420,7 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
-    - start: 10
+    - start: 14.7164955
       end: 30
       active: 1
       script: 1
@@ -20065,7 +20064,7 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 5
-          state: 49
+          state: 166
           inputs: 
         followUps: 
         strict: 0
@@ -20366,8 +20365,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 650
-          y: 261
+          x: 731
+          y: 182
           width: 175
           height: 50
         activated: 1
@@ -21205,5 +21204,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 4
+  currentMovelistIndex: 3
   currentControllerIndex: 0

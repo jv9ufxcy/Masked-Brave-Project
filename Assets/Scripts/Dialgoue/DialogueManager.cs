@@ -90,7 +90,7 @@ public class DialogueManager : MonoBehaviour
     private void DisplayNextSentence()
     {
         
-        if (dialogueText.text != storedSentence)
+        if (dialogueText.text != storedSentence&&storedSentence!=string.Empty)
         {
             StopAllCoroutines();
             dialogueText.text = storedSentence;
@@ -124,6 +124,7 @@ public class DialogueManager : MonoBehaviour
             storedSentence = sentence;
             StartCoroutine(Type(sentence));
         }
+        GameEngine.gameEngine.mainCharacter.UpdateCharacter();
     }
 
     private void FadeCutscene()

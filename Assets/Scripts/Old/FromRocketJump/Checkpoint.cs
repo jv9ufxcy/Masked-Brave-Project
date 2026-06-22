@@ -50,8 +50,11 @@ public class Checkpoint : MonoBehaviour
         gm.lastCheckpointPos = currentlyActiveCheckpoint.transform.position;
 
         //GameEngine.gameEngine.mainCharacter.FullyHeal();
-        Mission.instance.CompleteScore();
-        Mission.instance.CheckpointTime();
+        if (Mission.instance!=null)
+        {
+            Mission.instance.CompleteScore();
+            Mission.instance.CheckpointTime();
+        }
         audioManager.PlaySound(checkpointSound);
         GameEngine.GlobalPrefab(checkPointFXIndex,checkPointFX, -1, -1);
     }

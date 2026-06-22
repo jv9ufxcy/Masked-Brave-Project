@@ -449,8 +449,9 @@ public class Mission : MonoBehaviour,IDataPersistence
         get => missionPoints;
         set
         { 
-            missionPoints = value; 
-            totalScoreText.SetText(missionPoints.ToString(DecimalFormat)); 
+            missionPoints = value;
+            if (totalScoreText!=null)
+                totalScoreText.SetText(missionPoints.ToString(DecimalFormat)); 
         }
     }
 
