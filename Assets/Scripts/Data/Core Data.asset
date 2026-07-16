@@ -13695,7 +13695,7 @@ MonoBehaviour:
       poiseDamage: 2
       attackType: 0
       hitAnim: {x: 1, y: 0}
-      knockback: {x: 0, y: 8, z: 0}
+      knockback: {x: -13.125, y: 8, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
       hitBoxScale: {x: 0, y: 0, z: 0}
       cancelWindow: 15
@@ -13808,7 +13808,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 25
+    meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -13901,7 +13901,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 25
+    meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -13916,6 +13916,13 @@ MonoBehaviour:
     loop: 0
     blendRate: 0.1
     events:
+    - start: 0
+      end: 5
+      active: 1
+      script: 8
+      parameters:
+      - name: 
+        val: 1
     - start: 0
       end: 25
       active: 1
@@ -13937,29 +13944,103 @@ MonoBehaviour:
       parameters:
       - name: 
         val: -16.875
-    attacks:
     - start: 0
-      length: 5
-      hitStun: 15
-      hitStop: 2
-      damage: 1
-      meterGain: 3
-      comboValue: 4
-      poiseDamage: 1
-      attackType: 0
-      hitAnim: {x: 1, y: 0}
-      knockback: {x: 16, y: 0, z: 0}
-      hitBoxPos: {x: 0, y: 1, z: 0}
-      hitBoxScale: {x: 3, y: 3, z: 0}
-      cancelWindow: 45
-      killMultiplier: 0
+      end: 0
+      active: 1
+      script: 0
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 16
+    - start: 0
+      end: 0
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 29
+    - start: 0
+      end: 0
+      active: 1
+      script: 29
+      parameters:
+      - name: 
+        val: 30
+    - start: 0
+      end: 45
+      active: 1
+      script: 36
+      parameters:
+      - name: 
+        val: 5
+    - start: 40
+      end: 45
+      active: 1
+      script: 25
+      parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Player/Brave Target
+        val: 0
+    attacks:
     - start: 5
       length: 5
       hitStun: 15
       hitStop: 2
-      damage: 1
+      damage: 2
       meterGain: 3
-      comboValue: 5
+      comboValue: 10
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
@@ -13972,9 +14053,9 @@ MonoBehaviour:
       length: 5
       hitStun: 15
       hitStop: 2
-      damage: 1
+      damage: 2
       meterGain: 3
-      comboValue: 6
+      comboValue: 11
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
@@ -13987,9 +14068,9 @@ MonoBehaviour:
       length: 5
       hitStun: 15
       hitStop: 2
-      damage: 1
+      damage: 2
       meterGain: 3
-      comboValue: 7
+      comboValue: 12
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
@@ -14000,11 +14081,11 @@ MonoBehaviour:
       killMultiplier: 0
     - start: 20
       length: 5
-      hitStun: 20
+      hitStun: 45
       hitStop: 2
-      damage: 2
+      damage: 4
       meterGain: 3
-      comboValue: 8
+      comboValue: 13
       poiseDamage: 1
       attackType: 0
       hitAnim: {x: 1, y: 0}
@@ -14015,7 +14096,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 0
+    meterReq: 50
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -14023,7 +14104,7 @@ MonoBehaviour:
     activeTargetReq: 0
     lockedMoveCheck: 0
     bulletLimit: 0
-    windReq: 1
+    windReq: 0
   - stateName: Cyclone/Quickstep
     index: 0
     length: 30
@@ -14217,8 +14298,23 @@ MonoBehaviour:
     - start: 0
       end: 0
       active: 1
-      script: 0
+      script: 1
       parameters:
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 13
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
       - name: 
         val: 0
     attacks:
@@ -14239,7 +14335,7 @@ MonoBehaviour:
       killMultiplier: 0
     jumpReq: 0
     dashReq: 0
-    meterReq: 25
+    meterReq: 0
     dashCooldownReq: 0
     groundedReq: 0
     wallReq: 0
@@ -19890,7 +19986,7 @@ MonoBehaviour:
           input: 0
           state: 0
           inputs: 
-        followUps: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e000000
+        followUps: 010000000200000004000000050000000600000007000000080000000a0000000b0000000c0000000d000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -19922,7 +20018,7 @@ MonoBehaviour:
           input: 4
           state: 188
           inputs: 
-        followUps: 0f00000010000000
+        followUps: 100000000300000009000000
         strict: 0
         myRect:
           serializedVersion: 2
@@ -19935,15 +20031,15 @@ MonoBehaviour:
       - idIndex: 3
         command:
           motionCommand: 0
-          input: 3
-          state: 157
+          input: 0
+          state: 17
           inputs: 
         followUps: 
         strict: 1
         myRect:
           serializedVersion: 2
-          x: 506
-          y: 98
+          x: 57
+          y: 180
           width: 175
           height: 50
         activated: 1
@@ -20030,102 +20126,6 @@ MonoBehaviour:
         priority: 0
       - idIndex: 9
         command:
-          motionCommand: 4
-          input: 3
-          state: 158
-          inputs: 
-        followUps: 
-        strict: 0
-        myRect:
-          serializedVersion: 2
-          x: 507
-          y: 144
-          width: 175
-          height: 50
-        activated: 1
-        priority: 3
-      - idIndex: 10
-        command:
-          motionCommand: 3
-          input: 3
-          state: 159
-          inputs: 
-        followUps: 
-        strict: 0
-        myRect:
-          serializedVersion: 2
-          x: 503
-          y: 56
-          width: 175
-          height: 50
-        activated: 1
-        priority: 3
-      - idIndex: 11
-        command:
-          motionCommand: 0
-          input: 5
-          state: 166
-          inputs: 
-        followUps: 
-        strict: 0
-        myRect:
-          serializedVersion: 2
-          x: 751
-          y: 98
-          width: 175
-          height: 50
-        activated: 1
-        priority: 4
-      - idIndex: 12
-        command:
-          motionCommand: 4
-          input: 5
-          state: 167
-          inputs: 
-        followUps: 
-        strict: 0
-        myRect:
-          serializedVersion: 2
-          x: 750
-          y: 141
-          width: 175
-          height: 50
-        activated: 1
-        priority: 5
-      - idIndex: 13
-        command:
-          motionCommand: 3
-          input: 5
-          state: 184
-          inputs: 
-        followUps: 
-        strict: 0
-        myRect:
-          serializedVersion: 2
-          x: 754
-          y: 26
-          width: 175
-          height: 50
-        activated: 1
-        priority: 5
-      - idIndex: 14
-        command:
-          motionCommand: 0
-          input: 1
-          state: 160
-          inputs: 
-        followUps: 
-        strict: 0
-        myRect:
-          serializedVersion: 2
-          x: 272
-          y: 177
-          width: 175
-          height: 50
-        activated: 1
-        priority: 2
-      - idIndex: 15
-        command:
           motionCommand: 0
           input: 1
           state: 187
@@ -20134,30 +20134,126 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 283
-          y: 102
+          x: 274
+          y: 106
           width: 175
           height: 50
         activated: 1
-        priority: 1
-      - idIndex: 16
+        priority: 2
+      - idIndex: 10
         command:
           motionCommand: 0
-          input: 0
-          state: 17
+          input: 5
+          state: 160
           inputs: 
         followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 78
+          x: 263
           y: 172
           width: 175
           height: 50
         activated: 1
+        priority: 2
+      - idIndex: 11
+        command:
+          motionCommand: 0
+          input: 3
+          state: 166
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 536
+          y: 91
+          width: 175
+          height: 50
+        activated: 1
+        priority: 4
+      - idIndex: 12
+        command:
+          motionCommand: 4
+          input: 3
+          state: 167
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 525
+          y: 151
+          width: 175
+          height: 50
+        activated: 1
+        priority: 5
+      - idIndex: 13
+        command:
+          motionCommand: 3
+          input: 3
+          state: 184
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 534
+          y: 36
+          width: 175
+          height: 50
+        activated: 1
+        priority: 5
+      - idIndex: 14
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 498
+          y: 282
+          width: 175
+          height: 50
+        activated: 0
         priority: 0
-      omitList: 0f00000010000000
-      nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e000000
+      - idIndex: 15
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 327
+          y: 107
+          width: 175
+          height: 50
+        activated: 0
+        priority: 0
+      - idIndex: 16
+        command:
+          motionCommand: 0
+          input: 0
+          state: 0
+          inputs: 
+        followUps: 
+        strict: 0
+        myRect:
+          serializedVersion: 2
+          x: 255
+          y: 224
+          width: 175
+          height: 50
+        activated: 0
+        priority: 0
+      omitList: 100000000300000009000000
+      nextFollowups: 010000000200000004000000050000000600000007000000080000000a0000000b0000000c0000000d000000
     - stateName: Aerial
       aerial: 1
       explicitState: 0
@@ -20189,7 +20285,7 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 71
+          x: 56
           y: 122
           width: 175
           height: 50
@@ -20205,8 +20301,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 257
-          y: 121
+          x: 291
+          y: 120
           width: 175
           height: 50
         activated: 1
@@ -20237,8 +20333,8 @@ MonoBehaviour:
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 256
-          y: 66
+          x: 292
+          y: 63
           width: 175
           height: 50
         activated: 1
@@ -20310,15 +20406,15 @@ MonoBehaviour:
       - idIndex: 9
         command:
           motionCommand: 0
-          input: 1
+          input: 5
           state: 160
           inputs: 
         followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 103
-          y: 189
+          x: 512
+          y: 128
           width: 175
           height: 50
         activated: 1
@@ -20327,23 +20423,23 @@ MonoBehaviour:
         command:
           motionCommand: 0
           input: 3
-          state: 164
+          state: 166
           inputs: 
         followUps: 
         strict: 0
         myRect:
           serializedVersion: 2
-          x: 428
-          y: 179
+          x: 727
+          y: 58
           width: 175
           height: 50
         activated: 1
-        priority: 2
+        priority: 4
       - idIndex: 11
         command:
-          motionCommand: 0
-          input: 5
-          state: 166
+          motionCommand: 4
+          input: 3
+          state: 49
           inputs: 
         followUps: 
         strict: 0
@@ -20357,8 +20453,8 @@ MonoBehaviour:
         priority: 4
       - idIndex: 12
         command:
-          motionCommand: 4
-          input: 5
+          motionCommand: 3
+          input: 3
           state: 49
           inputs: 
         followUps: 
@@ -20373,9 +20469,9 @@ MonoBehaviour:
         priority: 5
       - idIndex: 13
         command:
-          motionCommand: 4
-          input: 5
-          state: 49
+          motionCommand: 0
+          input: 0
+          state: 0
           inputs: 
         followUps: 
         strict: 0
@@ -20385,7 +20481,7 @@ MonoBehaviour:
           y: 250
           width: 175
           height: 50
-        activated: 0
+        activated: 1
         priority: 5
       omitList: 
       nextFollowups: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000

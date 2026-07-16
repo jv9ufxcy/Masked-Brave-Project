@@ -1108,7 +1108,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     private float shotPressure;
     [SerializeField] private float minShotPressure = 30f, maxShotPressure = 60f;
     private bool shouldChargeBuster;
-    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22, shotgunIndex = 40, missileIndex = 41, cycloneIndex = 160;
+    public int chargeAttackIndex = 15, chargeShotIndex = 21, critBusterIndex = 22, shotgunIndex = 40, missileIndex = 41, cycloneIndex = 158, airCycloneIndex=164;
     [SerializeField] private bool firstCharge, secondCharge;
     private Color c;
 
@@ -1174,7 +1174,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                 }
                 if (Input.GetButtonUp(GameEngine.coreData.rawInputs[1].name))
                 {
-                    ReleaseChargedCyclone();
+                    if (IsGrounded())
+                        ReleaseChargedCyclone();
+                    else
+                        ReleaseAirChargedCyclone();
                 }
                 break;
             case 4:
@@ -1193,6 +1196,23 @@ public class CharacterObject : MonoBehaviour, IHittable
         else if (shotPressure >= maxShotPressure)
         {
             StartStateFromScript(cycloneIndex);
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        StopChargeAttack();
+    }
+
+    private void ReleaseAirChargedCyclone()
+    {
+        if (shotPressure >= minShotPressure && shotPressure < maxShotPressure)
+        {
+            StartStateFromScript(airCycloneIndex);
+            shotPressure = 0f;
+            firstCharge = false; secondCharge = false;
+        }
+        else if (shotPressure >= maxShotPressure)
+        {
+            StartStateFromScript(airCycloneIndex);
             shotPressure = 0f;
             firstCharge = false; secondCharge = false;
         }

@@ -329,7 +329,7 @@ public class BulletHit : MonoBehaviour
     }
     private void Satellite()
     {
-        angle += speed * Time.deltaTime;
+        angle += speed * Time.fixedDeltaTime;
 
         var offset = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad)) * radius;
         transform.position = (Vector2)character.transform.position + offset;
