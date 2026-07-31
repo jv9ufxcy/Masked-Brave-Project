@@ -5319,41 +5319,134 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Shuriken
+  - stateName: Enemy/Glacier
     index: 0
-    length: 5
+    length: 75
     loop: 0
     blendRate: 0.1
     events:
-    - start: 0
-      end: 0
+    - start: 20
+      end: 20
       active: 1
-      script: 10
+      script: 5
       parameters:
       - name: 
-        val: 8
-      - name: 
-        val: 8
+        val: 0
       - name: 
         val: 2
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
       - name: 
         val: 1
       - name: 
         val: 0
+      - name: 
+        val: 22
+    - start: 20
+      end: 20
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: -2
+      - name: 
+        val: -2
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 22
+    - start: 20
+      end: 20
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 2
+      - name: 
+        val: -2
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 22
+    - start: 60
+      end: 60
+      active: 1
+      script: 5
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 0
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 1
+      - name: 
+        val: 0
+      - name: 
+        val: 22
     attacks:
-    - start: 0
-      length: 0
+    - start: 25
+      length: 40
       hitStun: 20
-      hitStop: 2
-      damage: 1
+      hitStop: 4
+      damage: 4
       meterGain: 2
       comboValue: 0
       poiseDamage: 2
       attackType: 0
       hitAnim: {x: 0, y: 0}
-      knockback: {x: 10, y: 0, z: 0}
+      knockback: {x: 13.125, y: 0, z: 0}
       hitBoxPos: {x: 0, y: 0, z: 0}
-      hitBoxScale: {x: 0, y: 0, z: 0}
+      hitBoxScale: {x: 4, y: 4, z: 1}
       cancelWindow: 0
       killMultiplier: 1
     jumpReq: 0
@@ -12623,7 +12716,7 @@ MonoBehaviour:
       - name: 
         val: 1
       - name: 
-        val: 0
+        val: 1
       - name: 
         val: 21
     - start: 45
@@ -17853,12 +17946,34 @@ MonoBehaviour:
     lockedMoveCheck: 0
     bulletLimit: 0
     windReq: 0
-  - stateName: Enemy/NEWSTATE
+  - stateName: Enemy/BombSpit
     index: 0
-    length: 0
+    length: 45
     loop: 0
     blendRate: 0.1
-    events: []
+    events:
+    - start: 15
+      end: 15
+      active: 1
+      script: 10
+      parameters:
+      - name: 
+        val: 0
+      - name: 
+        val: 10
+      - name: 
+        val: 1
+      - name: 
+        val: 0.5
+      - name: 
+        val: 0
+    - start: 0
+      end: 0
+      active: 1
+      script: 14
+      parameters:
+      - name: Props/Slime Bounce
+        val: 0
     attacks: []
     jumpReq: 0
     dashReq: 0
@@ -21300,5 +21415,5 @@ MonoBehaviour:
     angleChange: 0
     prevAngle: 0
     curAngle: 0
-  currentMovelistIndex: 3
+  currentMovelistIndex: 4
   currentControllerIndex: 0

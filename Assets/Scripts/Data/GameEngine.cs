@@ -117,6 +117,10 @@ public class GameEngine : MonoBehaviour,IDataPersistence
             nextPrefab.transform.localPosition += new Vector3(thisEvent.parameters[0].val, thisEvent.parameters[1].val, thisEvent.parameters[2].val);
             nextPrefab.transform.localRotation = Quaternion.Euler(new Vector3(thisEvent.parameters[3].val, thisEvent.parameters[4].val, thisEvent.parameters[5].val));
             nextPrefab.transform.localScale =Vector3.Scale(nextPrefab.transform.localScale, new Vector3(thisEvent.parameters[6].val, thisEvent.parameters[7].val, thisEvent.parameters[8].val));
+            if (thisEvent.parameters[7].val>0)
+            {
+                nextPrefab.transform.SetParent(null);
+            }
         }
 
         //foreach (Animator myAnimator in nextPrefab.transform.GetComponentsInChildren<Animator>())

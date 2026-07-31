@@ -2109,9 +2109,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                 if (CanBeHit(curAtk, GetIsInvulnerable()))
                 {
                     Vector3 nextKnockback = curAtk.knockback;
+                    //Vector3 knockOrientation = transform.position - attacker.transform.position; old code 
                     Vector3 knockOrientation = transform.position - attacker.transform.position;
-                    knockOrientation.Normalize();
-                    nextKnockback.x *= knockOrientation.x;
+                    //knockOrientation.Normalize();
+                    nextKnockback.x *= Mathf.Sign(knockOrientation.x);
                     curComboValue = curAtk.comboValue;
                     StartInvul(curAtk.hitStop);
 
@@ -2412,7 +2413,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         }
         if (currentState == 0)//Neutral
         {
-            if (isAggroRange && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) > longAttackRange))
+            if (isAggroRange && (Mathf.Abs(transform.position.x - GameEngine.gameEngine.mainCharacter.transform.position.x) > shortAttackRange))//move
             {
                 if (shouldFacePlayer)
                     FaceTarget(target.transform.position);

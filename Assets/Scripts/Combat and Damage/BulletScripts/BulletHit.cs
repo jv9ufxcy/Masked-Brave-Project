@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using DG.Tweening;
 
 public class BulletHit : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class BulletHit : MonoBehaviour
     private SpriteRenderer[] bulletSprites;
     private BoxCollider2D[] bulletColls;
     private AudioManager audioManager;
+    private Animator animator;
     [Tooltip("0 - Straight, 1 - Homing, 2 - Target, 3 - Nearest Enemy, 4 - Follow Ground, 5 - Boomerang, 6 - Satellite, 7 - Curvy")]
     public int bulletType;
     public Vector2 direction, bulletVel;
@@ -23,7 +25,7 @@ public class BulletHit : MonoBehaviour
     //[SerializeField] private LayerMask whatLayersToHit;
 
     //[SerializeField] private string bulletCollisionSound;
-    [SerializeField] private bool shouldScreenshakeOnHit = false, shouldStopOnHit = true, canReflect = true, parabolicArc = false, cannotDeflect = false;
+    [SerializeField] private bool shouldScreenshakeOnHit = false, shouldStopOnHit = true, canReflect = true, parabolicArc = false, cannotDeflect = false, isTimerBomb=false;
     public int bulletChain = 0, newBulletSpeed = 0;
     public CharacterObject character;
     private Controller2D thisBullet;
@@ -32,6 +34,7 @@ public class BulletHit : MonoBehaviour
     void Awake()
     {
         bulletSprites = GetComponentsInChildren<SpriteRenderer>();
+        animator=GetComponentInChildren<Animator>();
         bulletColls = GetComponents<BoxCollider2D>();
         bulletRB = GetComponent<Rigidbody2D>();
         laser = GetComponentInChildren<LaserHazard>();
@@ -40,7 +43,7 @@ public class BulletHit : MonoBehaviour
         {
             explosionEffect = bulletHitEffect;
         }
-        if (bulletType==4)
+        if (bulletType==4)//bombs and ground chasers
         {
             thisBullet = GetComponent<Controller2D>();
             gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -96,7 +99,13 @@ public class BulletHit : MonoBehaviour
                         transform.position = closestEnemy.transform.position;
                     break;
                 case 4: //follow ground
-                    Controller2DMovement();
+                    if (isTimerBomb&&thisBullet.collisions.below)
+                    {
+                        RemoveForce();
+                        animator.SetFloat("ground", 1);
+                    }
+                    else
+                        Controller2DMovement();
                     //thisBullet.FrontVelocity( speed * transform.localScale.x);
                     break;
                 case 5:
@@ -114,6 +123,11 @@ public class BulletHit : MonoBehaviour
             if (lifeTime > 0)
             {
                 lifeTime -= Time.fixedDeltaTime;
+                if (lifeTime<=1&&animator!=null)
+                {
+                    animator.SetFloat("state", 1);
+                    //bulletSprites[0].transform.DOShakePosition(1,0.13125f,5);
+                }
             }
             else if (lifeTime <= 0)
             {
@@ -145,14 +159,21 @@ public class BulletHit : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(tagToCollide))
         {
-            if (shouldStopOnHit)
+            if (isTimerBomb)
             {
-                OnDestroyGO();
+                RemoveForce();
             }
-            if (canReflect)
+            else
             {
-                Vector2 wallNormal = collision.contacts[0].normal;
-                velocity = Vector2.Reflect(velocity, wallNormal).normalized;
+                if (shouldStopOnHit)
+                {
+                    OnDestroyGO();
+                }
+                if (canReflect)
+                {
+                    Vector2 wallNormal = collision.contacts[0].normal;
+                    velocity = Vector2.Reflect(velocity, wallNormal).normalized;
+                }
             }
         }
     }
@@ -237,11 +258,18 @@ public class BulletHit : MonoBehaviour
 
     private void HitEffects()
     {
-        if (shouldScreenshakeOnHit)
-            Screenshake(shakeAmp, shakeTime);
-        if (shouldStopOnHit)
+        if (isTimerBomb)
         {
-            OnDestroyGO();
+            RemoveForce();
+        }
+        else
+        {
+            if (shouldScreenshakeOnHit)
+                Screenshake(shakeAmp, shakeTime);
+            if (shouldStopOnHit)
+            {
+                OnDestroyGO();
+            }
         }
     }
 

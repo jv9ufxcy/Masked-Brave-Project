@@ -550,6 +550,7 @@ MonoBehaviour:
   shotgunIndex: 40
   missileIndex: 41
   cycloneIndex: 183
+  airCycloneIndex: 164
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
@@ -574,7 +575,8 @@ MonoBehaviour:
   bulletsActiveInHierarchy: []
   shootAnim: 0
   shootAnimMax: 0
-  bullets: []
+  bullets:
+  - {fileID: 3152041610049941263, guid: 294d8c9ee42b5374988bb94922b31ec6, type: 3}
   nonBulletObjects: []
   isKinzecterOut: 0
   menuDelay: 12
@@ -584,7 +586,9 @@ MonoBehaviour:
   crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
-  dashLength: 0.45
+  afterImageTimer: 0
+  afterImageCount: 6
+  afterStep: 0
   afterImageParent: {fileID: 0}
   whatCountsAsGround:
     serializedVersion: 2
@@ -641,14 +645,14 @@ MonoBehaviour:
   spawners: []
   aggroDistance: 8
   aggroHeight: 4
-  longAttackRange: 4
+  longAttackRange: 6
   shortAttackRange: 2
   attackCooldown: 20
   isAggroRange: 0
   isLongRange: 0
   isShortRange: 0
   closeAttackState: 36000000
-  rangedAttackState: 36000000
+  rangedAttackState: d4000000
   desperationCAStates: 
   desperationRAStates: 
   enemyType: 0
