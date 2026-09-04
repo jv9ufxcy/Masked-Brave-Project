@@ -459,7 +459,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 FireBullet(_params[0].val, _params[1].val, _params[2].val, _params[3].val, _params[4].val, _params[5].val);
                 break;
             case 17:
-                QuickChangeForm((int)_params[0].val);
+                QuickChangeForm((int)_params[0].val, _params[0].name);
                 healthManager.lastChance = true;
                 if (_params[0].val == 5)//bike
                 {
@@ -688,11 +688,11 @@ public class CharacterObject : MonoBehaviour, IHittable
             OnMovementStateChange(0);
         }
         PlayFlashParticle(henshinColors[index]);
-        GameEngine.SetHitPause(5f);
-        QuickChangeForm(index);
+        GameEngine.SetHitPause(15f);
+        QuickChangeForm(index,"");
     }
 
-    public void QuickChangeForm(int index)
+    public void QuickChangeForm(int index, string anim)
     {
         GameEngine.gameEngine.ChangeMovelist(index);
         characterAnim.runtimeAnimatorController = formAnims[GameEngine.gameEngine.globalMovelistIndex];
@@ -705,6 +705,7 @@ public class CharacterObject : MonoBehaviour, IHittable
         {
             kinzecter.GetComponent<Kinzecter>().RemoveKinzecter();
         }
+        SetAnimation(anim);
         OnFormChanged?.Invoke();
     }
 
@@ -2356,6 +2357,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     [SerializeField] private bool isAggroRange, isLongRange, isShortRange;
     [IndexedItem(IndexedItemAttribute.IndexedItemType.STATES)]
     public int[] closeAttackState, rangedAttackState, desperationCAStates, desperationRAStates;
+    private bool desperation = false;
 
     [Tooltip("0 = MoveForward, 1 = MoveTowards, 2 = JumpAction, 3 = Float")]
     public int enemyType;
@@ -2478,6 +2480,10 @@ public class CharacterObject : MonoBehaviour, IHittable
                     attackStep++;
                 }
             }
+            if (desperation)
+            {
+                DesperationActivate();
+            }
         }
         if (currentState != 0 && currentState != defStateIndex && currentState!=wakeUpStateIndex)//Attack
         {
@@ -2499,14 +2505,23 @@ public class CharacterObject : MonoBehaviour, IHittable
 
     public void OnDesperation()
     {
+        desperation = true;
+        
+        //attackCooldown *= 0.5f;
+    }
+
+    private void DesperationActivate()
+    {
+        characterAnim.SetFloat("aniHealthState", 1);
         closeAttackState = desperationCAStates;
         rangedAttackState = desperationRAStates;
         StartStateFromScript(desperationTransitionState);
         attackStep = 0;
         dashCooldown += 100;
         hitStun = 0;
-        //attackCooldown *= 0.5f;
+        desperation = false;
     }
+
     public void OnDeath()
     {
         hitStun = 0;

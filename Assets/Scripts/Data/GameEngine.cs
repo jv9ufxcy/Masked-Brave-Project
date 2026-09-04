@@ -106,10 +106,9 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         Mission.instance.EndMission();
         Mission.instance.EndLevel();
     }
-    public static void GlobalPrefab(int _index, GameObject _parentObj, int _state, int _ev)
+    public static void GlobalPrefabPosition(int _index, Vector3 _parentObj, int _state, int _ev)
     {
-        GameObject nextPrefab = Instantiate(coreData.globalPrefabs[_index], _parentObj.transform.position, _parentObj.transform.rotation, _parentObj.transform);
-        nextPrefab.transform.localScale = _parentObj.transform.localScale;
+        GameObject nextPrefab = Instantiate(coreData.globalPrefabs[_index], _parentObj, Quaternion.identity);
         if (_state!=-1)
         {
             StateEvent thisEvent = coreData.characterStates[_state].events[_ev];
@@ -136,6 +135,23 @@ public class GameEngine : MonoBehaviour,IDataPersistence
         //        myAnimator.speed *= thisEvent.parameters[9].val;
         //    }
         //}
+    }
+    public static void GlobalPrefab(int _index, GameObject _parentObj, int _state, int _ev)
+    {
+        GameObject nextPrefab = Instantiate(coreData.globalPrefabs[_index], _parentObj.transform.position, _parentObj.transform.rotation, _parentObj.transform);
+        nextPrefab.transform.localScale = _parentObj.transform.localScale;
+        if (_state!=-1)
+        {
+            StateEvent thisEvent = coreData.characterStates[_state].events[_ev];
+
+            nextPrefab.transform.localPosition += new Vector3(thisEvent.parameters[0].val, thisEvent.parameters[1].val, thisEvent.parameters[2].val);
+            nextPrefab.transform.localRotation = Quaternion.Euler(new Vector3(thisEvent.parameters[3].val, thisEvent.parameters[4].val, thisEvent.parameters[5].val));
+            nextPrefab.transform.localScale =Vector3.Scale(nextPrefab.transform.localScale, new Vector3(thisEvent.parameters[6].val, thisEvent.parameters[7].val, thisEvent.parameters[8].val));
+            if (thisEvent.parameters[7].val>0)
+            {
+                nextPrefab.transform.SetParent(null);
+            }
+        }
     }
     [SerializeField] private bool dontLoadSkillsInMenu = false;
     public void LoadData(GameData data)

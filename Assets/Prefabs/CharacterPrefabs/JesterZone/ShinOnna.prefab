@@ -5026,8 +5026,8 @@ MonoBehaviour:
   horizontalAxis: altPs4Horizontal
   verticalAxis: altPs4Vertical
   deadzone: 0.2
-  moveSpeed: 8
-  playerSpeed: 8
+  moveSpeed: 5.625
+  playerSpeed: 5.625
   airMod: 1
   jumpPow: 0.1
   currentCommandState: 0
@@ -5040,6 +5040,7 @@ MonoBehaviour:
   shotgunIndex: 40
   missileIndex: 41
   cycloneIndex: 183
+  airCycloneIndex: 164
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
@@ -5076,7 +5077,9 @@ MonoBehaviour:
   crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
-  dashLength: 0.45
+  afterImageTimer: 0
+  afterImageCount: 6
+  afterStep: 0
   afterImageParent: {fileID: 0}
   whatCountsAsGround:
     serializedVersion: 2
@@ -5229,6 +5232,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   IsSpawned: 0
+  spawnFXIndex: 13
 --- !u!50 &4070925128121250072
 Rigidbody2D:
   serializedVersion: 4

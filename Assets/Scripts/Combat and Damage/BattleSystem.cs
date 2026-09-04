@@ -51,6 +51,10 @@ public class BattleSystem : MonoBehaviour
     {
         return enemySpawnList.Count;
     }
+    private void OnEnable()
+    {
+        
+    }
     // Update is called once per frame
     void Update()
     {
@@ -67,15 +71,20 @@ public class BattleSystem : MonoBehaviour
                     {
                         wave.SpawnPortals();
                     }
-                    wave.timer -= Time.deltaTime;
-                    if (wave.timer <= 0f)
+                    if (wave.timer > 0f)
+                        wave.timer -= Time.deltaTime;
+                    else
                     {
                         if (!wave.alreadySpawned)
                             SpawnWave(wave);
                         wave.alreadySpawned = true;
                     }
-                    CheckNumOfEnemies();
-                    if (wave.IsWaveOver()) continue;
+                        CheckNumOfEnemies();
+                    if (wave.IsWaveOver())
+                    {
+
+                        continue;
+                    }
                     else break;
                     
                 }
@@ -86,7 +95,8 @@ public class BattleSystem : MonoBehaviour
                 break;
         }
     }
-
+    public delegate void WaveEnd();
+    public event WaveEnd OnWaveEnd;
     public void StartBattle()
     {
         if (battleState == State.Idle)
@@ -159,8 +169,11 @@ public class BattleSystem : MonoBehaviour
                     {
                         EnemySpawn enemySpawn = transform.GetComponent<EnemySpawn>();
                         if (enemySpawn != null)
+                        {
                             waveSpawnEnemyList.Add(enemySpawn);
+                        }
                     }
+                    wave.enemySpawnArray=waveSpawnEnemyList.ToArray();
                 }
                 if (wave.enemySpawnArray != null)
                     waveSpawnEnemyList.AddRange(wave.enemySpawnArray);

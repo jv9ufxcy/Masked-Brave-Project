@@ -15,7 +15,7 @@ public class Kinzecter : MonoBehaviour
 
     [Header("Kinzecter Stats")]
     [SerializeField] private float kzSpeed = 20f, kzRecallSpeed = 30f, returnDistance = 5f, maxDistance = 25f, targetNextEnemyDistance = 15f, minLethalSpeed = 3f, followSpeedDampen = 10f;
-    [SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
+    //[SerializeField] private float maxStamina = 100f, currentStamina = 100f, staminaCost = 10f, installStamina = 200f;
     [SerializeField] private ParticleSystem kinzecterParticles, hpPS, buffedZecterPS, energyPS;
     [SerializeField] private Vector3 offset = new Vector3(2, 2, 1);
     private AudioManager audioManager;
@@ -323,17 +323,17 @@ public class Kinzecter : MonoBehaviour
         CinemachineShake.instance.ShakeCamera(amp, time);
     }
 
-    private void SpendStamina(float _val)
-    {
-        currentStamina -= _val;
-        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
-    }
-    public void KinzecterInstall()
-    {
-        hitbox.projectileIndex = 33;
-        buffedZecterPS.Play();
-        maxStamina = installStamina;
-        currentStamina = installStamina;
-        kzSpeed *= 1.5f;
-    }
+    //private void SpendStamina(float _val)
+    //{
+    //    currentStamina -= _val;
+    //    currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+    //}
+    //public void KinzecterInstall()
+    //{
+    //    hitbox.projectileIndex = 33;
+    //    buffedZecterPS.Play();
+    //    maxStamina = installStamina;
+    //    currentStamina = installStamina;
+    //    kzSpeed *= 1.5f;
+    //}
 }

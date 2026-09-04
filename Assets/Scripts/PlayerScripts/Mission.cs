@@ -167,7 +167,7 @@ public class Mission : MonoBehaviour,IDataPersistence
     }
     public void HumanForm(int formIndex)
     {
-        mainChar.QuickChangeForm(formIndex);
+        mainChar.QuickChangeForm(formIndex, "");
         //mainChar.controlType = CharacterObject.ControlType.OBJECT;
     }
     public void SetSpecialCase(bool specialCase)

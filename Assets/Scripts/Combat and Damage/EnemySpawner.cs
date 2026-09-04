@@ -72,10 +72,16 @@ public class EnemySpawner : MonoBehaviour
             EnemySpawn E = collision.gameObject.GetComponent<EnemySpawn>();
             if (soloEnemies.Contains(E)&&!E.IsSpawned)
             {
-                SpawnEnemy(E);
+                if (respawn)
+                {
+                    StartCoroutine(RespawnEvent(E));
+                }
+                else
+                    SpawnEnemy(E);
             }
         }
     }
+    bool respawn = false;
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -84,6 +90,7 @@ public class EnemySpawner : MonoBehaviour
             if (soloEnemies.Contains(E))
             {
                 DeSpawnEnemy(E);
+                respawn = true;
             }
         }
     }
@@ -91,6 +98,14 @@ public class EnemySpawner : MonoBehaviour
     {
         enemy.Spawn(0);
     }
+
+    private IEnumerator RespawnEvent(EnemySpawn enemy)
+    {
+        GameEngine.GlobalPrefabPosition(enemy.spawnFXIndex, enemy.SpawnPos, -1, -1);
+        yield return new WaitForSeconds(1);
+        enemy.Spawn(0);
+    }
+
     public void DeSpawnEnemy(EnemySpawn enemy)
     {
         enemy.DeSpawn();

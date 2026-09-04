@@ -575,7 +575,7 @@ public class HealthManager : MonoBehaviour
     }
     private void DesperationTrigger()
     {
-        charAnim.SetFloat("aniHealthState", 1);
+        //charAnim.SetFloat("aniHealthState", 1);
         isDesperation = true;
         character.OnDesperation();
         //PoiseReset();
@@ -709,7 +709,7 @@ public class HealthManager : MonoBehaviour
                     DeathStates();
                     yield return new WaitForFixedUpdate();//get length of death animation
                     //ActualDefeat
-                    character.QuickChangeForm(4);
+                    character.QuickChangeForm(4, "Hitstun");
                     OnDeath.Invoke();
                     character.OnDeath();
                     //character.StartStateFromScript(36);

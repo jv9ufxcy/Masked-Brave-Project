@@ -199,11 +199,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1580854466}
+  - component: {fileID: 8715402425323364913}
   - component: {fileID: 2208960329544843072}
   - component: {fileID: 5808954520956565907}
   - component: {fileID: 7131327210722087137}
   - component: {fileID: 2225795552688392928}
-  - component: {fileID: 8715402425323364913}
   m_Layer: 14
   m_Name: SlimeMyube
   m_TagString: Enemy
@@ -226,6 +226,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8715402425323364913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580854460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41d04ca21236e843b9576f2042071fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpPow: 1.33
+  lifeTime: 0
+  isDestructible: 1
+  aerialOnly: 1
+  charaSpawn: {fileID: 0}
+  objType: 1
+  bounceSound: Props/Slime Bounce
+  useFX: {fileID: 1315619723106520, guid: e25a21c5f6ff08349b57d4511115514b, type: 3}
 --- !u!114 &2208960329544843072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +298,7 @@ MonoBehaviour:
   pickup:
   - {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f, type: 3}
   - {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c, type: 3}
-  deathEffect: {fileID: 7459617967329291029, guid: a27062d9c47b0e34b9afb6942de1ffab,
+  deathEffect: {fileID: 1315619723106520, guid: e25a21c5f6ff08349b57d4511115514b,
     type: 3}
   IsDead: 0
   IsSpawned: 0
@@ -299,6 +319,8 @@ MonoBehaviour:
   wallStickTime: 0.25
   gravity: -1.8
   velocity: {x: 0, y: 0, z: 0}
+  floatHeight: 3
+  floatTime: 0.5
 --- !u!61 &5808954520956565907
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -366,26 +388,9 @@ MonoBehaviour:
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
+  defaultColl: {fileID: 0}
   maxSlopeAngle: 80
   playerInput: {x: 0, y: 0}
---- !u!114 &8715402425323364913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580854460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41d04ca21236e843b9576f2042071fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpPow: 1.33
-  lifeTime: 0
-  isDestructible: 1
-  aerialOnly: 1
-  charaSpawn: {fileID: 0}
-  objType: 1
 --- !u!1 &1587091123
 GameObject:
   m_ObjectHideFlags: 0

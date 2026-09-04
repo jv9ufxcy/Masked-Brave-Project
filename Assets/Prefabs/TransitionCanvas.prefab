@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1277095852}
   - component: {fileID: 1277095854}
   - component: {fileID: 1277095853}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: RawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -82,7 +83,7 @@ GameObject:
   - component: {fileID: 6155075866505725635}
   - component: {fileID: 2167139964894457554}
   - component: {fileID: 7401313402454371352}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: TransitionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +183,7 @@ GameObject:
   - component: {fileID: 6597446439612425211}
   - component: {fileID: 8349147280268559844}
   - component: {fileID: 1496538907263918893}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: TransitionEffectImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SceneToLoad: 
   transitionSpeed: 1
+  transitionAudioEvent: Cutscene/Scene Transition
 --- !u!114 &1496538907263918893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +247,7 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: eca1d64956fd58640b7bd31e5bd32daf, type: 2}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

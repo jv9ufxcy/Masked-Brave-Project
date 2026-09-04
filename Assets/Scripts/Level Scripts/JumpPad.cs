@@ -12,6 +12,7 @@ public class JumpPad : MonoBehaviour
     public ObjectType objType;
     private AudioManager audioManager;
     public string bounceSound = "Props/Slime Bounce";
+    [SerializeField]private GameObject useFX;
     private void Start()
     {
         if (isDestructible)
@@ -97,6 +98,12 @@ public class JumpPad : MonoBehaviour
     private IEnumerator DestroyJumpPad()
     {
         yield return new WaitForFixedUpdate();
-            charaSpawn.DeSpawn();
+        if (useFX != null)
+        {
+            GameObject destroyGO = Instantiate(useFX,transform.position, Quaternion.identity);
+            destroyGO.transform.SetParent(null);
+            Debug.Log("Spawned: "+destroyGO.name);
+        }
+        charaSpawn.DeSpawn();
     }
 }

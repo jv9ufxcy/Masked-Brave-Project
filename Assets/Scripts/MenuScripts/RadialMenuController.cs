@@ -17,7 +17,7 @@ public class RadialMenuController : MonoBehaviour
     public GameObject highlightBlock;
     [SerializeField] private Image segmentedBlock, formIconImage;
     public CharacterObject player;
-    //private List<string> formNames = new List<string>() { "CYC","BMB","ARM","PRS","ZOE","???"};
+    private List<int> formStateIndex = new List<int>() { 134, 135, 136, 137, 132 };
     // Start is called before the first frame update
     void Start()
     {
@@ -167,7 +167,7 @@ public class RadialMenuController : MonoBehaviour
         else
         {
             if (arm)
-                player.DOChangeMovelist(0);
+                player.StartStateFromScript(formStateIndex[0]);
         }
     }
 
@@ -180,7 +180,7 @@ public class RadialMenuController : MonoBehaviour
         else
         {
             if (bomb)
-                player.DOChangeMovelist(1);
+                player.StartStateFromScript(formStateIndex[1]);
         }
     }
 
@@ -193,7 +193,7 @@ public class RadialMenuController : MonoBehaviour
         else
         {
             if (bike)
-                player.DOChangeMovelist(2);
+                player.StartStateFromScript(formStateIndex[2]);
         }
     }
 
@@ -206,7 +206,7 @@ public class RadialMenuController : MonoBehaviour
         else
         {
             if (ninja)
-                player.DOChangeMovelist(3);
+                player.StartStateFromScript(formStateIndex[3]);
         }
     }
     public void SwitchMask(int selectionIndex)
@@ -218,15 +218,15 @@ public class RadialMenuController : MonoBehaviour
         else
         {
             if (masks[selectionIndex].isUnlocked())
-                player.DOChangeMovelist(masks[selectionIndex].formIndex);
+                player.StartStateFromScript(formStateIndex[masks[selectionIndex].formIndex]);
         }
     }
 
     public void SwitchCivillian()
     {
         unmasked.formNameText = GetActiveMask().formNameText;
-        player.DOChangeMovelist(4);
-        player.BuildMeter(50f);//refund
+        player.StartStateFromScript(formStateIndex[4]);
+        //player.BuildMeter(50f);//refund
     }
     
 }
