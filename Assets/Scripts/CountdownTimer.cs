@@ -13,7 +13,7 @@ public class CountdownTimer : MonoBehaviour
     }
     [SerializeField] private BattleSystem battle;
     [Header("Timer")]
-    [SerializeField] private float remainingTime = 15f;
+    [SerializeField] private float remainingTime = 60f;
     private float elapsedTime = 0f;
     private bool countDown = false;
     [SerializeField] TextMeshProUGUI timerText;
@@ -38,8 +38,8 @@ public class CountdownTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        anchorLocation = popupHolder.anchoredPosition;
-        popupHolder.DOAnchorPos(hiddenLocation, 0);
+        //anchorLocation = popupHolder.anchoredPosition;
+        popupHolder.position = hiddenLocation;
     }
 
     private void Update()
@@ -89,7 +89,7 @@ public class CountdownTimer : MonoBehaviour
     public void AddTime(float seconds)
     {
         remainingTime += seconds;
-        AddToQueue("+ "+ seconds);
+        AddToQueue("+ 00:"+ seconds);
     }
     private void SetTimerText(int minutes, int seconds)
     {
@@ -137,10 +137,12 @@ public class CountdownTimer : MonoBehaviour
     private IEnumerator DisplayQueueText()
     {
         isPlaying = true;
-        popupHolder.DOAnchorPos(hiddenLocation, 0);
+        popupHolder.position = hiddenLocation;
         popupHolder.DOAnchorPos(anchorLocation, FadeTime);
+        Debug.Log("Moving Popup to: "+anchorLocation.y);
         yield return new WaitForSeconds(DisplayTime);
         popupHolder.DOAnchorPos(hiddenLocation, FadeTime);
+        Debug.Log("Moving Popup to: "+hiddenLocation.y);
         yield return new WaitForSeconds(FadeTime);
         isPlaying = false;
     }

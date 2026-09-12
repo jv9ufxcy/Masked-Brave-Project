@@ -448,6 +448,7 @@ MonoBehaviour:
   shotgunIndex: 40
   missileIndex: 41
   cycloneIndex: 183
+  airCycloneIndex: 164
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
@@ -483,7 +484,9 @@ MonoBehaviour:
   crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
-  dashLength: 0.45
+  afterImageTimer: 0
+  afterImageCount: 6
+  afterStep: 0
   afterImageParent: {fileID: 0}
   whatCountsAsGround:
     serializedVersion: 2
@@ -601,7 +604,7 @@ MonoBehaviour:
   numOfPickups: 3
   currencyPickup: {fileID: 6506153719552787811, guid: addc74acab808374f8779d0c83c4978f,
     type: 3}
-  healthPickup: {fileID: 6506153719552787811, guid: 797d1217142758b40acd617b6a465970,
+  healthPickup: {fileID: 6506153719552787811, guid: cb836da634f2d2948bfe7f030e0ee05c,
     type: 3}
   effectsAnim: {fileID: 3824118585683043634}
   charAnim: {fileID: 3948506263822943440}
@@ -647,6 +650,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   IsSpawned: 0
+  spawnFXIndex: 13
 --- !u!61 &1207396749204801032
 BoxCollider2D:
   m_ObjectHideFlags: 0

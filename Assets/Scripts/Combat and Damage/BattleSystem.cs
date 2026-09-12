@@ -12,17 +12,19 @@ public class BattleSystem : MonoBehaviour
     public UnityEvent OnBattleStarted;
     public UnityEvent OnBattleEnded;
 
-    [SerializeField] private TextMeshProUGUI numOfEnemies,battleFightText;
+    [SerializeField] private TextMeshProUGUI numOfEnemies, battleFightText;
     [SerializeField] private RectTransform enemyCounter;
     [SerializeField] private Vector2 restingLocation, startingLocation, midScreen;
     private Image enemyIcon;
-    [SerializeField] private string battleStartText="TATAKAE!", battleEndText="FINISH!", battleStartAudio = "Enemy/Spawn", battleEndAudio = "Cutscene/Sword Brandish";
+    [SerializeField] private string battleStartText = "TATAKAE!", battleEndText = "FINISH!", battleStartAudio = "Enemy/Spawn", battleEndAudio = "Cutscene/Sword Brandish";
     [SerializeField] private int spawnIndex;
     public int activeWaveCount;
-    private enum State { Idle, Active, Conclusion}
+    private enum State { Idle, Active, Conclusion }
     [SerializeField] private State battleState;
     [SerializeField] Wave[] waveArray;
     [SerializeField] ColliderTrigger collTrigger;
+    private enum BattleStyle { Enemies, Floors };
+    [SerializeField] private BattleStyle battleStyle;
     private List<Wave> activeWaveList;
     private List<EnemySpawn> enemySpawnList= new List<EnemySpawn>();
     private AudioManager audioManager;
@@ -64,25 +66,43 @@ public class BattleSystem : MonoBehaviour
                 
                 break;
             case State.Active:
-                foreach (Wave wave in waveArray)
+                for (int i = activeWaveCount;i<waveArray.Length;)
                 {
+                    Wave wave = waveArray[i];
                     wave.spawnFXIndex = spawnIndex;
-                    if (!wave.bossBattle&&wave.timer>=2)
+                    if (wave.timer>=2)
                     {
-                        wave.SpawnPortals();
+                        switch (battleStyle)
+                        {
+                            case BattleStyle.Enemies:
+                                if (!wave.bossBattle)
+                                    wave.SpawnPortals();
+                                break;
+                            case BattleStyle.Floors:
+                                wave.SpawnPortals();
+                                break;
+                            default:
+                                break;
+                        }
+                        
                     }
                     if (wave.timer > 0f)
                         wave.timer -= Time.deltaTime;
                     else
                     {
                         if (!wave.alreadySpawned)
+                        {
                             SpawnWave(wave);
-                        wave.alreadySpawned = true;
+                            wave.active=true;
+                            wave.alreadySpawned = true;
+                        }
                     }
                         CheckNumOfEnemies();
-                    if (wave.IsWaveOver())
+                    if (wave.IsWaveOver()&&wave.active)
                     {
-
+                        OnWaveEnd?.Invoke();
+                        wave.active = false;
+                        activeWaveCount++;
                         continue;
                     }
                     else break;
@@ -212,13 +232,24 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 enemySpawn.Spawn(0);
-
+                MusicManager.instance.ResumeMusic(battleTheme);
             }
         }
     }
     private void TestBattleOver()
     {
-        numOfEnemies.text = "x " + enemyNum();
+        switch (battleStyle)
+        {
+            case BattleStyle.Enemies:
+                numOfEnemies.text = "x " + enemyNum();
+                break;
+            case BattleStyle.Floors:
+                numOfEnemies.text = "# " + activeWaveCount;
+                break;
+            default:
+                break;
+        }
+        
         if (battleState==State.Active&&IsBattleOver())
         {
             EndBattle();
@@ -232,7 +263,17 @@ public class BattleSystem : MonoBehaviour
         audioManager.PlaySound(battleEndAudio);
         musicManager.StartBGM(stageTheme);
         enemySpawnList.Clear();
-        numOfEnemies.text = "x " + enemyNum();
+        switch (battleStyle)
+        {
+            case BattleStyle.Enemies:
+                numOfEnemies.text = "x " + enemyNum();
+                break;
+            case BattleStyle.Floors:
+                numOfEnemies.text = "# " + activeWaveCount;
+                break;
+            default:
+                break;
+        }
         EndBattleUI();
         battleState = State.Conclusion;
     }
@@ -264,7 +305,7 @@ public class BattleSystem : MonoBehaviour
         public bool listAlreadyChecked=false;
         public bool bossBattle = false;
         public int spawnFXIndex;
-
+        [HideInInspector]public bool active;
         public void SpawnPortals()
         {
             if (spawnFXIndex > 0)

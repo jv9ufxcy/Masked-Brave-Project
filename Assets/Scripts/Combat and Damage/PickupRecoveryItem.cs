@@ -8,7 +8,7 @@ public class PickupRecoveryItem : MonoBehaviour
     [SerializeField] private bool shouldAttract = false, shouldDestroy = true;
     [SerializeField] private float attractionSpeed = 50f, attractionRange = 10f, lifeTime = 8f;
     [SerializeField] private LayerMask whatCountsAsPlayer;
-    [SerializeField] private string pickupSound="PickupRecovery";
+    [SerializeField] private string pickupSound="Props/Health Pickup";
     [SerializeField] private GameObject pickupEffect;
     private CharacterObject thePlayer;
     private bool isPlayerInRange;

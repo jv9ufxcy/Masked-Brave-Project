@@ -71,8 +71,12 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySound(string _name)
     {
-        string eventPath = "event:/Sound Effects/";
-        FMODUnity.RuntimeManager.PlayOneShot(eventPath+_name);
+        if (_name!=string.Empty)
+        {
+            string eventPath = "event:/Sound Effects/";
+            FMODUnity.RuntimeManager.PlayOneShot(eventPath + _name);
+        }
+        
         //for (int i = 0; i < sounds.Length; i++)
         //{
         //    if (sounds[i].name==_name)

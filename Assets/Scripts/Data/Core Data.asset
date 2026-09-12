@@ -950,12 +950,12 @@ MonoBehaviour:
     blendRate: 0
     events:
     - start: 5
-      end: 7
+      end: 5
       active: 1
-      script: 0
+      script: 7
       parameters:
       - name: 
-        val: 20
+        val: 1
     - start: 5
       end: 15
       active: 1
@@ -11989,15 +11989,6 @@ MonoBehaviour:
       - name: Player/Dash
         val: 0
     - start: 0
-      end: 20
-      active: 1
-      script: 13
-      parameters:
-      - name: 
-        val: 0
-      - name: 
-        val: 1
-    - start: 0
       end: 30
       active: 1
       script: 36
@@ -17180,7 +17171,7 @@ MonoBehaviour:
       length: 30
       hitStun: 20
       hitStop: 4
-      damage: 0
+      damage: 2
       meterGain: 0
       comboValue: 5
       poiseDamage: 0

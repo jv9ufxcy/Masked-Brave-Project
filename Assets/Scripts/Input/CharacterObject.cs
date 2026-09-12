@@ -845,6 +845,7 @@ public class CharacterObject : MonoBehaviour, IHittable
                 velocity.y = maxJumpVelocity*_pow;
             }
         }
+        aerialTimer = coyoteTimer;
     }
     void CanCancel(float _val)
     {

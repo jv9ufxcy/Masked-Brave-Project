@@ -19449,6 +19449,7 @@ MonoBehaviour:
   shotgunIndex: 40
   missileIndex: 41
   cycloneIndex: 183
+  airCycloneIndex: 164
   firstCharge: 0
   secondCharge: 0
   chargeIncrement: 1
@@ -19484,7 +19485,9 @@ MonoBehaviour:
   crouchFlag: 0
   fadeTime: 0.5
   shortDashInterval: 0.05
-  dashLength: 0.45
+  afterImageTimer: 0
+  afterImageCount: 6
+  afterStep: 0
   afterImageParent: {fileID: 0}
   whatCountsAsGround:
     serializedVersion: 2
@@ -19556,13 +19559,13 @@ MonoBehaviour:
   floatHeight: 2
   floatTime: 0.25
   canDefend: 0
-  canWakeupEvade: 0
+  canWakeupEvade: 1
   shouldFacePlayer: 1
   startingDirection: 1
   isStationary: 0
   defStateIndex: 0
   defStates: 
-  wakeUpStateIndex: 0
+  wakeUpStateIndex: 56
 --- !u!114 &2762293302903773273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19637,6 +19640,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   IsSpawned: 0
+  spawnFXIndex: 13
 --- !u!61 &5808954520956565907
 BoxCollider2D:
   m_ObjectHideFlags: 0

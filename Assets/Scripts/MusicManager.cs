@@ -1,4 +1,5 @@
-﻿using FMODUnity;
+﻿using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class MusicManager : MonoBehaviour
     public static MusicManager instance;
     private StudioEventEmitter studioEventEmitter;
     FMOD.Studio.EventInstance BGM;
+    private FMOD.Studio.PLAYBACK_STATE BGMState;
     //[FMODUnity.EventRef(MigrateTo ="<fieldname>")]
     public EventReference stageTheme;
     void Awake()
@@ -65,8 +67,20 @@ public class MusicManager : MonoBehaviour
         BGM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         //BackgroundMusic.Stop();
     }
+    public void ResumeMusic(EventReference path)
+    {
+        BGM.getPlaybackState(out BGMState);
+        if (BGMState == PLAYBACK_STATE.STOPPED)
+        {
+            StartBGM(path);
+        }
+    }
     public void StopReverbZone()
     {
         studioEventEmitter.enabled = false;
+    }
+    private void OnDestroy()
+    {
+        StopMusic();
     }
 }
