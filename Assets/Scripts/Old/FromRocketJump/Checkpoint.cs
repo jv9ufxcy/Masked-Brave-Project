@@ -50,7 +50,7 @@ public class Checkpoint : MonoBehaviour
         gm.lastCheckpointPos = currentlyActiveCheckpoint.transform.position;
 
         //GameEngine.gameEngine.mainCharacter.FullyHeal();
-        if (Mission.instance!=null)
+        if (Mission.instance!=null&&Mission.instance.isMissionActive)
         {
             Mission.instance.CompleteScore();
             Mission.instance.CheckpointTime();

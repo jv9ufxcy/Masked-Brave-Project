@@ -2231,7 +2231,7 @@ public class CharacterObject : MonoBehaviour, IHittable
     }
     private void StartInvul(float hitFlash)
     {
-        if (invulCooldown <= 0 && (controlType != ControlType.AI && controlType != ControlType.OBJECT))
+        if (/*invulCooldown <= 0 &&*/ (controlType != ControlType.AI && controlType != ControlType.OBJECT))
         {
             invulCooldown = 90f;
             isInvulnerable = true;

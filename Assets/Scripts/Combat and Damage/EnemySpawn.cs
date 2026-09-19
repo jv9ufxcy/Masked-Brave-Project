@@ -8,9 +8,10 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     private HealthManager enemyHealth;
     private CharacterObject character;
     private EnemySpawner eSpawner;
-    public bool IsSpawned;
+    public bool IsSpawned, isKilled=false;
     private Vector3 spawnPos;
     public int spawnFXIndex = 13;
+    private Transform container;
     public static EnemySpawn GetClosestEnemy(Vector3 position, float maxRange)
     {
         EnemySpawn closest = null;
@@ -115,6 +116,7 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
                 character.OnDummySpawn();
                 break;
         }
+        container = transform.parent;
         transform.SetParent(null);
         transform.position = SpawnPos;
     }
@@ -122,8 +124,9 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
     {
         if (eSpawner!=null)
         {
-            eSpawner.RemoveEnemyFromList(this);
+            //eSpawner.RemoveEnemyFromList(this);
         }
+        isKilled = true;
         
         DeSpawn();
     }
@@ -139,6 +142,7 @@ public class EnemySpawn : MonoBehaviour, ISpawnable
         IsSpawned = false;
         //transform.SetParent(null);
         transform.position = SpawnPos;
+        transform.SetParent(container);
     }
     public bool IsAlive()
     {

@@ -74,13 +74,26 @@ public class EnemySpawner : MonoBehaviour
             {
                 if (respawn)
                 {
+                    ReturnEnemyAlive();
                     StartCoroutine(RespawnEvent(E));
                 }
                 else
-                    SpawnEnemy(E);
+                {
+                    if(!E.isKilled)
+                        SpawnEnemy(E);
+                }
             }
         }
     }
+
+    private void ReturnEnemyAlive()
+    {
+        foreach (EnemySpawn enemy in soloEnemies)
+        {
+            enemy.isKilled = false;
+        }
+    }
+
     bool respawn = false;
     private void OnTriggerExit2D(Collider2D collision)
     {

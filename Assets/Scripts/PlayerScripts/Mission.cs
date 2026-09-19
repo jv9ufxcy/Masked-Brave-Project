@@ -98,6 +98,7 @@ public class Mission : MonoBehaviour,IDataPersistence
     private void RestartMission()
     {
         StartCoroutine(InitializeCoRoutine());
+        //Initialize();
         elapsedTime = savedTime;
         StartCoroutine(DelayedScoreReset());
         BeginTimer();
@@ -300,7 +301,8 @@ public class Mission : MonoBehaviour,IDataPersistence
         set
         {
             _scoreMultiplier = Mathf.Round(value * 10) / 10;
-            scoreMultiplierText.SetText("x " + _scoreMultiplier.ToString());
+            if (scoreMultiplierText!=null)
+                scoreMultiplierText.SetText("x " + _scoreMultiplier.ToString());
             Math.Round(_scoreMultiplier, 1);
         }
     }
@@ -461,7 +463,8 @@ public class Mission : MonoBehaviour,IDataPersistence
         if (isVisible)
         {
             scoreRectTransform.DOAnchorPos(scorePos, .25f);
-            kudosHandler.SetContainerColor(0);
+            if (kudosHandler!=null)
+                kudosHandler.SetContainerColor(0);
         }
         else
             scoreRectTransform.DOAnchorPos(hiddenPos, .25f).SetDelay(2f);
@@ -490,7 +493,8 @@ public class Mission : MonoBehaviour,IDataPersistence
                 {
                     prevVal = newVal;
                 }
-                scoreMultiplicandText.SetText(prevVal.ToString(NumberFormat));
+                if (scoreMultiplicandText!=null)
+                    scoreMultiplicandText.SetText(prevVal.ToString(NumberFormat));
                 yield return Wait;
             }
         }
@@ -515,9 +519,11 @@ public class Mission : MonoBehaviour,IDataPersistence
         score = Mathf.RoundToInt(multiplicand * ScoreMultiplier);
         OnMissionPoint(score);
 
-        kudosHandler.SetContainerColor(2);
-        //play good sound
-        DefaultScore();
+        if (kudosHandler!=null)
+            kudosHandler.SetContainerColor(2);
+
+            //play good sound
+            DefaultScore();
     }
     public void FailScore()
     {
@@ -535,8 +541,12 @@ public class Mission : MonoBehaviour,IDataPersistence
         chainCount = 0;
 
         strikeCounter = maxStrikeCounter;
-        kudosHandler.UpdateStrike(strikeCounter);
-        kudosHandler.UpdateTimer(chainKillTimer);
+        if (kudosHandler != null)
+        {
+            //kudosHandler = scoreRectTransform.GetComponentInChildren<KudosHandler>();
+            kudosHandler.UpdateStrike(strikeCounter);
+            kudosHandler.UpdateTimer(chainKillTimer);
+        }            
     }
     private int strikeCounter = 3, maxStrikeCounter = 3;
     public void OnPlayerDamaged(int damage) 
